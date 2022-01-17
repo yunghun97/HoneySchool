@@ -42,6 +42,14 @@
           >eslint</a
         >
       </li>
+      <li>
+        <a
+          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-typescript"
+          target="_blank"
+          rel="noopener"
+          >typescript</a
+        >
+      </li>
     </ul>
     <h3>Essential Links</h3>
     <ul>
@@ -102,13 +110,15 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "HelloWorld",
   props: {
     msg: String,
   },
-};
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
