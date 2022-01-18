@@ -1,12 +1,14 @@
-import { Module, ActionContext } from "vuex";
-import { RootState } from "../index"
-import axios from "axios"
-import router from "../../router"
+import { Module } from "vuex";
+import { RootState } from "../index";
+import axios from "axios";
+import router from "../../router";
 
 export interface accountState {
   accessToken: string;
   accounts: Array<any>;
   user: any;
+  //
+  count: number;
 }
 
 export const accountStore: Module<accountState, RootState> = {
@@ -15,6 +17,7 @@ export const accountStore: Module<accountState, RootState> = {
     accessToken: "",
     accounts: [],
     user: {},
+    count: 0,
   }),
   getters: {
     isLogin: (state) => {
@@ -23,6 +26,10 @@ export const accountStore: Module<accountState, RootState> = {
     getUser: (state) => {
       // return JSON.parse(atob(state.accessToken.split('.')[1])).username
       return JSON.parse(atob(state.accessToken.split(".")[1]));
+    },
+    //
+    doubleCount: (state) => {
+      return state.count * 2;
     },
   },
   mutations: {
@@ -39,6 +46,11 @@ export const accountStore: Module<accountState, RootState> = {
     setUser(state, user) {
       state.user = user;
       // console.log(state.accounts)
+    },
+    //
+    increment(state) {
+      state.count++;
+      console.log(state.count);
     },
   },
   actions: {
@@ -65,6 +77,10 @@ export const accountStore: Module<accountState, RootState> = {
         .then((response) => {
           commit("setUser", response.data);
         });
+    },
+    //
+    incrementNumber({ commit }) {
+      commit("increment");
     },
   },
 };

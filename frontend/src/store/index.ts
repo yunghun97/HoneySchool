@@ -11,5 +11,5 @@ export interface RootState {
 
 export default createStore({
   // modules: { accountStore, boardStore, videoStore }
-  modules: { accountStore }
-})
+  modules: { accountStore },
+});
