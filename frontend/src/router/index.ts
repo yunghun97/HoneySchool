@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
 import ClassBoard from "../views/Board/ClassBoard.vue";
 import BoardTable from "../views/Board/BoardTable.vue";
+import Signup from "../views/accounts/Signup.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -27,6 +28,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/classboard/:category",
     name: "BoardTable",
     component: BoardTable,
+  },
+  {
+    path: "/signup",
+    name: "Signup",
+    component: Signup,
   },
 ];
 
