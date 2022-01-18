@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
+import ClassBoard from "../views/Board/ClassBoard.vue";
+import BoardTable from "../views/Board/BoardTable.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -15,6 +17,16 @@ const routes: Array<RouteRecordRaw> = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
+  },
+  {
+    path: "/classboard",
+    name: "ClassBoard",
+    component: ClassBoard,
+  },
+  {
+    path: "/classboard/:category",
+    name: "BoardTable",
+    component: BoardTable,
   },
 ];
 
