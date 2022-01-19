@@ -35,12 +35,9 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import Category from '@/types/board/Category'
+      // @click="$router.push({name: 'BoardTable', params: { category: category.url }, replace:true})"
 
-interface Category {
-    url: string,
-    name: string,
-    color: string,
-}
 
 export default defineComponent({
     name: 'ClassBoard',

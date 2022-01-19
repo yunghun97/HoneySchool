@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
-import ClassBoard from "../views/Board/ClassBoard.vue";
-import BoardTable from "../views/Board/BoardTable.vue";
+import ClassBoard from "../views/board/ClassBoard.vue";
+import BoardTable from "../views/board/BoardTable.vue";
+import ArticleDetail from "../views/board/ArticleDetail.vue";
 import Signup from "../views/accounts/Signup.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -28,6 +29,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/classboard/:category",
     name: "BoardTable",
     component: BoardTable,
+  },
+  {
+    path: "/classboard/:category/:article_id",
+    name: "ArticleDetail",
+    component: ArticleDetail,
   },
   {
     path: "/signup",
