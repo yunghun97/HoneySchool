@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import ClassBoard from "../views/Board/ClassBoard.vue";
 import BoardTable from "../views/Board/BoardTable.vue";
 import Signup from "../views/accounts/Signup.vue";
+import Login from "../views/accounts/Login.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -33,6 +34,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/signup",
     name: "Signup",
     component: Signup,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
   },
 ];
 
