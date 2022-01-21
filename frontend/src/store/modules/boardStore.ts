@@ -1,7 +1,10 @@
 import axios from "axios";
 import { Module } from "vuex";
 import { RootState } from "../index";
-// import boardType from "@/types/board/BoardArticles";
+// import BoardArticles from "@/types/board/BoardArticles";
+import AxiosService from '@/services/axios.service';
+import AxiosResponse from '@/services/axios.service';
+
 
 interface BoardArticles {
   id: number,
@@ -14,10 +17,16 @@ interface BoardArticles {
 type boardType = Array<BoardArticles>;
 export interface boardState {
     classBoardAll: boardType;
+    notice: boardType;
+    handouts: boardType;
+    photo: boardType;
 }
 export const boardStore: Module<boardState, RootState> = {
   namespaced: true,
   state: () => ({
+    notice: [],
+    handouts: [],
+    photo: [],
     classBoardAll: [
         {   id:1,
             category: 'notice',
@@ -50,17 +59,41 @@ export const boardStore: Module<boardState, RootState> = {
         file: 'url',
         date: 20220118
     },
+    {   id:5,
+        category: 'photo',
+        title: '2022.01.20 체육시간',
+        content: '체육시간',
+        writer: '1반 담임 선생님',
+        file: 'https://cdn.pixabay.com/photo/2015/04/20/06/29/childrens-730667_960_720.jpg',
+        date: 20220120
+  },
+    
     ]
   }),
   getters: {
     getArticleDetail: (state, id:number) => {
       console.log('here!')
       return state.classBoardAll.find(article => article.id === id)
+    },
+  }, 
+  mutations: {
+    CLASSIFYCATEGORY (state) {
+      for (let i = 0; i < state.classBoardAll.length; ++i) {
+        const article = state.classBoardAll[i] as BoardArticles
+        if (article.category === 'notice') {
+          state.notice.push(article)
+        } else if (article.category === 'handouts') {
+          state.handouts.push(article)
+        } else {
+          state.photo.push(article)
+        }
+      }
     }
   },
-  mutations: {
-  
-  },
   actions: {
+    classifyCategory ({ commit }) {
+      commit('CLASSIFYCATEGORY')
+    }
   },
+
 };

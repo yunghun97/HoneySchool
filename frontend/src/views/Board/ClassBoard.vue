@@ -9,7 +9,8 @@
   >
     <div
       class="card"
-      @click="$router.push({name: 'BoardTable', params: { category: category.url }, replace:true})"
+      @click="pushRouter(category.url)"
+
       :style="{backgroundColor : category.color}"
     >
       <div class="card-body">
@@ -34,14 +35,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import router from "@/router";
+import { defineComponent, ref, computed, onMounted } from 'vue'
+import { useStore } from 'vuex';
 import Category from '@/types/board/Category'
+import BoardArticles from "@/types/board/BoardArticles";
+type boardType = Array<BoardArticles>;
       // @click="$router.push({name: 'BoardTable', params: { category: category.url }, replace:true})"
 
 
 export default defineComponent({
     name: 'ClassBoard',
     setup() {
+        
+        const store = useStore();
+        store.dispatch("boardStore/classifyCategory")
+        
         const categories= ref<Category[]>([
         {
           url: "notice",
@@ -55,7 +64,7 @@ export default defineComponent({
         },
         {
           url: "photo",
-          name: "학급사진첩",
+          name: "사진첩",
           color: "#37B6F6",
         },
         {
@@ -74,7 +83,30 @@ export default defineComponent({
           color: "#F52532",
         }
         ])
-        return { categories }
+        
+        const pushRouter = (category:string) => {
+          if (category == "notice") {
+            const articles = computed(() => store.state.boardStore.notice[0]);
+            return router.push({name: 'ArticleDetail', params: { category:category ,article_id: articles.value.id }})
+          } else if (category =="handouts") {
+            const articles = computed(() => store.state.boardStore.handouts[0]);
+            return router.push({name: 'ArticleDetail', params: { category:category ,article_id: articles.value.id }})
+          } else if (category == "photo") {
+            const articles = computed(() => store.state.boardStore.photo[0]);
+            return router.push({name: 'ArticleDetail', params: { category:category ,article_id: articles.value.id }})
+          } else if (category == "all") {
+            return router.push({name: 'BoardTable'})
+          }
+
+        //   if (category === "notice" || category === "handouts" || category === "photo") {
+        //      return router.push({name: 'ArticleDetail', params: { category:category ,article_id: recentArticle.id }})
+        //   }
+      
+        }
+
+          
+
+        return { categories, pushRouter } 
     }
 
 })

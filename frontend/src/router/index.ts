@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import ClassBoard from "../views/board/ClassBoard.vue";
 import BoardTable from "../views/board/BoardTable.vue";
 import ArticleDetail from "../views/board/ArticleDetail.vue";
+import ArticleCreate from "../views/board/ArticleCreate.vue";
 import Signup from "../views/accounts/Signup.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -26,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
     component: ClassBoard,
   },
   {
-    path: "/classboard/:category",
+    path: "/classboard/all",
     name: "BoardTable",
     component: BoardTable,
   },
@@ -34,6 +35,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/classboard/:category/:article_id",
     name: "ArticleDetail",
     component: ArticleDetail,
+  },
+  {
+    path: "/classboard/create",
+    name: "ArticleCreate",
+    component: ArticleCreate,
   },
   {
     path: "/signup",
