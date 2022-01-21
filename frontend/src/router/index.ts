@@ -5,7 +5,7 @@ import BoardTable from "../views/board/BoardTable.vue";
 import ArticleDetail from "../views/board/ArticleDetail.vue";
 import ArticleCreate from "../views/board/ArticleCreate.vue";
 import Assignment from "../views/board/Assignment.vue";
-import Question from "../views/board/Qeustion.vue"
+import Question from "../views/board/Question.vue"
 import Signup from "../views/accounts/Signup.vue";
 
 const routes: Array<RouteRecordRaw> = [

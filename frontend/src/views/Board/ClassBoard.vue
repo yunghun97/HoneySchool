@@ -95,8 +95,11 @@ export default defineComponent({
             const articles = computed(() => store.state.boardStore.photo[0]);
             return router.push({name: 'ArticleDetail', params: { category:category ,article_id: articles.value.id }})
           } else if (category == "assignment") {
-            //const articles = computed(() => store.state.boardStore.photo[0]);
+            // const articles = computed(() => store.state.boardStore.photo[0]);
             return router.push({name: 'Assignment'})
+          } else if (category == "questions") {
+            // const articles = computed(() => store.state.boardStore.photo[0]);
+            return router.push({name: 'Question'})
           } else if (category == "all") {
             return router.push({name: 'BoardTable'})
           }

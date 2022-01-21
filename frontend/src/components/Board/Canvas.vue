@@ -1,7 +1,7 @@
 <template>
   <div class="flex-row">
     <div class="source">
-      <p>Canvas:</p>
+      <h4>오늘의 숙제</h4>
       <vue-drawing-canvas
         ref="VueCanvasDrawing"
         v-model:image="image"
@@ -15,83 +15,13 @@
         :watermark="watermark"
         saveAs="jpeg"
         :styles="{
-          border: 'solid 1px #000',
+          border: 'solid 3px #000',
         }"
         :lock="disabled"
         @mousemove="getCoordinate($event)"
       />
       <div class="button-container">
-        <!-- <button type="button" @click.prevent="disabled = !disabled">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
-              <path v-if="!disabled" d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2zM3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H3z"/>
-              <path v-else d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
-            </svg>
-            <span v-if="!disabled">Unlock</span>
-            <span v-else>Lock</span>
-          </button> -->
-        <button type="button" @click.prevent="$refs.VueCanvasDrawing.undo()">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-arrow-counterclockwise"
-            viewBox="0 0 16 16"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"
-            />
-            <path
-              d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"
-            />
-          </svg>
-          되돌리기
-        </button>
-        <button type="button" @click.prevent="$refs.VueCanvasDrawing.redo()">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-arrow-clockwise"
-            viewBox="0 0 16 16"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
-            />
-            <path
-              d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"
-            />
-          </svg>
-          되돌리기 취소
-        </button>
-        <!-- <button type="button" @click.prevent="$refs.VueCanvasDrawing.redraw()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
-              <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-              <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-            </svg>
-            새로하기
-          </button> -->
-        <button type="button" @click.prevent="$refs.VueCanvasDrawing.reset()">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-file-earmark"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"
-            />
-          </svg>
-          새로하기
-        </button>
-      </div>
-      <div class="button-container">
-        <button type="button" @click.prevent="eraser = !eraser">
+        <button type="button" class="btn btn-outline-dark btn-lg" @click.prevent="eraser = !eraser">
           <span v-if="eraser">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +53,79 @@
             연필
           </span>
         </button>
+        <!-- <button type="button" @click.prevent="disabled = !disabled">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
+              <path v-if="!disabled" d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2zM3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H3z"/>
+              <path v-else d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+            </svg>
+            <span v-if="!disabled">Unlock</span>
+            <span v-else>Lock</span>
+          </button> -->
+        <button type="button" class="btn btn-outline-danger btn-lg" @click.prevent="$refs.VueCanvasDrawing.undo()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            class="bi bi-arrow-counterclockwise"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"
+            />
+            <path
+              d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"
+            />
+          </svg>
+          되돌리기
+        </button>
+        <button type="button" class="btn btn-outline-success btn-lg" @click.prevent="$refs.VueCanvasDrawing.redo()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            class="bi bi-arrow-clockwise"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
+            />
+            <path
+              d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"
+            />
+          </svg>
+          되돌리기 취소
+        </button>
+        <!-- <button type="button" @click.prevent="$refs.VueCanvasDrawing.redraw()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+              <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+              <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+            </svg>
+            새로하기
+          </button> -->
+        <button type="button" class="btn btn-outline-primary btn-lg" @click.prevent="$refs.VueCanvasDrawing.reset()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-file-earmark"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"
+            />
+          </svg>
+          새로하기
+        </button>
+        <button type="button" class="btn btn-warning btn-lg" @click="saveImage">
+        제출하기
+        </button>
       </div>
+
         <div class="button-container">
 
           <div>
@@ -178,9 +180,10 @@
     </div> 
     </div>
   </div>
-    <button @click="saveImage">
-    제출하기
-    </button>
+  <div>
+
+  </div>
+
 </template>
 
 <script>
@@ -202,7 +205,7 @@ export default {
       color: "#000000",
       strokeType: "dash",
       backgroundColor: "#FFFFFF",
-        backgroundImage: null,
+      backgroundImage: null,
       watermark: null,
       // watermark: {
       //   type: "Text", // "Text" or "Image"
@@ -262,6 +265,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,700&display=swap");
 body {
   font-family: "Roboto", sans-serif;
+
 }
 .flex-row {
   display: flex;
