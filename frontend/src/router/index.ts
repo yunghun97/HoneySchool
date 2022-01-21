@@ -7,6 +7,7 @@ import ArticleCreate from "../views/board/ArticleCreate.vue";
 import Assignment from "../views/board/Assignment.vue";
 import Question from "../views/board/Question.vue"
 import Signup from "../views/accounts/Signup.vue";
+import Login from "../views/accounts/Login.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -57,6 +58,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/signup",
     name: "Signup",
     component: Signup,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
   },
 ];
 
