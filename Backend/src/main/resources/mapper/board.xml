@@ -6,6 +6,11 @@
 
 	<!-- 게시판 조회 -->
 	<select id="selectBoard" parameterType="map" resultType="boardDto">
-		select * from board where school=#{school} and grade=${grade} and class = #{classes}
+		select * from class_board where school=#{school} and grade= #{grade} and classes = #{classes}
 	</select>
+	
+	<insert id="insertBoard" parameterType="boardDto">
+		insert into class_board(category,title,content, writer, school, grade, classes, file_link)
+		values(#{category},#{title},#{content},#{writer},#{school},#{grade},#{classes},#{file_link});  
+	</insert>
 </mapper>

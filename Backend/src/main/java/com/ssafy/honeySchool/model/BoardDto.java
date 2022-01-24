@@ -14,9 +14,9 @@ public class BoardDto {
 	String content;
 	String writer;
 	String school;
-	String grade;
-	String classes;
-	String date;
+	int grade;
+	int classes;
+	Date date;
 	String file_link;
 	int viewcount;
 	

@@ -40,12 +40,30 @@ import { defineComponent, ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex';
 import Category from '@/types/board/Category'
 import BoardArticles from "@/types/board/BoardArticles";
+import axios from "axios";
 type boardType = Array<BoardArticles>;
       // @click="$router.push({name: 'BoardTable', params: { category: category.url }, replace:true})"
 
 
 export default defineComponent({
     name: 'ClassBoard',
+    beforeCreate() {
+      // axios.get("http://localhost:9999/api/v1/test")
+        axios.get("http://localhost:9999/api/v1/board/class",{
+          params:{
+            school: "싸피초",
+            grade: 1,
+            classes: 1,
+          }
+        })
+        .then((data)=>{
+          console.log(data);
+        })
+        .catch(()=>
+          alert("실패!")
+        )        
+
+    },
     setup() {
         
         const store = useStore();
