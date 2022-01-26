@@ -2,8 +2,9 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
 import ClassBoard from "../views/Board/ClassBoard.vue";
 import BoardTable from "../views/Board/BoardTable.vue";
-import Signup from "../views/accounts/Signup.vue";
-import Login from "../views/accounts/Login.vue";
+import Signup from "../views/Accounts/Signup.vue";
+import Login from "../views/Accounts/Login.vue";
+import Videoclass from "../views/Videoclass/Videoclass.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -39,6 +40,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/videoclass",
+    name: "Videoclass",
+    component: Videoclass,
   },
 ];
 

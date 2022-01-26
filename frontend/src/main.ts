@@ -5,4 +5,5 @@ import store from "./store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
 
+// window.Kakao.init("cd8e8cfb48d45ac31b7c93bbe5eada61");
 createApp(App).use(store).use(router).mount("#app");
