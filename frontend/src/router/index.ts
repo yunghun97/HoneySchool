@@ -4,6 +4,7 @@ import ClassBoard from "../views/board/ClassBoard.vue";
 import BoardTable from "../views/board/BoardTable.vue";
 import ArticleDetail from "../views/board/ArticleDetail.vue";
 import ArticleCreate from "../views/board/ArticleCreate.vue";
+import Notice from "../views/board/Notice.vue";
 import Assignment from "../views/board/Assignment.vue";
 import Question from "../views/board/Question.vue"
 import Signup from "../views/accounts/Signup.vue";
@@ -40,9 +41,19 @@ const routes: Array<RouteRecordRaw> = [
     component: ArticleDetail,
   },
   {
+    path: "/classboard/:category/:article_id/edit",
+    name: "ArticleUpdate",
+    component: () => import('@/views/board/ArticleUpdate.vue'),
+  },
+  {
     path: "/classboard/create",
     name: "ArticleCreate",
     component: ArticleCreate,
+  },
+  {
+    path: "/classboard/notice/:article_id",
+    name: "Notice",
+    component: Notice,
   },
   {
     path: "/classboard/assignment",

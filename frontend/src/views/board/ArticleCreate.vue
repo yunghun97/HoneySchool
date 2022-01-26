@@ -62,7 +62,6 @@
 import { defineComponent } from "vue";
 import Article from "@/types/board/Article";
 import axios from "axios";
-// import ResponseData from "@/types/board/ResponseData";
 
 export default defineComponent({
   name: "CreateArticle",
@@ -73,8 +72,7 @@ export default defineComponent({
         category: "",
         title: "",
         content: "",
-        file: "",
-        date: new Date(),
+        file_link: "",
       } as Article,
       submitted: false,
     };
@@ -82,12 +80,12 @@ export default defineComponent({
   methods: {
     fileSelect() {
       const uploadedfile = this.$refs.file as any
-      this.article.file= uploadedfile.files;
+      this.article.file_link= uploadedfile.files;
 
     },
     clearFiles(event:any) {
       event.preventDefault()
-      this.article.file=''
+      this.article.file_link=''
 
     },
     saveArticle() {
@@ -100,10 +98,8 @@ export default defineComponent({
       formData.append('category', this.article.category);
       formData.append('title', this.article.title);
       formData.append('content', this.article.content);
-      formData.append('file_link', this.article.file);
-      
-      // formData.append('date', this.article.date); // 기본 작성시간 입력
-      
+      formData.append('file_link', this.article.file_link);
+          
       // 글작성하느라 임의로 추가한내용
       formData.append('writer', "김싸피"); // user가 기본키여서 김싸피만 user로 등록되어있어서 작성자 바꿀려면 사람 User에서 추가해야합니다.
       formData.append('grade', '1');

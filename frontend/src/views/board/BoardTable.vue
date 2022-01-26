@@ -1,4 +1,5 @@
 <template>
+<div>
   <button 
     type="button" class="btn btn-outline-success"
     @click="$router.push('create')"
@@ -28,6 +29,7 @@
     </tbody>
   </table>
   </div>
+</div>
 </template>
 
 

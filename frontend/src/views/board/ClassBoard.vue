@@ -35,11 +35,11 @@
 </template>
 
 <script lang="ts">
-import router from "@/router";
+import router from "../../router";
 import { defineComponent, ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex';
-import Category from '@/types/board/Category'
-import BoardArticles from "@/types/board/BoardArticles";
+import Category from '../../types/board/Category'
+import BoardArticles from "../../types/board/BoardArticles";
 import axios from "axios";
 type boardType = Array<BoardArticles>;
       // @click="$router.push({name: 'BoardTable', params: { category: category.url }, replace:true})"
@@ -47,27 +47,29 @@ type boardType = Array<BoardArticles>;
 
 export default defineComponent({
     name: 'ClassBoard',
-    beforeCreate() {
+    //beforeCreate() {
+      //console.log('before')
       // axios.get("http://localhost:9999/api/v1/test")
-        axios.get("http://localhost:9999/api/v1/board/class",{
-          params:{
-            school: "싸피초",
-            grade: 1,
-            classes: 1,
-          }
-        })
-        .then((data)=>{
-          console.log(data);
-        })
-        .catch(()=>
-          alert("실패!")
-        )        
+        // axios.get("http://localhost:9999/api/v1/board/class",{
+        //   params:{
+        //     school: "싸피초",
+        //     grade: 1,
+        //     classes: 1,
+        //   }
+        // })
+        // .then((data)=>{
+        //   console.log(data);
+        // })
+        // .catch(()=>
+        //   alert("실패!")
+        // )        
 
-    },
+    //},
     setup() {
         
         const store = useStore();
-        store.dispatch("boardStore/classifyCategory")
+        store.dispatch('boardStore/getArticles')
+        
         
         const categories= ref<Category[]>([
         {
@@ -101,11 +103,12 @@ export default defineComponent({
           color: "#F52532",
         }
         ])
-        
+        // TODO : category 선택 시, 게시글 카테고리 필터 서버에 요청
         const pushRouter = (category:string) => {
           if (category == "notice") {
             const articles = computed(() => store.state.boardStore.notice[0]);
-            return router.push({name: 'ArticleDetail', params: { category:category ,article_id: articles.value.id }})
+            store.dispatch("boardStore/classifyCategory")
+            return router.push({name: 'Notice', params: { article_id: articles.value.id }})
           } else if (category =="handouts") {
             const articles = computed(() => store.state.boardStore.handouts[0]);
             return router.push({name: 'ArticleDetail', params: { category:category ,article_id: articles.value.id }})
