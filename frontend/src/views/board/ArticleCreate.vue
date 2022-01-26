@@ -112,7 +112,7 @@ export default defineComponent({
 
       this.submitted = true
     // TODO
-      axios.post("http://localhost:9999/api/v1/board/class",formData)
+      axios.post("http://localhost:9999/api/v1/board/class",formData, )
       .then((data)=>{
         alert("성공"); 
       })

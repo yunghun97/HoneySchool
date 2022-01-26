@@ -48,7 +48,8 @@ type boardType = Array<BoardArticles>;
 export default defineComponent({
     name: 'ClassBoard',
     beforeCreate() {
-      // axios.get("http://localhost:9999/api/v1/test")
+        
+        // 전체 받기
         axios.get("http://localhost:9999/api/v1/board/class",{
           params:{
             school: "싸피초",
@@ -60,9 +61,24 @@ export default defineComponent({
           console.log(data);
         })
         .catch(()=>
-          alert("실패!")
-        )        
+          alert("게시판 받아오기 실패!")
+        )
 
+        // category 받기        
+        axios.get("http://localhost:9999/api/v1/board/class/category",{
+          params:{
+            school: "싸피초",
+            grade: 1,
+            category: "photo",
+            classes: 1,
+          }
+        })
+        .then((data)=>{
+          console.log(data);
+        })
+        .catch(()=>
+          alert("카테고리 받아오기 실패!")
+        )  
     },
     setup() {
         
