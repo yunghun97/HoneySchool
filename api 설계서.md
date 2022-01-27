@@ -16,7 +16,7 @@ POST /signup
    "position": "String",
    "school":"String",
    "grade": "INT",
-   "class": "INT",
+   "classes": "INT",
    "number": "INT",
    "email": "String",
    "year": "INT"
@@ -73,10 +73,10 @@ SUCCESS{
    "position": "String",
    "school":"String",
    "grade": "INT",
-   "class": "INT",
+   "classes": "INT",
    "number": "INT",
    "email": "String",
-   "year": "INT"
+   "birth": "DATE"
 }
 FAIL {
     "code": 500, "message": "Server Error",
@@ -91,16 +91,15 @@ PUT /users/<string:user_id>
 - Request
 ```json
 {
-   "user_id":"String",
    "name":"String",    
-   "password": "String",
    "position": "String",
    "school":"String",
    "grade": "INT",
-   "class": "INT",
-   "number": "INT",
+   "classes": "INT",
+   "number": "INT",   
+   "password": "String",
    "email": "String",
-   "year": "INT"
+   "birth": "DATE"
 }
 ```
 - Response
@@ -135,7 +134,7 @@ FAIL {
 ## 게시판
 ---
 ### 반
-### 반 게시판 목록
+### 반 게시판 전체 목록
 - URL
 ```
 GET /board/class/<string:school>&<int:grade>&<int:class>
@@ -180,13 +179,8 @@ SUCCESS{
     "id": "INT",
     "category":"String",
     "title":"String",
-    "content":"String",
     "writer":"String",
-    "school":"String",
-    "grade": "INT",
-    "classes":"INT",
     "date":"DATETIME",
-    "file_link":"String",
     "viewCount":"INT"
 }
 FAIL{
@@ -207,8 +201,9 @@ GET /board/class/detail/<string:school>&<int:grade>&<int:class>&<int:id>
 ``` json
 SUCCESS{
     "code":200, "message": "Success",
-    "title":"String",
+    "id":"INT",
     "category":"String",
+    "title":"String",
     "content":"String",
     "writer":"String",
     "school":"String",
@@ -236,7 +231,7 @@ POST /board/class
     "title":"String",
     "date":"DATE",
     "grade":"INT",
-    "class":"INT",
+    "classes":"INT",
     "writer":"String",
     "content":"String",
     "file_link":"String",
@@ -266,7 +261,7 @@ PUT /board/class
     "title":"String",
     "date":"DATE",
     "grade":"INT",
-    "class":"INT",
+    "classes":"INT",
     "writer":"String",
     "content":"String",
     "file_link":"String",
@@ -278,7 +273,7 @@ SUCCESS{
     "code":200,"message":"Success",
     "school":"String",
     "grade":"INT",
-    "class":"INT",
+    "classes":"INT",
     "id":"INT"    
 }
 FAIL{
@@ -323,9 +318,9 @@ SUCCESS{
         {
             "id":"INT",
             "board_id":"INT",
-            "content":"String",                        
-            "writer":"String",
-            "date":"DATETIME"            
+            "content": "String",
+            "writer": "String",
+            "file_link": "String"         
         }
     ]
 }
@@ -343,11 +338,9 @@ POST /board/class/comment
 ```json
 {
     "board_id":"INT",
-    "school": "String",
-    "grade":"INT",
-    "class":"INT",
     "content": "String",
-    "writer": "String"
+    "writer": "String",
+    "file_link": "String"
 }
 ```
 - Response
@@ -371,7 +364,8 @@ PUT /board/class/comment
     "id":"INT",
     "board_id":"INT",    
     "content": "String",
-    "writer": "String"
+    "writer": "String",
+    "file_link": "String",
 }
 ```
 - Response
@@ -427,6 +421,7 @@ SUCCESS{
             "title":"String",
             "writer":"String",
             "date":"DATETIME",
+            "file_link":"String",
             "viewCount":"INT"
         }
     ]
@@ -440,7 +435,7 @@ FAIL{
 ### 공지사항 게시판 글 상세
 - URL
 ```
-GET /board/notice/id
+GET /board/notice/id?<int:id>
 ```
 - Request
 ```
@@ -451,6 +446,7 @@ X
 ``` json
 SUCCESS{
     "code":200, "message": "Success",
+    "id":"INT",
     "category":"String",
     "title":"String",
     "content":"String",
@@ -476,7 +472,7 @@ POST /board/notice
     "title":"String",
     "date":"DATE",
     "grade":"INT",
-    "class":"INT",
+    "classes":"INT",
     "writer":"String",
     "content":"String",
     "file_link":"String",
@@ -495,18 +491,17 @@ FAIL{
 ### 공지사항 게시판 글 수정
 - URL
 ```
-PUT /board/notice
+PUT /board/notice?<int:id>
 ```
 - Request
 ```json
 {
-    "id":"INT",
     "category":"String",
     "title":"String",
     "date":"DATE",
     "writer":"String",
     "content":"String",
-    "file_link":"String",
+    "file_link":"String",    
 }
 ```
 - Response
@@ -523,7 +518,7 @@ FAIL{
 ### 공지사항 게시판 글 삭제
 - URL
 ```
-DELETE /board/notice/<int:id>
+DELETE /board/notice?<int:id>
 ```
 - Request
 ```json
@@ -540,4 +535,3 @@ FAIL{
 }
 ```  
 
----
