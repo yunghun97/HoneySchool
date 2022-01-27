@@ -129,8 +129,22 @@ FAIL {
     "code": 401, "message": "본인의 ID가 아닙니다."
 }
 ```  
-  
-
+## 회원 ID 가져오기  
+- URL
+```
+GET /users/userId
+```
+- Request
+```Header
+"Authentication" : "accessToken"
+```
+- Response
+```json
+SUCCESS{ "userId" : "String"}
+FAIL {
+    "code": 403, "error" : "Forbidden", "message": "Access Denied."
+}
+``` 
 ## 게시판
 ---
 ### 반
