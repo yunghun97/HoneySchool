@@ -10,7 +10,7 @@
 <script lang="ts">
 
 export default {
-    name: "NoticeContent",
+    name: "HandoutContent",
     props: ['currentarticle'],
 }
 </script>

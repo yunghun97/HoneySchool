@@ -1,5 +1,6 @@
 <template>
     <!-- Article Detail -->
+
     <div>
         <div :style="`background-color:${categories[articles.category]}`">
             <div 
@@ -30,6 +31,9 @@
                     </div>
                     <div v-else>
                         <h2>{{ articles.content }}</h2>
+                    </div>
+                    <div>
+                        {{articles }}
                     </div>
                 </div>
             </div>

@@ -4,7 +4,8 @@ import ClassBoard from "../views/board/ClassBoard.vue";
 import BoardTable from "../views/board/BoardTable.vue";
 import ArticleDetail from "../views/board/ArticleDetail.vue";
 import ArticleCreate from "../views/board/ArticleCreate.vue";
-import Notice from "../views/board/Notice.vue";
+import Handout from "../views/board/Handout.vue";
+import Photo from "../views/board/Photo.vue";
 import Assignment from "../views/board/Assignment.vue";
 import Question from "../views/board/Question.vue"
 import Signup from "../views/accounts/Signup.vue";
@@ -53,7 +54,20 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/classboard/notice/:article_id",
     name: "Notice",
-    component: Notice,
+    component: () => import("@/views/board/Notice.vue"),
+    // meta: {
+    //   reload: true
+    // }
+  },
+  {
+    path: "/classboard/handouts/:article_id",
+    name: "Handout",
+    component: Handout,
+  },
+  {
+    path: "/classboard/photo/:article_id",
+    name: "Photo",
+    component: Photo,
   },
   {
     path: "/classboard/assignment",

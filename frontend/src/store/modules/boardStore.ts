@@ -44,16 +44,9 @@ export const boardStore: Module<boardState, RootState> = {
       state.classBoardAll = data
     },
     CLASSIFYCATEGORY (state) {
-      for (let i = 0; i < state.classBoardAll.length; ++i) {
-        const article = state.classBoardAll[i] as BoardArticles
-        if (article.category === 'notice') {
-          state.notice.push(article)
-        } else if (article.category === 'handouts') {
-          state.handouts.push(article)
-        } else {
-          state.photo.push(article)
-        }
-      }
+      state.notice = state.classBoardAll.filter((article) => article.category === "notice")
+      state.handouts = state.classBoardAll.filter((article) => article.category === "handouts")
+      state.photo = state.classBoardAll.filter((article) => article.category === "photo")
     }
   },
   actions: {    

@@ -108,8 +108,12 @@ export default defineComponent({
 
       this.submitted = true
     // TODO
-      axios.post("http://localhost:9999/api/v1/board/class",formData)
-      .then((data)=>{
+      axios.post("http://localhost:9999/api/v1/board/class",formData, 
+      {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
+      )
+      .then((response)=>{
+        console.log(response.data)
+        console.log(formData)
         alert("성공"); 
       })
       .catch(()=>{

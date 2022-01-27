@@ -105,16 +105,16 @@ export default defineComponent({
         ])
         // TODO : category 선택 시, 게시글 카테고리 필터 서버에 요청
         const pushRouter = (category:string) => {
+          store.dispatch("boardStore/classifyCategory")
           if (category == "notice") {
-            const articles = computed(() => store.state.boardStore.notice[0]);
-            store.dispatch("boardStore/classifyCategory")
-            return router.push({name: 'Notice', params: { article_id: articles.value.id }})
+            const article = computed(() => store.state.boardStore.notice[0]).value as BoardArticles;
+            return router.push({name: 'Notice', params: { article_id: article.id, }})
           } else if (category =="handouts") {
             const articles = computed(() => store.state.boardStore.handouts[0]);
-            return router.push({name: 'ArticleDetail', params: { category:category ,article_id: articles.value.id }})
+            return router.push({name: 'Handout', params: { article_id: articles.value.id }})
           } else if (category == "photo") {
             const articles = computed(() => store.state.boardStore.photo[0]);
-            return router.push({name: 'ArticleDetail', params: { category:category ,article_id: articles.value.id }})
+            return router.push({name: 'Photo', params: { article_id: articles.value.id }})
           } else if (category == "assignment") {
             // const articles = computed(() => store.state.boardStore.photo[0]);
             return router.push({name: 'Assignment'})
