@@ -5,7 +5,7 @@
 ### 회원가입
 - URL
 ```
-POST /signup
+POST /users/register
 ```
 - Request
 ```json
@@ -19,7 +19,7 @@ POST /signup
    "class": "INT",
    "number": "INT",
    "email": "String",
-   "year": "INT"
+   "birth": "Date"
 }
 ```
 - Response
@@ -27,7 +27,9 @@ POST /signup
 SUCCESS{ "code": 200, "message": "Success"}
 FAIL {
     "code": 500, "message": "Server Error",
-    "code": 401, "message": "인증 정보가 정확 하지 않음"
+    "code": 401, "message": "인증 실패"
+    "code": 404, "message": "사용자 없음"
+    "code": 500, "message": "서버 오류"
 }
 ```
   
@@ -46,15 +48,13 @@ POST /auth/login
 - Response
 ```json
 SUCCESS{ 
-    "user_id":"String",
-    "name": "String",
+    "accessToken" : "String",
     "code": 200, 
     "message": "Success"
 }
 FAIL {
     "code": 500, "message": "Server Error",
-    "code": 401, "message": "존재하지 않는 ID",
-    "code": 402, "message": "Password가 맞지 않음"
+    "code": 401, "message": "유효하지 않은 password"
 }
 ```  
 
@@ -91,7 +91,6 @@ PUT /users/<string:user_id>
 - Request
 ```json
 {
-   "user_id":"String",
    "name":"String",    
    "password": "String",
    "position": "String",
@@ -100,7 +99,7 @@ PUT /users/<string:user_id>
    "class": "INT",
    "number": "INT",
    "email": "String",
-   "year": "INT"
+   "birth": "DATE"
 }
 ```
 - Response
