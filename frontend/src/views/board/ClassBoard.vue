@@ -47,6 +47,7 @@ type boardType = Array<BoardArticles>;
 
 export default defineComponent({
     name: 'ClassBoard',
+<<<<<<< HEAD
     //beforeCreate() {
       //console.log('before')
       // axios.get("http://localhost:9999/api/v1/test")
@@ -65,6 +66,41 @@ export default defineComponent({
         // )        
 
     //},
+=======
+    beforeCreate() {
+        
+        // 전체 받기
+        axios.get("http://localhost:9999/api/v1/board/class",{
+          params:{
+            school: "싸피초",
+            grade: 1,
+            classes: 1,
+          }
+        })
+        .then((data)=>{
+          console.log(data);
+        })
+        .catch(()=>
+          alert("게시판 받아오기 실패!")
+        )
+
+        // category 받기        
+        axios.get("http://localhost:9999/api/v1/board/class/category",{
+          params:{
+            school: "싸피초",
+            grade: 1,
+            category: "photo",
+            classes: 1,
+          }
+        })
+        .then((data)=>{
+          console.log(data);
+        })
+        .catch(()=>
+          alert("카테고리 받아오기 실패!")
+        )  
+    },
+>>>>>>> 845e756e60b8ca3381398ef5f73d5ed9caefd734
     setup() {
         
         const store = useStore();

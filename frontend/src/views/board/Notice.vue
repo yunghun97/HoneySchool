@@ -142,7 +142,6 @@ export default
         padding-top: 20vh;
         margin-bottom: 50px;
 }
-
 /* h2 {
     margin-left:30vh; 
     text-align: left;
