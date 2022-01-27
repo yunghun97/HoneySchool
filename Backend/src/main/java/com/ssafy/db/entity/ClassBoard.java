@@ -1,12 +1,14 @@
 package com.ssafy.db.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicInsert;
 
@@ -34,6 +36,7 @@ public class ClassBoard {
 	private String school;
 	private int grade;
 	private int classes;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	private String file_link;
 	private int viewcount;
