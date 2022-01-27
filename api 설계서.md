@@ -1,11 +1,14 @@
 # API 명세서
 - ### 기본 포트 : http://localhost:9999/api/v1
+[회원](#회원)  
+[게시판](#게시판)  
+[화상회의](#화상회의)
 ## 회원  
 
 ### 회원가입
 - URL
 ```
-POST /signup
+POST /users/register
 ```
 - Request
 ```json
@@ -19,7 +22,7 @@ POST /signup
    "classes": "INT",
    "number": "INT",
    "email": "String",
-   "year": "INT"
+   "birth": "Date"
 }
 ```
 - Response
@@ -27,7 +30,9 @@ POST /signup
 SUCCESS{ "code": 200, "message": "Success"}
 FAIL {
     "code": 500, "message": "Server Error",
-    "code": 401, "message": "인증 정보가 정확 하지 않음"
+    "code": 401, "message": "인증 실패"
+    "code": 404, "message": "사용자 없음"
+    "code": 500, "message": "서버 오류"
 }
 ```
   
@@ -46,15 +51,13 @@ POST /auth/login
 - Response
 ```json
 SUCCESS{ 
-    "user_id":"String",
-    "name": "String",
+    "accessToken" : "String",
     "code": 200, 
     "message": "Success"
 }
 FAIL {
     "code": 500, "message": "Server Error",
-    "code": 401, "message": "존재하지 않는 ID",
-    "code": 402, "message": "Password가 맞지 않음"
+    "code": 401, "message": "유효하지 않은 password"
 }
 ```  
 
@@ -129,8 +132,22 @@ FAIL {
     "code": 401, "message": "본인의 ID가 아닙니다."
 }
 ```  
-  
-
+### 회원 ID 가져오기  
+- URL
+```
+GET /users/userId
+```
+- Request
+```Header
+"Authentication" : "accessToken"
+```
+- Response
+```json
+SUCCESS{ "userId" : "String"}
+FAIL {
+    "code": 403, "error" : "Forbidden", "message": "Access Denied."
+}
+``` 
 ## 게시판
 ---
 ### 반
@@ -535,3 +552,46 @@ FAIL{
 }
 ```  
 
+## 화상회의  
+
+## Room
+### 방 탐색
+- URL
+```
+GET /openvidu/api/sessions/<SESSION_ID>/connection
+```
+- Request
+미정
+- Response
+미정
+  
+### 방 생성
+- URL
+```
+POST /openvidu/api/sessions
+```
+- Request
+미정
+- Response
+미정
+  
+### 방 입장
+- URL
+```
+GET /openvidu/api/sessions/<SESSION_ID>
+```
+- Request
+미정
+- Response
+미정
+  
+### 방 퇴장
+- URL
+```
+DELETE /openvidu/api/sessions/<SESSION_ID>
+```
+- Request
+미정
+- Response
+미정  
+  
