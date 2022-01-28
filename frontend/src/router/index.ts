@@ -1,8 +1,13 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
-import ClassBoard from "../views/Board/ClassBoard.vue";
-import BoardTable from "../views/Board/BoardTable.vue";
+import ClassBoard from "../views/board/ClassBoard.vue";
+import BoardTable from "../views/board/BoardTable.vue";
+import ArticleDetail from "../views/board/ArticleDetail.vue";
+import ArticleCreate from "../views/board/ArticleCreate.vue";
+import Assignment from "../views/board/Assignment.vue";
+import Question from "../views/board/Question.vue"
 import Signup from "../views/accounts/Signup.vue";
+import Login from "../views/accounts/Login.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -25,14 +30,39 @@ const routes: Array<RouteRecordRaw> = [
     component: ClassBoard,
   },
   {
-    path: "/classboard/:category",
+    path: "/classboard/all",
     name: "BoardTable",
     component: BoardTable,
+  },
+  {
+    path: "/classboard/:category/:article_id",
+    name: "ArticleDetail",
+    component: ArticleDetail,
+  },
+  {
+    path: "/classboard/create",
+    name: "ArticleCreate",
+    component: ArticleCreate,
+  },
+  {
+    path: "/classboard/assignment",
+    name: "Assignment",
+    component: Assignment,
+  },
+  {
+    path: "/classboard/question",
+    name: "Question",
+    component: Question,
   },
   {
     path: "/signup",
     name: "Signup",
     component: Signup,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
   },
 ];
 
