@@ -1,178 +1,181 @@
 <template>
-  <div id="signup-form" class="card">
-    <h3 class="card-header">회원 가입</h3>
-    <div class="card-body">
-      <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }">
-        <div class="form-row">
-          <Field
-            name="position"
-            id="student"
-            type="radio"
-            class="form-control input-hidden"
-            :class="{ 'is-invalid': errors.position }"
-            value="S"
-            v-model="position"
-          />
-          <label for="student" class="form-check-label">
-            <img
-              class="profile"
-              src="@/assets/accounts/Signup_student.png"
-              alt="Signup_student"
+  <div class="d-flex justify-content-center">
+    <div id="signup-form" class="card">
+      <h3 class="card-header">회원 가입</h3>
+      <div class="card-body">
+        <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }">
+          <div class="form-row mb-3">
+            <Field
+              name="position"
+              id="student"
+              type="radio"
+              class="form-control input-hidden"
+              :class="{ 'is-invalid': errors.position }"
+              value="S"
+              v-model="position"
             />
-          </label>
-          <Field
-            name="position"
-            id="teacher"
-            type="radio"
-            class="form-control input-hidden"
-            :class="{ 'is-invalid': errors.position }"
-            value="T"
-            v-model="position"
-          />
-          <label for="teacher" class="form-check-label">
-            <img
-              class="profile"
-              src="@/assets/accounts/Signup_teacher.png"
-              alt="Signup_teacher"
+            <label for="student" class="form-check-label">
+              <img
+                class="profile"
+                src="@/assets/accounts/Signup_student.png"
+                alt="Signup_student"
+              />
+            </label>
+            <Field
+              name="position"
+              id="teacher"
+              type="radio"
+              class="form-control input-hidden"
+              :class="{ 'is-invalid': errors.position }"
+              value="T"
+              v-model="position"
             />
-          </label>
-        </div>
-        <div class="row">
-          <div class="form-group col-4">
-            <label>이름</label>
-            <Field
-              name="name"
-              type="text"
-              class="form-control"
-              :class="{ 'is-invalid': errors.name }"
-            />
-            <div class="invalid-feedback">{{ errors.name }}</div>
+            <label for="teacher" class="form-check-label">
+              <img
+                class="profile"
+                src="@/assets/accounts/Signup_teacher.png"
+                alt="Signup_teacher"
+              />
+            </label>
+            <p class="text-danger">{{ errors.position }}</p>
           </div>
-          <div class="form-group col-4">
-            <label>생년월일</label>
-            <Field
-              name="birth"
-              type="date"
-              class="form-control"
-              :class="{ 'is-invalid': errors.birth }"
-            />
-            <div class="invalid-feedback">{{ errors.birth }}</div>
+          <div class="row mb-3">
+            <div class="form-group col-4">
+              <label>이름</label>
+              <Field
+                name="name"
+                type="text"
+                class="form-control"
+                :class="{ 'is-invalid': errors.name }"
+              />
+              <div class="invalid-feedback">{{ errors.name }}</div>
+            </div>
+            <div class="form-group col-4">
+              <label>생년월일</label>
+              <Field
+                name="birth"
+                type="date"
+                class="form-control"
+                :class="{ 'is-invalid': errors.birth }"
+              />
+              <div class="invalid-feedback">{{ errors.birth }}</div>
+            </div>
+            <div class="form-group col-4">
+              <label>학교</label>
+              <Field
+                name="school"
+                as="select"
+                class="form-control"
+                :class="{ 'is-invalid': errors.school }"
+              >
+                <option disabled value="" selected>학교를 선택하세요.</option>
+                <option value="샘머리 초등학교">샘머리 초등학교</option>
+                <option value="노형 초등학교">노형 초등학교</option>
+                <option value="갑천 초등학교">갑천 초등학교</option>
+                <option value="지장 초등학교">지장 초등학교</option>
+                <option value="불당 초등학교">불당 초등학교</option>
+              </Field>
+              <div class="invalid-feedback">{{ errors.school }}</div>
+            </div>
           </div>
-          <div class="form-group col-4">
-            <label>학교</label>
-            <Field
-              name="school"
-              as="select"
-              class="form-control"
-              :class="{ 'is-invalid': errors.school }"
-            >
-              <option disabled value="" selected>학교를 선택하세요.</option>
-              <option value="샘머리 초등학교">샘머리 초등학교</option>
-              <option value="노형 초등학교">노형 초등학교</option>
-              <option value="갑천 초등학교">갑천 초등학교</option>
-              <option value="지장 초등학교">지장 초등학교</option>
-              <option value="불당 초등학교">불당 초등학교</option>
-            </Field>
-            <div class="invalid-feedback">{{ errors.school }}</div>
+          <div class="row mb-3">
+            <div class="form-group col-4">
+              <label>학년</label>
+              <Field
+                name="grade"
+                as="select"
+                class="form-control"
+                :class="{ 'is-invalid': errors.grade }"
+              >
+                <option disabled value="" selected>몇 학년인지 선택하세요.</option>
+                <option value="1">1학년</option>
+                <option value="2">2학년</option>
+                <option value="3">3학년</option>
+                <option value="4">4학년</option>
+                <option value="5">5학년</option>
+                <option value="6">6학년</option>
+              </Field>
+              <div class="invalid-feedback">{{ errors.grade }}</div>
+            </div>
+            <div class="form-group col-4">
+              <label>반</label>
+              <Field
+                name="class_number"
+                as="select"
+                class="form-control"
+                :class="{ 'is-invalid': errors.class_number }"
+              >
+                <option disabled value="" selected>몇 반인지 선택하세요.</option>
+                <option value="1">1반</option>
+                <option value="2">2반</option>
+                <option value="3">3반</option>
+                <option value="4">4반</option>
+                <option value="5">5반</option>
+                <option value="6">6반</option>
+              </Field>
+              <div class="invalid-feedback">{{ errors.class_number }}</div>
+            </div>
+            <div class="form-group col-4">
+              <label>번호</label>
+              <Field
+                name="student_number"
+                type="number"
+                class="form-control"
+                :class="{ 'is-invalid': errors.student_number }"
+              />
+              <div class="invalid-feedback">{{ errors.student_number }}</div>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-4">
-            <label>학년</label>
-            <Field
-              name="grade"
-              as="select"
-              class="form-control"
-              :class="{ 'is-invalid': errors.grade }"
-            >
-              <option disabled value="" selected>몇 학년인지 선택하세요.</option>
-              <option value="1">1학년</option>
-              <option value="2">2학년</option>
-              <option value="3">3학년</option>
-              <option value="4">4학년</option>
-              <option value="5">5학년</option>
-              <option value="6">6학년</option>
-            </Field>
-            <div class="invalid-feedback">{{ errors.grade }}</div>
+          <div class="row mb-3">
+            <div class="form-group col-6">
+              <label>아이디</label>
+              <Field
+                name="user_id"
+                type="text"
+                class="form-control"
+                :class="{ 'is-invalid': errors.user_id }"
+              />
+              <div class="invalid-feedback">{{ errors.user_id }}</div>
+            </div>
+            <div class="form-group col-6">
+              <label>Email</label>
+              <Field
+                name="email"
+                type="text"
+                class="form-control"
+                :class="{ 'is-invalid': errors.email }"
+              />
+              <div class="invalid-feedback">{{ errors.email }}</div>
+            </div>
           </div>
-          <div class="form-group col-4">
-            <label>반</label>
-            <Field
-              name="class_number"
-              as="select"
-              class="form-control"
-              :class="{ 'is-invalid': errors.class_number }"
-            >
-              <option disabled value="" selected>몇 반인지 선택하세요.</option>
-              <option value="1">1반</option>
-              <option value="2">2반</option>
-              <option value="3">3반</option>
-              <option value="4">4반</option>
-              <option value="5">5반</option>
-              <option value="6">6반</option>
-            </Field>
-            <div class="invalid-feedback">{{ errors.class_number }}</div>
+          <div class="row mb-3">
+            <div class="form-group col-6">
+              <label>비밀번호</label>
+              <Field
+                name="password"
+                type="password"
+                class="form-control"
+                :class="{ 'is-invalid': errors.password }"
+              />
+              <div class="invalid-feedback">{{ errors.password }}</div>
+            </div>
+            <div class="form-group col-6">
+              <label>비밀번호 확인</label>
+              <Field
+                name="confirmPassword"
+                type="password"
+                class="form-control"
+                :class="{ 'is-invalid': errors.confirmPassword }"
+              />
+              <div class="invalid-feedback">{{ errors.confirmPassword }}</div>
+            </div>
           </div>
-          <div class="form-group col-4">
-            <label>번호</label>
-            <Field
-              name="student_number"
-              type="number"
-              class="form-control"
-              :class="{ 'is-invalid': errors.student_number }"
-            />
-            <div class="invalid-feedback">{{ errors.student_number }}</div>
+          <div class="form-group mb-3">
+            <button type="submit" class="btn btn-primary mr-1">회원 가입</button>
           </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-6">
-            <label>아이디</label>
-            <Field
-              name="user_id"
-              type="text"
-              class="form-control"
-              :class="{ 'is-invalid': errors.user_id }"
-            />
-            <div class="invalid-feedback">{{ errors.user_id }}</div>
-          </div>
-          <div class="form-group col-6">
-            <label>Email</label>
-            <Field
-              name="email"
-              type="text"
-              class="form-control"
-              :class="{ 'is-invalid': errors.email }"
-            />
-            <div class="invalid-feedback">{{ errors.email }}</div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-6">
-            <label>비밀번호</label>
-            <Field
-              name="password"
-              type="password"
-              class="form-control"
-              :class="{ 'is-invalid': errors.password }"
-            />
-            <div class="invalid-feedback">{{ errors.password }}</div>
-          </div>
-          <div class="form-group col-6">
-            <label>비밀번호 확인</label>
-            <Field
-              name="confirmPassword"
-              type="password"
-              class="form-control"
-              :class="{ 'is-invalid': errors.confirmPassword }"
-            />
-            <div class="invalid-feedback">{{ errors.confirmPassword }}</div>
-          </div>
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary mr-1">회원 가입</button>
-        </div>
-      </Form>
-      <router-link to="/login">이미 회원이신가요?</router-link>
+        </Form>
+        <router-link to="/login">이미 회원이신가요?</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -214,11 +217,10 @@ export default {
         .required("비밀번호 확인은 필수 기입사항 입니다."),
     });
 
-    const onSubmit = (values:any) => {
-      console.log(schema)
+    const onSubmit = (values: any) => {
+      console.log(schema);
       alert("SUCCESS!! :-)\n\n" + JSON.stringify(values, null, 4));
-    }
-
+    };
 
     const position = ref("");
     // const grade = ref(0);

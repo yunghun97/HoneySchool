@@ -23,7 +23,7 @@
       "esnext",
       "dom",
       "dom.iterable",
-      "scripthost"
+      "scripthost",
     ]
   },
   "include": [
@@ -35,5 +35,6 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  
 }

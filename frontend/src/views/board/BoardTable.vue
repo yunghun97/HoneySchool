@@ -1,4 +1,5 @@
 <template>
+<div>
   <button 
     type="button" class="btn btn-outline-success"
     @click="$router.push('create')"
@@ -28,6 +29,7 @@
     </tbody>
   </table>
   </div>
+</div>
 </template>
 
 
@@ -39,6 +41,7 @@ export default {
   name: "BoardTable",
   setup() {
     const store = useStore();
+    store.dispatch('boardStore/getArticles')
     const articles = computed(() => store.state.boardStore.classBoardAll);
     return { articles };
   } 

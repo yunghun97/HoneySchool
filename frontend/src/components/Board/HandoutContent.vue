@@ -8,18 +8,10 @@
 </template>
 
 <script lang="ts">
-import { reactive } from '@vue/reactivity'
-import { computed } from '@vue/runtime-core'
-import BoardArticles from "../../types/board/BoardArticles";
 
 export default {
-    name: "NoticeContent",
+    name: "HandoutContent",
     props: ['currentarticle'],
-    // setup(props:any) {
-    //     const state = reactive({
-    //         currentarticle : computed(() => props.currentarticle)
-    //     })
-    // }
 }
 </script>
 <style scoped>

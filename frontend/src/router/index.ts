@@ -4,10 +4,13 @@ import ClassBoard from "../views/board/ClassBoard.vue";
 import BoardTable from "../views/board/BoardTable.vue";
 import ArticleDetail from "../views/board/ArticleDetail.vue";
 import ArticleCreate from "../views/board/ArticleCreate.vue";
+import Handout from "../views/board/Handout.vue";
+import Photo from "../views/board/Photo.vue";
 import Assignment from "../views/board/Assignment.vue";
 import Question from "../views/board/Question.vue"
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
+import Videoclass from "../views/Videoclass/Videoclass.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -40,9 +43,32 @@ const routes: Array<RouteRecordRaw> = [
     component: ArticleDetail,
   },
   {
+    path: "/classboard/:category/:article_id/edit",
+    name: "ArticleUpdate",
+    component: () => import('@/views/board/ArticleUpdate.vue'),
+  },
+  {
     path: "/classboard/create",
     name: "ArticleCreate",
     component: ArticleCreate,
+  },
+  {
+    path: "/classboard/notice/:article_id",
+    name: "Notice",
+    component: () => import("@/views/board/Notice.vue"),
+    // meta: {
+    //   reload: true
+    // }
+  },
+  {
+    path: "/classboard/handouts/:article_id",
+    name: "Handout",
+    component: Handout,
+  },
+  {
+    path: "/classboard/photo/:article_id",
+    name: "Photo",
+    component: Photo,
   },
   {
     path: "/classboard/assignment",
@@ -63,6 +89,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/videoclass",
+    name: "Videoclass",
+    component: Videoclass,
   },
 ];
 

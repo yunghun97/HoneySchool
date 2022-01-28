@@ -1,7 +1,5 @@
 <template>
   <div class="submit-form">
-    <div v-if="!submitted">
-
     <form>
       <div class="row mb-3">
         <label for="title" class="col-sm-2 col-form-label">제목</label>
@@ -42,19 +40,10 @@
           <input @change="fileSelect()" type="file" multiple ref="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
           <!-- <button @click="clearFiles" class="btn btn-outline-danger">파일 전체 삭제</button> -->
         </div>
-
       </div>
 
       <button @click="saveArticle" class="btn btn-success">작성하기</button>
     </form>
-
-      
-    </div>
-
-    <div v-else>
-      <!-- TODO -->
-      <h4>TODO : Axios 요청 보내고, 작성한 글 detail로 넘어가기!!</h4>
-    </div>
   </div>
 </template>
 
@@ -62,7 +51,7 @@
 import { defineComponent } from "vue";
 import Article from "@/types/board/Article";
 import axios from "axios";
-// import ResponseData from "@/types/board/ResponseData";
+import router from '@/router';
 
 export default defineComponent({
   name: "CreateArticle",
@@ -73,8 +62,7 @@ export default defineComponent({
         category: "",
         title: "",
         content: "",
-        file: "",
-        date: new Date(),
+        file_link: "",
       } as Article,
       submitted: false,
     };
@@ -82,12 +70,12 @@ export default defineComponent({
   methods: {
     fileSelect() {
       const uploadedfile = this.$refs.file as any
-      this.article.file= uploadedfile.files;
+      this.article.file_link= uploadedfile.files;
 
     },
     clearFiles(event:any) {
       event.preventDefault()
-      this.article.file=''
+      this.article.file_link=''
 
     },
     saveArticle() {
@@ -100,10 +88,8 @@ export default defineComponent({
       formData.append('category', this.article.category);
       formData.append('title', this.article.title);
       formData.append('content', this.article.content);
-      formData.append('file_link', this.article.file);
-      
-      // formData.append('date', this.article.date); // 기본 작성시간 입력
-      
+      formData.append('file_link', this.article.file_link);
+          
       // 글작성하느라 임의로 추가한내용
       formData.append('writer', "김싸피"); // user가 기본키여서 김싸피만 user로 등록되어있어서 작성자 바꿀려면 사람 User에서 추가해야합니다.
       formData.append('grade', '1');
@@ -111,10 +97,13 @@ export default defineComponent({
       formData.append('school', "싸피초");
 
       this.submitted = true
-    // TODO
-      axios.post("http://localhost:9999/api/v1/board/class",formData, )
-      .then((data)=>{
-        alert("성공"); 
+
+      // POST 요청
+      axios.post("http://localhost:9999/api/v1/board/class",formData, 
+      {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
+      )
+      .then((response)=>{
+        router.push({name: 'BoardTable'})
       })
       .catch(()=>{
         alert("글 작성 실패")

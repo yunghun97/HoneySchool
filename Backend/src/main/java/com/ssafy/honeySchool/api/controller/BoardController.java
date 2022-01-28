@@ -20,6 +20,7 @@ public class BoardController {
 	@Autowired
 	private ClassBoardRepository classBoardRepository;
 	
+	// 전체 검색
 	@GetMapping("/class")
 	public ResponseEntity<List<ClassBoard>> selectBoard(HttpServletRequest req) throws SQLException{
 		String school = req.getParameter("school");		
@@ -54,5 +55,17 @@ public class BoardController {
 		
 		return new ResponseEntity<List<ClassBoard>>(classBoardRepository.findBySchoolAndGradeAndClassesAndCategory(school, grade, classes, category),HttpStatus.OK);
 	}	
-	
+	// 전체게시판 글 상세
+	@Transactional
+	@GetMapping("/class/detail")
+	public ResponseEntity<ClassBoard> detailBoard(HttpServletRequest req) {
+		String school = req.getParameter("school");
+		int grade = Integer.parseInt(req.getParameter("grade"));
+		int classes = Integer.parseInt(req.getParameter("classes"));
+		int id = Integer.parseInt(req.getParameter("id"));
+		classBoardRepository.updateView(id);
+		ClassBoard detail = classBoardRepository.findBySchoolAndGradeAndClassesAndId(school, grade, classes, id);
+		return new ResponseEntity<ClassBoard>(detail, HttpStatus.OK);
+	}
+
 }

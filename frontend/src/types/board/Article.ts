@@ -5,8 +5,9 @@ export default interface Article {
     content: string;
     writer? : string;
     school? : string;
-    class? : number;
-    file? : any;
-    date: any;
+    grade? : number;
+    classes? : number;
+    file_link? : any;
+    date? : any;
     viewcount? : number; 
   }
