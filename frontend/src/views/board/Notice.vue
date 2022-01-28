@@ -42,7 +42,7 @@ import { useRoute } from 'vue-router';
 import Category from '../../types/board/Category';
 import Article from '../../types/board/Article';
 import BoardArticles from "../../types/board/BoardArticles";
-import NoticeContent from "@/components/Board/NoticeContent.vue";
+import NoticeContent from "../../components/Board/NoticeContent.vue";
 interface ArticleArray {
     [index: number] : any
 }
