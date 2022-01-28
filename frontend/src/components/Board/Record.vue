@@ -16,12 +16,13 @@
 
   export default {
   name: 'Record',
+  emits: ['finished'],
   components: {
     AudioRecorder,
     },
     methods: {
         myAudioFile(audioFile) {
-        console.log('myAudioFile: ', audioFile);
+          this.$emit('finished', audioFile)
         },
     },
 };

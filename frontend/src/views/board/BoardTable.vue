@@ -41,6 +41,7 @@ export default {
   name: "BoardTable",
   setup() {
     const store = useStore();
+    store.dispatch('boardStore/getArticles')
     const articles = computed(() => store.state.boardStore.classBoardAll);
     return { articles };
   } 

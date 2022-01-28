@@ -1,16 +1,19 @@
 <template>
+   <div v-if="isLoading">
+        <p>...LOADING</p>
+    </div>
+    
     <!-- Article Detail -->
-
-    <div>
-        <div :style="`background-color:${categories[articles.category]}`">
+    <div v-else>
+        <div :style="`background-color:${categories[category]}`">
             <div 
                 class="note"
-                :style="{'background-image':'url('+require(`@/assets/board/${articles.category}-background.png`)+')'}"
+                :style="{'background-image':'url('+require(`@/assets/board/${category}-background.png`)+')'}"
                 >
                 <div class="btns">
                     <button 
                         type="button" class="btn btn-primary"
-                        @click="$router.push({name: 'ArticleUpdate', params: { category:category ,article_id: id }})"
+                        @click="$router.push({name: 'ArticleUpdate', params: { category:category, article_id: id }})"
                         >
                         수정하기
                     </button>
@@ -22,18 +25,15 @@
                     </button>
                 </div>
                 <div class="content">
-                    <h1>{{ articles.title }}</h1>
-                    <p>작성자 : {{ articles.writer }}</p>
-                    <p>작성날짜 : {{articles.date }}</p>
+                    <h1>{{ currentarticle.title }}</h1>
+                    <p>작성자 : {{ currentarticle.writer }}</p>
+                    <p>작성날짜 : {{currentarticle.date }}</p>
                     <div v-if="isphoto" class="imgcontainer">
-                        <h5>{{ articles.content }}</h5>
-                        <img :src="articles.file" alt="img" class="img-fluid">
+                        <h5>{{ currentarticle.content }}</h5>
+                        <img :src="currentarticle.file" alt="img" class="img-fluid">
                     </div>
                     <div v-else>
-                        <h2>{{ articles.content }}</h2>
-                    </div>
-                    <div>
-                        {{articles }}
+                        <h2>{{ currentarticle.content }}</h2>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@ interface BoardArticles {
   writer: string,
   date: number,
 }
-type boardType = Array<BoardArticles>;
+
 
 export default {
     name: "ArticleDetail",
@@ -64,47 +64,44 @@ export default {
         const store = useStore();
         const route = useRoute();
 
-        let isLoading = false;
-        let isUpdating = false;
+        let isLoading = ref<boolean>(true);
         let id = +route.params.article_id;
         let category = route.params.category;
-        let isphoto = false;
-        if (category === "photo") {
-            isphoto = true
-        }
+        let isphoto =  route.params.category === "photo"? true : false;
 
         const categories= ref<any>({
             notice:"#FAD749",
             handouts: "#C9D9F0",
             photo: "#37B6F6",
             assignment: "#882FF6",
-            questions: "#F99D07",
+            question: "#F99D07",
             all: "#F52532",
         });
 
-        // TODO: article detail 요청 보내기
-        const articles = computed(() => store.state.boardStore.classBoardAll[id - 1]);
+        // article detail 요청            
+        let currentarticle = ref({});
+        const articleDetail = () => {
+            return axios.get("http://localhost:9999/api/v1/board/class/detail",{
+                params:{
+                school: "싸피초",
+                grade: 1,
+                classes: 1,
+                id : route.params.article_id
+                }
+            })
+            .then((response)=>{
+                currentarticle.value = response.data
+                
+            })
+            .catch(()=>
+                alert("실패!")
+            )  
+        }
+        articleDetail().then(() => {
+            isLoading.value = false
+        })
         
-        // let currentarticle = {};
-        // const articleDetail = () => {
-        //     axios.get("http://localhost:9999/api/v1/board/class",{
-        //         params:{
-        //         school: "싸피초",
-        //         grade: 1,
-        //         classes: 1,
-        //         id : id
-        //         }
-        //     })
-        //     .then((response)=>{
-        //         console.log(response.data)
-        //         currentarticle = response.data
-        //     })
-        //     .catch(()=>
-        //         alert("실패!")
-        //     )  
-        // }
-        // articleDetail()
-
+        // 삭제 버튼 클릭
         const deleteArticle = () => {
             console.log('삭제')
             // TODO : delete 요청 보내기
@@ -121,7 +118,7 @@ export default {
         //     })
         }
 
-        return { categories, id, category, isLoading, articles, isphoto, deleteArticle}
+        return { categories, id, category, isLoading, currentarticle, isphoto, deleteArticle }
     }
 }
 </script>

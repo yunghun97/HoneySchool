@@ -1,7 +1,5 @@
 <template>
   <div class="submit-form">
-    <div v-if="!submitted">
-
     <form>
       <div class="row mb-3">
         <label for="title" class="col-sm-2 col-form-label">제목</label>
@@ -42,19 +40,10 @@
           <input @change="fileSelect()" type="file" multiple ref="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
           <!-- <button @click="clearFiles" class="btn btn-outline-danger">파일 전체 삭제</button> -->
         </div>
-
       </div>
 
       <button @click="saveArticle" class="btn btn-success">작성하기</button>
     </form>
-
-      
-    </div>
-
-    <div v-else>
-      <!-- TODO -->
-      <h4>TODO : Axios 요청 보내고, 작성한 글 detail로 넘어가기!!</h4>
-    </div>
   </div>
 </template>
 
@@ -62,6 +51,7 @@
 import { defineComponent } from "vue";
 import Article from "@/types/board/Article";
 import axios from "axios";
+import router from '@/router';
 
 export default defineComponent({
   name: "CreateArticle",
@@ -107,14 +97,13 @@ export default defineComponent({
       formData.append('school', "싸피초");
 
       this.submitted = true
-    // TODO
+
+      // POST 요청
       axios.post("http://localhost:9999/api/v1/board/class",formData, 
       {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
       )
       .then((response)=>{
-        console.log(response.data)
-        console.log(formData)
-        alert("성공"); 
+        router.push({name: 'BoardTable'})
       })
       .catch(()=>{
         alert("글 작성 실패")
