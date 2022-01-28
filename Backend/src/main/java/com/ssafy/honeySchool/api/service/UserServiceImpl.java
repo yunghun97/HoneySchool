@@ -18,56 +18,56 @@ import java.util.Optional;
  */
 @Service("userService")
 public class UserServiceImpl implements UserService {
-	@Autowired
-	UserRepository userRepository;
-	
-	@Autowired
-	UserRepositorySupport userRepositorySupport;
-	
-	@Autowired
-	PasswordEncoder passwordEncoder;
-	
-	@Override
-	public User createUser(UserRegisterPostReq userRegisterInfo) {
-		User user= User.builder().userId(userRegisterInfo.getUserId())
-				.email(userRegisterInfo.getEmail())
-				.classes(userRegisterInfo.getClasses())
-				.name(userRegisterInfo.getName())
-				.grade(userRegisterInfo.getGrade())
-				.password(passwordEncoder.encode(userRegisterInfo.getPassword()))
-				.number(userRegisterInfo.getNumber())
-				.school(userRegisterInfo.getSchool())
-				.position(userRegisterInfo.getPosition())
-				.build();
-		return userRepository.save(user);
-	}
+    @Autowired
+    UserRepository userRepository;
 
-	@Override
-	public User getUserByUserId(String userId) {
-		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-		User user = userRepositorySupport.findUserByUserId(userId).get();
-		return user;
-	}
+    @Autowired
+    UserRepositorySupport userRepositorySupport;
 
-	@Override
-	public void deleteByUserId(String userId){
-		userRepository.deleteByUserId(userId);
-	}
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
-	@Override
-	public User updateUser(String id, UserModifyPutReq userModifyPutReq){
-		Optional<User> pUser = userRepositorySupport.findUserByUserId(id);
-		if(!pUser.isPresent()) return null;
+    @Override
+    public User createUser(UserRegisterPostReq userRegisterInfo) {
+        User user= User.builder().userId(userRegisterInfo.getUserId())
+                .email(userRegisterInfo.getEmail())
+                .classes(userRegisterInfo.getClasses())
+                .name(userRegisterInfo.getName())
+                .grade(userRegisterInfo.getGrade())
+                .password(passwordEncoder.encode(userRegisterInfo.getPassword()))
+                .number(userRegisterInfo.getNumber())
+                .school(userRegisterInfo.getSchool())
+                .position(userRegisterInfo.getPosition())
+                .build();
+        return userRepository.save(user);
+    }
 
-		User user= pUser.get();
-		user.setName(userModifyPutReq.getName());
-		user.setSchool(userModifyPutReq.getSchool());
-		user.setPosition(userModifyPutReq.getPosition());
-		user.setNumber(userModifyPutReq.getNumber());
-		user.setEmail(userModifyPutReq.getEmail());
-		user.setPassword(passwordEncoder.encode(userModifyPutReq.getPassword()));
-		user.setGrade(userModifyPutReq.getGrade());
-		user.setClasses(userModifyPutReq.getClasses());
-		return userRepository.save(user);
-	}
+    @Override
+    public User getUserByUserId(String userId) {
+        // 디비에 유저 정보 조회 (userId 를 통한 조회).
+        User user = userRepositorySupport.findUserByUserId(userId).get();
+        return user;
+    }
+
+    @Override
+    public void deleteByUserId(String userId){
+        userRepository.deleteByUserId(userId);
+    }
+
+    @Override
+    public User updateUser(String id, UserModifyPutReq userModifyPutReq){
+        Optional<User> pUser = userRepositorySupport.findUserByUserId(id);
+        if(!pUser.isPresent()) return null;
+
+        User user= pUser.get();
+        user.setName(userModifyPutReq.getName());
+        user.setSchool(userModifyPutReq.getSchool());
+        user.setPosition(userModifyPutReq.getPosition());
+        user.setNumber(userModifyPutReq.getNumber());
+        user.setEmail(userModifyPutReq.getEmail());
+        user.setPassword(passwordEncoder.encode(userModifyPutReq.getPassword()));
+        user.setGrade(userModifyPutReq.getGrade());
+        user.setClasses(userModifyPutReq.getClasses());
+        return userRepository.save(user);
+    }
 }
