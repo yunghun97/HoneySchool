@@ -1,21 +1,13 @@
-package com.ssafy.db.entity;
-
-import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.DynamicInsert;
+package com.ssafy.honeySchool.db.entity;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -45,7 +37,7 @@ public class ClassBoard {
 
 	@Builder
 	public ClassBoard(String category, String title, String content, String writer, String school, int grade,
-			int classes, String file_link, int viewcount) {		
+                      int classes, String file_link, int viewcount) {
 		this.category = category;
 		this.title = title;
 		this.content = content;
