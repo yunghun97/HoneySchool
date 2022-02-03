@@ -60,6 +60,13 @@
           @click="updateMainVideoStreamManager(sub)"
         />
       </div>
+      
+      <!-- 손들기 btn -->
+      <div>
+        <button v-if="raisehand" @click="handDown">손내리기</button>
+        <button v-else @click="raiseHand()">손들기</button>
+      </div>
+
     </div>
   </div>
 </template>
@@ -91,6 +98,8 @@ export default {
 
       mySessionId: "SessionA",
       myUserName: "Participant" + Math.floor(Math.random() * 100),
+
+      raisehand : false,
     };
   },
 
@@ -107,6 +116,7 @@ export default {
       // On every new Stream received...
       this.session.on("streamCreated", ({ stream }) => {
         const subscriber = this.session.subscribe(stream);
+        subscriber.raisehand = false;
         this.subscribers.push(subscriber);
       });
 
@@ -240,23 +250,69 @@ export default {
 
     // See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-openviduapisessionsltsession_idgtconnection
     createToken(sessionId) {
+      const jsondata = {
+        "type": "WEBRTC",
+        //"data": "user_data",
+        "role": "PUBLISHER",
+        "kurentoOptions": {
+            "allowedFilters": ["GStreamerFilter", "FaceOverlayFilter"]
+    }
+      }
       return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
-            {},
-            {
-              auth: {
-                username: "OPENVIDUAPP",
-                password: OPENVIDU_SERVER_SECRET,
-              },
-            }
-          )
+        axios({
+          method: 'post',
+          url:  `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`, 
+          data: JSON.stringify(jsondata),
+          auth: {
+            username: "OPENVIDUAPP",
+            password: OPENVIDU_SERVER_SECRET,
+          },
+        })
           .then((response) => response.data)
           .then((data) => resolve(data.token))
           .catch((error) => reject(error.response));
       });
     },
+    
+    // 손들기 function
+    raiseHand() {
+      this.raisehand = !this.raisehand
+      // this.publisher.stream.applyFilter("FaceOverlayFilter")
+      //   .then(filter => {
+      //     filter.execMethod(
+      //         "setOverlayedImage",
+      //         {
+      //             "uri":"https://cdn.pixabay.com/photo/2013/07/12/14/14/derby-148046_960_720.png",
+      //             "offsetXPercent":"-0.2F",
+      //             "offsetYPercent":"-0.8F",
+      //             "widthPercent":"1.3F",
+      //             "heightPercent":"1.0F"
+      //         });
+      // });
+
+      this.publisher.stream.applyFilter("GStreamerFilter", { command: "videobox fill=red top=-10 bottom=-10 left=-10 right=-10" })
+          //"gdkpixbufoverlay location=/images/img.png offset-x=10 offset-y=10 overlay-height=200 overlay-width=200" 
+          .then(() => {
+              console.log("손들기!!");
+          })
+          .catch(error => {
+              console.error(error);
+          });
+
+    },
+    handDown() {
+      this.raisehand = !this.raisehand
+      this.publisher.stream.removeFilter()
+        .then(() => {
+            console.log("Filter removed");
+
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    }
+
   },
 };
 </script>
