@@ -1,6 +1,6 @@
 <template>
   <div id="main-container" class="container">
-    <div id="join" v-if="!session">
+    <div id="join" v-if="!sessionCamera">
       <div id="img-div">
         <!-- <img src="resources/images/openvidu_grey_bg_transp_cropped.png" /> -->
       </div>
@@ -34,9 +34,16 @@
       </div>
     </div>
 
-    <div id="session" v-if="session">
+    <div id="session" v-if="sessionCamera">
       <div id="session-header">
         <h1 id="session-title">{{ mySessionId }}</h1>
+        <input
+          class="btn btn-large btn-primary"
+          type="button"
+          id="buttonScreenShare"
+          @click="publishScreenShare"
+          value="Screen share"
+        />
         <input
           class="btn btn-large btn-danger"
           type="button"
@@ -45,20 +52,38 @@
           value="Leave session"
         />
       </div>
-      <div id="main-video" class="col-md-6">
-        <user-video :stream-manager="mainStreamManager" />
-      </div>
-      <div id="video-container" class="col-md-6">
-        <user-video
-          :stream-manager="publisher"
-          @click="updateMainVideoStreamManager(publisher)"
-        />
-        <user-video
-          v-for="sub in subscribers"
-          :key="sub.stream.connection.connectionId"
-          :stream-manager="sub"
-          @click="updateMainVideoStreamManager(sub)"
-        />
+      <div class="row">
+        <div id="main-video" class="col-md-6">
+          <user-video :stream-manager="mainStreamManager" />
+        </div>
+        <div class="col-md-6">
+          <div id="container-cameras" class="row panel panel-default">
+            <p class="panel-heading">User Cameras</p>
+            <user-video
+              :stream-manager="publisherCamera"
+              @click="updateMainVideoStreamManager(publisherCamera)"
+            />
+            <user-video
+              v-for="sub in subscribersCamera"
+              :key="sub.stream.connection.connectionId"
+              :stream-manager="sub"
+              @click="updateMainVideoStreamManager(sub)"
+            />
+          </div>
+          <div class="row panel panel-default">
+            <p class="panel-heading">User Screens</p>
+            <user-video
+              :stream-manager="publisherScreen"
+              @click="updateMainVideoStreamManager(publisherScreen)"
+            />
+            <user-video
+              v-for="sub in subscribersScreen"
+              :key="sub.stream.connection.connectionId"
+              :stream-manager="sub"
+              @click="updateMainVideoStreamManager(sub)"
+            />
+          </div>
+        </div>
       </div>
       
       <!-- 손들기 btn -->
@@ -90,46 +115,72 @@ export default {
 
   data() {
     return {
-      OV: undefined,
-      session: undefined,
+      OVCamera: undefined,
+      OVScreen: undefined,
+      sessionCamera: undefined,
+      sessionScreen: undefined,
       mainStreamManager: undefined,
-      publisher: undefined,
-      subscribers: [],
+      publisherCamera: undefined,
+      publisherScreen: undefined,
+      subscribersCamera: [],
+      subscribersScreen: [],
 
       mySessionId: "SessionA",
       myUserName: "Participant" + Math.floor(Math.random() * 100),
 
       raisehand : false,
+      screensharing: false,
     };
   },
 
   methods: {
     joinSession() {
       // --- Get an OpenVidu object ---
-      this.OV = new OpenVidu();
+      this.OVCamera = new OpenVidu();
+      this.OVScreen = new OpenVidu();
 
       // --- Init a session ---
-      this.session = this.OV.initSession();
+      this.sessionCamera = this.OVCamera.initSession();
+      this.sessionScreen = this.OVScreen.initSession();
 
       // --- Specify the actions when events take place in the session ---
 
       // On every new Stream received...
+      // TODO: 이부분 어떻게 해결 할지????
       this.session.on("streamCreated", ({ stream }) => {
         const subscriber = this.session.subscribe(stream);
         subscriber.raisehand = false;
         this.subscribers.push(subscriber);
+        });
+
+      this.sessionCamera.on("streamCreated", ({ stream }) => {
+        if (stream.typeOfVideo == "CAMERA") {
+          console.log("카메라 타입");
+          console.log(stream.typeOfVideo);
+          const subscriberCamera = this.sessionCamera.subscribe(stream);
+          this.subscribersCamera.push(subscriberCamera);
+        }
+      });
+
+      this.sessionScreen.on("streamCreated", ({ stream }) => {
+        if (stream.typeOfVideo == "SCREEN") {
+          console.log("스크린 타입");
+          console.log(stream.typeOfVideo);
+          const subscriberScreen = this.sessionScreen.subscribe(stream);
+          this.subscribersScreen.push(subscriberScreen);
+        }
       });
 
       // On every Stream destroyed...
-      this.session.on("streamDestroyed", ({ stream }) => {
-        const index = this.subscribers.indexOf(stream.streamManager, 0);
+      this.sessionCamera.on("streamDestroyed", ({ stream }) => {
+        const index = this.subscribersCamera.indexOf(stream.streamManager, 0);
         if (index >= 0) {
-          this.subscribers.splice(index, 1);
+          this.subscribersCamera.splice(index, 1);
         }
       });
 
       // On every asynchronous exception...
-      this.session.on("exception", ({ exception }) => {
+      this.sessionCamera.on("exception", ({ exception }) => {
         console.warn(exception);
       });
 
@@ -138,12 +189,12 @@ export default {
       // 'getToken' method is simulating what your server-side should do.
       // 'token' parameter should be retrieved and returned by your own backend
       this.getToken(this.mySessionId).then((token) => {
-        this.session
+        this.sessionCamera
           .connect(token, { clientData: this.myUserName })
           .then(() => {
             // --- Get your own camera stream with the desired properties ---
 
-            let publisher = this.OV.initPublisher(undefined, {
+            let publisher = this.OVCamera.initPublisher(undefined, {
               audioSource: undefined, // The source of audio. If undefined default microphone
               videoSource: undefined, // The source of video. If undefined default webcam
               publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
@@ -154,12 +205,18 @@ export default {
               mirror: false, // Whether to mirror your local video or not
             });
 
+            // publisher.on("videoElementCreated", (event) => {
+            //   this.initMainVideo(event.element, this.myUserName);
+            //   this.appendUserData(event.element, this.myUserName);
+            //   event.element["muted"] = true;
+            // });
+
             this.mainStreamManager = publisher;
-            this.publisher = publisher;
+            this.publisherCamera = publisher;
 
             // --- Publish your stream ---
 
-            this.session.publish(this.publisher);
+            this.sessionCamera.publish(this.publisherCamera);
           })
           .catch((error) => {
             console.log(
@@ -170,27 +227,86 @@ export default {
           });
       });
 
+      this.getToken(this.mySessionId).then((tokenScreen) => {
+        // Create a token for screen share
+        this.sessionScreen
+          .connect(tokenScreen, { clientData: this.myUserName })
+          .then(() => {
+            console.log("Session screen connected");
+          })
+          .catch((error) => {
+            console.warn(
+              "There was an error connecting to the session for screen share:",
+              error.code,
+              error.message
+            );
+          });
+      });
+
       window.addEventListener("beforeunload", this.leaveSession);
+    },
+
+    publishScreenShare() {
+      // --- 9.1) To create a publisherScreen it is very important that the property 'videoSource' is set to 'screen'
+      let publisher = this.OVScreen.initPublisher("container-screens", {
+        videoSource: "screen",
+      });
+      this.publisherScreen = publisher;
+
+      // --- 9.2) If the user grants access to the screen share function, publish the screen stream
+      this.publisherScreen.once("accessAllowed", (event) => {
+        this.screensharing = true;
+        // It is very important to define what to do when the stream ends.
+        this.publisherScreen.stream
+          .getMediaStream()
+          .getVideoTracks()[0]
+          .addEventListener("ended", () => {
+            console.log('User pressed the "Stop sharing" button');
+            this.sessionScreen.unpublish(this.publisherScreen);
+            this.screensharing = false;
+          });
+        this.sessionScreen.publish(this.publisherScreen);
+      });
+
+      this.publisherScreen.on("videoElementCreated", ({ stream }) => {
+        const subscriberScreen = this.sessionScreen.subscribe(stream);
+        this.subscribersScreen.event.element["muted"] = true;
+        this.subscribersScreen.push(subscriberScreen);
+      });
+
+      this.publisherScreen.once("accessDenied", (event) => {
+        console.error("Screen Share: Access Denied");
+      });
     },
 
     leaveSession() {
       // --- Leave the session by calling 'disconnect' method over the Session object ---
-      if (this.session) this.session.disconnect();
+      if (this.sessionCamera) {
+        this.sessionCamera.disconnect();
+        this.sessionScreen.disconnect();
+      }
 
-      this.session = undefined;
+      this.OVCamera = undefined;
+      this.OVScreen = undefined;
+      this.sessionCamera = undefined;
+      this.sessionScreen = undefined;
       this.mainStreamManager = undefined;
-      this.publisher = undefined;
-      this.subscribers = [];
-      this.OV = undefined;
+      this.publisherCamera = undefined;
+      this.publisherScreen = undefined;
+      this.subscribersCamera = [];
+      this.subscribersScreen = [];
+      this.screensharing = false;
 
       window.removeEventListener("beforeunload", this.leaveSession);
+      this.$router.push({ name: "About" });
     },
 
     updateMainVideoStreamManager(stream) {
       if (this.mainStreamManager === stream) return;
+      console.log("Update");
+      console.log(stream);
       this.mainStreamManager = stream;
     },
-
     /**
      * --------------------------
      * SERVER-SIDE RESPONSIBILITY
@@ -229,7 +345,6 @@ export default {
           .then((data) => resolve(data.id))
           .catch((error) => {
             if (error.response.status === 409) {
-              console.log("에러다!!!!!!!!!!!!!!!!!!!");
               resolve(sessionId);
             } else {
               console.warn(
@@ -316,3 +431,6 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+</style>

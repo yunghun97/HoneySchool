@@ -1,21 +1,18 @@
-package com.ssafy.honeySchool.controller;
+package com.ssafy.honeySchool.api.controller;
 
-import java.sql.SQLException;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 
+import com.ssafy.honeySchool.db.entity.ClassBoard;
+import com.ssafy.honeySchool.db.repository.ClassBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.ssafy.db.entity.ClassBoard;
-import com.ssafy.db.repository.ClassBoardRepository;
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+import java.sql.SQLException;
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:8080/")
 @RestController
 @RequestMapping("/api/v1/board")
@@ -63,7 +60,7 @@ public class BoardController {
 	@Transactional
 	@GetMapping("/class/detail")
 	public ResponseEntity<ClassBoard> detailBoard(HttpServletRequest req) {
-		String school = req.getParameter("school");		
+		String school = req.getParameter("school");
 		int grade = Integer.parseInt(req.getParameter("grade"));
 		int classes = Integer.parseInt(req.getParameter("classes"));
 		int id = Integer.parseInt(req.getParameter("id"));
@@ -71,5 +68,5 @@ public class BoardController {
 		ClassBoard detail = classBoardRepository.findBySchoolAndGradeAndClassesAndId(school, grade, classes, id);
 		return new ResponseEntity<ClassBoard>(detail, HttpStatus.OK);
 	}
-	
+
 }
