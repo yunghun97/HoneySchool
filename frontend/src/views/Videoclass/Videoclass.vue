@@ -123,8 +123,7 @@ export default {
       publisherCamera: undefined,
       publisherScreen: undefined,
       subscribersCamera: [],
-      subscribersScreen: [],
-
+      subscribersScreen: [], 
       mySessionId: "SessionA",
       myUserName: "Participant" + Math.floor(Math.random() * 100),
 
@@ -147,17 +146,18 @@ export default {
 
       // On every new Stream received...
       // TODO: 이부분 어떻게 해결 할지????
-      this.session.on("streamCreated", ({ stream }) => {
-        const subscriber = this.session.subscribe(stream);
-        subscriber.raisehand = false;
-        this.subscribers.push(subscriber);
-        });
+      // this.session.on("streamCreated", ({ stream }) => {
+      //   const subscriber = this.session.subscribe(stream);
+      //   subscriber.raisehand = false;
+      //   this.subscribers.push(subscriber);
+      //   });
 
       this.sessionCamera.on("streamCreated", ({ stream }) => {
         if (stream.typeOfVideo == "CAMERA") {
           console.log("카메라 타입");
           console.log(stream.typeOfVideo);
           const subscriberCamera = this.sessionCamera.subscribe(stream);
+          subscriberCamera.raisehand = false;
           this.subscribersCamera.push(subscriberCamera);
         }
       });
@@ -392,7 +392,7 @@ export default {
     // 손들기 function
     raiseHand() {
       this.raisehand = !this.raisehand
-      // this.publisher.stream.applyFilter("FaceOverlayFilter")
+      // this.publisherCamera.stream.applyFilter("FaceOverlayFilter")
       //   .then(filter => {
       //     filter.execMethod(
       //         "setOverlayedImage",
@@ -405,8 +405,8 @@ export default {
       //         });
       // });
 
-      this.publisher.stream.applyFilter("GStreamerFilter", { command: "videobox fill=red top=-10 bottom=-10 left=-10 right=-10" })
-          //"gdkpixbufoverlay location=/images/img.png offset-x=10 offset-y=10 overlay-height=200 overlay-width=200" 
+      this.publisherCamera.stream.applyFilter("GStreamerFilter", { command: "videobox fill=red top=-10 bottom=-10 left=-10 right=-10" })
+          //"'gdkpixbufoverlay location=/src/views/VideoClass.images/hand.png offset-x=10 offset-y=10 overlay-height=200 overlay-width=200'" 
           .then(() => {
               console.log("손들기!!");
           })
@@ -417,7 +417,7 @@ export default {
     },
     handDown() {
       this.raisehand = !this.raisehand
-      this.publisher.stream.removeFilter()
+      this.publisherCamera.stream.removeFilter()
         .then(() => {
             console.log("Filter removed");
 
