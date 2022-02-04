@@ -1,4 +1,4 @@
-package com.ssafy.db.entity;
+package com.ssafy.honeySchool.db.entity;
 
 import java.sql.Date;
 
@@ -27,7 +27,7 @@ public class ClassBoard {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String category;
 	private String title;

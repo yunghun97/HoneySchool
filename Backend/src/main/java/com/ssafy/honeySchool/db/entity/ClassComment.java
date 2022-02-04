@@ -1,4 +1,4 @@
-package com.ssafy.db.entity;
+package com.ssafy.honeySchool.db.entity;
 
 import java.sql.Date;
 
@@ -17,6 +17,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -25,32 +26,31 @@ import lombok.Setter;
 @NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
+@ToString
 public class ClassComment {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private int board_id;
 	private String content;
 	private String writer;
 	private String file_link;
 	private Date date;
 	
-	// 다대일 관계 만들기
-	// ???
-	// private int board_id;
 	@ManyToOne
-	@JoinColumn(name = "board_id")
+	@JoinColumn(name = "class_board_id")
 	private ClassBoard classBoard;
 
 	
 	@Builder
-	public ClassComment(String content, String writer, String file_link, ClassBoard classBoard) {
+	public ClassComment(int board_id, String content, String writer, String file_link) {
 //		super();
+		this.board_id = board_id;
 		this.content = content;
 		this.writer = writer;
-		this.file_link = file_link;
-		this.classBoard = classBoard;
+		this.file_link = file_link;		
 	}
 	
 	

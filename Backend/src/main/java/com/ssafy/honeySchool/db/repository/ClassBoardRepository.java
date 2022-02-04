@@ -1,4 +1,4 @@
-package com.ssafy.db.repository;
+package com.ssafy.honeySchool.db.repository;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.ssafy.db.entity.ClassBoard;
+import com.ssafy.honeySchool.db.entity.ClassBoard;
 @Repository
 public interface ClassBoardRepository extends JpaRepository<ClassBoard, Integer>{
 	// 전체 검색

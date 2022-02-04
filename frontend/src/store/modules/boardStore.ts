@@ -66,7 +66,7 @@ export const boardStore: Module<boardState, RootState> = {
         commit('GETARTICLES', response.data)
       })
       .catch(()=>
-        alert("실패!")
+        alert("전체 받아오기 실패!")
       )    
     },
     classifyCategory ({ commit }, category) {

@@ -56,7 +56,8 @@ dependencies {
 	annotationProcessor("com.google.guava:guava:29.0-jre")
 }
 
-def querydslDir = "$buildDir/generated/querydsl"
+// querydsl 설정
+def querydslDir = "src/main/generated/querydsl"
 
 querydsl {
 	jpa = true
