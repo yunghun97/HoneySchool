@@ -63,12 +63,15 @@
               :stream-manager="publisherCamera"
               @click="updateMainVideoStreamManager(publisherCamera)"
             />
-            <user-video
+            <div
               v-for="sub in subscribersCamera"
               :key="sub.stream.connection.connectionId"
-              :stream-manager="sub"
-              @click="updateMainVideoStreamManager(sub)"
-            />
+            >
+              <user-video
+                :stream-manager="sub"
+                @click="updateMainVideoStreamManager(sub)"
+              />
+            </div>
           </div>
           <div class="row panel panel-default">
             <p class="panel-heading">User Screens</p>
@@ -88,10 +91,9 @@
       
       <!-- 손들기 btn -->
       <div>
-        <button v-if="raisehand" @click="handDown">손내리기</button>
+        <button v-if="raisehand" @click="handDown()">손내리기</button>
         <button v-else @click="raiseHand()">손들기</button>
       </div>
-
     </div>
   </div>
 </template>
@@ -179,10 +181,19 @@ export default {
         }
       });
 
+
       // On every asynchronous exception...
       this.sessionCamera.on("exception", ({ exception }) => {
         console.warn(exception);
       });
+      
+      this.sessionCamera.on('signal:handstatus', (event)=>{				
+				this.subscribersCamera.forEach((sub)=>{
+					if(event.from.connectionId === sub.stream.connection.connectionId) {
+						sub.raisehand = event.data==='true'?true:false;
+					}
+				})
+			});
 
       // --- Connect to the session with a valid user token ---
 
@@ -392,6 +403,11 @@ export default {
     // 손들기 function
     raiseHand() {
       this.raisehand = !this.raisehand
+      this.sessionCamera.signal({
+        data: `${this.raisehand}`,
+        to : [],
+        type: 'handstatus'
+      })
       // this.publisherCamera.stream.applyFilter("FaceOverlayFilter")
       //   .then(filter => {
       //     filter.execMethod(
@@ -406,7 +422,7 @@ export default {
       // });
 
       this.publisherCamera.stream.applyFilter("GStreamerFilter", { command: "videobox fill=red top=-10 bottom=-10 left=-10 right=-10" })
-          //"'gdkpixbufoverlay location=/src/views/VideoClass.images/hand.png offset-x=10 offset-y=10 overlay-height=200 overlay-width=200'" 
+          //"gdkpixbufoverlay location=/images/hand.png offset-x=10 offset-y=10 overlay-height=200 overlay-width=200 " 
           .then(() => {
               console.log("손들기!!");
           })
@@ -415,8 +431,13 @@ export default {
           });
 
     },
-    handDown() {
+    handDown(sub) {
       this.raisehand = !this.raisehand
+      this.sessionCamera.signal({
+        data: `${this.raisehand}`,
+        to : [],
+        type: 'handstatus'
+      })
       this.publisherCamera.stream.removeFilter()
         .then(() => {
             console.log("Filter removed");
