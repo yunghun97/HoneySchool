@@ -7,7 +7,7 @@ import ArticleCreate from "../views/board/ArticleCreate.vue";
 import Handout from "../views/board/Handout.vue";
 import Photo from "../views/board/Photo.vue";
 import Assignment from "../views/board/Assignment.vue";
-import Question from "../views/board/Question.vue"
+import Question from "../views/board/Question.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
 import Videoclass from "../views/Videoclass/Videoclass.vue";
@@ -45,7 +45,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/classboard/:category/:article_id/edit",
     name: "ArticleUpdate",
-    component: () => import('@/views/board/ArticleUpdate.vue'),
+    component: () => import("@/views/board/ArticleUpdate.vue"),
   },
   {
     path: "/classboard/create",

@@ -91,21 +91,65 @@
                 <img src="@/assets/videoclass/clock.png" alt="자리비움" v-if="sub.left" style="width:30px; height:30px">
               </div>
             </div>
-
           </div>
-          <div class="row panel panel-default">
-            <p class="panel-heading">User Screens</p>
-            <user-video
-              :stream-manager="publisherScreen"
-              @click="updateMainVideoStreamManager(publisherScreen)"
-            />
-            <user-video
-              v-for="sub in subscribersScreen"
-              :key="sub.stream.connection.connectionId"
-              :stream-manager="sub"
-              @click="updateMainVideoStreamManager(sub)"
-            />
+          <div class="navbar">
+            <!-- 손들기 btn -->
+            <div class="nav-cont" v-if="raisehand" @click="handDown()">
+              <span class="main-btn">
+                <fa icon="hand-paper" class="fontawesome-active"></fa>
+              </span>
+              <p style="margin-bottom: 0; margin-top: 10px">손 내리기</p>
+            </div>
+            <div class="nav-cont" v-else @click="raiseHand()">
+              <span class="main-btn">
+                <fa icon="hand-paper" class="fontawesome"></fa>
+              </span>
+              <p style="margin-bottom: 0; margin-top: 10px">손 들기</p>
+            </div>
+            <!-- 음소거 btn -->
+            <div class="nav-cont" v-if="muted" @click="changeMuteStatus">
+              <span class="main-btn">
+                <fa icon="microphone-slash" class="fontawesome"></fa>
+              </span>
+              <p style="margin-bottom: 0; margin-top: 10px">마이크 켜기</p>
+            </div>
+            <div class="nav-cont" v-else @click="changeMuteStatus">
+              <span class="main-btn">
+                <fa icon="microphone" class="fontawesome-active"></fa>
+              </span>
+              <p style="margin-bottom: 0; margin-top: 10px">마이크 끄기</p>
+            </div>
+            <!-- 자리비움 btn -->
+            <div class="nav-cont" v-if="left">
+              <span class="main-btn">
+                <fa icon="user-clock" class="fontawesome-active"></fa>
+              </span>
+              <p style="margin-bottom: 0; margin-top: 10px">자리 비우기 취소</p>
+            </div>
+            <div class="nav-cont" v-else>
+              <span class="main-btn">
+                <fa icon="user-clock" class="fontawesome"></fa>
+              </span>
+              <p style="margin-bottom: 0; margin-top: 10px">자리 비우기</p>
+            </div>
+            <!-- 퀴즈 링크 btn -->
+            <div class="nav-cont">
+              <span class="main-btn">
+                <fa icon="smile" class="fontawesome-active"></fa>
+              </span>
+              <p style="margin-bottom: 0; margin-top: 10px">퀴즈 풀기</p>
+            </div>
+            <!-- 방 나가기 btn -->
+            <div class="nav-cont" @click="leaveSession">
+              <span class="main-btn">
+                <fa icon="sign-out-alt" class="fontawesome"></fa>
+              </span>
+              <p style="margin-bottom: 0; margin-top: 10px">나가기</p>
+            </div>
           </div>
+        </div>
+        <div class="col-md-3">
+          <p>유저 상태목록</p>
         </div>
       </div>
     <!-- 하단 nav -->
@@ -215,17 +259,22 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "./UserVideo";
+import UserScreen from "./UserScreen";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
-const OPENVIDU_SERVER_SECRET = "MY_SECRET";
+// const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
+// const OPENVIDU_SERVER_SECRET = "MY_SECRET";
+
+const OPENVIDU_SERVER_URL = "https://i6b201.p.ssafy.io:443";
+const OPENVIDU_SERVER_SECRET = "ssafy";
 
 export default {
   name: "App",
 
   components: {
     UserVideo,
+    UserScreen,
   },
 
   data() {
@@ -238,11 +287,11 @@ export default {
       publisherCamera: undefined,
       publisherScreen: undefined,
       subscribersCamera: [],
-      subscribersScreen: [], 
+      subscribersScreen: [],
       mySessionId: "SessionA",
       myUserName: "Participant" + Math.floor(Math.random() * 100),
 
-      raisehand : false,
+      raisehand: false,
       screensharing: false,
       muted: true,
       left: false,
@@ -268,6 +317,7 @@ export default {
       this.sessionCamera.on("streamCreated", ({ stream }) => {
         if (stream.typeOfVideo == "CAMERA") {
           console.log("카메라 타입");
+          console.log("유저 추가");
           console.log(stream.typeOfVideo);
           const subscriberCamera = this.sessionCamera.subscribe(stream);
           subscriberCamera.raisehand = false;
@@ -282,6 +332,7 @@ export default {
           console.log("스크린 타입");
           console.log(stream.typeOfVideo);
           const subscriberScreen = this.sessionScreen.subscribe(stream);
+          console.log(subscriberScreen.data);
           this.subscribersScreen.push(subscriberScreen);
         }
       });
@@ -294,31 +345,30 @@ export default {
         }
       });
 
-
       // On every asynchronous exception...
       this.sessionCamera.on("exception", ({ exception }) => {
         console.warn(exception);
       });
-      
+
       // 손들기 시그널
-      this.sessionCamera.on('signal:handstatus', (event)=>{				
-				this.subscribersCamera.forEach((sub)=>{
-					if(event.from.connectionId === sub.stream.connection.connectionId) {
-						sub.raisehand = event.data==='true'?true:false;
-					}
-				})
-			});
-      // 선생님이 학생 손 내리기 시그널 
-      this.sessionCamera.on('signal:handStudent', () => {
+      this.sessionCamera.on("signal:handstatus", (event) => {
+        this.subscribersCamera.forEach((sub) => {
+          if (event.from.connectionId === sub.stream.connection.connectionId) {
+            sub.raisehand = event.data === "true" ? true : false;
+          }
+        });
+      });
+      // 선생님이 학생 손 내리기 시그널
+      this.sessionCamera.on("signal:handStudent", () => {
         this.handDown();
       });
       // mute 시그널
-      this.sessionCamera.on('signal:muteStatus', (event) => {
+      this.sessionCamera.on("signal:muteStatus", (event) => {
         this.subscribersCamera.forEach((sub) => {
           if(event.from.connectionId === sub.stream.connection.connectionId) {
             sub.muted = event.data==='true'?true:false;
           }
-        })
+        });
       });
       // 선생님이 학생 mute 시그널
       this.sessionCamera.on('signal:muteStudent', () => {
@@ -350,14 +400,13 @@ export default {
         this.quizReceived = event.data;
       });
 
-
       // --- Connect to the session with a valid user token ---
 
       // 'getToken' method is simulating what your server-side should do.
       // 'token' parameter should be retrieved and returned by your own backend
       this.getToken(this.mySessionId).then((token) => {
         this.sessionCamera
-          .connect(token, { clientData: this.myUserName,})
+          .connect(token, { clientData: this.myUserName })
           .then(() => {
             // --- Get your own camera stream with the desired properties ---
 
@@ -372,18 +421,14 @@ export default {
               mirror: false, // Whether to mirror your local video or not
             });
 
-            // publisher.on("videoElementCreated", (event) => {
-            //   this.initMainVideo(event.element, this.myUserName);
-            //   this.appendUserData(event.element, this.myUserName);
-            //   event.element["muted"] = true;
-            // });
-
             this.mainStreamManager = publisher;
             this.publisherCamera = publisher;
 
             // --- Publish your stream ---
 
             this.sessionCamera.publish(this.publisherCamera);
+            console.log("확인");
+            console.log(this.subscribersCamera);
           })
           .catch((error) => {
             console.log(
@@ -415,11 +460,10 @@ export default {
 
     publishScreenShare() {
       // --- 9.1) To create a publisherScreen it is very important that the property 'videoSource' is set to 'screen'
-      let publisher = this.OVScreen.initPublisher("container-screens", {
+      let publisher = this.OVScreen.initPublisher(undefined, {
         videoSource: "screen",
       });
       this.publisherScreen = publisher;
-
       // --- 9.2) If the user grants access to the screen share function, publish the screen stream
       this.publisherScreen.once("accessAllowed", (event) => {
         this.screensharing = true;
@@ -433,11 +477,13 @@ export default {
             this.screensharing = false;
           });
         this.sessionScreen.publish(this.publisherScreen);
+        // Screen sharing 시 메인 stream으로 자동 이동
+        this.mainStreamManager = this.publisherScreen;
       });
 
       this.publisherScreen.on("videoElementCreated", ({ stream }) => {
         const subscriberScreen = this.sessionScreen.subscribe(stream);
-        this.subscribersScreen.event.element["muted"] = true;
+        subscriberScreen.event.element["muted"] = true;
         this.subscribersScreen.push(subscriberScreen);
       });
 
@@ -471,9 +517,20 @@ export default {
     updateMainVideoStreamManager(stream) {
       if (this.mainStreamManager === stream) return;
       console.log("Update");
-      console.log(stream);
       this.mainStreamManager = stream;
+      console.log(this.mainStreamManager);
     },
+
+    // videofilter() {
+    //   this.mainStreamManager.stream
+    //     .applyFilter("GStreamerFilter", { "command": "videobalance saturation=0.0" })
+    //     .then(() => {
+    //       console.log("Video rotated!");
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
+    // },
     /**
      * --------------------------
      * SERVER-SIDE RESPONSIBILITY
@@ -533,17 +590,17 @@ export default {
     // See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-openviduapisessionsltsession_idgtconnection
     createToken(sessionId) {
       const jsondata = {
-        "type": "WEBRTC",
+        type: "WEBRTC",
         //"data": "user_data",
-        "role": "PUBLISHER",
-        "kurentoOptions": {
-            "allowedFilters": ["GStreamerFilter", "FaceOverlayFilter"]
-    }
-      }
+        role: "PUBLISHER",
+        kurentoOptions: {
+          allowedFilters: ["GStreamerFilter", "FaceOverlayFilter"],
+        },
+      };
       return new Promise((resolve, reject) => {
         axios({
-          method: 'post',
-          url:  `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`, 
+          method: "post",
+          url: `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
           data: JSON.stringify(jsondata),
           auth: {
             username: "OPENVIDUAPP",
@@ -555,42 +612,43 @@ export default {
           .catch((error) => reject(error.response));
       });
     },
-    
+
     // 손들기 function
     raiseHand() {
-      this.raisehand = !this.raisehand
+      this.raisehand = !this.raisehand;
       this.sessionCamera.signal({
         data: `${this.raisehand}`,
-        to : [],
-        type: 'handstatus'
-      })
-      this.publisherCamera.stream.applyFilter("GStreamerFilter", { command: "videobox fill=red top=-10 bottom=-10 left=-10 right=-10" })
+        to: [],
+        type: "handstatus",
+      });
+      this.publisherCamera.stream.applyFilter("GStreamerFilter", {
+        command: "videobox fill=red top=-10 bottom=-10 left=-10 right=-10",
+      });
     },
-    // 본인 손 내리기 
+    // 본인 손 내리기
     handDown() {
-      this.raisehand = !this.raisehand
+      this.raisehand = !this.raisehand;
       this.sessionCamera.signal({
         data: `${this.raisehand}`,
-        to : [],
-        type: 'handstatus'
-      })
-      this.publisherCamera.stream.removeFilter()
+        to: [],
+        type: "handstatus",
+      });
+      this.publisherCamera.stream
+        .removeFilter()
         .then(() => {
-            console.log("Filter removed");
-
+          console.log("Filter removed");
         })
-        .catch(error => {
-            console.error(error);
+        .catch((error) => {
+          console.error(error);
         });
-
     },
     // 선생님이 학생 손 내리기
     handDownThisStudent(student) {
       this.sessionCamera.signal({
         data: "선생님이 확인했어요. 손 내립니다.",
-        to:[student],
-        type: 'handStudent'
-      })
+        to: [student],
+        type: "handStudent",
+      });
     },
     // 본인 mute 조절
     changeMuteStatus() {
@@ -598,9 +656,9 @@ export default {
       this.muted = !this.muted;
       this.sessionCamera.signal({
         data: `${this.muted}`,
-        to:[],
-        type: 'muteStatus'
-      })
+        to: [],
+        type: "muteStatus",
+      });
     },
 
     // 선생님이 학생 mute 조절
@@ -648,7 +706,7 @@ export default {
 <style scoped>
 .navbar {
   justify-content: space-evenly;
-  background-color: #FFEDA9;
+  background-color: #ffeda9;
   overflow: hidden;
   position: fixed;
   bottom: 0;
@@ -657,7 +715,7 @@ export default {
   border-radius: 20px;
   padding: 0;
 }
-.nav-cont{
+.nav-cont {
   float: left;
   display: block;
   text-align: center;
@@ -667,7 +725,7 @@ export default {
   margin-top:10px;
 }
 .main-btn {
-  cursor:pointer;
+  cursor: pointer;
   border: 5px solid #ffff;
   background: #ffff;
   border-radius: 100%;
@@ -681,7 +739,7 @@ export default {
 .fontawesome-active {
   width: 30px;
   height: 30px;
-  color: #F52532;
+  color: #f52532;
 }
 .subContainer {
   position: relative;
