@@ -179,14 +179,14 @@ a:hover .demo-logo {
 
 #container-cameras video {
 	position: relative;
-	float: left;
-	width: 50%;
+	/* float: left; */
+	/* width: 50%; */
 	cursor: pointer;
 }
 
 #container-cameras div {
 	/* float: left; */
-	width: 50%;
+	/* width: 50%; */
 	position: relative;
 	/* margin-left: -50%; */
 }
