@@ -45,6 +45,12 @@
           value="Screen share"
         />
         <input
+          class="btn btn-large btn-warning"
+          type="button"
+          @click="videofilter"
+          value="Video filter"
+        />
+        <input
           class="btn btn-large btn-danger"
           type="button"
           id="buttonLeaveSession"
@@ -53,36 +59,47 @@
         />
       </div>
       <div class="row">
-        <div id="main-video" class="col-md-6">
-          <user-video :stream-manager="mainStreamManager" />
+        <div class="col-md-9">
+          <div class="row">
+            <div id="main-video" class="col-md-9">
+              <user-screen :stream-manager="mainStreamManager" />
+            </div>
+            <div class="col-md-3">
+              <div id="container-cameras" class="row panel panel-default">
+                <p class="panel-heading">User Cameras</p>
+                <user-video
+                  :stream-manager="publisherCamera"
+                  @click="updateMainVideoStreamManager(publisherCamera)"
+                />
+                <p>subscribersCamera</p>
+                <user-video
+                  v-for="sub in subscribersCamera"
+                  :key="sub.stream.connection.connectionId"
+                  :stream-manager="sub"
+                  @click="updateMainVideoStreamManager(sub)"
+                />
+              </div>
+              <div id="container-screens" class="row panel panel-default">
+                <p class="panel-heading">User Screens</p>
+                <user-screen
+                  :stream-manager="publisherScreen"
+                  @click="updateMainVideoStreamManager(publisherScreen)"
+                />
+                <user-screen
+                  v-for="(sub, i) in subscribersScreen"
+                  :key="i"
+                  :stream-manager="sub"
+                  @click="updateMainVideoStreamManager(sub)"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p>버튼 목록</p>
+          </div>
         </div>
-        <div class="col-md-6">
-          <div id="container-cameras" class="row panel panel-default">
-            <p class="panel-heading">User Cameras</p>
-            <user-video
-              :stream-manager="publisherCamera"
-              @click="updateMainVideoStreamManager(publisherCamera)"
-            />
-            <user-video
-              v-for="sub in subscribersCamera"
-              :key="sub.stream.connection.connectionId"
-              :stream-manager="sub"
-              @click="updateMainVideoStreamManager(sub)"
-            />
-          </div>
-          <div class="row panel panel-default">
-            <p class="panel-heading">User Screens</p>
-            <user-video
-              :stream-manager="publisherScreen"
-              @click="updateMainVideoStreamManager(publisherScreen)"
-            />
-            <user-video
-              v-for="sub in subscribersScreen"
-              :key="sub.stream.connection.connectionId"
-              :stream-manager="sub"
-              @click="updateMainVideoStreamManager(sub)"
-            />
-          </div>
+        <div class="col-md-3">
+          <p>유저 상태목록</p>
         </div>
       </div>
     </div>
@@ -93,17 +110,22 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "./UserVideo";
+import UserScreen from "./UserScreen";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
-const OPENVIDU_SERVER_SECRET = "MY_SECRET";
+// const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
+// const OPENVIDU_SERVER_SECRET = "MY_SECRET";
+
+const OPENVIDU_SERVER_URL = "https://i6b201.p.ssafy.io:443";
+const OPENVIDU_SERVER_SECRET = "ssafy";
 
 export default {
   name: "App",
 
   components: {
     UserVideo,
+    UserScreen,
   },
 
   data() {
@@ -140,6 +162,7 @@ export default {
       this.sessionCamera.on("streamCreated", ({ stream }) => {
         if (stream.typeOfVideo == "CAMERA") {
           console.log("카메라 타입");
+          console.log("유저 추가");
           console.log(stream.typeOfVideo);
           const subscriberCamera = this.sessionCamera.subscribe(stream);
           this.subscribersCamera.push(subscriberCamera);
@@ -151,6 +174,7 @@ export default {
           console.log("스크린 타입");
           console.log(stream.typeOfVideo);
           const subscriberScreen = this.sessionScreen.subscribe(stream);
+          console.log(subscriberScreen.data);
           this.subscribersScreen.push(subscriberScreen);
         }
       });
@@ -189,18 +213,14 @@ export default {
               mirror: false, // Whether to mirror your local video or not
             });
 
-            // publisher.on("videoElementCreated", (event) => {
-            //   this.initMainVideo(event.element, this.myUserName);
-            //   this.appendUserData(event.element, this.myUserName);
-            //   event.element["muted"] = true;
-            // });
-
             this.mainStreamManager = publisher;
             this.publisherCamera = publisher;
 
             // --- Publish your stream ---
 
             this.sessionCamera.publish(this.publisherCamera);
+            console.log("확인")
+            console.log(this.subscribersCamera)
           })
           .catch((error) => {
             console.log(
@@ -232,11 +252,10 @@ export default {
 
     publishScreenShare() {
       // --- 9.1) To create a publisherScreen it is very important that the property 'videoSource' is set to 'screen'
-      let publisher = this.OVScreen.initPublisher("container-screens", {
+      let publisher = this.OVScreen.initPublisher(undefined, {
         videoSource: "screen",
       });
       this.publisherScreen = publisher;
-
       // --- 9.2) If the user grants access to the screen share function, publish the screen stream
       this.publisherScreen.once("accessAllowed", (event) => {
         this.screensharing = true;
@@ -250,11 +269,13 @@ export default {
             this.screensharing = false;
           });
         this.sessionScreen.publish(this.publisherScreen);
+        // Screen sharing 시 메인 stream으로 자동 이동
+        this.mainStreamManager = this.publisherScreen;
       });
 
       this.publisherScreen.on("videoElementCreated", ({ stream }) => {
         const subscriberScreen = this.sessionScreen.subscribe(stream);
-        this.subscribersScreen.event.element["muted"] = true;
+        subscriberScreen.event.element["muted"] = true;
         this.subscribersScreen.push(subscriberScreen);
       });
 
@@ -288,9 +309,20 @@ export default {
     updateMainVideoStreamManager(stream) {
       if (this.mainStreamManager === stream) return;
       console.log("Update");
-      console.log(stream);
       this.mainStreamManager = stream;
+      console.log(this.mainStreamManager);
     },
+
+    // videofilter() {
+    //   this.mainStreamManager.stream
+    //     .applyFilter("GStreamerFilter", { "command": "videobalance saturation=0.0" })
+    //     .then(() => {
+    //       console.log("Video rotated!");
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
+    // },
     /**
      * --------------------------
      * SERVER-SIDE RESPONSIBILITY
@@ -370,5 +402,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

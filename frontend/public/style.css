@@ -203,16 +203,16 @@ a:hover .demo-logo {
 
 #container-screens video {
 	position: relative;
-	float: left;
+	/* float: left; */
 	width: 50%;
 	cursor: pointer;
 }
 
 #container-screens div {
-	float: left;
-	width: 50%;
+	/* float: left; */
+	/* width: 50%; */
 	position: relative;
-	margin-left: -50%;
+	/* margin-left: -50%; */
 }
 
 #container-screens p {
@@ -262,7 +262,7 @@ video {
 
 /* xs ans md screen resolutions*/
 
-@media screen and (max-width: 991px) and (orientation: portrait) {
+/* @media screen and (max-width: 991px) and (orientation: portrait) {
 	#join-dialog {
 		max-width: inherit;
 	}
@@ -293,4 +293,4 @@ video {
 	#join-dialog {
 		max-width: inherit;
 	}
-}
+} */
