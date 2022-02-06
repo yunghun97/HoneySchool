@@ -1,9 +1,6 @@
 import axios from "axios";
 import { Module } from "vuex";
 import { RootState } from "../index";
-// import BoardArticles from "@/types/board/BoardArticles";
-import AxiosService from '@/services/axios.service';
-import AxiosResponse from '@/services/axios.service';
 import { number } from "yup";
 
 
