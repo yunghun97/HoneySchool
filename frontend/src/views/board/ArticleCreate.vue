@@ -49,9 +49,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Article from "@/types/board/Article";
+import Article from "../../types/board/Article";
 import axios from "axios";
-import router from '@/router';
+import router from '../../router';
 
 export default defineComponent({
   name: "CreateArticle",

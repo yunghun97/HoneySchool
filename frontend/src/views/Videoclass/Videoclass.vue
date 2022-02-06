@@ -59,40 +59,34 @@
         />
       </div>
       <div class="row">
-        <div class="col-md-9">
-          <div class="row">
-            <div id="main-video" class="col-md-9">
-              <user-screen :stream-manager="mainStreamManager" />
+        <div id="main-video" class="col-md-6">
+          <user-video :stream-manager="mainStreamManager" />
+        </div>
+        <div class="col-md-6">
+          <div id="container-cameras" class="row panel panel-default">
+            <p class="panel-heading">User Cameras</p>
+            <user-video
+              :stream-manager="publisherCamera"
+              @click="updateMainVideoStreamManager(publisherCamera)"
+            />
+
+            <div
+              v-for="sub in subscribersCamera"
+              :key="sub.stream.connection.connectionId"
+              style="width:100%"
+            >
+              <user-video
+                :stream-manager="sub"
+                @click="updateMainVideoStreamManager(sub)"
+              />
+              <!-- raise hand icon-->
+              <img src="@/assets/videoclass/hand.png" alt="손들기" v-if="sub.raisehand" style="width:30px; height:30px" @click="handDownThisStudent(sub.stream.connection)">
+              <!-- mic icon -->
+              
+              <p v-if="sub.muted" @click="changeMuteThisStudent(sub.stream.connection)">마이크 off</p>
+              <p v-else @click="changeMuteThisStudent(sub.stream.connection)">마이크 on</p>
             </div>
-            <div class="col-md-3">
-              <div id="container-cameras" class="row panel panel-default">
-                <p class="panel-heading">User Cameras</p>
-                <user-video
-                  :stream-manager="publisherCamera"
-                  @click="updateMainVideoStreamManager(publisherCamera)"
-                />
-                <p>subscribersCamera</p>
-                <user-video
-                  v-for="sub in subscribersCamera"
-                  :key="sub.stream.connection.connectionId"
-                  :stream-manager="sub"
-                  @click="updateMainVideoStreamManager(sub)"
-                />
-              </div>
-              <div id="container-screens" class="row panel panel-default">
-                <p class="panel-heading">User Screens</p>
-                <user-screen
-                  :stream-manager="publisherScreen"
-                  @click="updateMainVideoStreamManager(publisherScreen)"
-                />
-                <user-screen
-                  v-for="(sub, i) in subscribersScreen"
-                  :key="i"
-                  :stream-manager="sub"
-                  @click="updateMainVideoStreamManager(sub)"
-                />
-              </div>
-            </div>
+
           </div>
           <div class="row">
             <p>버튼 목록</p>
@@ -102,8 +96,68 @@
           <p>유저 상태목록</p>
         </div>
       </div>
+
+    <!-- 하단 nav -->
     </div>
+      <div class="navbar">
+         <!-- 손들기 btn -->
+        <div class="nav-cont" v-if="raisehand" @click="handDown()">
+          <span class="main-btn">   
+            <fa icon="hand-paper" class="fontawesome-active"></fa>
+          </span>
+          <p style="margin-bottom:0; margin-top:10px;">손 내리기</p>
+        </div>
+        <div class="nav-cont" v-else @click="raiseHand()">
+          <span class="main-btn">   
+            <fa icon="hand-paper" class="fontawesome"></fa>
+          </span>
+          <p style="margin-bottom:0; margin-top:10px;">손 들기</p>
+        </div>
+        <!-- 음소거 btn -->
+        <div class="nav-cont" v-if="muted" @click="changeMuteStatus">
+        <span class="main-btn">   
+          <fa icon="microphone-slash" class="fontawesome" ></fa>
+        </span>
+        <p style="margin-bottom:0; margin-top:10px;">마이크 켜기</p>
+      </div>
+      <div class="nav-cont" v-else @click="changeMuteStatus">
+        <span class="main-btn">   
+          <fa icon="microphone" class="fontawesome-active"></fa>
+        </span>
+        <p style="margin-bottom:0; margin-top:10px;">마이크 끄기</p>
+      </div>
+      <!-- 자리비움 btn -->
+      <div class="nav-cont" v-if="left">
+        <span class="main-btn">   
+          <fa icon="user-clock" class="fontawesome-active"></fa>
+        </span>
+        <p style="margin-bottom:0; margin-top:10px;">자리 비우기 취소</p>
+      </div>
+      <div class="nav-cont" v-else>
+        <span class="main-btn">   
+          <fa icon="user-clock" class="fontawesome"></fa>
+        </span>
+        <p style="margin-bottom:0; margin-top:10px;">자리 비우기</p>
+      </div>
+      <!-- 퀴즈 링크 btn -->
+      <div class="nav-cont">
+        <span class="main-btn">   
+          <fa icon="smile" class="fontawesome-active" ></fa>
+        </span>
+        <p style="margin-bottom:0; margin-top:10px;">퀴즈 풀기</p>
+      </div>
+      <!-- 방 나가기 btn -->
+      <div class="nav-cont" @click="leaveSession">
+        <span class="main-btn">   
+          <fa icon="sign-out-alt" class="fontawesome"></fa>
+        </span>
+        <p style="margin-bottom:0; margin-top:10px;">나가기</p>
+      </div>
+
   </div>
+
+
+</div>
 </template>
 
 <script>
@@ -138,11 +192,15 @@ export default {
       publisherCamera: undefined,
       publisherScreen: undefined,
       subscribersCamera: [],
-      subscribersScreen: [],
-
+      subscribersScreen: [], 
       mySessionId: "SessionA",
       myUserName: "Participant" + Math.floor(Math.random() * 100),
+
+      raisehand : false,
       screensharing: false,
+      muted: true,
+      left: false,
+      quize: false,
     };
   },
 
@@ -165,6 +223,8 @@ export default {
           console.log("유저 추가");
           console.log(stream.typeOfVideo);
           const subscriberCamera = this.sessionCamera.subscribe(stream);
+          subscriberCamera.raisehand = false;
+          subscriberCamera.muted = true;
           this.subscribersCamera.push(subscriberCamera);
         }
       });
@@ -187,10 +247,39 @@ export default {
         }
       });
 
+
       // On every asynchronous exception...
       this.sessionCamera.on("exception", ({ exception }) => {
         console.warn(exception);
       });
+      
+      // 손들기 시그널
+      this.sessionCamera.on('signal:handstatus', (event)=>{				
+				this.subscribersCamera.forEach((sub)=>{
+					if(event.from.connectionId === sub.stream.connection.connectionId) {
+						sub.raisehand = event.data==='true'?true:false;
+					}
+				})
+			});
+      // 선생님이 학생 손 내리기 시그널 
+      this.sessionCamera.on('signal:handStudent', () => {
+        this.handDown();
+      });
+
+      // mute 시그널
+      this.sessionCamera.on('signal:muteStatus', (event) => {
+        this.subscribersCamera.forEach((sub) => {
+          if(event.from.connectionId === sub.stream.connection.connectionId) {
+            console.log('here!', event.data)
+            sub.muted = event.data==='true'?true:false;
+          }
+        })
+      });
+      // muteStudent
+      this.sessionCamera.on('signal:muteStudent', () => {
+        this.changeMuteStatus();
+      });
+
 
       // --- Connect to the session with a valid user token ---
 
@@ -198,14 +287,14 @@ export default {
       // 'token' parameter should be retrieved and returned by your own backend
       this.getToken(this.mySessionId).then((token) => {
         this.sessionCamera
-          .connect(token, { clientData: this.myUserName })
+          .connect(token, { clientData: this.myUserName,})
           .then(() => {
             // --- Get your own camera stream with the desired properties ---
 
             let publisher = this.OVCamera.initPublisher(undefined, {
               audioSource: undefined, // The source of audio. If undefined default microphone
               videoSource: undefined, // The source of video. If undefined default webcam
-              publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+              publishAudio: false, // Whether you want to start publishing with your audio unmuted or not
               publishVideo: true, // Whether you want to start publishing with your video enabled or not
               resolution: "640x480", // The resolution of your video
               frameRate: 30, // The frame rate of your video
@@ -381,25 +470,123 @@ export default {
 
     // See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-openviduapisessionsltsession_idgtconnection
     createToken(sessionId) {
+      const jsondata = {
+        "type": "WEBRTC",
+        //"data": "user_data",
+        "role": "PUBLISHER",
+        "kurentoOptions": {
+            "allowedFilters": ["GStreamerFilter", "FaceOverlayFilter"]
+    }
+      }
       return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
-            {},
-            {
-              auth: {
-                username: "OPENVIDUAPP",
-                password: OPENVIDU_SERVER_SECRET,
-              },
-            }
-          )
+        axios({
+          method: 'post',
+          url:  `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`, 
+          data: JSON.stringify(jsondata),
+          auth: {
+            username: "OPENVIDUAPP",
+            password: OPENVIDU_SERVER_SECRET,
+          },
+        })
           .then((response) => response.data)
           .then((data) => resolve(data.token))
           .catch((error) => reject(error.response));
       });
     },
+    
+    // 손들기 function
+    raiseHand() {
+      this.raisehand = !this.raisehand
+      this.sessionCamera.signal({
+        data: `${this.raisehand}`,
+        to : [],
+        type: 'handstatus'
+      })
+      this.publisherCamera.stream.applyFilter("GStreamerFilter", { command: "videobox fill=red top=-10 bottom=-10 left=-10 right=-10" })
+    },
+    // 본인 손 내리기 
+    handDown() {
+      this.raisehand = !this.raisehand
+      this.sessionCamera.signal({
+        data: `${this.raisehand}`,
+        to : [],
+        type: 'handstatus'
+      })
+      this.publisherCamera.stream.removeFilter()
+        .then(() => {
+            console.log("Filter removed");
+
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    },
+    // 선생님이 학생 손 내리기
+    handDownThisStudent(student) {
+      this.sessionCamera.signal({
+        data: "선생님이 확인했어요. 손 내립니다.",
+        to:[student],
+        type: 'handStudent'
+      })
+    },
+    // 본인 mute 조절
+    changeMuteStatus() {
+      this.publisherCamera.publishAudio(this.muted); // true to unmute the audio track, false to mute it
+      this.muted = !this.muted;
+      this.sessionCamera.signal({
+        data: `${this.muted}`,
+        to:[],
+        type: 'muteStatus'
+      })
+    },
+
+    // 선생님이 학생 mute 조절
+    changeMuteThisStudent(student) {
+      this.sessionCamera.signal({
+        data: "mic 조정합니다.",
+        to:[student],
+        type: 'muteStudent'
+      })
+    }
+
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.navbar {
+  justify-content: space-evenly;
+  background-color: #FFEDA9;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 80%;
+  height: 110px;
+  border-radius: 20px;
+  padding: 0;
+}
+.nav-cont{
+  float: left;
+  display: block;
+  text-align: center;
+}
+.main-btn {
+  cursor:pointer;
+  border: 5px solid #ffff;
+  background: #ffff;
+  border-radius: 100%;
+  padding: 15px 10px;
+  margin-right: 15px;
+}
+.fontawesome {
+  width: 30px;
+  height: 30px;
+}
+.fontawesome-active {
+  width: 30px;
+  height: 30px;
+  color: #F52532;
+}
+
+</style>
