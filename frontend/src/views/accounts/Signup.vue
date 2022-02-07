@@ -181,6 +181,7 @@
 </template>
 
 <script lang="ts">
+import axios from "axios";
 import { Form, Field } from "vee-validate";
 import * as Yup from "yup";
 import { ref } from "vue";
@@ -219,7 +220,14 @@ export default {
 
     const onSubmit = (values: any) => {
       console.log(schema);
-      alert("SUCCESS!! :-)\n\n" + JSON.stringify(values, null, 4));
+      axios.post("http://localhost:9999/api/v1/users/register/", values)
+        .then(res => {
+          console.log(res);
+          alert("SUCCESS!! :-)\n\n" + JSON.stringify(values, null, 4));
+        })
+        .catch(err => {
+          console.log(err);
+        });
     };
 
     const position = ref("");
