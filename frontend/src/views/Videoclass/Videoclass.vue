@@ -51,6 +51,15 @@
           @click="leaveSession"
           value="Leave session"
         />
+        <input 
+          type="button" 
+          class="btn btn-large btn-success"
+          id="buttonQuiz"
+          data-bs-toggle="modal" 
+          data-bs-target="#sendquiz" 
+          data-bs-whatever="@mdo" 
+          value="퀴즈내기"
+        />
       </div>
       <div class="row">
         <div class="col-md-9">
@@ -75,27 +84,17 @@
                     :stream-manager="sub"
                     @click="updateMainVideoStreamManager(sub)"
                   />
-                  <!-- raise hand icon-->
-                  <img
-                    src="@/assets/videoclass/hand.png"
-                    alt="손들기"
-                    v-if="sub.raisehand"
-                    style="width: 30px; height: 30px"
-                    @click="handDownThisStudent(sub.stream.connection)"
-                  />
-                  <!-- mic icon -->
-                  <p
-                    v-if="sub.muted"
-                    @click="changeMuteThisStudent(sub.stream.connection)"
-                  >
-                    마이크 off
-                  </p>
-                  <p
-                    v-else
-                    @click="changeMuteThisStudent(sub.stream.connection)"
-                  >
-                    마이크 on
-                  </p>
+                  <div class="iconsOnVideo">
+                    <!-- 손들기 icon-->
+                    <img src="@/assets/videoclass/hand.png" alt="손들기" v-if="sub.raisehand" style="width:30px; height:30px" @click="handDownThisStudent(sub.stream.connection)">
+                    <!-- mic icon -->
+                    <span>
+                      <fa icon="microphone-slash" class="fontawesome" v-if="sub.muted" @click="changeMuteThisStudent(sub.stream.connection)"></fa>
+                      <fa icon="microphone" class="fontawesome-active" v-else @click="changeMuteThisStudent(sub.stream.connection)"></fa>
+                    </span>
+                    <!-- 자리비움 icon -->
+                    <img src="@/assets/videoclass/clock.png" alt="자리비움" v-if="sub.left" style="width:30px; height:30px">
+                  </div>
                 </div>
               </div>
               <div id="container-screens" class="row panel panel-default">
@@ -113,58 +112,103 @@
               <span class="main-btn">
                 <fa icon="hand-paper" class="fontawesome-active"></fa>
               </span>
-              <p style="margin-bottom: 0; margin-top: 10px">손 내리기</p>
+              <p>손 내리기</p>
             </div>
             <div class="nav-cont" v-else @click="raiseHand()">
               <span class="main-btn">
                 <fa icon="hand-paper" class="fontawesome"></fa>
               </span>
-              <p style="margin-bottom: 0; margin-top: 10px">손 들기</p>
+              <p>손 들기</p>
             </div>
             <!-- 음소거 btn -->
             <div class="nav-cont" v-if="muted" @click="changeMuteStatus">
               <span class="main-btn">
                 <fa icon="microphone-slash" class="fontawesome"></fa>
               </span>
-              <p style="margin-bottom: 0; margin-top: 10px">마이크 켜기</p>
+              <p>마이크 켜기</p>
             </div>
             <div class="nav-cont" v-else @click="changeMuteStatus">
               <span class="main-btn">
                 <fa icon="microphone" class="fontawesome-active"></fa>
               </span>
-              <p style="margin-bottom: 0; margin-top: 10px">마이크 끄기</p>
+              <p>마이크 끄기</p>
             </div>
             <!-- 자리비움 btn -->
-            <div class="nav-cont" v-if="left">
+            <div class="nav-cont" v-if="left" @click="alarmReturn">
               <span class="main-btn">
                 <fa icon="user-clock" class="fontawesome-active"></fa>
               </span>
-              <p style="margin-bottom: 0; margin-top: 10px">자리 비우기 취소</p>
+              <p>자리 돌아오기</p>
             </div>
-            <div class="nav-cont" v-else>
+            <div class="nav-cont" v-else @click="alarmLeft">
               <span class="main-btn">
                 <fa icon="user-clock" class="fontawesome"></fa>
               </span>
-              <p style="margin-bottom: 0; margin-top: 10px">자리 비우기</p>
+              <p>자리 비우기</p>
             </div>
             <!-- 퀴즈 링크 btn -->
-            <div class="nav-cont">
+            <div 
+              class="nav-cont"
+               data-bs-toggle="modal" 
+               data-bs-target="#recievedquiz"
+            >
               <span class="main-btn">
-                <fa icon="smile" class="fontawesome-active"></fa>
+                <fa icon="smile" class="fontawesome"></fa>
               </span>
-              <p style="margin-bottom: 0; margin-top: 10px">퀴즈 풀기</p>
+              <p>퀴즈 풀기</p>
             </div>
             <!-- 방 나가기 btn -->
             <div class="nav-cont" @click="leaveSession">
               <span class="main-btn">
                 <fa icon="sign-out-alt" class="fontawesome"></fa>
               </span>
-              <p style="margin-bottom: 0; margin-top: 10px">나가기</p>
+              <p>나가기</p>
             </div>
           </div>
         </div>
         <div class="col-md-3">
           <p>유저 상태목록</p>
+        </div>
+      </div>
+    </div>
+      <!-- modal quiz 제출 -->
+    <div class="modal fade" id="sendquiz" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">우리반 학생들에게 공유 할 퀴즈를 작성해주세요</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">퀴즈 내용</label>
+                <textarea class="form-control" id="message-text" v-model="quizContent"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" @click="sendQuiz" data-bs-dismiss="modal">전송</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- modal quiz 풀기 -->
+    <div class="modal fade" id="recievedquiz" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">퀴즈!!</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>{{ quizReceived }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
@@ -179,11 +223,11 @@ import UserScreen from "./UserScreen";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-// const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
-// const OPENVIDU_SERVER_SECRET = "MY_SECRET";
+const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
+const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
-const OPENVIDU_SERVER_URL = "https://i6b201.p.ssafy.io:443";
-const OPENVIDU_SERVER_SECRET = "ssafy";
+// const OPENVIDU_SERVER_URL = "https://i6b201.p.ssafy.io:443";
+// const OPENVIDU_SERVER_SECRET = "ssafy";
 
 export default {
   name: "App",
@@ -211,7 +255,9 @@ export default {
       screensharing: false,
       muted: true,
       left: false,
-      quize: false,
+
+      quizContent: '',
+      quizReceived: '아직 도착한 퀴즈가 없습니다.',
     };
   },
 
@@ -236,6 +282,7 @@ export default {
           const subscriberCamera = this.sessionCamera.subscribe(stream);
           subscriberCamera.raisehand = false;
           subscriberCamera.muted = true;
+          subscriberCamera.left = false;
           this.subscribersCamera.push(subscriberCamera);
         }
       });
@@ -285,9 +332,34 @@ export default {
           }
         });
       });
-      // muteStudent
-      this.sessionCamera.on("signal:muteStudent", () => {
+      // 선생님이 학생 mute 시그널
+      this.sessionCamera.on('signal:muteStudent', () => {
         this.changeMuteStatus();
+      });
+      // 학생이 선생님께 자리 비움 시그널
+      this.sessionCamera.on('signal:leftStudent', (event) => {
+        this.subscribersCamera.forEach((sub)=>{
+					if(event.from.connectionId === sub.stream.connection.connectionId) {
+						sub.left = true;
+            console.log('sub', sub.left)
+					}
+        })
+        const studentname = JSON.parse(event.from.data).clientData
+        alert(`${studentname} 학생이 자리를 비웠습니다.`)
+      });
+      // 학생이 선생님께 자리 돌아옴 시그널
+      this.sessionCamera.on('signal:returnStudent', (event) => {
+        this.subscribersCamera.forEach((sub)=>{
+					if(event.from.connectionId === sub.stream.connection.connectionId) {
+						sub.left = false;
+					}
+        })
+        const studentname = JSON.parse(event.from.data).clientData
+        alert(`${studentname} 학생이 자리에 돌아왔습니다.`)
+      });
+      // quiz
+      this.sessionCamera.on('signal:quiz', (event) => {
+        this.quizReceived = event.data;
       });
 
       // --- Connect to the session with a valid user token ---
@@ -559,11 +631,45 @@ export default {
         type: "muteStudent",
       });
     },
+     // 학생이 선생님께 자리비움 알림
+    alarmLeft() {
+      this.left = true
+      this.sessionCamera.signal({
+        data: "자리비움 알림",
+        // TODO: 선생님에게 보내기!!!!
+        to:[this.subscribersCamera[0].stream.connection],
+        type: 'leftStudent'
+      })
+    },
+    alarmReturn() {
+      this.left = false
+      this.sessionCamera.signal({
+        data: "자리 돌아옴 알림",
+        // TODO: 선생님에게 보내기!!!!
+        to:[this.subscribersCamera[0].stream.connection],
+        type: 'returnStudent'
+      })
+    },
+    sendQuiz() {
+      if(this.quizContent) {
+        this.sessionCamera.signal({
+          data: this.quizContent,
+          to:[],
+          type: 'quiz'
+        })
+        this.quizContent="";
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
+#buttonQuiz {
+	float: right;
+	margin-top: 20px;
+	margin-right: 15px;
+}
 .navbar {
   justify-content: space-evenly;
   background-color: #ffeda9;
@@ -579,6 +685,10 @@ export default {
   float: left;
   display: block;
   text-align: center;
+}
+.nav-cont p{
+  margin-bottom:0; 
+  margin-top:10px;
 }
 .main-btn {
   cursor: pointer;
@@ -596,5 +706,17 @@ export default {
   width: 30px;
   height: 30px;
   color: #f52532;
+}
+.subContainer {
+  position: relative;
+}
+.subVideo {
+  display: block;
+  width: 100%;
+}
+.iconsOnVideo {
+  position: absolute;
+  bottom: 3px;
+  left: 20%;
 }
 </style>
