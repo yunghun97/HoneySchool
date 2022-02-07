@@ -177,6 +177,12 @@ a:hover .demo-logo {
 	margin-left: 15px;
 }
 
+#buttonQuiz {
+	float: right;
+	margin-top: 20px;
+	margin-right: 15px;
+}
+
 #container-cameras video {
 	position: relative;
 	/* float: left; */
