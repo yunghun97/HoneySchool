@@ -7,7 +7,7 @@
     <router-link to="/classboard">학급게시판</router-link> | 
     <router-link to="/videoclass">화상수업</router-link>
   </div>
-  <router-view />
+  <router-view/>
 </template>
 
 <style>
