@@ -4,7 +4,6 @@ import com.ssafy.honeySchool.api.request.ConnectReq;
 import com.ssafy.honeySchool.api.request.LectureReq;
 import com.ssafy.honeySchool.api.response.ConnectRes;
 import com.ssafy.honeySchool.api.response.LectureRes;
-import com.ssafy.honeySchool.api.response.UserInfoRes;
 import com.ssafy.honeySchool.api.service.LectureService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,14 +6,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.ssafy.honeySchool.db.entity.ClassBoard;
+import com.ssafy.honeySchool.db.entity.ClassBoardFile;
+import com.ssafy.honeySchool.db.repository.ClassBoardFileRepository;
+import com.ssafy.honeySchool.db.repository.ClassBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ssafy.db.entity.ClassBoard;
-import com.ssafy.db.entity.ClassBoardFile;
-import com.ssafy.db.repository.ClassBoardFileRepository;
-import com.ssafy.db.repository.ClassBoardRepository;
 
 @Service
 public class BoardService {

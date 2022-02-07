@@ -6,6 +6,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
+import com.ssafy.honeySchool.db.entity.ClassBoard;
+import com.ssafy.honeySchool.db.entity.ClassComment;
+import com.ssafy.honeySchool.db.repository.ClassBoardRepository;
+import com.ssafy.honeySchool.db.repository.ClassCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ssafy.db.entity.ClassBoard;
-import com.ssafy.db.entity.ClassComment;
-import com.ssafy.db.repository.ClassBoardRepository;
-import com.ssafy.db.repository.ClassCommentRepository;
 
 @CrossOrigin(origins = "http://localhost:8080/")
 @RestController

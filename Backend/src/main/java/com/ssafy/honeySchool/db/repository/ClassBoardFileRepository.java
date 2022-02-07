@@ -2,9 +2,9 @@ package com.ssafy.honeySchool.db.repository;
 
 import java.util.List;
 
+import com.ssafy.honeySchool.db.entity.ClassBoardFile;
 import org.springframework.data.repository.CrudRepository;
 
-import com.ssafy.db.entity.ClassBoardFile;
 
 public interface ClassBoardFileRepository extends CrudRepository<ClassBoardFile, Integer> {
 	ClassBoardFile save(ClassBoardFile classBoardFile);

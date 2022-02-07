@@ -3,11 +3,11 @@ package com.ssafy.honeySchool.db.repository;
 import java.util.List;
 import java.util.Optional;
 
+import com.ssafy.honeySchool.db.entity.ClassBoard;
+import com.ssafy.honeySchool.db.entity.ClassComment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ssafy.db.entity.ClassBoard;
-import com.ssafy.db.entity.ClassComment;
 
 @Repository
 public interface ClassCommentRepository extends JpaRepository<ClassComment, Integer>{

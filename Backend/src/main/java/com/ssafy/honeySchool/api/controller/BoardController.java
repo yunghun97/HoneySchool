@@ -10,6 +10,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
+import com.ssafy.honeySchool.api.service.BoardService;
+import com.ssafy.honeySchool.db.entity.ClassBoard;
+import com.ssafy.honeySchool.db.repository.ClassBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +29,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.ssafy.db.entity.ClassBoard;
-import com.ssafy.db.repository.ClassBoardRepository;
-import com.ssafy.honeySchool.service.BoardService;
 @CrossOrigin(origins = "http://localhost:8080/")
 @RestController
 @RequestMapping("/api/v1/board")
