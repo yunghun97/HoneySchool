@@ -15,21 +15,21 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:8080/")
 @RestController
-@RequestMapping("/api/v1/board")
+@RequestMapping("/api/v1/board/class")
 public class BoardController {
 		
 	@Autowired
 	private ClassBoardRepository classBoardRepository;
 	
 	// 전체 검색
-	@GetMapping("/class")
+	@GetMapping("")
 	public ResponseEntity<List<ClassBoard>> selectBoard(HttpServletRequest req) throws SQLException{
 		String school = req.getParameter("school");		
 		int grade = Integer.parseInt(req.getParameter("grade"));
 		int classes = Integer.parseInt(req.getParameter("classes"));
 		return new ResponseEntity<List<ClassBoard>>(classBoardRepository.findBySchoolAndGradeAndClasses(school, grade, classes),HttpStatus.OK);
 	}
-	@PostMapping("/class")
+	@PostMapping("")
 	public HttpStatus insertBoard(ClassBoard body) throws SQLException{
 		System.out.println("insert 집입");				
 		// 데이터 저장하기
@@ -47,7 +47,7 @@ public class BoardController {
 		return HttpStatus.OK;
 	}
 	// Jpa로 category 구분해서 가져오기
-	@GetMapping("/class/category")
+	@GetMapping("/category")
 	public ResponseEntity<List<ClassBoard>> selectCategory(HttpServletRequest req) {
 		String school = req.getParameter("school");		
 		String category = req.getParameter("category");
@@ -58,7 +58,7 @@ public class BoardController {
 	}	
 	// 전체게시판 글 상세
 	@Transactional
-	@GetMapping("/class/detail")
+	@GetMapping("/detail")
 	public ResponseEntity<ClassBoard> detailBoard(HttpServletRequest req) {
 		String school = req.getParameter("school");
 		int grade = Integer.parseInt(req.getParameter("grade"));

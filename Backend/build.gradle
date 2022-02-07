@@ -58,7 +58,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
 
-def querydslDir = "$buildDir/generated/querydsl"
+// querydsl 설정
+def querydslDir = "src/main/generated/querydsl"
 
 querydsl {
 	jpa = true
