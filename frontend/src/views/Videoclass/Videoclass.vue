@@ -52,9 +52,13 @@
           value="Leave session"
         />
         <input 
-          type="button" class="btn btn-large btn-success"
+          type="button" 
+          class="btn btn-large btn-success"
           id="buttonQuiz"
-          data-bs-toggle="modal" data-bs-target="#sendquiz" data-bs-whatever="@mdo" value="퀴즈내기"
+          data-bs-toggle="modal" 
+          data-bs-target="#sendquiz" 
+          data-bs-whatever="@mdo" 
+          value="퀴즈내기"
         />
       </div>
       <div class="row">
@@ -143,7 +147,11 @@
               <p>자리 비우기</p>
             </div>
             <!-- 퀴즈 링크 btn -->
-            <div class="nav-cont" data-bs-toggle="modal" data-bs-target="#recievedquiz">
+            <div 
+              class="nav-cont"
+               data-bs-toggle="modal" 
+               data-bs-target="#recievedquiz"
+            >
               <span class="main-btn">
                 <fa icon="smile" class="fontawesome"></fa>
               </span>
@@ -156,7 +164,6 @@
               </span>
               <p>나가기</p>
             </div>
-
           </div>
         </div>
         <div class="col-md-3">
@@ -219,8 +226,8 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
-//const OPENVIDU_SERVER_URL = "https://i6b201.p.ssafy.io:443";
-//const OPENVIDU_SERVER_SECRET = "ssafy";
+// const OPENVIDU_SERVER_URL = "https://i6b201.p.ssafy.io:443";
+// const OPENVIDU_SERVER_SECRET = "ssafy";
 
 export default {
   name: "App",
