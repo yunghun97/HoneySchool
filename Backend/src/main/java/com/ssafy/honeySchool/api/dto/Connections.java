@@ -1,4 +1,6 @@
-package com.ssafy.honeySchool.api.response;
+package com.ssafy.honeySchool.api.dto;
+
+import com.ssafy.honeySchool.api.response.LectureRes;
 
 import java.util.List;
 

@@ -1,5 +1,6 @@
 package com.ssafy.honeySchool.api.request;
 
+import com.ssafy.honeySchool.api.dto.DefaultRecordingProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,5 +12,5 @@ public class LectureReq {
     private String customSessionId;
     private String forceVideoCodec;
     private boolean allowTranscoding;
-    private DefaultRecordingPropertiesReq defaultRecordingPropertiesReq;
+    private DefaultRecordingProperties defaultRecordingProperties;
 }

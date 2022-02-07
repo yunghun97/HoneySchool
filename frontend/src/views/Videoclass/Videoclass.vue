@@ -96,8 +96,8 @@ import UserVideo from "./UserVideo";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
-const OPENVIDU_SERVER_SECRET = "MY_SECRET";
+const OPENVIDU_SERVER_URL = "https://i6b201.p.ssafy.io";
+const OPENVIDU_SERVER_SECRET = "ssafy";
 
 export default {
   name: "App",
@@ -314,7 +314,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .post(
-            `${OPENVIDU_SERVER_URL}/openvidu/api/sessions`,
+            `/api/v1/lecture/`,
             JSON.stringify({
               customSessionId: sessionId,
             }),

@@ -6,4 +6,5 @@ import com.ssafy.honeySchool.db.entity.Lecture;
 
 public interface LectureService {
     LectureRes createLecture(LectureReq lectureReq, String header);
+
 }

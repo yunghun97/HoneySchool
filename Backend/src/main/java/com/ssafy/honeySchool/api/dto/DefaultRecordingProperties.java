@@ -1,6 +1,6 @@
-package com.ssafy.honeySchool.api.request;
+package com.ssafy.honeySchool.api.dto;
 
-public class DefaultRecordingPropertiesReq {
+public class DefaultRecordingProperties {
     private String name;
     private boolean hasAudio;
     private boolean hasVideo;

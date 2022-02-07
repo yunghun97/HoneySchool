@@ -1,6 +1,7 @@
 package com.ssafy.honeySchool.api.response;
 
-import com.ssafy.honeySchool.api.request.DefaultRecordingPropertiesReq;
+import com.ssafy.honeySchool.api.dto.Connections;
+import com.ssafy.honeySchool.api.dto.DefaultRecordingProperties;
 import lombok.*;
 
 @Getter
@@ -14,7 +15,7 @@ public class LectureRes {
     private long createdAt;
     private String mediaMode;
     private String recordingMode;
-    private DefaultRecordingPropertiesReq defaultRecordingPropertiesReq;
+    private DefaultRecordingProperties defaultRecordingProperties;
     private String customSessionId;
     private Connections connections;
 
