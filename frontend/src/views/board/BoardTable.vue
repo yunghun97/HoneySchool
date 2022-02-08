@@ -13,6 +13,7 @@
         <th scope="col">글 번호</th>
         <th scope="col">제목</th>
         <th scope="col">분류</th>
+        <th scope="col">작성자</th>
         <th scope="col">작성 날짜</th>
       </tr>
     </thead>
@@ -24,7 +25,9 @@
         <td scope="row">{{article.id}}</td>
         <td>{{ article.title }}</td>
         <td>{{ article.category }}</td>
-        <td>{{ article.date }}</td>
+        <td v-if="article.user !== null">{{ article.user.name }}</td>
+        <td v-else>비로그인 사용자</td>
+        <td>{{ article.date.split("T")[0] }}</td>
       </tr>
     </tbody>
   </table>

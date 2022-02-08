@@ -19,9 +19,9 @@
                 <div >
                     <!--  v-if="currentarticle.files.length > 0" -->
                     <p>{{ currentarticle.files }}</p>
-                    <div>
+                    <!-- <div>
                         <p>{{ currentarticle }}</p>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -68,7 +68,16 @@
                     <h3><fa icon="comment" class="fa-icon-b"></fa> {{ comment.writer }}:
                         <!-- <span><small>{{ comment.date.split("T")[0] }}</small></span> -->
                     </h3>
+                    <!-- 댓글 수정 -->
+                    <div v-if="!isediting">
                     <p>{{ comment.content }}</p>
+                        <button type="button" class="btn btn-secondary comment-btn" @click="requestEditCom(comment.content)"><fa icon="edit" class="fa-icon"></fa></button>
+                    </div>
+                    <div v-else>
+                        <textarea class="form-control" rows="1" v-model="revisedComment"></textarea>
+                        <button type="button" class="btn btn-secondary comment-btn" @click="editCom(comment.id)"><fa icon="edit" class="fa-icon"></fa>수정</button>
+                    </div>
+                    <!-- 대댓글 작성 -->
                     <div v-if="isWrittingReComment">
                         <form role="form">
                             <div class="form-group">
@@ -82,8 +91,7 @@
                         <button type="button" class="btn btn-success comment-btn" @click="requestReCom"><fa icon="reply" class="fa-icon"></fa></button>
                     </div>
                     <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
-                <p>  </p>
-                <hr>
+                <hr class="line">
                 </div>
                 
             </div>
@@ -208,6 +216,32 @@ export default {
                 isLoadingCom.value = false
             })
         }
+        // 댓글 수정
+        let isediting = ref<boolean>(false);
+        let revisedComment = ref<string>('')
+        const requestEditCom = (oldCom:string) => {
+            isediting.value = !isediting.value
+            revisedComment.value = oldCom
+        }
+        const editCom = (comId:number) => {
+            if (revisedComment.value.length === 0) {
+                alert("댓글 내용을 작성해주세요")
+            } else {
+                axios.put(`http://localhost:9999/api/v1/board/class/${id}/comment/${comId}`, {
+                    'content': revisedComment.value,
+                    'writer': '박싸피',
+                    })
+                .then(() => {
+                    revisedComment.value = ''
+                    isediting.value = false
+                    isLoadingCom.value = false
+                    commentList()
+                })
+                .then(() => {
+                    isLoadingCom.value = false
+                })
+            }
+        }
         
         let isWrittingReComment = ref<boolean>(false);
         const requestReCom = () => {
@@ -218,6 +252,7 @@ export default {
         return { id, isLoading, 
         isLoadingCom, commentList, comments, deleteCom,
         currentarticle, deleteArticle, 
+        isediting, revisedComment, requestEditCom, editCom,
         newComment, postComment, isWrittingReComment, requestReCom, 
         
         }
@@ -260,6 +295,9 @@ export default {
 }
 .fa-icon-b{
     width: 30px;
+}
+.line {
+    margin-top: 10px;
 }
 button {
     margin:5px;
