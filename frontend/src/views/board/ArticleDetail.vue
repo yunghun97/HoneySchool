@@ -5,7 +5,6 @@
     
     <!-- Article Detail -->
     <div v-else>
-
         <div class="card">
             <h4 class="card-header">{{ currentarticle.title }}</h4>
             <div class="card-body">
@@ -17,7 +16,8 @@
                 <div v-if="currentarticle.category==='photo'" class="img-container">
                     <img :src="currentarticle.file" alt="img" class="img-fluid">
                 </div>
-                <div v-if="currentarticle.file_link.length > 0" >
+                <div >
+                    <!--  v-if="currentarticle.files.length > 0" -->
                     <p>{{ currentarticle.files }}</p>
                     <div>
                         <p>{{ currentarticle }}</p>
@@ -41,7 +41,7 @@
                         >
                         삭제하기
                     </button>
-                </div>  
+                </div>
             <hr>
             <!-- comments 작성 -->
             <div class="comment-box">
@@ -55,23 +55,38 @@
             </div>
             <hr>
             <!-- comments 조회 -->
-            <div class="comment-list">
-                <h3><fa icon="comment" class="fa-icon-b"></fa> 김싸피:
-                    <span><small>2022-02-07</small></span>
-                </h3>
-                <p>댓글 내용을 여기에 작성하면 이렇게 보임</p>
-                <img src="" alt="이미지도 이렇게 보임">
-                <div v-if="isWrittingReComment">
-                    <form role="form">
-                        <div class="form-group">
-                            <textarea class="form-control" rows="1"></textarea>
-                        </div>
-                        <button class="btn btn-primary comment-btn"><fa icon="reply" class="fa-icon"></fa> 작성</button>
-                    </form>
-                </div>
-                <button type="button" class="btn btn-success comment-btn" @click="requestReCom" v-else><fa icon="reply" class="fa-icon"></fa></button>
+            <div v-if="isLoadingCom">
+                <p>...LOADING</p>
             </div>
-            <hr>
+            
+            <div v-if="!isLoadingCom">
+                <div 
+                    class="comment-list" 
+                    v-for="comment in comments"
+                    :key="comment.id"
+                >
+                    <h3><fa icon="comment" class="fa-icon-b"></fa> {{ comment.writer }}:
+                        <!-- <span><small>{{ comment.date.split("T")[0] }}</small></span> -->
+                    </h3>
+                    <p>{{ comment.content }}</p>
+                    <div v-if="isWrittingReComment">
+                        <form role="form">
+                            <div class="form-group">
+                                <textarea class="form-control" rows="1"></textarea>
+                            </div>
+                            <button class="btn btn-primary comment-btn"><fa icon="reply" class="fa-icon"></fa> 작성</button>
+                            <button type="button" class="btn btn-success comment-btn" @click="requestReCom">취소</button>
+                        </form>
+                    </div>
+                    <div v-else>
+                        <button type="button" class="btn btn-success comment-btn" @click="requestReCom"><fa icon="reply" class="fa-icon"></fa></button>
+                    </div>
+                    <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
+                <p>  </p>
+                <hr>
+                </div>
+                
+            </div>
         </div>
   
 	</div>
@@ -117,7 +132,6 @@ export default {
             })
             .then((response)=>{
                 currentarticle.value = response.data
-                console.log(response.data)
             })
             .catch(()=>
                 alert("실패!")
@@ -126,11 +140,31 @@ export default {
         articleDetail().then(() => {
             isLoading.value = false
         })
-        
+        // comment get 요청
+        let isLoadingCom = ref<boolean>(true);
+        let comments = ref({});
+        const commentList = () => {
+            return axios.get("http://localhost:9999/api/v1/board/class/comment",{
+                params:{
+                school: "싸피초",
+                grade: 1,
+                classes: 1,
+                board_id : route.params.article_id
+                }
+            })
+            .then((res) => {
+                isLoadingCom.value = false
+                comments.value = res.data
+            })
+        }
+        commentList().then(() =>{
+            isLoadingCom.value = false
+        })
+
         // 삭제 버튼 클릭
         const deleteArticle = () => {
             // delete 요청 보내기
-            axios.delete("http://localhost:9999/api/v1/board/class",{
+            axios.delete("http://localhost:9999/api/v1/board/class/comment",{
                 params:{
                     school: "싸피초",
                     grade: 1,
@@ -142,37 +176,48 @@ export default {
                 router.push({name: 'BoardTable'})
             })
         }
-
+        // 댓글 작성
         let newComment = ref<string>('');
         const postComment = () => {
             console.log(newComment.value)
             if (newComment.value.length === 0) {
                 alert("댓글 내용을 작성해주세요")
             } else {
-                axios.post("http://localhost:9999/api/v1/board/class/comment", {
+                axios.post(`http://localhost:9999/api/v1/board/class/${id}/comment/`, {
                     'content': newComment.value,
                     'writer': '박싸피',
-                    }, 
-                    {params:{
-                        school: "싸피초",
-                        grade: 1,
-                        classes: 1,
-                        id: id
-                    }
+                    })
+                .then(() => {
+                    newComment.value = ''
+                    isLoadingCom.value = false
+                    commentList()
                 })
-                .then((res) => {
-                    console.log(res)
+                .then(() => {
+                    isLoadingCom.value = false
                 })
             }
         }
-
+        // 댓글 삭제
+        const deleteCom = (comId:number) => {
+            axios.delete(`http://localhost:9999/api/v1/board/class/${id}/comment/${comId}`)
+            .then(() => {
+                isLoadingCom.value = false
+                commentList()
+            })
+            .then(() =>{
+                isLoadingCom.value = false
+            })
+        }
+        
         let isWrittingReComment = ref<boolean>(false);
         const requestReCom = () => {
-            isWrittingReComment.value = true;
+            isWrittingReComment.value = !isWrittingReComment.value;
         }
 
 
-        return { id, isLoading, currentarticle, deleteArticle, 
+        return { id, isLoading, 
+        isLoadingCom, commentList, comments, deleteCom,
+        currentarticle, deleteArticle, 
         newComment, postComment, isWrittingReComment, requestReCom, 
         
         }
@@ -204,7 +249,8 @@ export default {
 }
 .comment-btn {
     float: right;
-    margin-top: 10px;
+    /* margin-top: 10px; */
+    margin-bottom: 10px;
 }
 .comment-list {
     text-align: left;
