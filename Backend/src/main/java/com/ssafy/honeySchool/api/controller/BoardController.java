@@ -2,33 +2,35 @@ package com.ssafy.honeySchool.api.controller;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpRequest;
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
-import com.ssafy.honeySchool.api.service.BoardService;
-import com.ssafy.honeySchool.db.entity.ClassBoard;
-import com.ssafy.honeySchool.db.repository.ClassBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.honeySchool.api.service.BoardService;
+import com.ssafy.honeySchool.db.entity.ClassBoard;
+import com.ssafy.honeySchool.db.entity.ClassComment;
+import com.ssafy.honeySchool.db.entity.User;
+import com.ssafy.honeySchool.db.repository.ClassBoardRepository;
+import com.ssafy.honeySchool.db.repository.ClassCommentRepository;
+import com.ssafy.honeySchool.db.repository.UserRepository;
 @CrossOrigin(origins = "http://localhost:8080/")
 @RestController
 @RequestMapping("/api/v1/board")
@@ -37,6 +39,9 @@ public class BoardController {
 	@Autowired
 	private ClassBoardRepository classBoardRepository;
 	
+	@Autowired
+	ClassCommentRepository classCommentRepository;
+	
 	// 서버 상대경로 얻을 때 사용
 	@Autowired
 	private HttpServletRequest request;
@@ -44,13 +49,17 @@ public class BoardController {
 	@Autowired
     private BoardService boardService;
 	
+	// User 객체 못가져와서 임시로 사용
+	@Autowired
+	UserRepository userRepository;
+	
 	// 반 게시판 전체 목록
 	@GetMapping("/class")
 	public ResponseEntity<List<ClassBoard>> selectBoard(HttpServletRequest req) throws SQLException{
 		String school = req.getParameter("school");		
 		int grade = Integer.parseInt(req.getParameter("grade"));
 		int classes = Integer.parseInt(req.getParameter("classes"));
-		return new ResponseEntity<List<ClassBoard>>(classBoardRepository.findBySchoolAndGradeAndClasses(school, grade, classes),HttpStatus.OK);
+		return new ResponseEntity<List<ClassBoard>>(classBoardRepository.findBySchoolAndGradeAndClassesOrderByIdDesc(school, grade, classes),HttpStatus.OK);
 	}
 //	@PostMapping("/class")
 //	public HttpStatus insertBoard(ClassBoard body) throws SQLException{
@@ -69,8 +78,10 @@ public class BoardController {
 //				.build());				
 //		return HttpStatus.OK;
 //	}
-	@PostMapping("/class")
+	// User 객체 못가져와서 임시로 url에 써서 받아옴
+	@PostMapping("/class/{userId}")
 	public ResponseEntity<?> createBoard(
+			@PathVariable String userId,
 			ClassBoard body, 
 			// validation 라이브러리가 없어서 @Valid를 뺌 
 //			@Valid @RequestParam("files") List<MultipartFile> files
@@ -86,16 +97,18 @@ public class BoardController {
 		rootPath = resourcesPath;
 		System.out.println("루트패스 수정: " + rootPath);
 		
+		// User 객체 못가져와서 임시로 사용 (User랑 합치면 수정)
+        User user = userRepository.findByUserId(userId).get();
+		
 		// 데이터 저장하기
 		ClassBoard board = boardService.addBoard(ClassBoard.builder()
 				.category(body.getCategory())
 				.title(body.getTitle())
 				.content(body.getContent())
-				.writer(body.getWriter())
+				.user(user)
 				.school(body.getSchool())
 				.grade(body.getGrade())
 				.classes(body.getClasses())
-				.file_link(body.getFile_link())
 				.viewcount(0)
 				.build(), files, rootPath);
 		// BoardService에서는 전달한 게시글의 id를 못찾는다. -> id를 DB에서 생성하기 때문에, 데이터가 DB에 들어가고 난 후에만 getId가 가능하다. 그전까지는 0으로 되는듯
@@ -103,17 +116,33 @@ public class BoardController {
 		URI uriLocation = new URI("/board/" + board.getId());
         return ResponseEntity.created(uriLocation).body("{}");	
 	}
-	// Jpa로 category 구분해서 가져오기
+	// Jpa로 category 구분해서 가져오기 (pk 내림차순)
 	@GetMapping("/class/category")
 	public ResponseEntity<List<ClassBoard>> selectCategory(HttpServletRequest req) {
-		String school = req.getParameter("school");		
 		String category = req.getParameter("category");
+		String school = req.getParameter("school");		
 		int grade = Integer.parseInt(req.getParameter("grade"));
 		int classes = Integer.parseInt(req.getParameter("classes"));	
 		
-		return new ResponseEntity<List<ClassBoard>>(classBoardRepository.findBySchoolAndGradeAndClassesAndCategory(school, grade, classes, category),HttpStatus.OK);
-	}	
-	// 전체게시판 글 상세
+		return new ResponseEntity<List<ClassBoard>>(classBoardRepository.findBySchoolAndGradeAndClassesAndCategoryOrderByIdDesc(school, grade, classes, category),HttpStatus.OK);
+	}
+	// 특정 category에서 특정 user가 쓴 글 모아보기 (pk 내림차순)
+	// User 객체 못가져와서 임시로 url에 써서 받아옴
+	@GetMapping("/class/category/user/{userId}")
+	public ResponseEntity<List<ClassBoard>> selectCategoryAndUser(HttpServletRequest req, @PathVariable String userId) throws SQLException{
+		String category = req.getParameter("category");
+		String school = req.getParameter("school");		
+		int grade = Integer.parseInt(req.getParameter("grade"));
+		int classes = Integer.parseInt(req.getParameter("classes"));
+		
+		// User 객체 못가져와서 임시로 사용 (User랑 합치면 수정)
+        User user = userRepository.findByUserId(userId).get();
+        
+		return new ResponseEntity<List<ClassBoard>>(
+				classBoardRepository.findByCategoryAndSchoolAndGradeAndClassesAndUserOrderByIdDesc(category, school, grade, classes, user), 
+				HttpStatus.OK);
+	}
+	// 전체게시판 글 상세 (+ 댓글 같이 가져옴)
 	@Transactional
 	@GetMapping("/class/detail")
 	public ResponseEntity<ClassBoard> detailBoard(HttpServletRequest req) {
@@ -139,7 +168,7 @@ public class BoardController {
 	// 전체게시판 글 수정
 	// API 명세서랑 다르게 일단 entity 자체를 리턴했습니다
 	@Transactional
-	@PatchMapping("/class")
+	@PutMapping("/class")
 	public ResponseEntity<ClassBoard> updateBoard(ClassBoard body) throws SQLException{
 		String school = body.getSchool();		
 		int grade = body.getGrade();
@@ -149,8 +178,7 @@ public class BoardController {
 		String category = body.getCategory();
 		String title = body.getTitle();
 		String content = body.getContent();
-		String file_link = body.getFile_link();
-		board.update(category, title, content, file_link);
+		board.update(category, title, content);
 		return new ResponseEntity<ClassBoard>(board, HttpStatus.OK);
 	}
 	// 로컬 폴더에 파일 업로드 - 잘 작동

@@ -11,7 +11,7 @@ import Question from "../views/board/Question.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
 import Videoclass from "../views/Videoclass/Videoclass.vue";
-
+import AskQuestion from "../views/board/AskQuestion.vue"
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -38,7 +38,7 @@ const routes: Array<RouteRecordRaw> = [
     component: BoardTable,
   },
   {
-    path: "/classboard/:category/:article_id",
+    path: "/classboard/:article_id",
     name: "ArticleDetail",
     component: ArticleDetail,
   },
@@ -56,9 +56,6 @@ const routes: Array<RouteRecordRaw> = [
     path: "/classboard/notice/:article_id",
     name: "Notice",
     component: () => import("@/views/board/Notice.vue"),
-    // meta: {
-    //   reload: true
-    // }
   },
   {
     path: "/classboard/handouts/:article_id",
@@ -94,6 +91,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/videoclass",
     name: "Videoclass",
     component: Videoclass,
+  },
+  {
+    path: "/classboard/askquestion",
+    name: "AskQuestion",
+    component: AskQuestion,
   },
 ];
 

@@ -78,7 +78,7 @@
                 <div
                   v-for="sub in subscribersCamera"
                   :key="sub.stream.connection.connectionId"
-                  style="width: 100%"
+                  class="subContainer"
                 >
                   <user-video
                     :stream-manager="sub"
@@ -752,7 +752,6 @@ export default {
   padding: 0;
 }
 .nav-cont {
-  float: left;
   display: block;
   text-align: center;
 }
@@ -786,7 +785,9 @@ export default {
 }
 .iconsOnVideo {
   position: absolute;
-  bottom: 3px;
-  left: 20%;
+  left: 40%;
+  bottom: 25%;
+  /* bottom: 3px; */
+  /* left: 20%; */
 }
 </style>

@@ -3,19 +3,15 @@ package com.ssafy.honeySchool.api.controller;
 
 import com.ssafy.honeySchool.api.request.UserLoginPostReq;
 import com.ssafy.honeySchool.api.response.UserLoginPostRes;
-import com.ssafy.honeySchool.api.response.UserIdRes;
 import com.ssafy.honeySchool.api.service.UserService;
-import com.ssafy.honeySchool.common.auth.HoneySchoolUserDetails;
 import com.ssafy.honeySchool.common.model.response.BaseResponseBody;
 import com.ssafy.honeySchool.common.util.JwtTokenUtil;
 import com.ssafy.honeySchool.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 인증 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -39,7 +35,7 @@ public class AuthController {
         @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
 	public ResponseEntity<UserLoginPostRes> login(@RequestBody @ApiParam(value="로그인 정보", required = true) UserLoginPostReq loginInfo) {
-		String userId = loginInfo.getUser_id();
+		String userId = loginInfo.getId();
 		String password = loginInfo.getPassword();
 		
 		User user = userService.getUserByUserId(userId);
