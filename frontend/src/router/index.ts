@@ -11,7 +11,7 @@ import Question from "../views/board/Question.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
 import Videoclass from "../views/Videoclass/Videoclass.vue";
-
+import AskQuestion from "../views/board/AskQuestion.vue"
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -43,7 +43,7 @@ const routes: Array<RouteRecordRaw> = [
     component: ArticleDetail,
   },
   {
-    path: "/classboard/:category/:article_id/edit",
+    path: "/classboard/:article_id/edit",
     name: "ArticleUpdate",
     component: () => import("@/views/board/ArticleUpdate.vue"),
   },
@@ -94,6 +94,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/videoclass",
     name: "Videoclass",
     component: Videoclass,
+  },
+  {
+    path: "/classboard/askquestion",
+    name: "AskQuestion",
+    component: AskQuestion,
   },
 ];
 
