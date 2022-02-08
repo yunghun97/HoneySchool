@@ -54,13 +54,14 @@ export const accountStore: Module<accountState, RootState> = {
     },
   },
   actions: {
-    getToken({ commit }, { username, password }) {
+    getToken({ commit }, { user_id, password }) {
       axios
-        .post("http://localhost:8000/api/token/", { username, password })
+        .post("http://localhost:9999/api/v1/auth/login", { user_id, password })
         .then((response) => {
-          localStorage.setItem("accessToken", response.data.access);
-          commit("setToken", response.data.access);
-          router.push({ name: "Index" });
+          console.log(response)
+          localStorage.setItem("accessToken", response.data.accessToken);
+          commit("setToken", response.data.accessToken);
+          router.push({ name: "About" });
         })
         .catch((err) => {
           console.log("에러", err.response);
