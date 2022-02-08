@@ -38,7 +38,7 @@ const routes: Array<RouteRecordRaw> = [
     component: BoardTable,
   },
   {
-    path: "/classboard/:category/:article_id",
+    path: "/classboard/:article_id",
     name: "ArticleDetail",
     component: ArticleDetail,
   },

@@ -88,7 +88,7 @@ export default defineComponent({
       formData.append('category', this.article.category);
       formData.append('title', this.article.title);
       formData.append('content', this.article.content);
-      formData.append('file_link', this.article.file_link);
+      formData.append('files', this.article.file_link);
           
       // 글작성하느라 임의로 추가한내용
       formData.append('writer', "김싸피"); // user가 기본키여서 김싸피만 user로 등록되어있어서 작성자 바꿀려면 사람 User에서 추가해야합니다.
@@ -102,7 +102,7 @@ export default defineComponent({
       axios.post("http://localhost:9999/api/v1/board/class",formData, 
       {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
       )
-      .then((response)=>{
+      .then(()=>{
         router.push({name: 'BoardTable'})
       })
       .catch(()=>{
