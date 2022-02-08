@@ -88,7 +88,8 @@ export default {
                 }
             })
             .then((response)=>{
-                currentarticle.value = response.data
+                console.log(response)
+                currentarticle.value = response.data.board
                 
             })
             .catch(()=>
@@ -109,8 +110,8 @@ export default {
 
         const fileSelect = () => {
             const file = ref() as any
-            console.log(file.files)
             currentarticle.value.file_link= file.files;
+            console.log(file.value.files)
         };
         const clearFiles = (event:any) => {
             event.preventDefault()

@@ -42,7 +42,7 @@
         </div>
       </div>
 
-      <button @click="saveArticle" class="btn btn-success">작성하기</button>
+      <button @click="saveArticle" class="btn btn-success" type="button">작성하기</button>
     </form>
   </div>
 </template>
@@ -91,19 +91,20 @@ export default defineComponent({
       formData.append('files', this.article.file_link);
           
       // 글작성하느라 임의로 추가한내용
-      formData.append('writer', "김싸피"); // user가 기본키여서 김싸피만 user로 등록되어있어서 작성자 바꿀려면 사람 User에서 추가해야합니다.
+      //formData.append('writer', "김싸피"); // user가 기본키여서 김싸피만 user로 등록되어있어서 작성자 바꿀려면 사람 User에서 추가해야합니다.
       formData.append('grade', '1');
       formData.append('classes', '1');
       formData.append('school', "싸피초");
 
       this.submitted = true
-
+      console.log(formData)
       // POST 요청
-      axios.post("http://localhost:9999/api/v1/board/class",formData, 
-      {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
+      axios.post("http://localhost:9999/api/v1/board/class/yunghun97",formData, 
+      { headers: {'Content-Type' : 'multipart/form-data;charset=utf-8' } }
       )
-      .then(()=>{
+      .then((res)=>{
         router.push({name: 'BoardTable'})
+        
       })
       .catch(()=>{
         alert("글 작성 실패")

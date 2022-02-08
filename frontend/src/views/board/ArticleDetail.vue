@@ -6,22 +6,21 @@
     <!-- Article Detail -->
     <div v-else>
         <div class="card">
-            <h4 class="card-header">{{ currentarticle.title }}</h4>
+            <h4 class="card-header">{{ currentarticle.board.title }}</h4>
             <div class="card-body">
-                <p>작성자 : {{ currentarticle.writer }}</p>
-                <p>작성날짜 : {{currentarticle.date.split("T")[0] }}</p>
+                <p>작성자 : {{ currentarticle.board.user.name }}</p>
+                <p>작성날짜 : {{ currentarticle.board.date.split("T")[0] }}</p>
                 <div class="content-container">
-                    <p>{{ currentarticle.content }}</p>
+                    <p>{{ currentarticle.board.content }}</p>
                 </div>
-                <div v-if="currentarticle.category==='photo'" class="img-container">
-                    <img :src="currentarticle.file" alt="img" class="img-fluid">
+                <div v-if="currentarticle.board.category==='photo'" class="img-container">
+                    <img :src="currentarticle.files" alt="img" class="img-fluid">
                 </div>
-                <div >
-                    <!--  v-if="currentarticle.files.length > 0" -->
+                <div v-if="currentarticle.files.length > 0">
                     <p>{{ currentarticle.files }}</p>
-                    <!-- <div>
-                        <p>{{ currentarticle }}</p>
-                    </div> -->
+                </div>
+                <div>
+                    <p>{{ currentarticle }}</p>
                 </div>
             </div>
         </div>
@@ -50,7 +49,7 @@
                     <div class="form-group">
                         <textarea class="form-control" rows="3" v-model="newComment"></textarea>
                     </div>
-                    <button type="button" class="btn btn-primary comment-btn" @click="postComment"><fa icon="reply" class="fa-icon"></fa> 작성</button>
+                    <button type="button" class="btn btn-primary post-btn" @click="postComment"><fa icon="reply" class="fa-icon"></fa> 작성</button>
                 </form>
             </div>
             <hr>
@@ -66,32 +65,32 @@
                     :key="comment.id"
                 >
                     <h3><fa icon="comment" class="fa-icon-b"></fa> {{ comment.writer }}:
-                        <!-- <span><small>{{ comment.date.split("T")[0] }}</small></span> -->
+                        <span><small>{{ comment.date.split("T")[0] }}</small></span>
                     </h3>
+                    <p :class="'collapse show col'+comment.id">{{ comment.content }}</p>
+                    <!-- 댓글 삭제 -->
+                    <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
                     <!-- 댓글 수정 -->
-                    <div v-if="!isediting">
-                    <p>{{ comment.content }}</p>
-                        <button type="button" class="btn btn-secondary comment-btn" @click="requestEditCom(comment.content)"><fa icon="edit" class="fa-icon"></fa></button>
-                    </div>
-                    <div v-else>
-                        <textarea class="form-control" rows="1" v-model="revisedComment"></textarea>
-                        <button type="button" class="btn btn-secondary comment-btn" @click="editCom(comment.id)"><fa icon="edit" class="fa-icon"></fa>수정</button>
+                    <button class="btn btn-secondary comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.col'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
+                        <fa icon="edit" class="fa-icon"></fa>
+                    </button>
+                    <div :class="'collapse col'+comment.id">
+                        <div class="card card-body">
+                            <textarea class="form-control" rows="1" v-model="revisedComment"></textarea>
+                            <button type="button" class="btn btn-secondary" @click="editCom(comment.id)"><fa icon="edit" class="fa-icon"></fa>수정</button>
+                        </div>
                     </div>
                     <!-- 대댓글 작성 -->
-                    <div v-if="isWrittingReComment">
-                        <form role="form">
-                            <div class="form-group">
-                                <textarea class="form-control" rows="1"></textarea>
-                            </div>
-                            <button class="btn btn-primary comment-btn"><fa icon="reply" class="fa-icon"></fa> 작성</button>
-                            <button type="button" class="btn btn-success comment-btn" @click="requestReCom">취소</button>
-                        </form>
+                     <button class="btn btn-success comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.re'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
+                        <fa icon="reply" class="fa-icon"></fa>
+                    </button>
+                    <div :class="'collapse re'+comment.id">
+                        <div class="card card-body">
+                            <textarea class="form-control" rows="1" v-model="reComment"></textarea>
+                            <button type="button" class="btn btn-success" @click="postReCom(comment.id)"><fa icon="reply" class="fa-icon"></fa>작성</button>
+                        </div>
                     </div>
-                    <div v-else>
-                        <button type="button" class="btn btn-success comment-btn" @click="requestReCom"><fa icon="reply" class="fa-icon"></fa></button>
-                    </div>
-                    <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
-                <hr class="line">
+                    <hr>
                 </div>
                 
             </div>
@@ -172,7 +171,7 @@ export default {
         // 삭제 버튼 클릭
         const deleteArticle = () => {
             // delete 요청 보내기
-            axios.delete("http://localhost:9999/api/v1/board/class/comment",{
+            axios.delete("http://localhost:9999/api/v1/board/class/",{
                 params:{
                     school: "싸피초",
                     grade: 1,
@@ -217,10 +216,8 @@ export default {
             })
         }
         // 댓글 수정
-        let isediting = ref<boolean>(false);
         let revisedComment = ref<string>('')
         const requestEditCom = (oldCom:string) => {
-            isediting.value = !isediting.value
             revisedComment.value = oldCom
         }
         const editCom = (comId:number) => {
@@ -233,7 +230,6 @@ export default {
                     })
                 .then(() => {
                     revisedComment.value = ''
-                    isediting.value = false
                     isLoadingCom.value = false
                     commentList()
                 })
@@ -242,19 +238,20 @@ export default {
                 })
             }
         }
-        
-        let isWrittingReComment = ref<boolean>(false);
-        const requestReCom = () => {
-            isWrittingReComment.value = !isWrittingReComment.value;
+        // 대댓글 작성
+        let reComment = ref<string>('')
+        const postReCom = (comId:number) => {
+            if (reComment.value.length === 0) {
+                alert("댓글 내용을 작성해주세요")
+            } else {
+                alert(reComment.value)
+            }
         }
-
-
         return { id, isLoading, 
         isLoadingCom, commentList, comments, deleteCom,
         currentarticle, deleteArticle, 
-        isediting, revisedComment, requestEditCom, editCom,
-        newComment, postComment, isWrittingReComment, requestReCom, 
-        
+        revisedComment, requestEditCom, editCom,
+        newComment, postComment, reComment, postReCom, 
         }
     }
 }
@@ -265,7 +262,7 @@ export default {
     width: 1320px;
     display: inline-block;
 }
-.card-body > p {
+.card-body > p{
     text-align: right;
 }
 .btns {
@@ -283,21 +280,23 @@ export default {
     text-align: left;
 }
 .comment-btn {
+    display:inline-block; 
+    margin-top: -42px;
     float: right;
-    /* margin-top: 10px; */
-    margin-bottom: 10px;
 }
 .comment-list {
     text-align: left;
+    margin-bottom: 30px;
 }
+
 .fa-icon{
     width: 15px;
 }
 .fa-icon-b{
     width: 30px;
 }
-.line {
-    margin-top: 10px;
+.post-btn {
+    float: right;
 }
 button {
     margin:5px;

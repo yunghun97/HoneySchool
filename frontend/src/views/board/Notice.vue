@@ -71,9 +71,6 @@ export default
             .then((response)=>{
                 currentarticle.value = response.data
             })
-            .catch(()=>
-                alert("실패!")
-            )  
         }
 
         const articles = computed(() => store.state.boardStore.notice);
