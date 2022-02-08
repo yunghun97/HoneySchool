@@ -4,7 +4,9 @@ package com.ssafy.honeySchool.api.controller;
 import java.io.File;
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -26,8 +28,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.honeySchool.api.service.BoardService;
 import com.ssafy.honeySchool.db.entity.ClassBoard;
+import com.ssafy.honeySchool.db.entity.ClassBoardFile;
 import com.ssafy.honeySchool.db.entity.ClassComment;
+import com.ssafy.honeySchool.db.entity.DeleteYn;
 import com.ssafy.honeySchool.db.entity.User;
+import com.ssafy.honeySchool.db.repository.ClassBoardFileRepository;
 import com.ssafy.honeySchool.db.repository.ClassBoardRepository;
 import com.ssafy.honeySchool.db.repository.ClassCommentRepository;
 import com.ssafy.honeySchool.db.repository.UserRepository;
@@ -41,6 +46,9 @@ public class BoardController {
 	
 	@Autowired
 	ClassCommentRepository classCommentRepository;
+	
+	@Autowired
+	ClassBoardFileRepository classBoardFileRepository;
 	
 	// 서버 상대경로 얻을 때 사용
 	@Autowired
@@ -92,8 +100,11 @@ public class BoardController {
 		
 		// 원래 코드에서는 FileHandler 에서 절대경로를 얻었지만, 상대경로로 바꿔야해서 controller에서 생성 -> service로 전달 -> FileHandler로 전달 -> 파일 저장
 		String rootPath = request.getSession().getServletContext().getRealPath("/uploads");
-		String resourcesPath = rootPath.substring(0, rootPath.length()-14) + "resources\\static\\uploads";
+		System.out.println("바뀐 static path?? : " + rootPath);
+		// 저장 경로 변경 부분
+		String resourcesPath = rootPath.substring(0, rootPath.length()-14) + "resources\\static\\uploads";	
 //		System.out.println("자른 거: " + resourcesPath + "resources\\static\\uploads");
+		
 		rootPath = resourcesPath;
 		System.out.println("루트패스 수정: " + rootPath);
 		
@@ -145,14 +156,24 @@ public class BoardController {
 	// 전체게시판 글 상세 (+ 댓글 같이 가져옴)
 	@Transactional
 	@GetMapping("/class/detail")
-	public ResponseEntity<ClassBoard> detailBoard(HttpServletRequest req) {
+	public ResponseEntity<Map<String, Object>> detailBoard(HttpServletRequest req) {
 		String school = req.getParameter("school");		
 		int grade = Integer.parseInt(req.getParameter("grade"));
 		int classes = Integer.parseInt(req.getParameter("classes"));
 		int id = Integer.parseInt(req.getParameter("id"));
 		classBoardRepository.updateView(id);
+		// 글정보, 댓글, 파일정보 같이 묶어서 응답
 		ClassBoard detail = classBoardRepository.findBySchoolAndGradeAndClassesAndId(school, grade, classes, id);
-		return new ResponseEntity<ClassBoard>(detail, HttpStatus.OK);
+		List<ClassComment> comments = classCommentRepository.findClassCommentByClassBoard(detail);
+		List<ClassBoardFile> files = classBoardFileRepository.findByBoardIdAndIsDeleted(id, DeleteYn.N);
+		// Map 사용해서 묶기
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("board", detail);
+		map.put("comments", comments);
+		map.put("files", files);
+		return new ResponseEntity<>(map, HttpStatus.OK);
+//		return new ResponseEntity<ClassBoard>(detail, HttpStatus.OK);
 	}
 	// 전체게시판 글 삭제
 	@DeleteMapping("/class")

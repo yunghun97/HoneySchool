@@ -142,11 +142,11 @@ public class FileHandler {
                 String new_file_name = Long.toString(System.nanoTime()) + originalFileExtension;
                 // 생성 후 리스트에 추가
                 ClassBoardFile classBoardFile = ClassBoardFile.builder()
-                        .board_id(boardID)
+                        .boardId(boardID)
                         .original_file_name(multipartFile.getOriginalFilename())
                         .stored_file_path(path + "/" + new_file_name)
                         .file_size(multipartFile.getSize())
-                        .delete_yn(DeleteYn.N)
+                        .isDeleted(DeleteYn.N)
                         .build();
                 fileList.add(classBoardFile);
                 
