@@ -1,37 +1,35 @@
 <template>
-<div class="root">
-  <div
-  class="box">
-  <div
-    cols="4"
-    v-for="category in categories"
-    :key="category"
-  >
+  <div class="root">
     <div
-      class="card"
-      @click="pushRouter(category.url)"
-
-      :style="{backgroundColor : category.color}"
+    class="box">
+    <div
+      cols="4"
+      v-for="category in categories"
+      :key="category"
     >
-      <div class="card-body">
-        <div class="card-icon">
-          <img
-            :src="require(`@/assets/board/${category.url}.png`)"
-            alt="img"
-          />
+      <div
+        class="card"
+        @click="pushRouter(category.url)"
+        :style="{backgroundColor : category.color}"
+      >
+        <div class="card-body">
+          <div class="card-icon">
+            <img
+              :src="require(`@/assets/board/${category.url}.png`)"
+              alt="img"
+            />
+          </div>
+          <div class="card-name">
+            <h1>
+              {{ category.name }}
+            </h1>
+          </div>
         </div>
-        <div class="card-name">
-          <h1>
-            {{ category.name }}
-          </h1>
-        </div>
-
       </div>
     </div>
-  </div>
 
+    </div>
   </div>
-</div>
 </template>
 
 <script lang="ts">

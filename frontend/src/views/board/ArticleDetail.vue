@@ -19,9 +19,9 @@
                 <div >
                     <!--  v-if="currentarticle.files.length > 0" -->
                     <p>{{ currentarticle.files }}</p>
-                    <!-- <div>
+                    <div>
                         <p>{{ currentarticle }}</p>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                     <div class="form-group">
                         <textarea class="form-control" rows="3" v-model="newComment"></textarea>
                     </div>
-                    <button type="button" class="btn btn-primary comment-btn" @click="postComment"><fa icon="reply" class="fa-icon"></fa> 작성</button>
+                    <button type="button" class="btn btn-primary post-btn" @click="postComment"><fa icon="reply" class="fa-icon"></fa> 작성</button>
                 </form>
             </div>
             <hr>
@@ -68,15 +68,16 @@
                     <h3><fa icon="comment" class="fa-icon-b"></fa> {{ comment.writer }}:
                         <!-- <span><small>{{ comment.date.split("T")[0] }}</small></span> -->
                     </h3>
-                    <!-- 댓글 수정 -->
-                    <div v-if="!isediting">
                     <p>{{ comment.content }}</p>
+                    <!-- 댓글 수정 -->
+                    <!-- <div v-if="!isediting">
                         <button type="button" class="btn btn-secondary comment-btn" @click="requestEditCom(comment.content)"><fa icon="edit" class="fa-icon"></fa></button>
                     </div>
                     <div v-else>
                         <textarea class="form-control" rows="1" v-model="revisedComment"></textarea>
                         <button type="button" class="btn btn-secondary comment-btn" @click="editCom(comment.id)"><fa icon="edit" class="fa-icon"></fa>수정</button>
-                    </div>
+                    </div> -->
+                    <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
                     <!-- 대댓글 작성 -->
                     <div v-if="isWrittingReComment">
                         <form role="form">
@@ -90,8 +91,7 @@
                     <div v-else>
                         <button type="button" class="btn btn-success comment-btn" @click="requestReCom"><fa icon="reply" class="fa-icon"></fa></button>
                     </div>
-                    <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
-                <hr class="line">
+                <hr>
                 </div>
                 
             </div>
@@ -172,7 +172,7 @@ export default {
         // 삭제 버튼 클릭
         const deleteArticle = () => {
             // delete 요청 보내기
-            axios.delete("http://localhost:9999/api/v1/board/class/comment",{
+            axios.delete("http://localhost:9999/api/v1/board/class/",{
                 params:{
                     school: "싸피초",
                     grade: 1,
@@ -217,44 +217,41 @@ export default {
             })
         }
         // 댓글 수정
-        let isediting = ref<boolean>(false);
-        let revisedComment = ref<string>('')
-        const requestEditCom = (oldCom:string) => {
-            isediting.value = !isediting.value
-            revisedComment.value = oldCom
-        }
-        const editCom = (comId:number) => {
-            if (revisedComment.value.length === 0) {
-                alert("댓글 내용을 작성해주세요")
-            } else {
-                axios.put(`http://localhost:9999/api/v1/board/class/${id}/comment/${comId}`, {
-                    'content': revisedComment.value,
-                    'writer': '박싸피',
-                    })
-                .then(() => {
-                    revisedComment.value = ''
-                    isediting.value = false
-                    isLoadingCom.value = false
-                    commentList()
-                })
-                .then(() => {
-                    isLoadingCom.value = false
-                })
-            }
-        }
-        
+        // let isediting = ref<boolean>(false);
+        // let revisedComment = ref<string>('')
+        // const requestEditCom = (oldCom:string) => {
+        //     isediting.value = !isediting.value
+        //     revisedComment.value = oldCom
+        // }
+        // const editCom = (comId:number) => {
+        //     if (revisedComment.value.length === 0) {
+        //         alert("댓글 내용을 작성해주세요")
+        //     } else {
+        //         axios.put(`http://localhost:9999/api/v1/board/class/${id}/comment/${comId}`, {
+        //             'content': revisedComment.value,
+        //             'writer': '박싸피',
+        //             })
+        //         .then(() => {
+        //             revisedComment.value = ''
+        //             isediting.value = false
+        //             isLoadingCom.value = false
+        //             commentList()
+        //         })
+        //         .then(() => {
+        //             isLoadingCom.value = false
+        //         })
+        //     }
+        // }
+    
         let isWrittingReComment = ref<boolean>(false);
         const requestReCom = () => {
             isWrittingReComment.value = !isWrittingReComment.value;
         }
-
-
         return { id, isLoading, 
         isLoadingCom, commentList, comments, deleteCom,
         currentarticle, deleteArticle, 
-        isediting, revisedComment, requestEditCom, editCom,
+        // isediting, revisedComment, requestEditCom, editCom,
         newComment, postComment, isWrittingReComment, requestReCom, 
-        
         }
     }
 }
@@ -265,7 +262,7 @@ export default {
     width: 1320px;
     display: inline-block;
 }
-.card-body > p {
+.card-body > p{
     text-align: right;
 }
 .btns {
@@ -283,12 +280,13 @@ export default {
     text-align: left;
 }
 .comment-btn {
+    display:inline-block; 
+    margin-top: -42px;
     float: right;
-    /* margin-top: 10px; */
-    margin-bottom: 10px;
 }
 .comment-list {
     text-align: left;
+    margin-bottom: 30px;
 }
 .fa-icon{
     width: 15px;
@@ -296,8 +294,8 @@ export default {
 .fa-icon-b{
     width: 30px;
 }
-.line {
-    margin-top: 10px;
+.post-btn {
+    float: right;
 }
 button {
     margin:5px;

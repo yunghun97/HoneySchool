@@ -42,7 +42,7 @@
                     <!-- <button @click="clearFiles" class="btn btn-outline-danger">파일 전체 삭제</button> -->
                 </div>
             </div>
-            <button class="btn btn-success">수정하기</button>
+            <button class="btn btn-success" type="button" @click="updateArticle">수정하기</button>
         </form>
     </div>
 </template>
@@ -53,7 +53,7 @@ import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router'
 import axios from "axios";
-import Reference from 'yup/lib/Reference';
+
 
 interface BoardArticles {
   id: number,
@@ -73,6 +73,7 @@ export default {
         let isLoading = ref<boolean>(true);
         // article detail 요청            
         let currentarticle = ref({
+            id: route.params.article_id as string,
             title: '',
             category : route.params.category as string,
             content: '',
@@ -118,6 +119,7 @@ export default {
         };
         const updateArticle = () => {
             const formData = new FormData() 
+            formData.append('id', currentarticle.value.id);
             formData.append('category', currentarticle.value.category);
             formData.append('title', currentarticle.value.title);
             formData.append('content', currentarticle.value.content);
@@ -131,12 +133,11 @@ export default {
 
             console.log(formData)
             //TODO : PUT 요청 보내기
-            axios.put("http://localhost:9999/api/v1/board/class",formData,
+            axios.put("http://localhost:9999/api/v1/board/class/",formData,
             {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
             )
             .then((response) => {
                 console.log(response.data)
-                alert('성공')
                 router.push({name: 'ArticleDetail', params: { category:updatingarticle.category ,article_id: updatingarticle.id }})
             })
             .catch(() => {
