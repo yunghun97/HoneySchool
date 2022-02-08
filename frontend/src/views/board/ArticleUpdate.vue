@@ -99,13 +99,13 @@ export default {
         articleDetail().then(() => {
             isLoading.value = false
         })
-        // let updatingarticle = {
-        //     id : +route.params.article_id,
-        //     category : route.params.category as string,
-        //     title : currentarticle.value.title,
-        //     content : currentarticle.value.content,
-        //     file_link : currentarticle.value.file_link,
-        // } as BoardArticles
+        let updatingarticle = {
+            id : +route.params.article_id,
+            category : route.params.category as string,
+            title : currentarticle.value.title,
+            content : currentarticle.value.content,
+            file_link : currentarticle.value.file_link,
+        } as BoardArticles
 
         const fileSelect = () => {
             const file = ref() as any
@@ -121,7 +121,7 @@ export default {
             formData.append('category', currentarticle.value.category);
             formData.append('title', currentarticle.value.title);
             formData.append('content', currentarticle.value.content);
-            formData.append('file_link', currentarticle.value.file_link);
+            formData.append('files', currentarticle.value.file_link);
 
             // 글작성하느라 임의로 추가한내용
             formData.append('writer', "김싸피"); // user가 기본키여서 김싸피만 user로 등록되어있어서 작성자 바꿀려면 사람 User에서 추가해야합니다.
@@ -131,17 +131,17 @@ export default {
 
             console.log(formData)
             //TODO : PUT 요청 보내기
-            // axios.put("http://localhost:9999/api/v1/board/class",formData,
-            //{headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
-            //)
-            // .then((response) => {
-            //     console.log(response.data)
-            //     alert('성공')
-            //     router.push({name: 'ArticleDetail', params: { category:updatingarticle.category ,article_id: updatingarticle.id }})
-            // })
-            // .catch((e) => {
-            //     alert('수정 실패')
-            // })
+            axios.put("http://localhost:9999/api/v1/board/class",formData,
+            {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
+            )
+            .then((response) => {
+                console.log(response.data)
+                alert('성공')
+                router.push({name: 'ArticleDetail', params: { category:updatingarticle.category ,article_id: updatingarticle.id }})
+            })
+            .catch(() => {
+                alert('수정 실패')
+            })
         }
         return { id, isLoading, currentarticle, fileSelect, clearFiles, updateArticle}
     }
