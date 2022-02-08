@@ -7,8 +7,9 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -26,29 +27,30 @@ public class ClassBoard {
 	private String category;
 	private String title;
 	private String content;
-	// DB를 먼저 수정했다. 이제 여기 user FK로 바꿔야함
-	private String writer;
+	// writer에서 user FK로 바꿨다
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 	private String school;
 	private int grade;
 	private int classes;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
-	private String file_link;
+	// file_link는 지웠다
 	private int viewcount;
 	
 
 
 	@Builder
-	public ClassBoard(String category, String title, String content, String writer, String school, int grade,
-			int classes, String file_link, int viewcount) {		
+	public ClassBoard(String category, String title, String content, User user, String school, int grade,
+			int classes, int viewcount) {		
 		this.category = category;
 		this.title = title;
 		this.content = content;
-		this.writer = writer;
+		this.user = user;
 		this.school = school;
 		this.grade = grade;
 		this.classes = classes;
-		this.file_link = file_link;
 		this.viewcount = viewcount;
 	}
 	
@@ -58,11 +60,10 @@ public class ClassBoard {
 	// 2. writer
 	// 3. id
 	// 4. school, grade, classes: 반 게시판이니까 안바꿔도 돼서
-	public void update(String category, String title, String content, String file_link) {		
+	public void update(String category, String title, String content) {		
 		this.category = category;
 		this.title = title;
 		this.content = content;
-		this.file_link = file_link;
 	}
 	
 }

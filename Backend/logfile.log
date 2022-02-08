@@ -1,0 +1,922 @@
+2022-02-08 09:47:43.127  WARN 9088 --- [HikariPool-53 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-53 - Thread starvation or clock leap detected (housekeeper delta=9h2m13s150ms818µs700ns).
+2022-02-08 10:32:09.172  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : Starting HoneySchoolApplication using Java 11.0.14 on DESKTOP-KVCQHCD with PID 8044 (C:\Users\multicampus\git\S06P12B201\Backend\bin\main started by SSAFY in C:\Users\multicampus\git\S06P12B201\Backend)
+2022-02-08 10:32:09.173  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : No active profile set, falling back to default profiles: default
+2022-02-08 10:32:09.212  INFO 8044 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-02-08 10:32:09.220  INFO 8044 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-02-08 10:32:09.910  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-08 10:32:09.911  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-02-08 10:32:09.953  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 37 ms. Found 4 JPA repository interfaces.
+2022-02-08 10:32:10.212  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-08 10:32:10.212  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-02-08 10:32:10.223  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassBoardFileRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:32:10.225  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassBoardRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:32:10.226  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassCommentRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:32:10.227  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.UserRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:32:10.227  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 0 JDBC repository interfaces.
+2022-02-08 10:32:10.553  INFO 8044 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@3dc92af7' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-08 10:32:10.557  INFO 8044 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-08 10:32:10.849  INFO 8044 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9999 (http)
+2022-02-08 10:32:10.857  INFO 8044 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-02-08 10:32:10.858  INFO 8044 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.54]
+2022-02-08 10:32:10.932  INFO 8044 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-02-08 10:32:10.932  INFO 8044 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1712 ms
+2022-02-08 10:32:11.058 DEBUG 8044 --- [restartedMain] o.s.w.f.CommonsRequestLoggingFilter      : Filter 'commonsRequestLoggingFilter' configured for use
+2022-02-08 10:32:11.138  INFO 8044 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-02-08 10:32:11.179  INFO 8044 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.32.Final
+2022-02-08 10:32:11.288  INFO 8044 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-02-08 10:32:11.372  INFO 8044 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-02-08 10:32:11.462  INFO 8044 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-02-08 10:32:11.477  INFO 8044 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2022-02-08 10:32:12.155  INFO 8044 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-02-08 10:32:12.162  INFO 8044 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-02-08 10:32:12.535  WARN 8044 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-02-08 10:32:12.922 DEBUG 8044 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 25 mappings in 'requestMappingHandlerMapping'
+2022-02-08 10:32:13.011  INFO 8044 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-02-08 10:32:13.181  INFO 8044 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2ab58068, org.springframework.security.web.context.SecurityContextPersistenceFilter@42363b4e, org.springframework.security.web.header.HeaderWriterFilter@48af0e2c, org.springframework.web.filter.CorsFilter@62b493ef, org.springframework.security.web.authentication.logout.LogoutFilter@795ce0fb, com.ssafy.honeySchool.common.auth.JwtAuthenticationFilter@c1aafad, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1642827b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@19cd3f5d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@28d106ed, org.springframework.security.web.session.SessionManagementFilter@6c7d2d1, org.springframework.security.web.access.ExceptionTranslationFilter@13712e3b, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@61328ae2]
+2022-02-08 10:32:13.277  INFO 8044 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-02-08 10:32:13.284 DEBUG 8044 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-02-08 10:32:13.322 DEBUG 8044 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2022-02-08 10:32:13.336 DEBUG 8044 --- [restartedMain] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2022-02-08 10:32:13.343 DEBUG 8044 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/resources/**, /swagger-ui.html, /webjars/**, /css/**, /fonts/**, /icons/**, /img/**, /js/**, /swagger-ui/**] in 'resourceHandlerMapping'
+2022-02-08 10:32:13.351 DEBUG 8044 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-02-08 10:32:13.568  INFO 8044 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9999 (http) with context path ''
+2022-02-08 10:32:13.849  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : Started HoneySchoolApplication in 4.999 seconds (JVM running for 6.072)
+2022-02-08 10:32:17.054  INFO 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-02-08 10:32:17.055  INFO 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-02-08 10:32:17.055 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-02-08 10:32:17.055 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-02-08 10:32:17.055 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-02-08 10:32:17.056 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@1a6eb4df
+2022-02-08 10:32:17.057 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@258d45d1
+2022-02-08 10:32:17.057 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-02-08 10:32:17.057  INFO 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-02-08 10:32:17.086 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.w.f.CommonsRequestLoggingFilter      : Before request [POST /api/v1/board/class/5/comment/, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"79", Content-Type:"application/json;charset=UTF-8"]]
+2022-02-08 10:32:17.087 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/api/v1/board/class/5/comment/", parameters={}
+2022-02-08 10:32:17.090 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ssafy.honeySchool.api.controller.CommentController#createComment(int, ClassComment)
+2022-02-08 10:32:17.151 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.ssafy.honeySchool.db.entity.ClassComment@7362efe7]
+2022-02-08 10:32:17.199 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [5]
+2022-02-08 10:32:17.259 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [5]
+2022-02-08 10:32:17.259 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [2월 8일]
+2022-02-08 10:32:17.259 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [생성.txt]
+2022-02-08 10:32:17.260 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [댓글]
+2022-02-08 10:32:17.291 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-02-08 10:32:17.292 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [200 OK]
+2022-02-08 10:32:17.302 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-02-08 10:32:17.303 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.w.f.CommonsRequestLoggingFilter      : After request [POST /api/v1/board/class/5/comment/, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"79", Content-Type:"application/json;charset=UTF-8"], payload={
+		"content": "2월 8일",
+		"writer": "댓글",
+		"file_link": "생성.txt"
+}]
+2022-02-08 10:32:28.284 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.w.f.CommonsRequestLoggingFilter      : Before request [PATCH /api/v1/board/class/5/comment/15, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"86", Content-Type:"application/json;charset=UTF-8"]]
+2022-02-08 10:32:28.285 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.web.servlet.DispatcherServlet        : PATCH "/api/v1/board/class/5/comment/15", parameters={}
+2022-02-08 10:32:28.285 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ssafy.honeySchool.api.controller.CommentController#updateComment(int, int, ClassComment)
+2022-02-08 10:32:28.286 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.ssafy.honeySchool.db.entity.ClassComment@1f353b2f]
+2022-02-08 10:32:28.297 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [15]
+2022-02-08 10:32:28.310 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [댓글 수정]
+2022-02-08 10:32:28.310 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [update.txt]
+2022-02-08 10:32:28.310 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [김수정]
+2022-02-08 10:32:28.310 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [15]
+2022-02-08 10:32:28.340 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-02-08 10:32:28.340 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.ssafy.honeySchool.db.entity.ClassComment@661579f7]
+2022-02-08 10:32:28.345 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-02-08 10:32:28.345 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.w.f.CommonsRequestLoggingFilter      : After request [PATCH /api/v1/board/class/5/comment/15, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"86", Content-Type:"application/json;charset=UTF-8"], payload={
+		"content": "댓글 수정",
+		"writer": "김수정",
+		"file_link": "update.txt"
+}]
+2022-02-08 10:32:36.923 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.s.w.f.CommonsRequestLoggingFilter      : Before request [DELETE /api/v1/board/class/2/comment/9, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"0", Content-Type:"application/json;charset=UTF-8"]]
+2022-02-08 10:32:36.923 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.s.web.servlet.DispatcherServlet        : DELETE "/api/v1/board/class/2/comment/9", parameters={}
+2022-02-08 10:32:36.924 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ssafy.honeySchool.api.controller.CommentController#deleteComment(int, int)
+2022-02-08 10:32:36.938 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [9]
+2022-02-08 10:32:36.969 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.springframework.dao.EmptyResultDataAccessException: No class com.ssafy.honeySchool.db.entity.ClassComment entity with id 9 exists!
+2022-02-08 10:32:36.969 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.s.w.f.CommonsRequestLoggingFilter      : After request [DELETE /api/v1/board/class/2/comment/9, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"0", Content-Type:"application/json;charset=UTF-8"]]
+2022-02-08 10:32:36.976 ERROR 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.EmptyResultDataAccessException: No class com.ssafy.honeySchool.db.entity.ClassComment entity with id 9 exists!] with root cause
+
+org.springframework.dao.EmptyResultDataAccessException: No class com.ssafy.honeySchool.db.entity.ClassComment entity with id 9 exists!
+	at org.springframework.data.jpa.repository.support.SimpleJpaRepository.lambda$deleteById$0(SimpleJpaRepository.java:166) ~[spring-data-jpa-2.5.6.jar:2.5.6]
+	at java.base/java.util.Optional.orElseThrow(Optional.java:408) ~[na:na]
+	at org.springframework.data.jpa.repository.support.SimpleJpaRepository.deleteById(SimpleJpaRepository.java:165) ~[spring-data-jpa-2.5.6.jar:2.5.6]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:289) ~[spring-data-commons-2.5.6.jar:2.5.6]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:137) ~[spring-data-commons-2.5.6.jar:2.5.6]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:121) ~[spring-data-commons-2.5.6.jar:2.5.6]
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:529) ~[spring-data-commons-2.5.6.jar:2.5.6]
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:285) ~[spring-data-commons-2.5.6.jar:2.5.6]
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:599) ~[spring-data-commons-2.5.6.jar:2.5.6]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:163) ~[spring-data-commons-2.5.6.jar:2.5.6]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:138) ~[spring-data-commons-2.5.6.jar:2.5.6]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:80) ~[spring-data-commons-2.5.6.jar:2.5.6]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123) ~[spring-tx-5.3.12.jar:5.3.12]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388) ~[spring-tx-5.3.12.jar:5.3.12]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:137) ~[spring-tx-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:174) ~[spring-data-jpa-2.5.6.jar:2.5.6]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:215) ~[spring-aop-5.3.12.jar:5.3.12]
+	at com.sun.proxy.$Proxy160.deleteById(Unknown Source) ~[na:na]
+	at com.ssafy.honeySchool.api.controller.CommentController.deleteComment(CommentController.java:68) ~[main/:na]
+	at com.ssafy.honeySchool.api.controller.CommentController$$FastClassBySpringCGLIB$$d013dee3.invoke(<generated>) ~[main/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:689) ~[spring-aop-5.3.12.jar:5.3.12]
+	at com.ssafy.honeySchool.api.controller.CommentController$$EnhancerBySpringCGLIB$$18e43de8.deleteComment(<generated>) ~[main/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.FrameworkServlet.doDelete(FrameworkServlet.java:931) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687) ~[tomcat-embed-core-9.0.54.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.54.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.web.filter.AbstractRequestLoggingFilter.doFilterInternal(AbstractRequestLoggingFilter.java:289) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:327) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:121) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:115) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:105) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at com.ssafy.honeySchool.common.auth.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:41) ~[main/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:358) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:271) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) ~[spring-boot-actuator-2.5.6.jar:2.5.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1722) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at java.base/java.lang.Thread.run(Thread.java:834) ~[na:na]
+
+2022-02-08 10:32:36.979 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for DELETE "/error", parameters={}
+2022-02-08 10:32:36.981 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2022-02-08 10:32:36.985 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-02-08 10:32:36.986 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Tue Feb 08 10:32:36 KST 2022, status=500, error=Internal Server Error, trace=org.springfr (truncated)...]
+2022-02-08 10:32:36.990 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 500
+2022-02-08 10:32:42.415 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.s.w.f.CommonsRequestLoggingFilter      : Before request [DELETE /api/v1/board/class/2/comment/8, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"0", Content-Type:"application/json;charset=UTF-8"]]
+2022-02-08 10:32:42.415 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.s.web.servlet.DispatcherServlet        : DELETE "/api/v1/board/class/2/comment/8", parameters={}
+2022-02-08 10:32:42.416 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ssafy.honeySchool.api.controller.CommentController#deleteComment(int, int)
+2022-02-08 10:32:42.431 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [8]
+2022-02-08 10:32:42.449 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [8]
+2022-02-08 10:32:42.470 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-02-08 10:32:42.470 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [200 OK]
+2022-02-08 10:32:42.471 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-02-08 10:32:42.471 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.s.w.f.CommonsRequestLoggingFilter      : After request [DELETE /api/v1/board/class/2/comment/8, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"0", Content-Type:"application/json;charset=UTF-8"]]
+2022-02-08 10:32:50.303 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-5] o.s.w.f.CommonsRequestLoggingFilter      : Before request [GET /api/v1/board/class/comment, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"335", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:32:50.303 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/v1/board/class/comment", parameters={multipart}
+2022-02-08 10:32:50.324 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ssafy.honeySchool.api.controller.CommentController#selectClassBoardComments(HttpServletRequest)
+2022-02-08 10:32:50.356 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-5] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [싸피초]
+2022-02-08 10:32:50.356 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-5] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [1]
+2022-02-08 10:32:50.356 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-5] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [1]
+2022-02-08 10:32:50.357 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-5] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [3]
+2022-02-08 10:32:50.366 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-5] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [3]
+2022-02-08 10:32:50.374 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-02-08 10:32:50.374 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[com.ssafy.honeySchool.db.entity.ClassComment@2e007b14, com.ssafy.honeySchool.db.entity.ClassComment (truncated)...]
+2022-02-08 10:32:50.376 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-02-08 10:32:50.377 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-5] o.s.w.f.CommonsRequestLoggingFilter      : After request [GET /api/v1/board/class/comment, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"335", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:33:38.863  INFO 8044 --- [Thread-4] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-02-08 10:33:38.867  INFO 8044 --- [Thread-4] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-02-08 10:33:38.952  INFO 8044 --- [Thread-4] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-02-08 10:33:39.025  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : Starting HoneySchoolApplication using Java 11.0.14 on DESKTOP-KVCQHCD with PID 8044 (C:\Users\multicampus\git\S06P12B201\Backend\bin\main started by SSAFY in C:\Users\multicampus\git\S06P12B201\Backend)
+2022-02-08 10:33:39.025  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : No active profile set, falling back to default profiles: default
+2022-02-08 10:33:39.329  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-08 10:33:39.329  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-02-08 10:33:39.341  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 4 JPA repository interfaces.
+2022-02-08 10:33:39.423  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-08 10:33:39.423  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-02-08 10:33:39.432  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassBoardFileRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:33:39.432  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassBoardRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:33:39.432  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassCommentRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:33:39.432  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.UserRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:33:39.432  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 0 JDBC repository interfaces.
+2022-02-08 10:33:39.494  INFO 8044 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@6a355e3c' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-08 10:33:39.494  INFO 8044 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-08 10:33:39.539  INFO 8044 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9999 (http)
+2022-02-08 10:33:39.540  INFO 8044 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-02-08 10:33:39.540  INFO 8044 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.54]
+2022-02-08 10:33:39.563  INFO 8044 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-02-08 10:33:39.563  INFO 8044 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 536 ms
+2022-02-08 10:33:39.606 DEBUG 8044 --- [restartedMain] o.s.w.f.CommonsRequestLoggingFilter      : Filter 'commonsRequestLoggingFilter' configured for use
+2022-02-08 10:33:39.635  INFO 8044 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-02-08 10:33:39.640  INFO 8044 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2022-02-08 10:33:39.678  INFO 8044 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2022-02-08 10:33:39.679  INFO 8044 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2022-02-08 10:33:39.873  INFO 8044 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-02-08 10:33:39.873  INFO 8044 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-02-08 10:33:39.954  WARN 8044 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-02-08 10:33:40.104 DEBUG 8044 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 25 mappings in 'requestMappingHandlerMapping'
+2022-02-08 10:33:40.144  INFO 8044 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-02-08 10:33:40.197  INFO 8044 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@498ba8bd, org.springframework.security.web.context.SecurityContextPersistenceFilter@5898b70a, org.springframework.security.web.header.HeaderWriterFilter@3609e21e, org.springframework.web.filter.CorsFilter@47caabac, org.springframework.security.web.authentication.logout.LogoutFilter@3a787ed, com.ssafy.honeySchool.common.auth.JwtAuthenticationFilter@5d4a8bc6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2931dd8b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@50d1d3a1, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@21c713cf, org.springframework.security.web.session.SessionManagementFilter@1f3a27f7, org.springframework.security.web.access.ExceptionTranslationFilter@5ed5f1bb, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@43cb2a31]
+2022-02-08 10:33:40.235  INFO 8044 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-02-08 10:33:40.238 DEBUG 8044 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-02-08 10:33:40.250 DEBUG 8044 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2022-02-08 10:33:40.261 DEBUG 8044 --- [restartedMain] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2022-02-08 10:33:40.264 DEBUG 8044 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/resources/**, /swagger-ui.html, /webjars/**, /css/**, /fonts/**, /icons/**, /img/**, /js/**, /swagger-ui/**] in 'resourceHandlerMapping'
+2022-02-08 10:33:40.268 DEBUG 8044 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-02-08 10:33:40.362  INFO 8044 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9999 (http) with context path ''
+2022-02-08 10:33:40.482  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : Started HoneySchoolApplication in 1.48 seconds (JVM running for 92.704)
+2022-02-08 10:33:40.484  INFO 8044 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-02-08 10:33:53.051  INFO 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-02-08 10:33:53.052  INFO 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-02-08 10:33:53.052 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-02-08 10:33:53.052 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-02-08 10:33:53.052 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-02-08 10:33:53.053 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@80c3c5d
+2022-02-08 10:33:53.054 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@122f172f
+2022-02-08 10:33:53.054 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-02-08 10:33:53.054  INFO 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-02-08 10:33:53.054 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.w.f.CommonsRequestLoggingFilter      : Before request [PUT /api/v1/board/class/5/comment/15, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"89", Content-Type:"application/json;charset=UTF-8"]]
+2022-02-08 10:33:53.055 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : PUT "/api/v1/board/class/5/comment/15", parameters={}
+2022-02-08 10:33:53.055 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ssafy.honeySchool.api.controller.CommentController#updateComment(int, int, ClassComment)
+2022-02-08 10:33:53.059 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.ssafy.honeySchool.db.entity.ClassComment@2d964ffa]
+2022-02-08 10:33:53.078 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [15]
+2022-02-08 10:33:53.087 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [댓글 풋으로]
+2022-02-08 10:33:53.087 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [15]
+2022-02-08 10:33:53.108 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-02-08 10:33:53.108 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.ssafy.honeySchool.db.entity.ClassComment@29b608fc]
+2022-02-08 10:33:53.110 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-02-08 10:33:53.111 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.w.f.CommonsRequestLoggingFilter      : After request [PUT /api/v1/board/class/5/comment/15, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"89", Content-Type:"application/json;charset=UTF-8"], payload={
+		"content": "댓글 풋으로",
+		"writer": "김수정",
+		"file_link": "update.txt"
+}]
+2022-02-08 10:34:25.886  INFO 8044 --- [Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-02-08 10:34:25.887  INFO 8044 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2022-02-08 10:34:25.952  INFO 8044 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2022-02-08 10:34:26.017  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : Starting HoneySchoolApplication using Java 11.0.14 on DESKTOP-KVCQHCD with PID 8044 (C:\Users\multicampus\git\S06P12B201\Backend\bin\main started by SSAFY in C:\Users\multicampus\git\S06P12B201\Backend)
+2022-02-08 10:34:26.018  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : No active profile set, falling back to default profiles: default
+2022-02-08 10:34:26.281  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-08 10:34:26.281  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-02-08 10:34:26.290  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 4 JPA repository interfaces.
+2022-02-08 10:34:26.364  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-08 10:34:26.364  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-02-08 10:34:26.371  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassBoardFileRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:34:26.372  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassBoardRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:34:26.372  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassCommentRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:34:26.372  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.UserRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:34:26.372  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JDBC repository interfaces.
+2022-02-08 10:34:26.423  INFO 8044 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@3ebc368e' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-08 10:34:26.425  INFO 8044 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-08 10:34:26.471  INFO 8044 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9999 (http)
+2022-02-08 10:34:26.471  INFO 8044 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-02-08 10:34:26.472  INFO 8044 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.54]
+2022-02-08 10:34:26.486  INFO 8044 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-02-08 10:34:26.486  INFO 8044 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 467 ms
+2022-02-08 10:34:26.527 DEBUG 8044 --- [restartedMain] o.s.w.f.CommonsRequestLoggingFilter      : Filter 'commonsRequestLoggingFilter' configured for use
+2022-02-08 10:34:26.551  INFO 8044 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-02-08 10:34:26.556  INFO 8044 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2022-02-08 10:34:26.601  INFO 8044 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2022-02-08 10:34:26.602  INFO 8044 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2022-02-08 10:34:26.779  INFO 8044 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-02-08 10:34:26.779  INFO 8044 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-02-08 10:34:26.859  WARN 8044 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-02-08 10:34:27.004 DEBUG 8044 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 25 mappings in 'requestMappingHandlerMapping'
+2022-02-08 10:34:27.042  INFO 8044 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-02-08 10:34:27.094  INFO 8044 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4c4b4803, org.springframework.security.web.context.SecurityContextPersistenceFilter@7bf0beb2, org.springframework.security.web.header.HeaderWriterFilter@71ff5b00, org.springframework.web.filter.CorsFilter@4bb4a110, org.springframework.security.web.authentication.logout.LogoutFilter@281000d9, com.ssafy.honeySchool.common.auth.JwtAuthenticationFilter@138f1cb6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5ce7c60b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@574bb1cc, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@598af5e9, org.springframework.security.web.session.SessionManagementFilter@69fd0b86, org.springframework.security.web.access.ExceptionTranslationFilter@450c4780, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@71bef07]
+2022-02-08 10:34:27.132  INFO 8044 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-02-08 10:34:27.136 DEBUG 8044 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-02-08 10:34:27.148 DEBUG 8044 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2022-02-08 10:34:27.159 DEBUG 8044 --- [restartedMain] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2022-02-08 10:34:27.162 DEBUG 8044 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/resources/**, /swagger-ui.html, /webjars/**, /css/**, /fonts/**, /icons/**, /img/**, /js/**, /swagger-ui/**] in 'resourceHandlerMapping'
+2022-02-08 10:34:27.166 DEBUG 8044 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-02-08 10:34:27.252  INFO 8044 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9999 (http) with context path ''
+2022-02-08 10:34:27.352  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : Started HoneySchoolApplication in 1.358 seconds (JVM running for 139.575)
+2022-02-08 10:34:27.354  INFO 8044 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-02-08 10:34:40.873  INFO 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-02-08 10:34:40.874  INFO 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-02-08 10:34:40.874 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-02-08 10:34:40.874 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-02-08 10:34:40.874 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-02-08 10:34:40.875 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@34de6f54
+2022-02-08 10:34:40.876 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@5037ced9
+2022-02-08 10:34:40.876 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-02-08 10:34:40.876  INFO 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-02-08 10:34:40.877 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.w.f.CommonsRequestLoggingFilter      : Before request [PATCH /api/v1/board/class/, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"915", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:34:40.877 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : PATCH "/api/v1/board/class/", parameters={multipart}
+2022-02-08 10:34:40.902  WARN 8044 --- [http-nio-127.0.0.1-9999-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'PATCH' not supported]
+2022-02-08 10:34:40.902 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 405 METHOD_NOT_ALLOWED
+2022-02-08 10:34:40.903 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.w.f.CommonsRequestLoggingFilter      : After request [PATCH /api/v1/board/class/, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"915", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:34:40.903 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for PATCH "/error", parameters={multipart}
+2022-02-08 10:34:40.904 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2022-02-08 10:34:40.905 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-02-08 10:34:40.905 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Tue Feb 08 10:34:40 KST 2022, status=405, error=Method Not Allowed, trace=org.springframe (truncated)...]
+2022-02-08 10:34:40.907 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 405
+2022-02-08 10:34:48.645 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.w.f.CommonsRequestLoggingFilter      : Before request [PUT /api/v1/board/class/, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"915", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:34:48.646 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.web.servlet.DispatcherServlet        : PUT "/api/v1/board/class/", parameters={multipart}
+2022-02-08 10:34:48.663 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ssafy.honeySchool.api.controller.BoardController#updateBoard(ClassBoard)
+2022-02-08 10:34:48.673 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.web.method.HandlerMethod             : Could not resolve parameter [0] in public org.springframework.http.ResponseEntity<com.ssafy.honeySchool.db.entity.ClassBoard> com.ssafy.honeySchool.api.controller.BoardController.updateBoard(com.ssafy.honeySchool.db.entity.ClassBoard) throws java.sql.SQLException: org.springframework.validation.BeanPropertyBindingResult: 1 errors
+Field error in object 'classBoard' on field 'date': rejected value [2022-02-01]; codes [typeMismatch.classBoard.date,typeMismatch.date,typeMismatch.java.util.Date,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [classBoard.date,date]; arguments []; default message [date]]; default message [Failed to convert property value of type 'java.lang.String' to required type 'java.util.Date' for property 'date'; nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type [@javax.persistence.Temporal java.util.Date] for value '2022-02-01'; nested exception is java.lang.IllegalArgumentException]
+2022-02-08 10:34:48.673  WARN 8044 --- [http-nio-127.0.0.1-9999-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.validation.BindException: org.springframework.validation.BeanPropertyBindingResult: 1 errors<LF>Field error in object 'classBoard' on field 'date': rejected value [2022-02-01]; codes [typeMismatch.classBoard.date,typeMismatch.date,typeMismatch.java.util.Date,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [classBoard.date,date]; arguments []; default message [date]]; default message [Failed to convert property value of type 'java.lang.String' to required type 'java.util.Date' for property 'date'; nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type [@javax.persistence.Temporal java.util.Date] for value '2022-02-01'; nested exception is java.lang.IllegalArgumentException]]
+2022-02-08 10:34:48.673 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 400 BAD_REQUEST
+2022-02-08 10:34:48.673 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.w.f.CommonsRequestLoggingFilter      : After request [PUT /api/v1/board/class/, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"915", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:34:48.674 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for PUT "/error", parameters={multipart}
+2022-02-08 10:34:48.674 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2022-02-08 10:34:48.676 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-02-08 10:34:48.676 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Tue Feb 08 10:34:48 KST 2022, status=400, error=Bad Request, trace=org.springframework.va (truncated)...]
+2022-02-08 10:34:48.686 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 400
+2022-02-08 10:35:12.872 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.s.w.f.CommonsRequestLoggingFilter      : Before request [PUT /api/v1/board/class/, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"833", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:35:12.872 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.s.web.servlet.DispatcherServlet        : PUT "/api/v1/board/class/", parameters={multipart}
+2022-02-08 10:35:12.898 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ssafy.honeySchool.api.controller.BoardController#updateBoard(ClassBoard)
+2022-02-08 10:35:12.917 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [싸피초]
+2022-02-08 10:35:12.917 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [1]
+2022-02-08 10:35:12.917 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [1]
+2022-02-08 10:35:12.917 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [113]
+2022-02-08 10:35:12.929 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2022-02-08 10:35:12.938 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [테스트 풋으로]
+2022-02-08 10:35:12.938 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [게시판 내용 테스트 수정]
+2022-02-08 10:35:12.938 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [글쓰기 테스트 2월 7일44]
+2022-02-08 10:35:12.938 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [113]
+2022-02-08 10:35:12.963 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-02-08 10:35:12.963 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.ssafy.honeySchool.db.entity.ClassBoard@75371ee0]
+2022-02-08 10:35:12.964 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-02-08 10:35:12.964 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-3] o.s.w.f.CommonsRequestLoggingFilter      : After request [PUT /api/v1/board/class/, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"833", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:35:40.467 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.s.w.f.CommonsRequestLoggingFilter      : Before request [POST /api/v1/board/class/yunghun97, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"5114", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:35:40.468 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/api/v1/board/class/yunghun97", parameters={multipart}
+2022-02-08 10:35:40.480 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ssafy.honeySchool.api.controller.BoardController#createBoard(String, ClassBoard, List)
+2022-02-08 10:35:40.940  WARN 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.a.c.util.SessionIdGeneratorBase        : Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [453] milliseconds.
+2022-02-08 10:35:40.951 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [yunghun97]
+2022-02-08 10:35:40.970 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [질문]
+2022-02-08 10:35:40.971 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [1]
+2022-02-08 10:35:40.971 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [게시판 내용 테스트]
+2022-02-08 10:35:40.971 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+2022-02-08 10:35:40.971 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - [싸피초]
+2022-02-08 10:35:40.972 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [카테고리풋풋풋]
+2022-02-08 10:35:40.972 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [7] as [INTEGER] - [1]
+2022-02-08 10:35:40.972 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [8] as [INTEGER] - [0]
+2022-02-08 10:35:41.032 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [114]
+2022-02-08 10:35:41.033 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [N]
+2022-02-08 10:35:41.034 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [BIGINT] - [4452]
+2022-02-08 10:35:41.035 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [호루라기.ogg]
+2022-02-08 10:35:41.035 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - [audios/20220208/2719980782900.ogg]
+2022-02-08 10:35:41.062 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-02-08 10:35:41.062 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["{}"]
+2022-02-08 10:35:41.063 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2022-02-08 10:35:41.063 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-4] o.s.w.f.CommonsRequestLoggingFilter      : After request [POST /api/v1/board/class/yunghun97, client=127.0.0.1, session=CA0279EAD01E72BC91D4339C47AA1D95, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=819594D090ABBABB2F450B996E6A62E4", accept:"*/*", content-length:"5114", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:36:41.874 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.s.w.f.CommonsRequestLoggingFilter      : Before request [POST /api/v1/board/class/yunghun97, client=127.0.0.1, session=CA0279EAD01E72BC91D4339C47AA1D95, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=CA0279EAD01E72BC91D4339C47AA1D95", accept:"*/*", content-length:"5114", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:36:41.874 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/api/v1/board/class/yunghun97", parameters={multipart}
+2022-02-08 10:36:41.910 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ssafy.honeySchool.api.controller.BoardController#createBoard(String, ClassBoard, List)
+2022-02-08 10:36:41.922 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [yunghun97]
+2022-02-08 10:36:41.936 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [질문]
+2022-02-08 10:36:41.936 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [1]
+2022-02-08 10:36:41.936 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [게시판 내용 테스트]
+2022-02-08 10:36:41.936 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+2022-02-08 10:36:41.936 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - [싸피초]
+2022-02-08 10:36:41.937 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [카테고리풋풋풋]
+2022-02-08 10:36:41.937 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.h.type.descriptor.sql.BasicBinder      : binding parameter [7] as [INTEGER] - [1]
+2022-02-08 10:36:41.937 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.h.type.descriptor.sql.BasicBinder      : binding parameter [8] as [INTEGER] - [0]
+2022-02-08 10:36:41.969 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [115]
+2022-02-08 10:36:41.969 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [N]
+2022-02-08 10:36:41.969 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [BIGINT] - [4452]
+2022-02-08 10:36:41.969 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [호루라기.ogg]
+2022-02-08 10:36:41.969 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - [audios/20220208/2780930959200.ogg]
+2022-02-08 10:36:41.990 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-02-08 10:36:41.990 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["{}"]
+2022-02-08 10:36:41.991 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2022-02-08 10:36:41.991 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-6] o.s.w.f.CommonsRequestLoggingFilter      : After request [POST /api/v1/board/class/yunghun97, client=127.0.0.1, session=CA0279EAD01E72BC91D4339C47AA1D95, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=CA0279EAD01E72BC91D4339C47AA1D95", accept:"*/*", content-length:"5114", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:36:45.226 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-7] o.s.w.f.CommonsRequestLoggingFilter      : Before request [GET /api/v1/board/class/detail, client=127.0.0.1, session=CA0279EAD01E72BC91D4339C47AA1D95, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=CA0279EAD01E72BC91D4339C47AA1D95", accept:"*/*", content-length:"329", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:36:45.226 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/api/v1/board/class/detail", parameters={multipart}
+2022-02-08 10:36:45.234 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ssafy.honeySchool.api.controller.BoardController#detailBoard(HttpServletRequest)
+2022-02-08 10:36:45.249 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-7] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2022-02-08 10:36:45.257 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-7] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [싸피초]
+2022-02-08 10:36:45.257 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-7] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [1]
+2022-02-08 10:36:45.257 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-7] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [1]
+2022-02-08 10:36:45.257 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-7] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+2022-02-08 10:36:45.276 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-02-08 10:36:45.276 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.ssafy.honeySchool.db.entity.ClassBoard@2267467f]
+2022-02-08 10:36:45.277 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-02-08 10:36:45.277 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-7] o.s.w.f.CommonsRequestLoggingFilter      : After request [GET /api/v1/board/class/detail, client=127.0.0.1, session=CA0279EAD01E72BC91D4339C47AA1D95, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=CA0279EAD01E72BC91D4339C47AA1D95", accept:"*/*", content-length:"329", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:37:02.587 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-8] o.s.w.f.CommonsRequestLoggingFilter      : Before request [GET /api/v1/board/class/detail, client=127.0.0.1, session=CA0279EAD01E72BC91D4339C47AA1D95, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=CA0279EAD01E72BC91D4339C47AA1D95", accept:"*/*", content-length:"331", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:37:02.587 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/api/v1/board/class/detail", parameters={multipart}
+2022-02-08 10:37:02.594 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ssafy.honeySchool.api.controller.BoardController#detailBoard(HttpServletRequest)
+2022-02-08 10:37:02.606 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-8] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [114]
+2022-02-08 10:37:02.614 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-8] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [싸피초]
+2022-02-08 10:37:02.615 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-8] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [1]
+2022-02-08 10:37:02.615 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-8] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [1]
+2022-02-08 10:37:02.615 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-8] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [114]
+2022-02-08 10:37:02.621 TRACE 8044 --- [http-nio-127.0.0.1-9999-exec-8] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2022-02-08 10:37:02.640 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-02-08 10:37:02.640 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.ssafy.honeySchool.db.entity.ClassBoard@188dde24]
+2022-02-08 10:37:02.641 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-02-08 10:37:02.642 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-8] o.s.w.f.CommonsRequestLoggingFilter      : After request [GET /api/v1/board/class/detail, client=127.0.0.1, session=CA0279EAD01E72BC91D4339C47AA1D95, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=CA0279EAD01E72BC91D4339C47AA1D95", accept:"*/*", content-length:"331", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 10:40:41.849  INFO 8044 --- [Thread-11] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-02-08 10:40:41.850  INFO 8044 --- [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2022-02-08 10:40:41.920  INFO 8044 --- [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2022-02-08 10:40:41.989  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : Starting HoneySchoolApplication using Java 11.0.14 on DESKTOP-KVCQHCD with PID 8044 (C:\Users\multicampus\git\S06P12B201\Backend\bin\main started by SSAFY in C:\Users\multicampus\git\S06P12B201\Backend)
+2022-02-08 10:40:41.989  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : No active profile set, falling back to default profiles: default
+2022-02-08 10:40:42.249  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-08 10:40:42.249  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-02-08 10:40:42.259  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 4 JPA repository interfaces.
+2022-02-08 10:40:42.334  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-08 10:40:42.334  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-02-08 10:40:42.342  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassBoardFileRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:40:42.343  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassBoardRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:40:42.343  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassCommentRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:40:42.343  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.UserRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 10:40:42.343  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 0 JDBC repository interfaces.
+2022-02-08 10:40:42.401  INFO 8044 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@4ff92c96' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-08 10:40:42.401  INFO 8044 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-08 10:40:42.452  INFO 8044 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9999 (http)
+2022-02-08 10:40:42.453  INFO 8044 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-02-08 10:40:42.453  INFO 8044 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.54]
+2022-02-08 10:40:42.467  INFO 8044 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-02-08 10:40:42.467  INFO 8044 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 477 ms
+2022-02-08 10:40:42.507 DEBUG 8044 --- [restartedMain] o.s.w.f.CommonsRequestLoggingFilter      : Filter 'commonsRequestLoggingFilter' configured for use
+2022-02-08 10:40:42.531  INFO 8044 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-02-08 10:40:42.537  INFO 8044 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2022-02-08 10:40:42.583  INFO 8044 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2022-02-08 10:40:42.584  INFO 8044 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2022-02-08 10:40:42.793  INFO 8044 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-02-08 10:40:42.793  INFO 8044 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-02-08 10:40:42.872  WARN 8044 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-02-08 10:40:43.013 DEBUG 8044 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 25 mappings in 'requestMappingHandlerMapping'
+2022-02-08 10:40:43.052  INFO 8044 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-02-08 10:40:43.100  INFO 8044 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@420ad8d2, org.springframework.security.web.context.SecurityContextPersistenceFilter@5950365e, org.springframework.security.web.header.HeaderWriterFilter@33e8ffcb, org.springframework.web.filter.CorsFilter@1ed6df1e, org.springframework.security.web.authentication.logout.LogoutFilter@70871fc6, com.ssafy.honeySchool.common.auth.JwtAuthenticationFilter@848d0d3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@481709b3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3cf5a1dd, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4673aa3f, org.springframework.security.web.session.SessionManagementFilter@417aa4ce, org.springframework.security.web.access.ExceptionTranslationFilter@f83dab5, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@766c1c93]
+2022-02-08 10:40:43.137  INFO 8044 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-02-08 10:40:43.140 DEBUG 8044 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-02-08 10:40:43.152 DEBUG 8044 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2022-02-08 10:40:43.162 DEBUG 8044 --- [restartedMain] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2022-02-08 10:40:43.165 DEBUG 8044 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/resources/**, /swagger-ui.html, /webjars/**, /css/**, /fonts/**, /icons/**, /img/**, /js/**, /swagger-ui/**] in 'resourceHandlerMapping'
+2022-02-08 10:40:43.169 DEBUG 8044 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-02-08 10:40:43.266  INFO 8044 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9999 (http) with context path ''
+2022-02-08 10:40:43.355  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : Started HoneySchoolApplication in 1.389 seconds (JVM running for 515.578)
+2022-02-08 10:40:43.357  INFO 8044 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-02-08 11:20:07.751  INFO 8044 --- [Thread-15] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-02-08 11:20:07.753  INFO 8044 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2022-02-08 11:20:07.820  INFO 8044 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2022-02-08 11:20:07.895  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : Starting HoneySchoolApplication using Java 11.0.14 on DESKTOP-KVCQHCD with PID 8044 (C:\Users\multicampus\git\S06P12B201\Backend\bin\main started by SSAFY in C:\Users\multicampus\git\S06P12B201\Backend)
+2022-02-08 11:20:07.895  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : No active profile set, falling back to default profiles: default
+2022-02-08 11:20:08.155  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-08 11:20:08.155  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-02-08 11:20:08.165  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 4 JPA repository interfaces.
+2022-02-08 11:20:08.238  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-08 11:20:08.238  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-02-08 11:20:08.245  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassBoardFileRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 11:20:08.246  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassBoardRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 11:20:08.246  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassCommentRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 11:20:08.246  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.UserRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 11:20:08.246  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JDBC repository interfaces.
+2022-02-08 11:20:08.300  INFO 8044 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@15f34f04' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-08 11:20:08.300  INFO 8044 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-08 11:20:08.343  INFO 8044 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9999 (http)
+2022-02-08 11:20:08.343  INFO 8044 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-02-08 11:20:08.343  INFO 8044 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.54]
+2022-02-08 11:20:08.357  INFO 8044 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-02-08 11:20:08.357  INFO 8044 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 460 ms
+2022-02-08 11:20:08.394 DEBUG 8044 --- [restartedMain] o.s.w.f.CommonsRequestLoggingFilter      : Filter 'commonsRequestLoggingFilter' configured for use
+2022-02-08 11:20:08.418  INFO 8044 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-02-08 11:20:08.423  INFO 8044 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+2022-02-08 11:20:08.467  INFO 8044 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
+2022-02-08 11:20:08.467  INFO 8044 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2022-02-08 11:20:08.704  INFO 8044 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-02-08 11:20:08.704  INFO 8044 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-02-08 11:20:08.780  WARN 8044 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-02-08 11:20:08.918 DEBUG 8044 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 25 mappings in 'requestMappingHandlerMapping'
+2022-02-08 11:20:08.956  INFO 8044 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-02-08 11:20:09.004  INFO 8044 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1cdbf811, org.springframework.security.web.context.SecurityContextPersistenceFilter@60eb8b23, org.springframework.security.web.header.HeaderWriterFilter@a823402, org.springframework.web.filter.CorsFilter@1c51a346, org.springframework.security.web.authentication.logout.LogoutFilter@4fb7c0f4, com.ssafy.honeySchool.common.auth.JwtAuthenticationFilter@391d6745, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4be7c206, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@50decd5c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@546dabc, org.springframework.security.web.session.SessionManagementFilter@26a0ac88, org.springframework.security.web.access.ExceptionTranslationFilter@6b5b25a, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@455c16a7]
+2022-02-08 11:20:09.040  INFO 8044 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-02-08 11:20:09.045 DEBUG 8044 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-02-08 11:20:09.056 DEBUG 8044 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2022-02-08 11:20:09.071 DEBUG 8044 --- [restartedMain] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2022-02-08 11:20:09.074 DEBUG 8044 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/resources/**, /swagger-ui.html, /webjars/**, /css/**, /fonts/**, /icons/**, /img/**, /js/**, /swagger-ui/**] in 'resourceHandlerMapping'
+2022-02-08 11:20:09.079 DEBUG 8044 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-02-08 11:20:09.167  INFO 8044 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9999 (http) with context path ''
+2022-02-08 11:20:09.249  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : Started HoneySchoolApplication in 1.378 seconds (JVM running for 2881.472)
+2022-02-08 11:20:09.251  INFO 8044 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-02-08 11:20:32.694  INFO 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-02-08 11:20:32.695  INFO 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-02-08 11:20:32.695 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-02-08 11:20:32.695 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-02-08 11:20:32.695 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-02-08 11:20:32.696 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@28b1ef55
+2022-02-08 11:20:32.697 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@3952534c
+2022-02-08 11:20:32.697 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-02-08 11:20:32.697  INFO 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-02-08 11:20:32.697 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.w.f.CommonsRequestLoggingFilter      : Before request [GET /api/v1/board/class/detail, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=CA0279EAD01E72BC91D4339C47AA1D95", accept:"*/*", content-length:"331", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 11:20:32.697 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/v1/board/class/detail", parameters={multipart}
+2022-02-08 11:20:32.714 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ssafy.honeySchool.api.controller.BoardController#detailBoard(HttpServletRequest)
+2022-02-08 11:20:32.738 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.springframework.web.util.NestedServletException: Handler dispatch failed; nested exception is java.lang.Error: Unresolved compilation problem: 
+	Unhandled exception type JsonProcessingException
+
+2022-02-08 11:20:32.739 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.w.f.CommonsRequestLoggingFilter      : After request [GET /api/v1/board/class/detail, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=CA0279EAD01E72BC91D4339C47AA1D95", accept:"*/*", content-length:"331", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 11:20:32.742 ERROR 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Handler dispatch failed; nested exception is java.lang.Error: Unresolved compilation problem: 
+	Unhandled exception type JsonProcessingException
+] with root cause
+
+java.lang.Error: Unresolved compilation problem: 
+	Unhandled exception type JsonProcessingException
+
+	at com.ssafy.honeySchool.api.controller.BoardController.detailBoard(BoardController.java:165) ~[main/:na]
+	at com.ssafy.honeySchool.api.controller.BoardController$$FastClassBySpringCGLIB$$bdf264aa.invoke(<generated>) ~[main/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:783) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:753) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123) ~[spring-tx-5.3.12.jar:5.3.12]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388) ~[spring-tx-5.3.12.jar:5.3.12]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:753) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:698) ~[spring-aop-5.3.12.jar:5.3.12]
+	at com.ssafy.honeySchool.api.controller.BoardController$$EnhancerBySpringCGLIB$$8922239d.detailBoard(<generated>) ~[main/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655) ~[tomcat-embed-core-9.0.54.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.54.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.web.filter.AbstractRequestLoggingFilter.doFilterInternal(AbstractRequestLoggingFilter.java:289) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:327) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:121) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:115) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:105) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at com.ssafy.honeySchool.common.auth.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:41) ~[main/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:358) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:271) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) ~[spring-boot-actuator-2.5.6.jar:2.5.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1722) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at java.base/java.lang.Thread.run(Thread.java:834) ~[na:na]
+
+2022-02-08 11:20:32.743 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={multipart}
+2022-02-08 11:20:32.744 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2022-02-08 11:20:32.745 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-02-08 11:20:32.745 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Tue Feb 08 11:20:32 KST 2022, status=500, error=Internal Server Error, trace=java.lang.Er (truncated)...]
+2022-02-08 11:20:32.746 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-1] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 500
+2022-02-08 11:20:39.727 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.w.f.CommonsRequestLoggingFilter      : Before request [GET /api/v1/board/class/detail, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=CA0279EAD01E72BC91D4339C47AA1D95", accept:"*/*", content-length:"331", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 11:20:39.727 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/v1/board/class/detail", parameters={multipart}
+2022-02-08 11:20:39.734 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ssafy.honeySchool.api.controller.BoardController#detailBoard(HttpServletRequest)
+2022-02-08 11:20:39.759 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.springframework.web.util.NestedServletException: Handler dispatch failed; nested exception is java.lang.Error: Unresolved compilation problem: 
+	Unhandled exception type JsonProcessingException
+
+2022-02-08 11:20:39.759 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.w.f.CommonsRequestLoggingFilter      : After request [GET /api/v1/board/class/detail, client=127.0.0.1, headers=[host:"localhost:9999", user-agent:"insomnia/2021.7.2", cookie:"JSESSIONID=CA0279EAD01E72BC91D4339C47AA1D95", accept:"*/*", content-length:"331", Content-Type:"multipart/form-data;boundary=X-INSOMNIA-BOUNDARY;charset=UTF-8"]]
+2022-02-08 11:20:39.760 ERROR 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Handler dispatch failed; nested exception is java.lang.Error: Unresolved compilation problem: 
+	Unhandled exception type JsonProcessingException
+] with root cause
+
+java.lang.Error: Unresolved compilation problem: 
+	Unhandled exception type JsonProcessingException
+
+	at com.ssafy.honeySchool.api.controller.BoardController.detailBoard(BoardController.java:165) ~[main/:na]
+	at com.ssafy.honeySchool.api.controller.BoardController$$FastClassBySpringCGLIB$$bdf264aa.invoke(<generated>) ~[main/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:783) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:753) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123) ~[spring-tx-5.3.12.jar:5.3.12]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388) ~[spring-tx-5.3.12.jar:5.3.12]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:753) ~[spring-aop-5.3.12.jar:5.3.12]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:698) ~[spring-aop-5.3.12.jar:5.3.12]
+	at com.ssafy.honeySchool.api.controller.BoardController$$EnhancerBySpringCGLIB$$8922239d.detailBoard(<generated>) ~[main/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655) ~[tomcat-embed-core-9.0.54.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.12.jar:5.3.12]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.54.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.web.filter.AbstractRequestLoggingFilter.doFilterInternal(AbstractRequestLoggingFilter.java:289) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:327) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:121) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:115) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:105) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at com.ssafy.honeySchool.common.auth.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:41) ~[main/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183) ~[spring-security-web-5.5.3.jar:5.5.3]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:358) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:271) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) ~[spring-boot-actuator-2.5.6.jar:2.5.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.12.jar:5.3.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1722) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.54.jar:9.0.54]
+	at java.base/java.lang.Thread.run(Thread.java:834) ~[na:na]
+
+2022-02-08 11:20:39.761 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={multipart}
+2022-02-08 11:20:39.761 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2022-02-08 11:20:39.762 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-02-08 11:20:39.762 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Tue Feb 08 11:20:39 KST 2022, status=500, error=Internal Server Error, trace=java.lang.Er (truncated)...]
+2022-02-08 11:20:39.763 DEBUG 8044 --- [http-nio-127.0.0.1-9999-exec-2] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 500
+2022-02-08 11:24:22.702  INFO 8044 --- [Thread-19] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-02-08 11:24:22.703  INFO 8044 --- [Thread-19] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2022-02-08 11:24:22.767  INFO 8044 --- [Thread-19] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2022-02-08 11:24:22.852  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : Starting HoneySchoolApplication using Java 11.0.14 on DESKTOP-KVCQHCD with PID 8044 (C:\Users\multicampus\git\S06P12B201\Backend\bin\main started by SSAFY in C:\Users\multicampus\git\S06P12B201\Backend)
+2022-02-08 11:24:22.852  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : No active profile set, falling back to default profiles: default
+2022-02-08 11:24:23.127  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-08 11:24:23.127  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-02-08 11:24:23.137  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 4 JPA repository interfaces.
+2022-02-08 11:24:23.210  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-08 11:24:23.210  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-02-08 11:24:23.218  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassBoardFileRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 11:24:23.218  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassBoardRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 11:24:23.218  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassCommentRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 11:24:23.219  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.UserRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 11:24:23.219  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JDBC repository interfaces.
+2022-02-08 11:24:23.275  INFO 8044 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@7927823f' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-08 11:24:23.275  INFO 8044 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-08 11:24:23.313  INFO 8044 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9999 (http)
+2022-02-08 11:24:23.314  INFO 8044 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-02-08 11:24:23.314  INFO 8044 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.54]
+2022-02-08 11:24:23.329  INFO 8044 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-02-08 11:24:23.329  INFO 8044 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 474 ms
+2022-02-08 11:24:23.366 DEBUG 8044 --- [restartedMain] o.s.w.f.CommonsRequestLoggingFilter      : Filter 'commonsRequestLoggingFilter' configured for use
+2022-02-08 11:24:23.390  INFO 8044 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-02-08 11:24:23.395  INFO 8044 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Starting...
+2022-02-08 11:24:23.442  INFO 8044 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Start completed.
+2022-02-08 11:24:23.442  INFO 8044 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2022-02-08 11:24:23.647  INFO 8044 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-02-08 11:24:23.647  INFO 8044 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-02-08 11:24:23.751  WARN 8044 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-02-08 11:24:23.893 DEBUG 8044 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 25 mappings in 'requestMappingHandlerMapping'
+2022-02-08 11:24:23.943  INFO 8044 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-02-08 11:24:23.992  INFO 8044 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1f128a8, org.springframework.security.web.context.SecurityContextPersistenceFilter@1accc13d, org.springframework.security.web.header.HeaderWriterFilter@48e33e60, org.springframework.web.filter.CorsFilter@27e72546, org.springframework.security.web.authentication.logout.LogoutFilter@379b88c1, com.ssafy.honeySchool.common.auth.JwtAuthenticationFilter@369fba21, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4e1a298d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1fdb1e10, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@61cafcdd, org.springframework.security.web.session.SessionManagementFilter@5b01f587, org.springframework.security.web.access.ExceptionTranslationFilter@234ef990, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@603e3ae9]
+2022-02-08 11:24:24.029  INFO 8044 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-02-08 11:24:24.032 DEBUG 8044 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-02-08 11:24:24.043 DEBUG 8044 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2022-02-08 11:24:24.057 DEBUG 8044 --- [restartedMain] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2022-02-08 11:24:24.059 DEBUG 8044 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/resources/**, /swagger-ui.html, /webjars/**, /css/**, /fonts/**, /icons/**, /img/**, /js/**, /swagger-ui/**] in 'resourceHandlerMapping'
+2022-02-08 11:24:24.064 DEBUG 8044 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-02-08 11:24:24.154  INFO 8044 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9999 (http) with context path ''
+2022-02-08 11:24:24.244  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : Started HoneySchoolApplication in 1.418 seconds (JVM running for 3136.466)
+2022-02-08 11:24:24.245  INFO 8044 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-02-08 11:26:58.495  INFO 8044 --- [Thread-23] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-02-08 11:26:58.497  INFO 8044 --- [Thread-23] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown initiated...
+2022-02-08 11:26:58.575  INFO 8044 --- [Thread-23] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown completed.
+2022-02-08 11:26:58.651  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : Starting HoneySchoolApplication using Java 11.0.14 on DESKTOP-KVCQHCD with PID 8044 (C:\Users\multicampus\git\S06P12B201\Backend\bin\main started by SSAFY in C:\Users\multicampus\git\S06P12B201\Backend)
+2022-02-08 11:26:58.651  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : No active profile set, falling back to default profiles: default
+2022-02-08 11:26:58.919  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-08 11:26:58.919  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-02-08 11:26:58.928  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 4 JPA repository interfaces.
+2022-02-08 11:26:59.005  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-02-08 11:26:59.005  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-02-08 11:26:59.012  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassBoardFileRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 11:26:59.013  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassBoardRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 11:26:59.013  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.ClassCommentRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 11:26:59.013  INFO 8044 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.ssafy.honeySchool.db.repository.UserRepository. If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2022-02-08 11:26:59.013  INFO 8044 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JDBC repository interfaces.
+2022-02-08 11:26:59.064  INFO 8044 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@39231eda' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-08 11:26:59.065  INFO 8044 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-02-08 11:26:59.102  INFO 8044 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9999 (http)
+2022-02-08 11:26:59.102  INFO 8044 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-02-08 11:26:59.102  INFO 8044 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.54]
+2022-02-08 11:26:59.116  INFO 8044 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-02-08 11:26:59.116  INFO 8044 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 463 ms
+2022-02-08 11:26:59.152 DEBUG 8044 --- [restartedMain] o.s.w.f.CommonsRequestLoggingFilter      : Filter 'commonsRequestLoggingFilter' configured for use
+2022-02-08 11:26:59.176  INFO 8044 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-02-08 11:26:59.180  INFO 8044 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Starting...
+2022-02-08 11:26:59.214  INFO 8044 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Start completed.
+2022-02-08 11:26:59.215  INFO 8044 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2022-02-08 11:26:59.400  INFO 8044 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-02-08 11:26:59.400  INFO 8044 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-02-08 11:26:59.491  WARN 8044 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-02-08 11:26:59.631 DEBUG 8044 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 25 mappings in 'requestMappingHandlerMapping'
+2022-02-08 11:26:59.675  INFO 8044 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2022-02-08 11:26:59.724  INFO 8044 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5ac72581, org.springframework.security.web.context.SecurityContextPersistenceFilter@dead60e, org.springframework.security.web.header.HeaderWriterFilter@5cfc9d0d, org.springframework.web.filter.CorsFilter@44f3b70a, org.springframework.security.web.authentication.logout.LogoutFilter@183c4f20, com.ssafy.honeySchool.common.auth.JwtAuthenticationFilter@4b81c0f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2da41f3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3af6b050, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@601d3353, org.springframework.security.web.session.SessionManagementFilter@5b0446cf, org.springframework.security.web.access.ExceptionTranslationFilter@cb071f9, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@118a3033]
+2022-02-08 11:26:59.762  INFO 8044 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-02-08 11:26:59.765 DEBUG 8044 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-02-08 11:26:59.777 DEBUG 8044 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2022-02-08 11:26:59.788 DEBUG 8044 --- [restartedMain] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2022-02-08 11:26:59.790 DEBUG 8044 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/resources/**, /swagger-ui.html, /webjars/**, /css/**, /fonts/**, /icons/**, /img/**, /js/**, /swagger-ui/**] in 'resourceHandlerMapping'
+2022-02-08 11:26:59.794 DEBUG 8044 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-02-08 11:26:59.887  INFO 8044 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9999 (http) with context path ''
+2022-02-08 11:26:59.972  INFO 8044 --- [restartedMain] c.s.honeySchool.HoneySchoolApplication   : Started HoneySchoolApplication in 1.34 seconds (JVM running for 3292.194)
+2022-02-08 11:26:59.977  INFO 8044 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged

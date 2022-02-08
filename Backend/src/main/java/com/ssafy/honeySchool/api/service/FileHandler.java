@@ -10,14 +10,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.ssafy.honeySchool.db.entity.ClassBoardFile;
-import com.ssafy.honeySchool.db.entity.DeleteYn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.ssafy.honeySchool.db.entity.ClassBoardFile;
+import com.ssafy.honeySchool.db.entity.DeleteYn;
 
 @Component
 public class FileHandler {
