@@ -3,8 +3,6 @@ import { accountStore, accountState } from "@/store/modules/accountStore";
 import { boardStore, boardState } from "@/store/modules/boardStore";
 // import videoStore from "@/store/modules/videoStore";
 
-
-
 export interface RootState {
   accountStore: accountState;
   boardStore: boardState;

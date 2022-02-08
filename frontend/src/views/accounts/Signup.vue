@@ -3,7 +3,11 @@
     <div id="signup-form" class="card">
       <h3 class="card-header">회원 가입</h3>
       <div class="card-body">
-        <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }">
+        <Form
+          @submit="onSubmit"
+          :validation-schema="schema"
+          v-slot="{ errors }"
+        >
           <div class="form-row mb-3">
             <Field
               name="position"
@@ -87,7 +91,9 @@
                 class="form-control"
                 :class="{ 'is-invalid': errors.grade }"
               >
-                <option disabled value="" selected>몇 학년인지 선택하세요.</option>
+                <option disabled value="" selected>
+                  몇 학년인지 선택하세요.
+                </option>
                 <option value="1">1학년</option>
                 <option value="2">2학년</option>
                 <option value="3">3학년</option>
@@ -105,7 +111,9 @@
                 class="form-control"
                 :class="{ 'is-invalid': errors.class_number }"
               >
-                <option disabled value="" selected>몇 반인지 선택하세요.</option>
+                <option disabled value="" selected>
+                  몇 반인지 선택하세요.
+                </option>
                 <option value="1">1반</option>
                 <option value="2">2반</option>
                 <option value="3">3반</option>
@@ -171,7 +179,9 @@
             </div>
           </div>
           <div class="form-group mb-3">
-            <button type="submit" class="btn btn-primary mr-1">회원 가입</button>
+            <button type="submit" class="btn btn-primary mr-1">
+              회원 가입
+            </button>
           </div>
         </Form>
         <router-link to="/login">이미 회원이신가요?</router-link>
@@ -182,6 +192,8 @@
 
 <script lang="ts">
 import axios from "axios";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import { Form, Field } from "vee-validate";
 import * as Yup from "yup";
 import { ref } from "vue";
@@ -218,14 +230,23 @@ export default {
         .required("비밀번호 확인은 필수 기입사항 입니다."),
     });
 
+    const store = useStore();
+    const router = useRouter();
+
     const onSubmit = (values: any) => {
       console.log(schema);
-      axios.post("http://localhost:9999/api/v1/users/register/", values)
-        .then(res => {
+      axios
+        .post("http://localhost:9999/api/v1/users/register/", values)
+        .then((res) => {
           console.log(res);
-          alert("SUCCESS!! :-)\n\n" + JSON.stringify(values, null, 4));
+          // alert("SUCCESS!! :-)\n\n" + JSON.stringify(values, null, 4));
+          const payload = {
+            user_id: values.user_id,
+            password: values.password,
+          };
+          store.dispatch("accountStore/getToken", payload);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     };
