@@ -117,6 +117,7 @@ export default {
             })
             .then((response)=>{
                 currentarticle.value = response.data
+                console.log(response.data)
             })
             .catch(()=>
                 alert("실패!")
