@@ -132,7 +132,7 @@ export default {
         // article detail 요청            
         let currentarticle = ref({});
         const articleDetail = () => {
-            return axios.get("http://localhost:9999/api/v1/board/class/detail",{
+            return axios.get(process.env.VUE_APP_API_URL+"/board/class/detail",{
                 params:{
                 school: "싸피초",
                 grade: 1,
@@ -154,7 +154,7 @@ export default {
         let isLoadingCom = ref<boolean>(true);
         let comments = ref({});
         const commentList = () => {
-            return axios.get("http://localhost:9999/api/v1/board/class/comment",{
+            return axios.get(process.env.VUE_APP_API_URL+"/board/class/comment",{
                 params:{
                 school: "싸피초",
                 grade: 1,
@@ -174,7 +174,7 @@ export default {
         // 삭제 버튼 클릭
         const deleteArticle = () => {
             // delete 요청 보내기
-            axios.delete("http://localhost:9999/api/v1/board/class/",{
+            axios.delete(process.env.VUE_APP_API_URL+"/board/class/",{
                 params:{
                     school: "싸피초",
                     grade: 1,
@@ -193,7 +193,7 @@ export default {
             if (newComment.value.length === 0) {
                 alert("댓글 내용을 작성해주세요")
             } else {
-                axios.post(`http://localhost:9999/api/v1/board/class/${id}/comment/`, {
+                axios.post(process.env.VUE_APP_API_URL+`/board/class/${id}/comment/`, {
                     'content': newComment.value,
                     'writer': '박싸피',
                     })
@@ -209,7 +209,7 @@ export default {
         }
         // 댓글 삭제
         const deleteCom = (comId:number) => {
-            axios.delete(`http://localhost:9999/api/v1/board/class/${id}/comment/${comId}`)
+            axios.delete(process.env.VUE_APP_API_URL+`/board/class/${id}/comment/${comId}`)
             .then(() => {
                 isLoadingCom.value = false
                 commentList()
@@ -227,7 +227,7 @@ export default {
             if (revisedComment.value.length === 0) {
                 alert("댓글 내용을 작성해주세요")
             } else {
-                axios.put(`http://localhost:9999/api/v1/board/class/${id}/comment/${comId}`, {
+                axios.put(process.env.VUE_APP_API_URL+`/board/class/${id}/comment/${comId}`, {
                     'content': revisedComment.value,
                     'writer': '박싸피',
                     })

@@ -295,7 +295,6 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const OPENVIDU_SERVER_URL = "https://i6b201.p.ssafy.io";
 const OPENVIDU_SERVER_SECRET = "ssafy";
-const VUE_APP_API_URL = "http://localhost:9999/api/v1"
 
 export default {
   name: "App",
@@ -528,7 +527,7 @@ export default {
 				"Authorization": "OPENVIDUAPP:ssafy"
 			}
 			// --- Leave the session by calling 'disconnect' method over the Session object ---			
-			axios.delete(VUE_APP_API_URL+"/lecture/connect?sessionId="+this.mySessionId+"&connectionId="+this.connectionId,{headers})
+			axios.delete(process.env.VUE_APP_API_URL+"/lecture/connect?sessionId="+this.mySessionId+"&connectionId="+this.connectionId,{headers})
 				.then((response)=>{
 					console.log(response);
 				})
@@ -601,7 +600,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .post(
-            VUE_APP_API_URL+"/lecture/",
+            process.env.VUE_APP_API_URL+"/lecture/",
             JSON.stringify({
               customSessionId: sessionId,
             }),
@@ -637,7 +636,7 @@ export default {
 				"Authorization": "OPENVIDUAPP:ssafy",
 			}
 			return new Promise((resolve, reject) => {
-				axios.post(VUE_APP_API_URL+"/lecture/connect",{
+				axios.post(process.env.VUE_APP_API_URL+"/lecture/connect",{
 					customSessionId: this.mySessionId,
 				},{headers})
 				.then((response)=>{

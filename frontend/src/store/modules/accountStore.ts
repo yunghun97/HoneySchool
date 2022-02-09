@@ -66,13 +66,13 @@ export const accountStore: Module<accountState, RootState> = {
   actions: {
     getToken({ commit }, { user_id, password }) {
       axios
-        .post("http://localhost:9999/api/v1/auth/login", { user_id, password })
+        .post(process.env.VUE_APP_API_URL+"/auth/login", { user_id, password })
         .then((response) => {
           localStorage.setItem("accessToken", response.data.accessToken);
           commit("setToken", response.data.accessToken);
           // commit("setUserid", user_id);
           axios
-            .get("http://localhost:9999/api/v1/users/userInfo/", {
+            .get(process.env.VUE_APP_API_URL+"/users/userInfo/", {
               headers: {
                 Authorization: `Bearer ${response.data.accessToken}`,
               },
@@ -92,7 +92,7 @@ export const accountStore: Module<accountState, RootState> = {
     },
     getUserinfo({ commit }, accessToken) {
       axios
-        .get(`http://localhost:9999/api/v1/users/userInfo/`, {
+        .get(process.env.VUE_APP_API_URL+"/users/userInfo/", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
