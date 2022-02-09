@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.time.LocalDate;
 
 /**
  * 유저 모델 정의.
@@ -37,4 +38,6 @@ public class User extends BaseEntity{
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    private LocalDate birth;
 }
