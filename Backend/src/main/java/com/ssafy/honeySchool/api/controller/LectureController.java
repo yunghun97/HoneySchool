@@ -6,11 +6,16 @@ import com.ssafy.honeySchool.api.response.ConnectRes;
 import com.ssafy.honeySchool.api.response.LectureRes;
 import com.ssafy.honeySchool.api.service.LectureService;
 import io.swagger.annotations.Api;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
+import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 인증 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -22,44 +27,35 @@ public class LectureController {
     @Autowired
     LectureService lectureService;
 
-    @PostMapping("/")
-    public ResponseEntity<LectureRes> createLecture(@RequestBody LectureReq lectureReq, @RequestHeader(value = "Authorization") String header){
-        LectureRes lr=lectureService.createLecture(lectureReq,header);
-        return ResponseEntity.status(200).body(lr);
+    private String defaultHeader = "OPENVIDUAPP:ssafy";
+
+    private Map<String, String> map;
+
+    @PostMapping()
+    public Mono<String> createLecture(@RequestBody LectureReq lectureReq){
+        String header = "Basic "+ Base64.getEncoder().encodeToString(this.defaultHeader.getBytes());
+        return lectureService.createLecture(lectureReq,header);
+
+    }
+    @GetMapping()
+    public Mono<String> searchAllLecture() {
+        String header = "Basic "+ Base64.getEncoder().encodeToString(this.defaultHeader.getBytes());
+        return lectureService.searchAllLecture(header);
+    }
+    @DeleteMapping()
+    public Mono<String> deleteLecture(@RequestParam(value = "sessionId") String sessionId){
+        String header = "Basic "+ Base64.getEncoder().encodeToString(this.defaultHeader.getBytes());
+        return lectureService.deleteLecture(sessionId, header);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<String>> getLectureList(@RequestHeader(value = "Authorization") String header){
-        return null;
+    @PostMapping("/connect")
+    public Mono<String> connectLecture(@RequestBody LectureReq lectureReq) throws ParseException {
+        String header = "Basic "+ Base64.getEncoder().encodeToString(this.defaultHeader.getBytes());
+        return lectureService.connectLecture(lectureReq.getCustomSessionId(), header);
     }
-
-    @GetMapping("/{session_id}")
-    public ResponseEntity<List<String>> getLectureList(@PathVariable String session_id, @RequestHeader(value = "Authorization") String header){
-        return null;
-    }
-
-    @DeleteMapping("/{session_id}")
-    public ResponseEntity<String> deleteLecture(@PathVariable String session_id, @RequestBody LectureReq lectureReq,@RequestHeader(value = "Authorization") String header){
-        return null;
-    }
-
-    @PostMapping("/{session_id}/conn")
-    public ResponseEntity<ConnectRes> createConnection(@PathVariable String session_id,@RequestBody ConnectReq connectReq, @RequestHeader(value = "Authorization") String header){
-        return null;
-    }
-
-    @GetMapping("/{session_id}/conn/{connection_id}")
-    public ResponseEntity<ConnectRes> getConnection(){
-        return null;
-    }
-
-    @GetMapping("/{session_id}/conn/")
-    public ResponseEntity<ConnectRes> getConnectionList(){
-        return null;
-    }
-
-    @DeleteMapping("/{session_id}/conn/{connection_id}")
-    public ResponseEntity<ConnectRes> deleteConnection(){
-        return null;
+    @DeleteMapping("/connect")
+    public HttpStatus disconnectLecture(@RequestParam(value= "sessionId") String sessionId, @RequestParam(value="connectionId") String connectionId) {
+        String header = "Basic "+ Base64.getEncoder().encodeToString(this.defaultHeader.getBytes());
+        return lectureService.disconnectLecture(sessionId,connectionId,header);
     }
 }

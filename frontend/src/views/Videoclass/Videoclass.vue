@@ -293,11 +293,9 @@ import UserScreen from "./UserScreen";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-// const OPENVIDU_SERVER_URL = "https://i6b201.p.ssafy.io";
-// const OPENVIDU_SERVER_SECRET = "ssafy";
-
-const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
-const OPENVIDU_SERVER_SECRET = "MY_SECRET";
+const OPENVIDU_SERVER_URL = "https://i6b201.p.ssafy.io";
+const OPENVIDU_SERVER_SECRET = "ssafy";
+const VUE_APP_API_URL = "http://localhost:9999/api/v1"
 
 export default {
   name: "App",
@@ -526,6 +524,17 @@ export default {
 
     leaveSession() {
       // --- Leave the session by calling 'disconnect' method over the Session object ---
+      const headers = {
+				"Authorization": "OPENVIDUAPP:ssafy"
+			}
+			// --- Leave the session by calling 'disconnect' method over the Session object ---			
+			axios.delete(VUE_APP_API_URL+"/lecture/connect?sessionId="+this.mySessionId+"&connectionId="+this.connectionId,{headers})
+				.then((response)=>{
+					console.log(response);
+				})
+				.catch((error)=>{
+					alert("세션 나가기 오류");
+				})			
       if (this.sessionCamera) {
         this.sessionCamera.disconnect();
         this.sessionScreen.disconnect();
@@ -541,6 +550,9 @@ export default {
       this.subscribersCamera = [];
       this.subscribersScreen = [];
       this.screensharing = false;
+
+      this.connectionId = "";
+
 
       window.removeEventListener("beforeunload", this.leaveSession);
       this.$router.push({ name: "About" });
@@ -583,24 +595,24 @@ export default {
 
     // See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-openviduapisessions
     createSession(sessionId) {
+      const headers = {
+				"Authorization": "OPENVIDUAPP:ssafy"
+			}
       return new Promise((resolve, reject) => {
         axios
           .post(
-            `/api/v1/lecture/`,
+            VUE_APP_API_URL+"/lecture/",
             JSON.stringify({
               customSessionId: sessionId,
             }),
             {
-              auth: {
-                username: "OPENVIDUAPP",
-                password: OPENVIDU_SERVER_SECRET,
-              },
+              headers
             }
           )
           .then((response) => response.data)
           .then((data) => resolve(data.id))
           .catch((error) => {
-            if (error.response.status === 409) {
+            if (error) {
               resolve(sessionId);
             } else {
               console.warn(
@@ -619,30 +631,27 @@ export default {
       });
     },
 
+  joinConnection(){		
+
+			const headers = {
+				"Authorization": "OPENVIDUAPP:ssafy",
+			}
+			return new Promise((resolve, reject) => {
+				axios.post(VUE_APP_API_URL+"/lecture/connect",{
+					customSessionId: this.mySessionId,
+				},{headers})
+				.then((response)=>{
+					this.connectionId = response.data.id;
+					resolve(response.data.token);
+				})
+				.catch(error =>
+					reject(error.response));				
+			})
+		},
+
     // See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-openviduapisessionsltsession_idgtconnection
     createToken(sessionId) {
-      const jsondata = {
-        type: "WEBRTC",
-        //"data": "user_data",
-        role: "PUBLISHER",
-        kurentoOptions: {
-          allowedFilters: ["GStreamerFilter", "FaceOverlayFilter"],
-        },
-      };
-      return new Promise((resolve, reject) => {
-        axios({
-          method: "post",
-          url: `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
-          data: JSON.stringify(jsondata),
-          auth: {
-            username: "OPENVIDUAPP",
-            password: OPENVIDU_SERVER_SECRET,
-          },
-        })
-          .then((response) => response.data)
-          .then((data) => resolve(data.token))
-          .catch((error) => reject(error.response));
-      });
+      return this.joinConnection(sessionId);
     },
 
     // 손들기 function
