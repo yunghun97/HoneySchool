@@ -135,7 +135,7 @@ FAIL {
 ### 회원 ID 가져오기  
 - URL
 ```
-GET /users/userId
+GET /users/userInfo
 ```
 - Request
 ```Header
