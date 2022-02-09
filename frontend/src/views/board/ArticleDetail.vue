@@ -13,11 +13,14 @@
                 <div class="content-container">
                     <p>{{ currentarticle.board.content }}</p>
                 </div>
-                <div v-if="currentarticle.board.category==='photo'" class="img-container">
+                <!-- <div v-if="currentarticle.board.category==='photo'" class="img-container">
                     <img :src="currentarticle.files" alt="img" class="img-fluid">
-                </div>
-                <div v-if="currentarticle.files.length > 0">
-                    <p>{{ currentarticle.files }}</p>
+                </div> -->
+                <div v-if="currentarticle.files.length > 0" class="content-container">
+                    <p>첨부파일</p>
+                    <div v-for="idx in currentarticle.files.length" :key="idx">
+                        <a href="`http://localhost:9999/static/uploads/${{currentarticle.files[idx].stored_file_path}}`">첨부파일 {{idx}}</a>
+                    </div>
                 </div>
                 <div>
                     <p>{{ currentarticle }}</p>
