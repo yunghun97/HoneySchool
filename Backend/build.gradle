@@ -84,3 +84,7 @@ configurations {
 test {
 	useJUnitPlatform()
 }
+
+compileQuerydsl.doFirst { 
+	if(file(querydslDir).exists() ) delete(file(querydslDir)) 
+}

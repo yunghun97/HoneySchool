@@ -19,13 +19,13 @@ public class QClassBoardFile extends EntityPathBase<ClassBoardFile> {
 
     public static final QClassBoardFile classBoardFile = new QClassBoardFile("classBoardFile");
 
-    public final NumberPath<Integer> board_id = createNumber("board_id", Integer.class);
-
-    public final EnumPath<DeleteYn> delete_yn = createEnum("delete_yn", DeleteYn.class);
+    public final NumberPath<Integer> boardId = createNumber("boardId", Integer.class);
 
     public final NumberPath<Long> file_size = createNumber("file_size", Long.class);
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
+
+    public final EnumPath<DeleteYn> isDeleted = createEnum("isDeleted", DeleteYn.class);
 
     public final StringPath original_file_name = createString("original_file_name");
 

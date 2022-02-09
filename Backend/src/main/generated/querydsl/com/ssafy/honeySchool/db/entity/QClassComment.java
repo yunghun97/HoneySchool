@@ -52,7 +52,7 @@ public class QClassComment extends EntityPathBase<ClassComment> {
 
     public QClassComment(Class<? extends ClassComment> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.classBoard = inits.isInitialized("classBoard") ? new QClassBoard(forProperty("classBoard")) : null;
+        this.classBoard = inits.isInitialized("classBoard") ? new QClassBoard(forProperty("classBoard"), inits.get("classBoard")) : null;
     }
 
 }
