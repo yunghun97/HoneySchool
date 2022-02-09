@@ -10,14 +10,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.ssafy.honeySchool.db.entity.ClassBoardFile;
-import com.ssafy.honeySchool.db.entity.DeleteYn;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.ssafy.honeySchool.db.entity.ClassBoardFile;
+import com.ssafy.honeySchool.db.entity.DeleteYn;
 
 @Component
 public class FileHandler {
@@ -34,7 +34,9 @@ public class FileHandler {
     	// 반환을 할 파일 리스트
     	List<ClassBoardFile> fileList = new ArrayList<>();
     	
-    	// 밑에 코드 대신 씀
+    	// 밑에 코드 대신 씀 (NullPointerException 에러가 발생)
+    	// if(객체 == null) 사용하면 안된다고해서 아래처럼 하면 DB에 저장 안된다...
+//    	if (!CollectionUtils.isEmpty(multipartFiles)) {
     	if (multipartFiles == null) {
     		System.out.println("파일이 널이야");
     		return fileList;
@@ -54,10 +56,10 @@ public class FileHandler {
 //        // 반환을 할 파일 리스트
 //        List<BoardPicture> fileList = new ArrayList<>();
 
-        // 파일이 빈 것이 들어오면 빈 것을 반환
-        if(multipartFiles.isEmpty()){
-            return fileList;
-        }
+//        // 파일이 빈 것이 들어오면 빈 것을 반환
+//        if(multipartFiles.isEmpty()){
+//            return fileList;
+//        }
 
 //        // 파일 이름을 업로드 한 날짜로 바꾸어서 저장할 것이다
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -143,11 +145,11 @@ public class FileHandler {
                 String new_file_name = Long.toString(System.nanoTime()) + originalFileExtension;
                 // 생성 후 리스트에 추가
                 ClassBoardFile classBoardFile = ClassBoardFile.builder()
-                        .board_id(boardID)
+                        .boardId(boardID)
                         .original_file_name(multipartFile.getOriginalFilename())
                         .stored_file_path(path + "/" + new_file_name)
                         .file_size(multipartFile.getSize())
-                        .delete_yn(DeleteYn.N)
+                        .isDeleted(DeleteYn.N)
                         .build();
                 fileList.add(classBoardFile);
                 

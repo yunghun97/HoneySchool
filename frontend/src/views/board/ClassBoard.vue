@@ -10,7 +10,6 @@
     <div
       class="card"
       @click="pushRouter(category.url)"
-
       :style="{backgroundColor : category.color}"
     >
       <div class="card-body">
@@ -47,21 +46,21 @@ type boardType = Array<BoardArticles>;
 
 export default defineComponent({
     name: 'ClassBoard',
-    beforeCreate() {            
-            const formData = new FormData();
-            formData.append('board_id', '10');
-            formData.append('content', "댓글내용990입니다");
-            formData.append('file_link', "파일링크");
-            formData.append('writer', "강씨"); // user가 기본키여서 김싸피만 user로 등록되어있어서 작성자 바꿀려면 사람 User에서 추가해야합니다.
+    // beforeCreate() {            
+    //         const formData = new FormData();
+    //         formData.append('board_id', '10');
+    //         formData.append('content', "댓글내용990입니다");
+    //         formData.append('file_link', "파일링크");
+    //         formData.append('writer', "강씨"); // user가 기본키여서 김싸피만 user로 등록되어있어서 작성자 바꿀려면 사람 User에서 추가해야합니다.
 
-            axios.post("http://localhost:9999/api/v1/board/class/comment",formData, {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} })
-            .then(()=>{
-                console.log("댓글작성 성공");
-            })            
-            .catch(()=>{
-                console.log("이상해짐")
-            })
-    },   
+    //         axios.post("http://localhost:9999/api/v1/board/class/comment",formData, {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} })
+    //         .then(()=>{
+    //             console.log("댓글작성 성공");
+    //         })            
+    //         .catch(()=>{
+    //             console.log("이상해짐")
+    //         })
+    // },   
     //     // 카테고리 받기
     //     axios.get("http://localhost:9999/api/v1/board/class/category",{
     //       params:{

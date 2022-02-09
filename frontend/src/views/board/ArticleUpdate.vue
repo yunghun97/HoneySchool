@@ -38,29 +38,28 @@
             <div class="row mb-3">
                 <label for="title" class="col-sm-2 col-form-label">첨부</label>
                 <div class="col-sm-10">
-                    <input @change="fileSelect()" type="file" multiple ref="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                    <input @change="fileSelect()" multiple type="file" ref="selectedFile" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                     <!-- <button @click="clearFiles" class="btn btn-outline-danger">파일 전체 삭제</button> -->
                 </div>
             </div>
-            <button class="btn btn-success">수정하기</button>
+            <button class="btn btn-success" type="button" @click="updateArticle">수정하기</button>
         </form>
     </div>
 </template>
 
 <script lang="ts">
 import router from "../../router";
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router'
 import axios from "axios";
-import Reference from 'yup/lib/Reference';
 
 interface BoardArticles {
   id: number,
   category: string,
   title: string,
   content: string,
-  file_link? :any,
+  files? :any,
 }
 
 export default {
@@ -73,10 +72,11 @@ export default {
         let isLoading = ref<boolean>(true);
         // article detail 요청            
         let currentarticle = ref({
+            id: route.params.article_id as string,
             title: '',
             category : route.params.category as string,
             content: '',
-            file_link: '',
+            files: '' as any,
         });
         const articleDetail = () => {
             return axios.get("http://localhost:9999/api/v1/board/class/detail",{
@@ -88,62 +88,65 @@ export default {
                 }
             })
             .then((response)=>{
-                currentarticle.value = response.data
-                
+                currentarticle.value = response.data.board
             })
-            .catch(()=>
-                alert("실패!")
-            )  
         }
 
         articleDetail().then(() => {
             isLoading.value = false
         })
-        // let updatingarticle = {
-        //     id : +route.params.article_id,
-        //     category : route.params.category as string,
-        //     title : currentarticle.value.title,
-        //     content : currentarticle.value.content,
-        //     file_link : currentarticle.value.file_link,
-        // } as BoardArticles
+        let updatingarticle = {
+            id : +route.params.article_id,
+            category : route.params.category as string,
+            title : currentarticle.value.title,
+            content : currentarticle.value.content,
+            file_link : currentarticle.value.files,
+        } as BoardArticles
 
+        let isUploading = ref<boolean>(false);
+        const selectedFile = ref({files:''})
         const fileSelect = () => {
-            const file = ref() as any
-            console.log(file.files)
-            currentarticle.value.file_link= file.files;
+            if (selectedFile.value !== null) {
+            isUploading.value = true
+            currentarticle.value.files = selectedFile.value.files
+            console.log(currentarticle.value.files)
+            }
         };
         const clearFiles = (event:any) => {
             event.preventDefault()
-            currentarticle.value.file_link=''
         };
         const updateArticle = () => {
-            const formData = new FormData() 
+            const formData = new FormData();
             formData.append('category', currentarticle.value.category);
             formData.append('title', currentarticle.value.title);
             formData.append('content', currentarticle.value.content);
-            formData.append('file_link', currentarticle.value.file_link);
-
+            formData.append('id', route.params.article_id as string); // user가 기본키여서 김싸피만 user로 등록되어있어서 작성자 바꿀려면 사람 User에서 추가해야합니다.
+            if (isUploading.value) {
+                for (var index=0; index < currentarticle.value.files.length; index++) {
+                    formData.append('files', currentarticle.value.files[index])
+                    formData.append('filesChanged', 'Y');
+                }
+            } else {
+                formData.append('filesChanged', 'N');
+            }
+           
             // 글작성하느라 임의로 추가한내용
-            formData.append('writer', "김싸피"); // user가 기본키여서 김싸피만 user로 등록되어있어서 작성자 바꿀려면 사람 User에서 추가해야합니다.
             formData.append('grade', '1');
             formData.append('classes', '1');
             formData.append('school', "싸피초");
 
-            console.log(formData)
+            console.log(...formData.entries())
             //TODO : PUT 요청 보내기
-            // axios.put("http://localhost:9999/api/v1/board/class",formData,
-            //{headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
-            //)
-            // .then((response) => {
-            //     console.log(response.data)
-            //     alert('성공')
-            //     router.push({name: 'ArticleDetail', params: { category:updatingarticle.category ,article_id: updatingarticle.id }})
-            // })
-            // .catch((e) => {
-            //     alert('수정 실패')
-            // })
+            axios.put("http://localhost:9999/api/v1/board/class/",formData,
+            {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
+            )
+            .then((response) => {
+                console.log(response.data)
+                router.push({name: 'ArticleDetail', params: { category:updatingarticle.category ,article_id: updatingarticle.id }})
+            })
+
         }
-        return { id, isLoading, currentarticle, fileSelect, clearFiles, updateArticle}
+        return { id, isLoading, currentarticle, isUploading, selectedFile, fileSelect, clearFiles, updateArticle}
     }
 }
 

@@ -28,7 +28,17 @@
             <div 
                 class="note"
                 >
-                <p>{{currentarticle}}</p>
+                <div v-if="currentarticle.files.length > 0" class="content-container">
+                    <div v-for="idx in currentarticle.files.length" :key="idx">
+                        <img class="rounded mx-auto d-block" src="`http://localhost:9999/static/uploads/${{currentarticle.files[idx].stored_file_path}}`" alt="">
+                    </div>
+                </div>
+                <div class="content">
+                    <p>{{ currentarticle.board.title }}</p>
+                    <p v-if="currentarticle.board.user!==null">작성자 : {{ currentarticle.board.user.name }}</p>
+                    <p>작성날짜 : {{currentarticle.board.date.split("T")[0] }}</p>
+                    <p>{{ currentarticle.board.content }}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -69,9 +79,6 @@ export default
             .then((response)=>{
                 currentarticle.value = response.data
             })
-            .catch(()=>
-                alert("실패!")
-            )  
         }
 
         const articles = computed(() => store.state.boardStore.photo);
@@ -156,5 +163,12 @@ img {
 .beforebtn {
     float:left;
     margin:80px;
+}
+.content {
+        padding-top: 20vh;
+        margin-bottom: 50px;
+}
+.content > p {
+    margin-right: 25vh;
 }
 </style>

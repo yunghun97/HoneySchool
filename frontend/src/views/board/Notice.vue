@@ -71,13 +71,10 @@ export default
             .then((response)=>{
                 currentarticle.value = response.data
             })
-            .catch(()=>
-                alert("실패!")
-            )  
         }
 
         const articles = computed(() => store.state.boardStore.notice);
-        const articlesdata = articles.value as ArticleArray
+                const articlesdata = articles.value as ArticleArray
        
         let nextarticleidx = ref<number>(articles.value.length);
         let nextarticleid = ref<number>(0);
@@ -119,7 +116,6 @@ export default
             isLoading.value = false
             })
         })
-
 
         return { isLoading, articles, getCurrentArticle, currentarticle, beforearticleidx, nextarticleidx, beforearticleid, nextarticleid, articlesdata }
     }
