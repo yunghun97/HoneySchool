@@ -10,7 +10,6 @@
     <div
       class="card"
       @click="pushRouter(category.url)"
-
       :style="{backgroundColor : category.color}"
     >
       <div class="card-body">

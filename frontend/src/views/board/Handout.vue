@@ -39,8 +39,6 @@ import axios from 'axios';
 import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-import Category from '../../types/board/Category';
-import Article from '../../types/board/Article';
 import BoardArticles from "../../types/board/BoardArticles";
 import HandoutContent from "@/components/Board/HandoutContent.vue";
 interface ArticleArray {

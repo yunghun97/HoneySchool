@@ -56,9 +56,6 @@ const routes: Array<RouteRecordRaw> = [
     path: "/classboard/notice/:article_id",
     name: "Notice",
     component: () => import("@/views/board/Notice.vue"),
-    // meta: {
-    //   reload: true
-    // }
   },
   {
     path: "/classboard/handouts/:article_id",

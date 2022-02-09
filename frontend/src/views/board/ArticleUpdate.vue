@@ -42,7 +42,7 @@
                     <!-- <button @click="clearFiles" class="btn btn-outline-danger">파일 전체 삭제</button> -->
                 </div>
             </div>
-            <button class="btn btn-success">수정하기</button>
+            <button class="btn btn-success" type="button" @click="updateArticle">수정하기</button>
         </form>
     </div>
 </template>
@@ -72,6 +72,7 @@ export default {
         let isLoading = ref<boolean>(true);
         // article detail 요청            
         let currentarticle = ref({
+            id: route.params.article_id as string,
             title: '',
             category : route.params.category as string,
             content: '',
@@ -136,10 +137,11 @@ export default {
 
             console.log(...formData.entries())
             //TODO : PUT 요청 보내기
-            axios.put("http://localhost:9999/api/v1/board/class",formData,
-            {headers: {'Content-Type' : 'multipart/form-data'} }
+            axios.put("http://localhost:9999/api/v1/board/class/",formData,
+            {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
             )
             .then((response) => {
+                console.log(response.data)
                 router.push({name: 'ArticleDetail', params: { category:updatingarticle.category ,article_id: updatingarticle.id }})
             })
 
