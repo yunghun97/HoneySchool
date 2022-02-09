@@ -43,7 +43,7 @@ const routes: Array<RouteRecordRaw> = [
     component: ArticleDetail,
   },
   {
-    path: "/classboard/:category/:article_id/edit",
+    path: "/classboard/:article_id/edit",
     name: "ArticleUpdate",
     component: () => import("@/views/board/ArticleUpdate.vue"),
   },

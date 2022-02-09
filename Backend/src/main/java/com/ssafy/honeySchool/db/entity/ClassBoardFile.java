@@ -26,7 +26,8 @@ public class ClassBoardFile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
-    private int board_id;
+    @Column(name = "board_id")
+    private int boardId;
 
     // 원본 파일이름 과 서버에 저장된 파일 경로 를 분리한 이유?
     // 동일한 이름을 가진 파일이 업로드가 된다면 오류가 생긴다.
@@ -42,5 +43,5 @@ public class ClassBoardFile {
     
     @Enumerated(value = EnumType.STRING)
     @Column(name = "delete_yn")
-    private DeleteYn delete_yn;
+    private DeleteYn isDeleted;
 }

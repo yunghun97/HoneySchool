@@ -69,9 +69,6 @@ export default
             .then((response)=>{
                 currentarticle.value = response.data
             })
-            .catch((e)=>
-                console.log(e)
-            )  
         }
 
         const articles = computed(() => store.state.boardStore.handouts);

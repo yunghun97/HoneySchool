@@ -33,17 +33,12 @@ public class BoardService {
             String rootPath
     ) throws Exception {
     	
-    	// 먼저 게시물 정보를 DB에 저장한다 -> board.getId()도 pk값을 갖게 된다.
-    	ClassBoard saveBoard = classBoardRepository.save(board);
-//    	System.out.println("여기에 pk가 있을까요" + saveBoard.getId());
-//    	System.out.println("여기에 pk가 있을까요" + board.getId());
-    	
-        // 파일을 저장하고 그 BoardPicture 에 대한 list 를 가지고 있는다
+        // 파일을 저장하고 그 files 에 대한 list 를 가지고 있는다
     	List<ClassBoardFile> list = fileHandler.parseFileInfo(board.getId(), files, rootPath);
         
         if(list.isEmpty()){
             // TODO : 파일이 없을 땐 어떻게 해야할까.. 고민을 해보아야 할 것
-        	return saveBoard;
+        	return board;
         }
         // 파일에 대해 DB에 저장하고 가지고 있을 것
         else{
@@ -58,6 +53,6 @@ public class BoardService {
 //        board.setReported_date(new Date().toString());
 
 //        return classBoardRepository.save(board);
-        return saveBoard;
+        return board;
     }
 }
