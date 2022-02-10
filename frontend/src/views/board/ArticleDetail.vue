@@ -285,7 +285,7 @@ export default {
 .comment-btn {
     display:inline-block; 
     margin-top: -42px;
-    float: right;
+    /* float: right; */
 }
 .comment-list {
     text-align: left;

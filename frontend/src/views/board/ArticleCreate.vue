@@ -141,11 +141,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
+import { mapState } from "vuex";
 import Article from "../../types/board/Article";
 import axios from "axios";
 import router from '../../router';
-
+interface timeTable {
+  [index: number] : Array<any>;
+};
 export default defineComponent({
   name: "CreateArticle",
   data() {
@@ -161,6 +164,9 @@ export default defineComponent({
       timeweek: "",
       monDate: "" as any,
     };
+  },
+  computed: {
+    ...mapState('accountStore', ['userinfo'])
   },
   methods: {
     fileSelect() {
@@ -186,12 +192,10 @@ export default defineComponent({
             formData.append('files', this.article.file_link[index]);
         }
       }
+      formData.append('school', this.userinfo.school);
+      formData.append('grade', this.userinfo.grade);
+      formData.append('classes', this.userinfo.class_number);
       
-      // 글작성하느라 임의로 추가한내용
-      //formData.append('writer', "김싸피"); // user가 기본키여서 김싸피만 user로 등록되어있어서 작성자 바꿀려면 사람 User에서 추가해야합니다.
-      formData.append('grade', '1');
-      formData.append('classes', '1');
-      formData.append('school', "싸피초");
 
       this.submitted = true
       // console.log(...formData.entries())
@@ -206,24 +210,67 @@ export default defineComponent({
         alert("글 작성 실패")
       })
     },
-      saveTimetable() {
+    // 시간표 작성
+    saveTimetable() {
         if (this.article.category.length <=0 || this.article.title.length <=0 || this.timeweek.length <=0) {
           window.alert('제목, 분류 및 내용을 모두 작성해주세요')
         return false;
-      }
-        
-    },
-    // 몇 주차인지 정하면, 월요일 날짜 구하는 함수
-    getDate() {
-      const y = +this.timeweek.split("-")[0];
-      const w = +this.timeweek.split("W")[1];
-      let date = new Date(y, 0, (1 + w * 7));
-      date.setDate(date.getDate() + (1 - date.getDay()))
-      this.monDate = date
-      //console.log(date.getFullYear())
-      //console.log(date.getMonth())
-      //console.log(date.getDate())
-    }
+        }
+        const day=['mon','tue','wed','thu','fri'];
+        let timetable = [[], [], [], [], []] as timeTable;
+        for (var i=1; i<7; i++) {
+          day.forEach((d) => {
+            const subject = {
+              'start_time': (document.getElementById(`start${i}`) as HTMLInputElement).value,
+              'end_time': (document.getElementById(`end${i}`) as HTMLInputElement).value,
+              'subject': (document.getElementById(`${d}${i}`) as HTMLInputElement).value,
+            }
+            if (subject.subject !== '') {
+              timetable[day.indexOf(d)].push(subject)
+            }
+          })
+        }
+        let data:any = {
+          'year': +this.timeweek.split('-')[0],
+          'week': +this.timeweek.split('W')[1],
+          'school': this.userinfo.school,
+          'grade': this.userinfo.grade,
+          'classes': this.userinfo.class_number,
+          '1': timetable[0],
+          '2': timetable[1],
+          '3': timetable[2],
+          '4': timetable[3],
+          '5': timetable[4]
+        }
+     },
+
+    // get 요청 확인
+    //  show() {
+    //     axios.get(process.env.VUE_APP_API_URL+"/timetable/week",{
+    //         params:{
+    //               school: this.userinfo.school,
+    //               grade: this.userinfo.grade,
+    //               classes: this.userinfo.class_number,
+    //               date: '2022-02-07',
+    //               },
+    //         })
+    //     .then((res) => {
+    //       console.log(res.data)
+    //     })
+    //     },
+
+
+    // // 몇 주차인지 정하면, 월요일 날짜 구하는 함수
+    // getDate() {
+    //   const y = +this.timeweek.split("-")[0];
+    //   const w = +this.timeweek.split("W")[1];
+    //   let date = new Date(y, 0, (1 + w * 7));
+    //   date.setDate(date.getDate() + (1 - date.getDay()))
+    //   this.monDate = date
+    //   //console.log(date.getFullYear())
+    //   //console.log(date.getMonth())
+    //   //console.log(date.getDate())
+    // },
   },
 });
 </script>
