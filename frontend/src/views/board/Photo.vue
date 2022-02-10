@@ -68,7 +68,7 @@ export default
 
         let currentarticle = ref({});
         const articleDetail = () => {
-            return axios.get("http://localhost:9999/api/v1/board/class/detail",{
+            return axios.get(process.env.VUE_APP_API_URL+"/board/class/detail",{
                 params:{
                 school: "싸피초",
                 grade: 1,

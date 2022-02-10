@@ -236,7 +236,7 @@ export default {
     const onSubmit = (values: any) => {
       console.log(schema);
       axios
-        .post("http://localhost:9999/api/v1/users/register/", values)
+        .post(process.env.VUE_APP_API_URL+"/users/register/", values)
         .then((res) => {
           console.log(res);
           // alert("SUCCESS!! :-)\n\n" + JSON.stringify(values, null, 4));

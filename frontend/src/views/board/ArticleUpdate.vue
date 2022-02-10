@@ -79,7 +79,7 @@ export default {
             files: '' as any,
         });
         const articleDetail = () => {
-            return axios.get("http://localhost:9999/api/v1/board/class/detail",{
+            return axios.get(process.env.VUE_APP_API_URL+"/board/class/detail",{
                 params:{
                 school: "싸피초",
                 grade: 1,
@@ -137,7 +137,7 @@ export default {
 
             console.log(...formData.entries())
             //TODO : PUT 요청 보내기
-            axios.put("http://localhost:9999/api/v1/board/class/",formData,
+            axios.put(process.env.VUE_APP_API_URL+"/board/class/",formData,
             {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
             )
             .then((response) => {

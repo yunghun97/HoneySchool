@@ -51,7 +51,7 @@ export const boardStore: Module<boardState, RootState> = {
   },
   actions: {    
     getArticles ({ commit }) {
-      axios.get("http://localhost:9999/api/v1/board/class",{
+      axios.get(process.env.VUE_APP_API_URL+"/board/class",{
         params:{
           school: "싸피초",
           grade: 1,
@@ -67,7 +67,7 @@ export const boardStore: Module<boardState, RootState> = {
       )    
     },
     classifyCategory ({ commit }, category) {
-      return axios.get("http://localhost:9999/api/v1/board/class/category",{
+      return axios.get(process.env.VUE_APP_API_URL+"/board/class/category",{
           params:{
             school: "싸피초",
             grade: 1,

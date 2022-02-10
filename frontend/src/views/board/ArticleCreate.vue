@@ -196,7 +196,7 @@ export default defineComponent({
       this.submitted = true
       // console.log(...formData.entries())
       // POST 요청
-      axios.post("http://localhost:9999/api/v1/board/class/yunghun97",formData, 
+      axios.post(process.env.VUE_APP_API_URL+"/board/class/yunghun97",formData, 
       { headers: {'Content-Type' : 'multipart/form-data;charset=utf-8' } }
       )
       .then((res)=>{

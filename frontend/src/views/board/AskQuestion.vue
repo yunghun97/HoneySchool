@@ -47,7 +47,7 @@ export default defineComponent({
             formData.append('classes', '1');
             formData.append('school', "싸피초");
 
-            axios.post("http://localhost:9999/api/v1/board/class",formData, 
+            axios.post(process.env.VUE_APP_API_URL+"/board/class",formData, 
             {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
             )
             .then((response)=>{
