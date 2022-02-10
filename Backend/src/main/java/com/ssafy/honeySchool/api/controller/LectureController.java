@@ -21,6 +21,7 @@ import java.util.Map;
  * 인증 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
 @Api(value = "강의 API", tags = {"Lecture"})
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/lecture")
 public class LectureController {

@@ -36,7 +36,7 @@ import com.ssafy.honeySchool.db.repository.ClassBoardFileRepository;
 import com.ssafy.honeySchool.db.repository.ClassBoardRepository;
 import com.ssafy.honeySchool.db.repository.ClassCommentRepository;
 import com.ssafy.honeySchool.db.repository.UserRepository;
-@CrossOrigin(origins = "http://localhost:8080/")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/board")
 public class BoardController {

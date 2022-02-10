@@ -26,7 +26,7 @@ import reactor.netty.http.client.HttpClient;
 @Service("lectureService")
 public class LectureServiceImpl implements LectureService{
     WebClient webClient=WebClient.builder()
-            .baseUrl("https://i6b201.p.ssafy.io:8443")
+            .baseUrl("https://i6b201.p.ssafy.io:5443")
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .clientConnector(
                     new ReactorClientHttpConnector(
