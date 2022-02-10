@@ -18,6 +18,14 @@
       </tr>
     </thead>
     <tbody>
+      <tr @click="$router.push({ name: 'TimeTable' })">
+        <td class="table-warning"><fa icon="calendar-check" style="width:25px;"></fa></td>
+        <td class="table-warning">이번주 시간표</td>
+        <td class="table-warning">시간표</td>
+        <td class="table-warning"></td>
+        <td class="table-warning"></td>
+
+      </tr>
       <tr 
       v-for="article in articles" :key="article.id"
       @click="$router.push({name: 'ArticleDetail', params: { category:article.category ,article_id: article.id }})"
