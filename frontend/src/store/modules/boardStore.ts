@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Module } from "vuex";
 import { RootState } from "../index";
-import { number } from "yup";
 
 
 interface BoardArticles {
