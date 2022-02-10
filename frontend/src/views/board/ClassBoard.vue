@@ -114,19 +114,30 @@ export default defineComponent({
           color: "#F52532",
         }
         ])
-        // TODO : category 선택 시, 게시글 카테고리 필터 서버에 요청
+
         const pushRouter = async(category:string) => {
           await store.dispatch("boardStore/classifyCategory", category)
             if (category == "notice") {
               const article = await computed(() => store.state.boardStore.notice[0]).value as BoardArticles;
-              //console.log(article)
-              return router.push({name: 'Notice', params: { article_id: article.id }})
+              if (article === null) {
+                alert('아직 게시글이 없습니다.')
+              } else {
+                return router.push({name: 'Notice', params: { article_id: article.id }})
+              }
             } else if (category =="handouts") {
               const article = await computed(() => store.state.boardStore.handouts[0]).value as BoardArticles;
-              return router.push({name: 'Handout', params: { article_id: article.id }})
+              if (article === null) {
+                alert('아직 게시글이 없습니다.')
+              } else {
+                return router.push({name: 'Handout', params: { article_id: article.id }})
+              }
             } else if (category == "photo") {
               const article = await computed(() => store.state.boardStore.photo[0]).value as BoardArticles;
-              return router.push({name: 'Photo', params: { article_id: article.id }})
+              if (article === null) {
+                alert('아직 게시글이 없습니다.')
+              } else {
+                return router.push({name: 'Photo', params: { article_id: article.id }})
+              }
             } else if (category == "assignment") {
               const article = computed(() => store.state.boardStore.assignment[0]).value as BoardArticles;
               return router.push({name: 'Assignment'})

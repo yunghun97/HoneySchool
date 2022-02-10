@@ -109,7 +109,7 @@ export default {
             if (selectedFile.value !== null) {
             isUploading.value = true
             currentarticle.value.files = selectedFile.value.files
-            console.log(currentarticle.value.files)
+            //console.log(currentarticle.value.files)
             }
         };
         const clearFiles = (event:any) => {
@@ -124,10 +124,10 @@ export default {
             if (isUploading.value) {
                 for (var index=0; index < currentarticle.value.files.length; index++) {
                     formData.append('files', currentarticle.value.files[index])
-                    formData.append('filesChanged', 'Y');
+                    formData.append('fileIsChanged', 'Y');
                 }
             } else {
-                formData.append('filesChanged', 'N');
+                formData.append('fileIsChanged', 'N');
             }
            
             // 글작성하느라 임의로 추가한내용
