@@ -8,8 +8,6 @@ export interface accountState {
   user_id: string;
   accounts: Array<any>;
   userinfo: any;
-  //
-  count: number;
 }
 
 export const accountStore: Module<accountState, RootState> = {
@@ -19,7 +17,6 @@ export const accountStore: Module<accountState, RootState> = {
     user_id: "",
     accounts: [],
     userinfo: {},
-    count: 0,
   }),
   getters: {
     isLogin: (state) => {
@@ -31,10 +28,6 @@ export const accountStore: Module<accountState, RootState> = {
     },
     getUserinfo: (state) => {
       return state.userinfo;
-    },
-    //
-    doubleCount: (state) => {
-      return state.count * 2;
     },
   },
   mutations: {
@@ -57,22 +50,20 @@ export const accountStore: Module<accountState, RootState> = {
       router.push({ name: "About" });
       // console.log(state.accounts)
     },
-    //
-    increment(state) {
-      state.count++;
-      console.log(state.count);
-    },
   },
   actions: {
     getToken({ commit }, { user_id, password }) {
       axios
-        .post(process.env.VUE_APP_API_URL+"/auth/login", { user_id, password })
+        .post(process.env.VUE_APP_API_URL + "/auth/login", {
+          user_id,
+          password,
+        })
         .then((response) => {
           localStorage.setItem("accessToken", response.data.accessToken);
           commit("setToken", response.data.accessToken);
           // commit("setUserid", user_id);
           axios
-            .get(process.env.VUE_APP_API_URL+"/users/userInfo/", {
+            .get(process.env.VUE_APP_API_URL + "/users/userInfo/", {
               headers: {
                 Authorization: `Bearer ${response.data.accessToken}`,
               },
@@ -92,7 +83,7 @@ export const accountStore: Module<accountState, RootState> = {
     },
     getUserinfo({ commit }, accessToken) {
       axios
-        .get(process.env.VUE_APP_API_URL+"/users/userInfo/", {
+        .get(process.env.VUE_APP_API_URL + "/users/userInfo/", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -104,10 +95,6 @@ export const accountStore: Module<accountState, RootState> = {
         .catch((err) => {
           console.log("에러", err.response);
         });
-    },
-    //
-    incrementNumber({ commit }) {
-      commit("increment");
     },
   },
 };
