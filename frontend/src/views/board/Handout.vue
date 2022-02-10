@@ -39,8 +39,6 @@ import axios from 'axios';
 import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-import Category from '../../types/board/Category';
-import Article from '../../types/board/Article';
 import BoardArticles from "../../types/board/BoardArticles";
 import HandoutContent from "@/components/Board/HandoutContent.vue";
 interface ArticleArray {
@@ -60,7 +58,7 @@ export default
 
         let currentarticle = ref({});
         const articleDetail = () => {
-            return axios.get("http://localhost:9999/api/v1/board/class/detail",{
+            return axios.get(process.env.VUE_APP_API_URL+"/board/class/detail",{
                 params:{
                 school: "싸피초",
                 grade: 1,
@@ -71,9 +69,6 @@ export default
             .then((response)=>{
                 currentarticle.value = response.data
             })
-            .catch(()=>
-                alert("실패!")
-            )  
         }
 
         const articles = computed(() => store.state.boardStore.handouts);

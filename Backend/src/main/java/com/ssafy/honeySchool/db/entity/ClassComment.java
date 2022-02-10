@@ -17,7 +17,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
@@ -26,32 +25,38 @@ import lombok.ToString;
 @NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
-@ToString
 public class ClassComment {
 	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int board_id;
 	private String content;
 	private String writer;
 	private String file_link;
 	private Date date;
 	
+	// 다대일 관계 만들기
+	// ???
+	// private int board_id;
 	@ManyToOne
-	@JoinColumn(name = "class_board_id")
+	@JoinColumn(name = "board_id")
 	private ClassBoard classBoard;
 
 	
 	@Builder
-	public ClassComment(int board_id, String content, String writer, String file_link) {
+	public ClassComment(String content, String writer, String file_link, ClassBoard classBoard) {
 //		super();
-		this.board_id = board_id;
 		this.content = content;
 		this.writer = writer;
-		this.file_link = file_link;		
+		this.file_link = file_link;
+		this.classBoard = classBoard;
 	}
 	
-	
+	// 댓글 수정
+	public void update(String content, String writer, String file_link) {		
+		this.content = content;
+		this.writer = writer;
+		this.file_link = file_link;
+	}
 }

@@ -28,6 +28,8 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-websocket")
@@ -54,9 +56,12 @@ dependencies {
 
 	implementation("com.google.guava:guava:29.0-jre")
 	annotationProcessor("com.google.guava:guava:29.0-jre")
+
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
 
-// querydsl 설정
 def querydslDir = "src/main/generated/querydsl"
 
 querydsl {
@@ -78,4 +83,8 @@ configurations {
 
 test {
 	useJUnitPlatform()
+}
+
+compileQuerydsl.doFirst { 
+	if(file(querydslDir).exists() ) delete(file(querydslDir)) 
 }

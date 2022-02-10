@@ -3,7 +3,11 @@
     <div id="login-form" class="card">
       <h3 class="card-header">로그인</h3>
       <div class="card-body">
-        <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }">
+        <Form
+          @submit="onSubmit"
+          :validation-schema="schema"
+          v-slot="{ errors }"
+        >
           <div class="form-group">
             <label>아이디</label>
             <Field
@@ -35,6 +39,8 @@
 </template>
 
 <script lang="ts">
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import { Form, Field } from "vee-validate";
 import * as Yup from "yup";
 
@@ -45,6 +51,8 @@ export default {
     Field,
   },
   setup() {
+    const store = useStore();
+    const router = useRouter();
     const schema = Yup.object().shape({
       user_id: Yup.string().required("아이디는 필수 기입사항 입니다."),
       password: Yup.string()
@@ -54,7 +62,12 @@ export default {
 
     const onSubmit = (values: any) => {
       console.log(schema);
-      alert("SUCCESS!! :-)\n\n" + JSON.stringify(values, null, 4));
+      // alert("SUCCESS!! :-)\n\n" + JSON.stringify(values, null, 4));
+      const payload = {
+        user_id: values.user_id,
+        password: values.password,
+      };
+      store.dispatch("accountStore/getToken", payload);
     };
 
     return {

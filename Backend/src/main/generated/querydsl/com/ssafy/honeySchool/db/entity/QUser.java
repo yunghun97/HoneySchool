@@ -21,6 +21,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
+    public final DatePath<java.time.LocalDate> birth = createDate("birth", java.time.LocalDate.class);
+
     public final NumberPath<Integer> classes = createNumber("classes", Integer.class);
 
     public final StringPath email = createString("email");

@@ -1,9 +1,11 @@
 <template>  
     <div class="content">
-        <h1>{{ currentarticle.title }}</h1>
-        <p>작성자 : {{ currentarticle.writer }}</p>
-        <p>작성날짜 : {{currentarticle.date }}</p>
-        <h2>{{ currentarticle.content }}</h2>
+        <h1>{{ currentarticle.board.title }}</h1>
+        <div v-if="currentarticle.board.user !== null">
+            <p>작성자 : {{ currentarticle.board.user.name }}</p>
+        </div>
+        <p>작성날짜 : {{currentarticle.board.date.split("T")[0] }}</p>
+        <h2>{{ currentarticle.board.content }}</h2>
     </div>
 </template>
 

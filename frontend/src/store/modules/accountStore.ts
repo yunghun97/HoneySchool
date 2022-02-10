@@ -5,8 +5,9 @@ import router from "../../router";
 
 export interface accountState {
   accessToken: string;
+  user_id: string;
   accounts: Array<any>;
-  user: any;
+  userinfo: any;
   //
   count: number;
 }
@@ -15,8 +16,9 @@ export const accountStore: Module<accountState, RootState> = {
   namespaced: true,
   state: () => ({
     accessToken: "",
+    user_id: "",
     accounts: [],
-    user: {},
+    userinfo: {},
     count: 0,
   }),
   getters: {
@@ -27,6 +29,9 @@ export const accountStore: Module<accountState, RootState> = {
       // return JSON.parse(atob(state.accessToken.split('.')[1])).username
       return JSON.parse(atob(state.accessToken.split(".")[1]));
     },
+    getUserinfo: (state) => {
+      return state.userinfo;
+    },
     //
     doubleCount: (state) => {
       return state.count * 2;
@@ -36,15 +41,20 @@ export const accountStore: Module<accountState, RootState> = {
     setToken(state, newAccessToken) {
       state.accessToken = newAccessToken;
     },
-    deleteToken(state) {
+    // 로그아웃 시 vuex-persistance 데이터도 삭제
+    logout(state) {
       state.accessToken = "";
+      state.userinfo = {};
+      window.localStorage.clear();
+      router.push({ name: "Login" });
     },
     setAccounts(state, newAccounts) {
       state.accounts = newAccounts;
       // console.log(state.accounts)
     },
-    setUser(state, user) {
-      state.user = user;
+    setUser(state, userinfo) {
+      state.userinfo = userinfo;
+      router.push({ name: "About" });
       // console.log(state.accounts)
     },
     //
@@ -54,13 +64,22 @@ export const accountStore: Module<accountState, RootState> = {
     },
   },
   actions: {
-    getToken({ commit }, { username, password }) {
+    getToken({ commit }, { user_id, password }) {
       axios
-        .post("http://localhost:8000/api/token/", { username, password })
+        .post(process.env.VUE_APP_API_URL+"/auth/login", { user_id, password })
         .then((response) => {
-          localStorage.setItem("accessToken", response.data.access);
-          commit("setToken", response.data.access);
-          router.push({ name: "Index" });
+          localStorage.setItem("accessToken", response.data.accessToken);
+          commit("setToken", response.data.accessToken);
+          // commit("setUserid", user_id);
+          axios
+            .get(process.env.VUE_APP_API_URL+"/users/userInfo/", {
+              headers: {
+                Authorization: `Bearer ${response.data.accessToken}`,
+              },
+            })
+            .then((response) => {
+              commit("setUser", response.data);
+            });
         })
         .catch((err) => {
           console.log("에러", err.response);
@@ -71,11 +90,19 @@ export const accountStore: Module<accountState, RootState> = {
         commit("setAccounts", response.data);
       });
     },
-    getUserdetail({ commit }, user_id) {
+    getUserinfo({ commit }, accessToken) {
       axios
-        .get(`http://127.0.0.1:8000/accounts/${user_id}/detail/`)
+        .get(process.env.VUE_APP_API_URL+"/users/userInfo/", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
         .then((response) => {
+          console.log(response);
           commit("setUser", response.data);
+        })
+        .catch((err) => {
+          console.log("에러", err.response);
         });
     },
     //

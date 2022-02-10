@@ -1,9 +1,6 @@
 import axios from "axios";
 import { Module } from "vuex";
 import { RootState } from "../index";
-// import BoardArticles from "@/types/board/BoardArticles";
-import AxiosService from '@/services/axios.service';
-import AxiosResponse from '@/services/axios.service';
 import { number } from "yup";
 
 
@@ -54,7 +51,7 @@ export const boardStore: Module<boardState, RootState> = {
   },
   actions: {    
     getArticles ({ commit }) {
-      axios.get("http://localhost:9999/api/v1/board/class",{
+      axios.get(process.env.VUE_APP_API_URL+"/board/class",{
         params:{
           school: "싸피초",
           grade: 1,
@@ -70,7 +67,7 @@ export const boardStore: Module<boardState, RootState> = {
       )    
     },
     classifyCategory ({ commit }, category) {
-      return axios.get("http://localhost:9999/api/v1/board/class/category",{
+      return axios.get(process.env.VUE_APP_API_URL+"/board/class/category",{
           params:{
             school: "싸피초",
             grade: 1,

@@ -29,15 +29,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(UserRegisterPostReq userRegisterInfo) {
-        User user= User.builder().userId(userRegisterInfo.getUserId())
+        User user= User.builder().userId(userRegisterInfo.getUser_id())
                 .email(userRegisterInfo.getEmail())
-                .classes(userRegisterInfo.getClasses())
+                .classes(userRegisterInfo.getClass_number())
                 .name(userRegisterInfo.getName())
                 .grade(userRegisterInfo.getGrade())
                 .password(passwordEncoder.encode(userRegisterInfo.getPassword()))
-                .number(userRegisterInfo.getNumber())
+                .number(userRegisterInfo.getStudent_number())
                 .school(userRegisterInfo.getSchool())
                 .position(userRegisterInfo.getPosition())
+                .birth(userRegisterInfo.getBirth())
                 .build();
         return userRepository.save(user);
     }

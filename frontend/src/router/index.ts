@@ -7,11 +7,11 @@ import ArticleCreate from "../views/board/ArticleCreate.vue";
 import Handout from "../views/board/Handout.vue";
 import Photo from "../views/board/Photo.vue";
 import Assignment from "../views/board/Assignment.vue";
-import Question from "../views/board/Question.vue"
+import Question from "../views/board/Question.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
 import Videoclass from "../views/Videoclass/Videoclass.vue";
-
+import AskQuestion from "../views/board/AskQuestion.vue"
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -38,14 +38,14 @@ const routes: Array<RouteRecordRaw> = [
     component: BoardTable,
   },
   {
-    path: "/classboard/:category/:article_id",
+    path: "/classboard/:article_id",
     name: "ArticleDetail",
     component: ArticleDetail,
   },
   {
-    path: "/classboard/:category/:article_id/edit",
+    path: "/classboard/:article_id/edit",
     name: "ArticleUpdate",
-    component: () => import('@/views/board/ArticleUpdate.vue'),
+    component: () => import("@/views/board/ArticleUpdate.vue"),
   },
   {
     path: "/classboard/create",
@@ -56,9 +56,6 @@ const routes: Array<RouteRecordRaw> = [
     path: "/classboard/notice/:article_id",
     name: "Notice",
     component: () => import("@/views/board/Notice.vue"),
-    // meta: {
-    //   reload: true
-    // }
   },
   {
     path: "/classboard/handouts/:article_id",
@@ -95,11 +92,32 @@ const routes: Array<RouteRecordRaw> = [
     name: "Videoclass",
     component: Videoclass,
   },
+  {
+    path: "/classboard/askquestion",
+    name: "AskQuestion",
+    component: AskQuestion,
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+// 전역 가드
+// https://router.vuejs.org/kr/guide/advanced/navigation-guards.html#%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%8B%E1%85%A7%E1%86%A8-%E1%84%80%E1%85%A1%E1%84%83%E1%85%B3
+router.beforeEach((to, from, next) => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (to.name === "Login" || to.name === "Signup") {
+    if (accessToken) {
+      next({ name: "About" });
+    }
+  } else {
+    if (!accessToken) {
+      next({ name: "Login" });
+    }
+  }
+  next();
 });
 
 export default router;
