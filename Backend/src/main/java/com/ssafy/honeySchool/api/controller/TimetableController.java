@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -42,7 +44,7 @@ public class TimetableController {
 	
 	// 오늘 시간표 보기
 	@GetMapping("/today")
-	public ResponseEntity<List<TimetableDto>> todaysTimetable(HttpServletRequest req) throws Exception{
+	public ResponseEntity<?> todaysTimetable(HttpServletRequest req) throws Exception{
 		String school = req.getParameter("school");		
 		int grade = Integer.parseInt(req.getParameter("grade"));
 		int classes = Integer.parseInt(req.getParameter("classes"));
@@ -56,7 +58,16 @@ public class TimetableController {
 		Date endDate = cal.getTime();
 		// startDate-endDate 사이의 1일동안 시간표 불러오기
 		List<Timetable> todaysTimetables = 
-				timetableRepository.findAllBySchoolAndGradeAndClassesAndStartTimeBetweenOrderByStartTimeAsc(school, grade, classes, startDate, endDate);
+				timetableRepository.findAllBySchoolAndGradeAndClassesAndStartTimeBetweenOrderByStartTimeAsc(school, grade, classes, startDate, endDate);		
+		
+		// 반환할 수업이 없을시 404 반환
+		if (todaysTimetables.isEmpty()) {
+			Map<String, String> errors = new HashMap<String, String>();
+			errors.put("code", "404");
+			errors.put("message", "해당하는 수업이 없습니다.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errors);
+//			return ResponseEntity.notFound().build();
+		}
 		
 		// dto로 변환해서 전달함
 		List<TimetableDto> todaysTimetablesDto = new ArrayList<TimetableDto>();
@@ -70,7 +81,7 @@ public class TimetableController {
 	}
 	// 일주일 시간표 보기
 	@GetMapping("/week")
-	public ResponseEntity<List<TimetableDto>> thisWeeksTimetable(HttpServletRequest req) throws Exception{
+	public ResponseEntity<?> thisWeeksTimetable(HttpServletRequest req) throws Exception{
 		String school = req.getParameter("school");
 		System.out.println("req : " + school);
 		int grade = Integer.parseInt(req.getParameter("grade"));
@@ -87,6 +98,14 @@ public class TimetableController {
 		// startDate-endDate 사이의 5일동안 시간표 불러오기
 		List<Timetable> thisWeeksTimetables = 
 				timetableRepository.findAllBySchoolAndGradeAndClassesAndStartTimeBetweenOrderByStartTimeAsc(school, grade, classes, startDate, endDate);
+		
+		// 반환할 수업이 없을시 404 반환
+		if (thisWeeksTimetables.isEmpty()) {
+			Map<String, String> errors = new HashMap<String, String>();
+			errors.put("code", "404");
+			errors.put("message", "해당하는 수업이 없습니다.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errors);
+		}
 		
 		// dto로 변환해서 전달함
 		List<TimetableDto> thisWeeksTimetablesDto = new ArrayList<TimetableDto>();
