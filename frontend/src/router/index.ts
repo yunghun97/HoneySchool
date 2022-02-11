@@ -11,7 +11,8 @@ import Question from "../views/board/Question.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
 import Videoclass from "../views/Videoclass/Videoclass.vue";
-import AskQuestion from "../views/board/AskQuestion.vue"
+import AskQuestion from "../views/board/AskQuestion.vue";
+import TimeTable from "../views/board/TimeTable.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -96,6 +97,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/classboard/askquestion",
     name: "AskQuestion",
     component: AskQuestion,
+  },
+  {
+    path: "/classboard/timetable",
+    name: "TimeTable",
+    component: TimeTable,
   },
 ];
 

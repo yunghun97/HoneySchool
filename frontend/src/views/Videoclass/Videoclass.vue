@@ -432,6 +432,18 @@ export default {
       this.sessionCamera.on("signal:quiz", (event) => {
         this.quizReceived = event.data;
       });
+      // mainstream 화면 전체 바꾸기
+      this.sessionCamera.on("signal:updateMainstream", (event) => {
+        this.subscribersCamera.forEach((sub) => {
+          if (event.data === sub.stream.connection.connectionId) {
+           this.changeMainVideo(sub)
+          }
+        });
+        if (event.data === this.publisherCamera.stream.connection.connectionId) {
+          this.changeMainVideo(this.publisherCamera)
+        }
+      });
+      
 
       // --- Connect to the session with a valid user token ---
 
@@ -561,11 +573,16 @@ export default {
       this.$router.push({ name: "About" });
     },
 
-    updateMainVideoStreamManager(stream) {
-      if (this.mainStreamManager === stream) return;
-      console.log("Update");
-      this.mainStreamManager = stream;
-      console.log(this.mainStreamManager);
+    updateMainVideoStreamManager(camera) {
+      this.sessionCamera.signal({
+        data: camera.stream.connection.connectionId,
+        to: [],
+        type: "updateMainstream",
+      });
+    },
+    changeMainVideo(updatedMain) {
+      if (this.mainStreamManager === updatedMain) return;
+      this.mainStreamManager = updatedMain;
     },
 
     // videofilter() {
