@@ -3,6 +3,7 @@ package com.ssafy.honeySchool.api.controller;
 import java.io.BufferedReader;
 import java.net.http.HttpResponse;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.honeySchool.api.dto.TimetableDto;
 import com.ssafy.honeySchool.db.entity.ClassBoard;
 import com.ssafy.honeySchool.db.entity.Timetable;
 import com.ssafy.honeySchool.db.repository.TimetableRepository;
@@ -40,7 +42,7 @@ public class TimetableController {
 	
 	// 오늘 시간표 보기
 	@GetMapping("/today")
-	public ResponseEntity<List<Timetable>> todaysTimetable(HttpServletRequest req) throws Exception{
+	public ResponseEntity<List<TimetableDto>> todaysTimetable(HttpServletRequest req) throws Exception{
 		String school = req.getParameter("school");		
 		int grade = Integer.parseInt(req.getParameter("grade"));
 		int classes = Integer.parseInt(req.getParameter("classes"));
@@ -56,16 +58,19 @@ public class TimetableController {
 		List<Timetable> todaysTimetables = 
 				timetableRepository.findAllBySchoolAndGradeAndClassesAndStartTimeBetweenOrderByStartTimeAsc(school, grade, classes, startDate, endDate);
 		
-//		// 테스트
-//		System.out.println("date 타입은? : " + date.getClass().getSimpleName());
-//		System.out.println("startdate? : " + startDate);
-//		System.out.println("enddate? : " + endDate);
+		// dto로 변환해서 전달함
+		List<TimetableDto> todaysTimetablesDto = new ArrayList<TimetableDto>();
+		for(int i = 0; i < todaysTimetables.size(); i++) {
+			
+			todaysTimetablesDto.add(TimetableDto.from(todaysTimetables.get(i)));
+			
+		}
 		
-		return new ResponseEntity<List<Timetable>>(todaysTimetables, HttpStatus.OK);
+		return new ResponseEntity<List<TimetableDto>>(todaysTimetablesDto, HttpStatus.OK);
 	}
 	// 일주일 시간표 보기
 	@GetMapping("/week")
-	public ResponseEntity<List<Timetable>> thisWeeksTimetable(HttpServletRequest req) throws Exception{
+	public ResponseEntity<List<TimetableDto>> thisWeeksTimetable(HttpServletRequest req) throws Exception{
 		String school = req.getParameter("school");
 		System.out.println("req : " + school);
 		int grade = Integer.parseInt(req.getParameter("grade"));
@@ -83,12 +88,20 @@ public class TimetableController {
 		List<Timetable> thisWeeksTimetables = 
 				timetableRepository.findAllBySchoolAndGradeAndClassesAndStartTimeBetweenOrderByStartTimeAsc(school, grade, classes, startDate, endDate);
 		
+		// dto로 변환해서 전달함
+		List<TimetableDto> thisWeeksTimetablesDto = new ArrayList<TimetableDto>();
+		for(int i = 0; i < thisWeeksTimetables.size(); i++) {
+			
+			thisWeeksTimetablesDto.add(TimetableDto.from(thisWeeksTimetables.get(i)));
+			
+		}
+		
 //		// 테스트
 //		System.out.println("date 타입은? : " + startDate.getClass().getSimpleName());
 //		System.out.println("startdate? : " + startDate);
 //		System.out.println("enddate? : " + endDate);
 		
-		return new ResponseEntity<List<Timetable>>(thisWeeksTimetables, HttpStatus.OK);
+		return new ResponseEntity<List<TimetableDto>>(thisWeeksTimetablesDto, HttpStatus.OK);
 	}
 	// 일주일 시간표 만들기
 	@PostMapping("/week")
