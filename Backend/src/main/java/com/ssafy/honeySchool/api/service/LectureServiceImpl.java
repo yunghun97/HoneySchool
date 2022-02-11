@@ -121,13 +121,12 @@ public class LectureServiceImpl implements LectureService{
         JSONParser parser = new JSONParser();
         JSONObject obj = null;
 
-        try {
-            System.out.println("진입");
+        try {            
             obj = (JSONObject)parser.parse(input);
             System.out.println(obj.toString());
 
             return webClient.post()
-                    .uri("openvidu/api/sessions/"+sessionId+"/connection")
+                    .uri("/openvidu/api/sessions/"+sessionId+"/connection")
                     .header(HttpHeaders.AUTHORIZATION, header)
                     .bodyValue(obj)
                     .retrieve()
@@ -141,11 +140,18 @@ public class LectureServiceImpl implements LectureService{
     @Override
     public HttpStatus disconnectLecture(String sessionId, String connectionId, String header) {
         webClient.delete()
-                .uri("openvidu/api/sessions/"+sessionId+"/connection/"+connectionId)
+                .uri("/openvidu/api/sessions/"+sessionId+"/connection/"+connectionId)
                 .header(HttpHeaders.AUTHORIZATION, header)
                 .retrieve();
         return HttpStatus.OK;
     }
 
-
+	@Override
+	public Mono<String> searchLecture(String sessionId, String header) {
+		return webClient.get()
+                .uri("/openvidu/api/sessions/"+sessionId)
+                .header(HttpHeaders.AUTHORIZATION, header)
+                .retrieve()
+                .bodyToMono(String.class);
+	}
 }

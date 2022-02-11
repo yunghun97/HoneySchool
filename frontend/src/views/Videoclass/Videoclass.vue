@@ -322,6 +322,7 @@ export default {
       mySessionId: "SessionA",
       myUserName: "Participant" + Math.floor(Math.random() * 100),
 
+      myConnectionId: "",
       raisehand: false,
       screensharing: false,
       muted: true,
@@ -331,7 +332,6 @@ export default {
       quizReceived: "아직 도착한 퀴즈가 없습니다.",
     };
   },
-
   methods: {
     joinSession() {
       // --- Get an OpenVidu object ---
@@ -348,7 +348,12 @@ export default {
       this.sessionCamera.on("streamCreated", ({ stream }) => {
         if (stream.typeOfVideo == "CAMERA") {
           console.log("카메라 타입");
-          console.log("유저 추가");
+          console.log(stream)
+          console.log(stream.session.remoteConnections);
+          for(let i of stream.session.remoteConnections){
+            console.log("사용자 : "+JSON.parse(i));
+          }
+          this.searchSession();          
           console.log(stream.typeOfVideo);
           const subscriberCamera = this.sessionCamera.subscribe(stream);
           subscriberCamera.raisehand = false;
@@ -371,6 +376,7 @@ export default {
       // On every Stream destroyed...
       this.sessionCamera.on("streamDestroyed", ({ stream }) => {
         const index = this.subscribersCamera.indexOf(stream.streamManager, 0);
+        alert("사람 나감");
         if (index >= 0) {
           this.subscribersCamera.splice(index, 1);
         }
@@ -650,6 +656,17 @@ export default {
           });
       });
     },
+    searchSession(){
+      console.log("검색 실행");
+      axios.get(process.env.VUE_APP_API_URL+"/lecture/session?sessionId="+this.mySessionId) 
+      .then((response)=>{
+        console.log(response.data.connections.content);
+        return response;
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
+    },
     // 활성화된 모든 세션 검색하기
     searchAllSession(){
       return new Promise((resolve, reject) =>{
@@ -680,8 +697,7 @@ export default {
 				.catch(error =>
 					reject(error.response));				
 			})
-		},
-
+		},    
     // See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-openviduapisessionsltsession_idgtconnection
     createToken(sessionId) {
       return this.joinConnection(sessionId);
@@ -772,6 +788,7 @@ export default {
         this.quizContent = "";
       }
     },
+
   },
 };
 </script>

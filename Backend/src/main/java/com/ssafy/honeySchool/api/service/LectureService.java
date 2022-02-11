@@ -13,4 +13,5 @@ public interface LectureService {
     Mono<String> deleteLecture(String sessionId, String header);
     Mono<String> connectLecture(String sessionId, String header) throws ParseException;
     HttpStatus disconnectLecture(String sessionId, String connectionId, String header);
+	Mono<String> searchLecture(String sessionId, String header);	
 }
