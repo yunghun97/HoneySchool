@@ -193,6 +193,9 @@
         </div>
         <div class="col-md-3">
           <p>유저 상태목록</p>
+          <li v-for="(value, index) in participants" v-bind:key="index">
+            <div>{{value}}</div>            
+          </li>          
         </div>
       </div>
     </div>
@@ -327,9 +330,11 @@ export default {
       screensharing: false,
       muted: true,
       left: false,
-
+    
       quizContent: "",
       quizReceived: "아직 도착한 퀴즈가 없습니다.",
+
+      participants: [],
     };
   },
   methods: {
@@ -345,15 +350,10 @@ export default {
       // --- Specify the actions when events take place in the session ---
 
       // On every new Stream received...
+      // 새로운 카메라 타입을 받았을 때
       this.sessionCamera.on("streamCreated", ({ stream }) => {
         if (stream.typeOfVideo == "CAMERA") {
-          console.log("카메라 타입");
-          console.log(stream)
-          console.log(stream.session.remoteConnections);
-          for(let i of stream.session.remoteConnections){
-            console.log("사용자 : "+JSON.parse(i));
-          }
-          this.searchSession();          
+          console.log("카메라 타입");          
           console.log(stream.typeOfVideo);
           const subscriberCamera = this.sessionCamera.subscribe(stream);
           subscriberCamera.raisehand = false;
@@ -361,25 +361,29 @@ export default {
           subscriberCamera.left = false;
           this.subscribersCamera.push(subscriberCamera);
         }
-      });
-
-      this.sessionScreen.on("streamCreated", ({ stream }) => {
-        if (stream.typeOfVideo == "SCREEN") {
+        else if (stream.typeOfVideo == "SCREEN") {
           console.log("스크린 타입");
           console.log(stream.typeOfVideo);
           const subscriberScreen = this.sessionScreen.subscribe(stream);
           console.log(subscriberScreen.data);
           this.subscribersScreen.push(subscriberScreen);
         }
+          console.log("사람입장");
+          console.log(stream.session.remoteConnections);
+          this.updateUserList(stream.session.remoteConnections); 
       });
-
+      
       // On every Stream destroyed...
       this.sessionCamera.on("streamDestroyed", ({ stream }) => {
         const index = this.subscribersCamera.indexOf(stream.streamManager, 0);
-        alert("사람 나감");
+
+        // 사용자 목록 업데이트
         if (index >= 0) {
           this.subscribersCamera.splice(index, 1);
         }
+        console.log("사람 퇴장");
+        console.log(stream.session.remoteConnections);
+        this.updateUserList(stream.session.remoteConnections);
       });
 
       // On every asynchronous exception...
@@ -489,11 +493,11 @@ export default {
             );
           });
       });
-
+      // 화면 공유 생성
       this.getToken(this.mySessionId).then((tokenScreen) => {
         // Create a token for screen share
         this.sessionScreen
-          .connect(tokenScreen, { clientData: this.myUserName })
+          .connect(tokenScreen, { clientData: this.myUserName+"_화면 공유" })
           .then(() => {
             console.log("Session screen connected");
           })
@@ -503,7 +507,7 @@ export default {
               error.code,
               error.message
             );
-          });
+          });          
       });
 
       window.addEventListener("beforeunload", this.leaveSession);
@@ -656,6 +660,7 @@ export default {
           });
       });
     },
+    // 해당 세션 정보 가져오기
     searchSession(){
       console.log("검색 실행");
       axios.get(process.env.VUE_APP_API_URL+"/lecture/session?sessionId="+this.mySessionId) 
@@ -788,6 +793,13 @@ export default {
         this.quizContent = "";
       }
     },
+    updateUserList(UserList){                      
+        this.participants = [this.myUserName];
+        for(let i of UserList.keys()){
+          this.participants.push(JSON.parse(UserList.get(i).data).clientData);            
+        };
+        console.log(this.participants);
+    }
 
   },
 };
