@@ -28,59 +28,29 @@
       </div>
     </div>
   </div>
-
   </div>
 </div>
 </template>
 
 <script lang="ts">
 import router from "../../router";
-import { defineComponent, ref, computed, onMounted } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import { useStore } from 'vuex';
 import Category from '../../types/board/Category'
 import BoardArticles from "../../types/board/BoardArticles";
-import axios from "axios";
 type boardType = Array<BoardArticles>;
-      // @click="$router.push({name: 'BoardTable', params: { category: category.url }, replace:true})"
-
 
 export default defineComponent({
     name: 'ClassBoard',
-    // beforeCreate() {            
-    //         const formData = new FormData();
-    //         formData.append('board_id', '10');
-    //         formData.append('content', "댓글내용990입니다");
-    //         formData.append('file_link', "파일링크");
-    //         formData.append('writer', "강씨"); // user가 기본키여서 김싸피만 user로 등록되어있어서 작성자 바꿀려면 사람 User에서 추가해야합니다.
-
-    //         axios.post("http://localhost:9999/api/v1/board/class/comment",formData, {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} })
-    //         .then(()=>{
-    //             console.log("댓글작성 성공");
-    //         })            
-    //         .catch(()=>{
-    //             console.log("이상해짐")
-    //         })
-    // },   
-    //     // 카테고리 받기
-    //     axios.get("http://localhost:9999/api/v1/board/class/category",{
-    //       params:{
-    //         school: "싸피초",
-    //         grade: 1,
-    //         category: "photo",
-    //         classes: 1,
-    //       }
-    //     })
-    //     .then((data)=>{
-    //       console.log(data);
-    //     })
-    //     .catch(()=>
-    //       alert("카테고리 받아오기 실패!")
-    //     )  
-    // },
     setup() {
         
         const store = useStore();
-        store.dispatch('boardStore/getArticles')
+        const localStorageData = localStorage.getItem("vuex");
+        let userinfoData;
+        if (localStorageData !== null) {
+          userinfoData = JSON.parse(localStorageData);
+        }
+        let userinfo = userinfoData.accountStore.userinfo;
         
         const categories= ref<Category[]>([
         {
@@ -116,39 +86,42 @@ export default defineComponent({
         ])
 
         const pushRouter = async(category:string) => {
-          await store.dispatch("boardStore/classifyCategory", category)
-            if (category == "notice") {
-              const article = await computed(() => store.state.boardStore.notice[0]).value as BoardArticles;
-              if (article === null) {
-                alert('아직 게시글이 없습니다.')
-              } else {
-                return router.push({name: 'Notice', params: { article_id: article.id }})
-              }
-            } else if (category =="handouts") {
-              const article = await computed(() => store.state.boardStore.handouts[0]).value as BoardArticles;
-              if (article === null) {
-                alert('아직 게시글이 없습니다.')
-              } else {
-                return router.push({name: 'Handout', params: { article_id: article.id }})
-              }
-            } else if (category == "photo") {
-              const article = await computed(() => store.state.boardStore.photo[0]).value as BoardArticles;
-              if (article === null) {
-                alert('아직 게시글이 없습니다.')
-              } else {
-                return router.push({name: 'Photo', params: { article_id: article.id }})
-              }
-            } else if (category == "assignment") {
-              const article = computed(() => store.state.boardStore.assignment[0]).value as BoardArticles;
-              return router.push({name: 'Assignment'})
-            } else if (category == "questions") {
-              const article = computed(() => store.state.boardStore.question[0]);
-              return router.push({name: 'Question'})
-            } else if (category == "all") {
-              return router.push({name: 'BoardTable'})
-            }
+          await store.dispatch('boardStore/getArticles', userinfo)
+          if (category == "all") {
+            return router.push({name: 'BoardTable'})
+          } else {
+            await store.dispatch("boardStore/classifyCategory", [category, userinfo])
+              if (category == "notice") {
+                const article = await computed(() => store.state.boardStore.notice[0]).value as BoardArticles;
+                if (article === undefined) {
+                  alert('아직 게시글이 없습니다.')
+                } else {
+                  return router.push({name: 'Notice', params: { article_id: article.id }})
+                }
+              } else if (category =="handouts") {
+                const article = await computed(() => store.state.boardStore.handouts[0]).value as BoardArticles;
+                if (article === undefined) {
+                  alert('아직 게시글이 없습니다.')
+                } else {
+                  return router.push({name: 'Handout', params: { article_id: article.id }})
+                }
+              } else if (category == "photo") {
+                const article = await computed(() => store.state.boardStore.photo[0]).value as BoardArticles;
+                if (article === undefined) {
+                  alert('아직 게시글이 없습니다.')
+                } else {
+                  return router.push({name: 'Photo', params: { article_id: article.id }})
+                }
+              } else if (category == "assignment") {
+                const article = computed(() => store.state.boardStore.assignment[0]).value as BoardArticles;
+                return router.push({name: 'Assignment', params: { article_id: article.id }})
+              } else if (category == "questions") {
+                const article = computed(() => store.state.boardStore.question[0]);
+                return router.push({name: 'Question'})
+              } 
+          }
         }
-        return { categories, pushRouter } 
+        return { categories, pushRouter, userinfo } 
     }
 
 })

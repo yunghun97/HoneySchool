@@ -1,7 +1,6 @@
 <template>
   <div class="flex-row">
     <div class="source">
-      <h4>오늘의 숙제</h4>
       <vue-drawing-canvas
         ref="VueCanvasDrawing"
         v-model:image="image"
@@ -53,14 +52,6 @@
             연필
           </span>
         </button>
-        <!-- <button type="button" @click.prevent="disabled = !disabled">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
-              <path v-if="!disabled" d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2zM3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H3z"/>
-              <path v-else d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
-            </svg>
-            <span v-if="!disabled">Unlock</span>
-            <span v-else>Lock</span>
-          </button> -->
         <button type="button" class="btn btn-outline-danger btn-lg" @click.prevent="$refs.VueCanvasDrawing.undo()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -99,13 +90,6 @@
           </svg>
           되돌리기 취소
         </button>
-        <!-- <button type="button" @click.prevent="$refs.VueCanvasDrawing.redraw()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
-              <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-              <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-            </svg>
-            새로하기
-          </button> -->
         <button type="button" class="btn btn-outline-primary btn-lg" @click.prevent="$refs.VueCanvasDrawing.reset()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -125,74 +109,19 @@
         제출하기
         </button>
       </div>
-
-        <div class="button-container">
-
-          <div>
-            <p style="margin-bottom: 0">
-              Upload Background Image:
-            </p>
-            <input type="file" @change="setImage($event)">
-        </div>
-
-      <!-- <select v-model="line">
-            <option v-for="n in 25" :key="'option-' + n" :value="n">{{ n }}</option>
-          </select>
-          <input type="color" v-model="color">
-          <select v-model="strokeType">
-            <option value="dash">
-              Dash
-            </option>
-            <option value="circle">
-              Circle
-            </option>
-            <option value="square">
-              Square
-            </option>
-            <option value="triangle">
-              Triangle
-            </option>
-            <option value="half_triangle">
-              Half Triangle
-            </option>
-          </select> -->
-      <!-- <button type="button" @click.prevent="fillShape = !fillShape">
-            <span v-if="fillShape">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-square-fill" viewBox="0 0 16 16">
-                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z"/>
-              </svg>
-              Fill
-            </span>
-            <span v-else>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-square" viewBox="0 0 16 16">
-                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-              </svg>
-              Stroke
-            </span>
-          </button>
-        </div>
-
-  
-      <div class="output">
-        <p>Output:</p>
-        <img :src="image" style="border: solid 1px #000000">
-      </div> -->
-    </div> 
     </div>
   </div>
-  <div>
-
-  </div>
-
 </template>
 
 <script>
+import axios from "axios";
 import VueDrawingCanvas from "vue-drawing-canvas";
 export default {
   name: "App",
   components: {
     VueDrawingCanvas,
   },
+  props : ['filepath'],
   data() {
     return {
       x: 0,
@@ -205,36 +134,15 @@ export default {
       color: "#000000",
       strokeType: "dash",
       backgroundColor: "#FFFFFF",
-      backgroundImage: null,
+      backgroundImage: this.filepath,
       watermark: null,
-      // watermark: {
-      //   type: "Text", // "Text" or "Image"
-      //   source: "Watermark", // either Text or Image URL
-      //   x: 200,
-      //   y: 180,
-      //   imageStyle: {
-      //     width: 600,
-      //     height: 400
-      //   },
-      //   fontStyle: {
-      //     width: 200,
-      //     lineHeight: 48,
-      //     color: '#FF0000',
-      //     font: 'bold 48px roboto',
-      //     drawType: 'fill', // "fill" or "stroke"
-      //     textAlign: 'left',
-      //     textBaseline: 'top',
-      //     rotate: 0
-      //   }
-      // }
     };
   },
   methods: {
-    async setImage(event) {
-      let URL = window.URL;
-      this.backgroundImage = URL.createObjectURL(event.target.files[0]);
-      await this.$refs.VueCanvasDrawing.redraw();
-    },
+    // async setImage(event) {
+    //   this.backgroundImage = URL.createObjectURL(event.target.files[0]);
+    //   await this.$refs.VueCanvasDrawing.redraw();
+    // },
     async setWatermarkImage(event) {
       let URL = window.URL;
       this.watermark = {
@@ -254,8 +162,37 @@ export default {
       this.x = coordinates.x;
       this.y = coordinates.y;
     },
+    // base64 to imagefile
+    dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+        var byteString;
+        if (dataURI.split(',')[0].indexOf('base64') >= 0)
+            byteString = atob(dataURI.split(',')[1]);
+        else
+            byteString = unescape(dataURI.split(',')[1]);
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+        var ia = new Uint8Array(byteString.length);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        return new File([ia], '김싸피숙제',{type:mimeString});
+    },
     saveImage() {
-        console.log(this.image) // base64
+        const formData = new FormData()
+            formData.append('category', 'assignment');
+            formData.append('title', '김싸피 숙제제출');
+            formData.append('content', '');
+            formData.append('files', this.dataURItoBlob(this.image));
+                
+        //     // 글작성하느라 임의로 추가한내용
+            formData.append('grade', '1');
+            formData.append('classes', '1');
+            formData.append('school', "싸피초");
+
+        // TODO : 댓글로 작성하기
+            axios.post(process.env.VUE_APP_API_URL+"/board/class/yunghun97",formData, 
+            {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
+            )
     }
   },
 };

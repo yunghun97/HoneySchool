@@ -5,13 +5,17 @@
     
     <!-- Article Detail -->
     <div v-else>
+        {{currentarticle}}
+        {{userinfo.userId}}
         <div class="card">
             <h4 class="card-header">{{ currentarticle.board.title }}</h4>
             <div class="card-body">
                 <p>작성자 : {{ currentarticle.board.user.name }}</p>
-                <p>작성날짜 : {{ currentarticle.board.date.split("T")[0] }}</p>
-                <div class="content-container">
-                    <p>{{ currentarticle.board.content }}</p>
+                <p>작성날짜 : {{ currentarticle.board.date }}</p>
+                <div v-if="currentarticle.board.content.length > 0" class="content-container">
+                    <div v-for="content in currentarticle.board.content.split('\r')" :key="content">
+                        <h2>{{ content }}</h2>
+                    </div>
                 </div>
                 <!-- <div v-if="currentarticle.board.category==='photo'" class="img-container">
                     <img :src="currentarticle.files" alt="img" class="img-fluid">
@@ -22,13 +26,9 @@
                         <a :href="`http://localhost:9999/static/uploads/${currentarticle.files[idx-1].stored_file_path}`">첨부파일 {{idx}}</a>
                     </div>
                 </div>
-                <!-- <div>
-                    <p>{{ currentarticle }}</p>
-                </div> -->
             </div>
         </div>
-
-        <div class="container">
+        <div class="container" v-if="currentarticle.board.user.userId === userinfo.userId">
             <div class="row">
                 <div class="btns">
                     <button 
@@ -62,40 +62,45 @@
             </div>
             
             <div v-if="!isLoadingCom">
-                <div 
-                    class="comment-list" 
-                    v-for="comment in comments"
-                    :key="comment.id"
-                >
-                    <h3><fa icon="comment" class="fa-icon-b"></fa> {{ comment.writer }}:
-                        <span><small>{{ comment.date.split("T")[0] }}</small></span>
-                    </h3>
-                    <p :class="'collapse show col'+comment.id">{{ comment.content }}</p>
-                    <!-- 댓글 삭제 -->
-                    <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
-                    <!-- 댓글 수정 -->
-                    <button class="btn btn-secondary comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.col'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
-                        <fa icon="edit" class="fa-icon"></fa>
-                    </button>
-                    <div :class="'collapse col'+comment.id">
-                        <div class="card card-body">
-                            <textarea class="form-control" rows="1" v-model="revisedComment"></textarea>
-                            <button type="button" class="btn btn-secondary" @click="editCom(comment.id)"><fa icon="edit" class="fa-icon"></fa>수정</button>
-                        </div>
-                    </div>
-                    <!-- 대댓글 작성 -->
-                     <button class="btn btn-success comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.re'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
-                        <fa icon="reply" class="fa-icon"></fa>
-                    </button>
-                    <div :class="'collapse re'+comment.id">
-                        <div class="card card-body">
-                            <textarea class="form-control" rows="1" v-model="reComment"></textarea>
-                            <button type="button" class="btn btn-success" @click="postReCom(comment.id)"><fa icon="reply" class="fa-icon"></fa>작성</button>
-                        </div>
-                    </div>
-                    <hr>
+                <div v-if="comments.length === 0">
+                    <p>아직 작성된 댓글이 없습니다.</p>
                 </div>
-                
+                <div v-else>
+                    <div 
+                        class="comment-list" 
+                        v-for="comment in comments"
+                        :key="comment.id"
+                    >
+                        <h3><fa icon="comment" class="fa-icon-b"></fa> {{ comment.writer }}:
+                            <span><small>{{ comment.date.split("T")[0] }}</small></span>
+                        </h3>
+                        <p :class="'collapse show col'+comment.id">{{ comment.content }}</p>
+                        <!-- 댓글 삭제 -->
+                        <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
+                        <!-- 댓글 수정 -->
+                        <button class="btn btn-secondary comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.col'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
+                            <fa icon="edit" class="fa-icon"></fa>
+                        </button>
+                        <div :class="'collapse col'+comment.id">
+                            <div class="card card-body">
+                                <textarea class="form-control" rows="1" v-model="revisedComment"></textarea>
+                                <button type="button" class="btn btn-secondary" @click="editCom(comment.id)"><fa icon="edit" class="fa-icon"></fa>수정</button>
+                            </div>
+                        </div>
+                        <!-- 대댓글 작성 -->
+                        <button class="btn btn-success comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.re'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
+                            <fa icon="reply" class="fa-icon"></fa>
+                        </button>
+                        <div :class="'collapse re'+comment.id">
+                            <div class="card card-body">
+                                <textarea class="form-control" rows="1" v-model="reComment"></textarea>
+                                <button type="button" class="btn btn-success" @click="postReCom(comment.id)"><fa icon="reply" class="fa-icon"></fa>작성</button>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    
+                </div>
             </div>
         </div>
   
@@ -118,7 +123,12 @@ interface BoardArticles {
   writer: string,
   date: number,
 }
-
+interface article {
+    [index: string] : any
+    comments: Array<any>,
+    files: Array<any>,
+    board: any,
+}
 
 export default {
     name: "ArticleDetail",
@@ -127,38 +137,49 @@ export default {
         const route = useRoute();
 
         let isLoading = ref<boolean>(true);
+        let isLoadingCom = ref<boolean>(true);
         let id = +route.params.article_id;
-
+        // user 정보 가져오기
+        const localStorageData = localStorage.getItem("vuex");
+        let userinfoData;
+        if (localStorageData !== null) {
+        userinfoData = JSON.parse(localStorageData);
+        }
+        let userinfo = userinfoData.accountStore.userinfo;
+        //console.log(userinfo)
         // article detail 요청            
-        let currentarticle = ref({});
+        let currentarticle = ref<article>({comments:[], files:[], board:[]});
+        let comments = ref({});
         const articleDetail = () => {
             return axios.get(process.env.VUE_APP_API_URL+"/board/class/detail",{
                 params:{
-                school: "싸피초",
-                grade: 1,
-                classes: 1,
+                school: userinfo.school,
+                grade: userinfo.grade,
+                classes: userinfo.class_number,
                 id : route.params.article_id
                 }
             })
             .then((response)=>{
                 currentarticle.value = response.data
+                comments.value = currentarticle.value.comments
             })
-            .catch(()=>
-                alert("실패!")
-            )  
+            .catch(()=> {
+                alert("해당 글을 찾지 못했습니다.")
+                router.push({name: 'BoardTable'})
+            })  
         } 
         articleDetail().then(() => {
             isLoading.value = false
+            isLoadingCom.value = false
         })
         // comment get 요청
-        let isLoadingCom = ref<boolean>(true);
-        let comments = ref({});
+        // TODO : url 다시 확인
         const commentList = () => {
             return axios.get(process.env.VUE_APP_API_URL+"/board/class/comment",{
                 params:{
-                school: "싸피초",
-                grade: 1,
-                classes: 1,
+                school: userinfo.school,
+                grade: userinfo.grade,
+                classes: userinfo.class_number,
                 board_id : route.params.article_id
                 }
             })
@@ -167,19 +188,20 @@ export default {
                 comments.value = res.data
             })
         }
-        commentList().then(() =>{
-            isLoadingCom.value = false
-        })
+        
+        // commentList().then(() =>{
+        //     isLoadingCom.value = false
+        // })
 
         // 삭제 버튼 클릭
         const deleteArticle = () => {
             // delete 요청 보내기
             axios.delete(process.env.VUE_APP_API_URL+"/board/class/",{
                 params:{
-                    school: "싸피초",
-                    grade: 1,
-                    classes: 1,
-                    id: id
+                school: userinfo.school,
+                grade: userinfo.grade,
+                classes: userinfo.class_number,
+                id : route.params.article_id
                 }
             })
             .then(() => {
@@ -189,13 +211,13 @@ export default {
         // 댓글 작성
         let newComment = ref<string>('');
         const postComment = () => {
-            console.log(newComment.value)
+            // console.log(newComment.value)
             if (newComment.value.length === 0) {
                 alert("댓글 내용을 작성해주세요")
             } else {
                 axios.post(process.env.VUE_APP_API_URL+`/board/class/${id}/comment/`, {
                     'content': newComment.value,
-                    'writer': '박싸피',
+                    'userId': userinfo.userId,
                     })
                 .then(() => {
                     newComment.value = ''
@@ -229,7 +251,6 @@ export default {
             } else {
                 axios.put(process.env.VUE_APP_API_URL+`/board/class/${id}/comment/${comId}`, {
                     'content': revisedComment.value,
-                    'writer': '박싸피',
                     })
                 .then(() => {
                     revisedComment.value = ''
@@ -247,10 +268,22 @@ export default {
             if (reComment.value.length === 0) {
                 alert("댓글 내용을 작성해주세요")
             } else {
-                alert(reComment.value)
+                axios.post(process.env.VUE_APP_API_URL+`/board/class/${id}/comment/`, {
+                    'content': reComment.value,
+                    'userId': userinfo.userId,
+                    'parent_id': comId
+                    })
+                .then(() => {
+                    reComment.value = ''
+                    isLoadingCom.value = false
+                    commentList()
+                })
+                .then(() => {
+                    isLoadingCom.value = false
+                })
             }
         }
-        return { id, isLoading, 
+        return { id, isLoading, userinfo,
         isLoadingCom, commentList, comments, deleteCom,
         currentarticle, deleteArticle, 
         revisedComment, requestEditCom, editCom,

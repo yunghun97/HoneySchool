@@ -2,24 +2,73 @@
    <div v-if="isLoading">
         <p>...LOADING</p>
     </div>
-    <div v-else>
-        <p>{{timedetail}}</p>
-    <!-- <table>
-        <thead>
+    <div v-else class="box">
+        <table class="table">
+            <thead>
             <tr>
-                <th scope="col">수업 시작</th>
-                <th scope="col">수업 종료</th>
-                <th scope="col">과목명</th>
-                <th scope="col">과목명</th>
-                <th scope="col">과목명</th>
-                <th scope="col">과목명</th>
-                <th scope="col">과목명</th>
-                <th scope="col">과목명</th>
+                <th scope="col">교시</th>
+                <th scope="col">시작 시간</th>
+                <th scope="col">종료 시간</th>
+                <th scope="col">월요일</th>
+                <th scope="col">화요일</th>
+                <th scope="col">수요일</th>
+                <th scope="col">목요일</th>
+                <th scope="col">금요일</th>
             </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table> -->
+            </thead>
+            <tbody>
+            <tr 
+                v-for="idx in 4" :key="idx"
+            >   
+                <td>{{idx}}교시</td>
+                <td v-if="standardTime.length >= idx-1">{{ standardTime[idx-1][0] }}</td>
+                <td v-else class="table-warning">{{idx}}</td>
+                <td v-if="standardTime.length >= idx">{{ standardTime[idx-1][1] }}</td>
+                <td v-else class="table-warning">{{idx-1}}</td>
+                <td v-if="table[0].length >= idx-1">{{ table[0][idx-1].subject }}</td>
+                <td v-else class="table-warning"></td>
+                <td v-if="table[1].length >= idx-1">{{ table[1][idx-1].subject }}</td>
+                <td v-else class="table-warning"></td>
+                <td v-if="table[2].length >= idx-1">{{ table[2][idx-1].subject }}</td>
+                <td v-else class="table-warning"></td>
+                <td v-if="table[3].length >= idx-1">{{ table[3][idx-1].subject }}</td>
+                <td v-else class="table-warning"></td>
+                <td v-if="table[4].length >= idx-1">{{ table[4][idx-1].subject }}</td>
+                <td v-else class="table-warning"></td>
+            </tr>
+            <tr>
+                <th class="table-warning"></th>
+                <td class="table-warning">12:10</td>
+                <td class="table-warning">13:00</td>
+                <td class="table-warning">점</td>
+                <td class="table-warning">심</td>
+                <td class="table-warning">시</td>
+                <td class="table-warning">간</td>
+                <td class="table-warning"></td>
+            </tr>
+                <tr>
+                  <td>5교시</td>
+                  <td>13:00</td>
+                  <td>13:40</td>
+                  <td>{{ table[0][4].subject }}</td>
+                  <td>{{ table[1][4].subject }}</td>
+                  <td>{{ table[2][4].subject }}</td>
+                  <td>{{ table[3][4].subject }}</td>
+                  <td>{{ table[4][4].subject }}</td>
+                </tr>
+                <tr>
+                  <td>6교시</td>
+                  <td>13:50</td>
+                  <td>14:30</td>
+                  <td>{{ table[0][4].subject }}</td>
+                  <td>{{ table[1][4].subject }}</td>
+                  <td>{{ table[2][4].subject }}</td>
+                  <td>{{ table[3][4].subject }}</td>
+                  <td>{{ table[4][4].subject }}</td>
+                </tr>
+            </tbody>
+        </table>
+
     </div>
         <!-- <div class="container">
             <div class="row">
@@ -30,25 +79,22 @@
                         >
                         수정하기
                     </button>
-                    <button 
-                        type="button" class="btn btn-danger"
-                        @click="deleteArticle"
-                        >
-                        삭제하기
-                    </button>
                 </div> -->
 </template>
 
 <script lang="ts">
+import router from "../../router";
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router'
 import axios from 'axios';
 
 interface timedetail {
-    [index: string] : any;
+    [index: string ] : any;
 }
-
+interface timeTable {
+  [index: number] : Array<any>;
+};
 
 export default {
     name: "TimeTable",
@@ -64,7 +110,6 @@ export default {
         userinfoData = JSON.parse(localStorageData);
         }
         let userinfo = userinfoData.accountStore.userinfo;
-        console.log(userinfo)
         // 시간표 get 요청
         // 이번주 월요일 날짜 구하기
         var today = new Date();
@@ -86,74 +131,39 @@ export default {
                 timedetail.value = response.data
                 
             })
-            .catch(()=>
-                alert("실패!")
-            )  
+            .catch(()=> {
+                alert("아직 이번주 시간표가 없습니다!")
+                router.push({name: 'BoardTable'})
+            })  
         }
-        articleDetail().then(()=>isLoading.value = false)
-        const date=['월','화','수','목','금'];
-        let mon = ref<Array<any>>([]);
-        let tue = ref<Array<any>>([]);
-        let wed = ref<Array<any>>([]);
-        let thu = ref<Array<any>>([]);
-        let fri = ref<Array<any>>([]);
-        
-        
-        
+        const standardTime = [['09:00','09:40'],['09:50','10:30'],['10:40','11:20'],['11:30','12:10'],['13:00','13:40'],['13:50','14:30']]
+        let table = [[], [], [], [], []] as timeTable;
+        articleDetail().then(() => {            
+                    timedetail.value.forEach((detail:any) => {
+                if (detail.day === "월") {
+                    table[0].push(detail)
+                } else if (detail.day === "화") {
+                    table[1].push(detail)
+                } else if (detail.day === "수") {
+                    table[2].push(detail)
+                } else if (detail.day === "목") {
+                    table[3].push(detail)
+                } else if (detail.day === "금") {
+                    table[4].push(detail)
+                }
+            })
 
-
-        return { id, isLoading, userinfo, timedetail, articleDetail }
+            isLoading.value = false
+        })
+        
+        return { id, isLoading, userinfo, timedetail, articleDetail,
+                table, standardTime
+        }
     }
 }
 </script>
 <style scoped>
-.card {
-    margin: 30px;
-    width: 1320px;
-    display: inline-block;
-}
-.card-body > p{
-    text-align: right;
-}
-.btns {
-    margin-bottom:20px;
-    text-align: right;
-}
-.content-container {
-    text-align: left;
-}
-.comment-box {
-    padding-top: 20px;
-    background-color: #f8f9fa;
-}
-.comment-box > h5 {
-    text-align: left;
-}
-.comment-btn {
-    display:inline-block; 
-    margin-top: -42px;
-    /* float: right; */
-}
-.comment-list {
-    text-align: left;
-    margin-bottom: 30px;
-}
-
-.fa-icon{
-    width: 15px;
-}
-.fa-icon-b{
-    width: 30px;
-}
-.post-btn {
-    float: right;
-}
-button {
-    margin:5px;
-}
-img {
-    max-width: 600px;
-    height: auto;
-    
+.box {
+    margin: 30px 30vh;
 }
 </style>

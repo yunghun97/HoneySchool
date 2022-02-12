@@ -39,8 +39,6 @@ import axios from 'axios';
 import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-import Category from '../../types/board/Category';
-import Article from '../../types/board/Article';
 import BoardArticles from "../../types/board/BoardArticles";
 import NoticeContent from "../../components/Board/NoticeContent.vue";
 interface ArticleArray {
@@ -56,15 +54,20 @@ export default
         const route = useRoute();
 
         let isLoading = ref<boolean>(true);
-        // let id = +route.params.article_id;
+        const localStorageData = localStorage.getItem("vuex");
+        let userinfoData;
+        if (localStorageData !== null) {
+        userinfoData = JSON.parse(localStorageData);
+        }
+        let userinfo = userinfoData.accountStore.userinfo;
 
         let currentarticle = ref({});
         const articleDetail = () => {
             return axios.get(process.env.VUE_APP_API_URL+"/board/class/detail",{
                 params:{
-                school: "싸피초",
-                grade: 1,
-                classes: 1,
+                school: userinfo.school,
+                grade: userinfo.grade,
+                classes: userinfo.class_number,
                 id : route.params.article_id
                 }
             })
@@ -74,7 +77,7 @@ export default
         }
 
         const articles = computed(() => store.state.boardStore.notice);
-                const articlesdata = articles.value as ArticleArray
+        const articlesdata = articles.value as ArticleArray
        
         let nextarticleidx = ref<number>(articles.value.length);
         let nextarticleid = ref<number>(0);
@@ -117,7 +120,7 @@ export default
             })
         })
 
-        return { isLoading, articles, getCurrentArticle, currentarticle, beforearticleidx, nextarticleidx, beforearticleid, nextarticleid, articlesdata }
+        return { isLoading, userinfo, articles, getCurrentArticle, currentarticle, beforearticleidx, nextarticleidx, beforearticleid, nextarticleid, articlesdata }
     }
 }
 </script>

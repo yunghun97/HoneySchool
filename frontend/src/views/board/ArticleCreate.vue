@@ -56,8 +56,8 @@
               <tbody>
                 <tr>
                   <th>1</th>
-                  <td><input type="time" class="form-control" id="start1" placeholder="시작시간"></td>
-                  <td><input type="time" class="form-control" id="end1" placeholder="종료시간"></td>
+                  <td id="start1" value="9:00">9:00</td>
+                  <td id="end1">9:40</td>
                   <td><input type="text" class="form-control" id="mon1" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="tue1" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="wed1" placeholder="과목명"></td>
@@ -66,8 +66,8 @@
                 </tr>
                 <tr>
                   <th>2</th>
-                  <td><input type="time" class="form-control" id="start2" placeholder="시작시간"></td>
-                  <td><input type="time" class="form-control" id="end2" placeholder="종료시간"></td>
+                  <td id="start2">9:50</td>
+                  <td id="end2">10:30</td>
                   <td><input type="text" class="form-control" id="mon2" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="tue2" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="wed2" placeholder="과목명"></td>
@@ -76,8 +76,8 @@
                 </tr>
                 <tr>
                   <th>3</th>
-                  <td><input type="time" class="form-control" id="start3" placeholder="시작시간"></td>
-                  <td><input type="time" class="form-control" id="end3" placeholder="종료시간"></td>
+                  <td id="start3">10:40</td>
+                  <td id="end3">11:20</td>
                   <td><input type="text" class="form-control" id="mon3" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="tue3" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="wed3" placeholder="과목명"></td>
@@ -86,8 +86,8 @@
                 </tr>
                 <tr>
                   <th>4</th>
-                  <td><input type="time" class="form-control" id="start4" placeholder="시작시간"></td>
-                  <td><input type="time" class="form-control" id="end4" placeholder="종료시간"></td>
+                  <td id="start4">11:30</td>
+                  <td id="end4">12:10</td>
                   <td><input type="text" class="form-control" id="mon4" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="tue4" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="wed4" placeholder="과목명"></td>
@@ -95,9 +95,19 @@
                   <td><input type="text" class="form-control" id="fri4" placeholder="과목명"></td>
                 </tr>
                 <tr>
+                  <th class="table-warning"></th>
+                  <td class="table-warning">12:10</td>
+                  <td class="table-warning">13:00</td>
+                  <td class="table-warning">점</td>
+                  <td class="table-warning">심</td>
+                  <td class="table-warning">시</td>
+                  <td class="table-warning">간</td>
+                  <td class="table-warning"></td>
+                </tr>
+                <tr>
                   <th>5</th>
-                  <td><input type="time" class="form-control" id="start5" placeholder="시작시간"></td>
-                  <td><input type="time" class="form-control" id="end5" placeholder="종료시간"></td>
+                  <td id="start5">13:00</td>
+                  <td id="end5">13:40</td>
                   <td><input type="text" class="form-control" id="mon5" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="tue5" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="wed5" placeholder="과목명"></td>
@@ -106,8 +116,8 @@
                 </tr>
                 <tr>
                   <th>6</th>
-                  <td><input type="time" class="form-control" id="start6" placeholder="시작시간"></td>
-                  <td><input type="time" class="form-control" id="end6" placeholder="종료시간"></td>
+                  <td id="start6">13:50</td>
+                  <td id="end6">14:30</td>
                   <td><input type="text" class="form-control" id="mon6" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="tue6" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="wed6" placeholder="과목명"></td>
@@ -195,12 +205,12 @@ export default defineComponent({
       formData.append('school', this.userinfo.school);
       formData.append('grade', this.userinfo.grade);
       formData.append('classes', this.userinfo.class_number);
-      
+      formData.append('userId', this.userinfo.userId);
 
       this.submitted = true
-      // console.log(...formData.entries())
+      //console.log(...formData.entries())
       // POST 요청
-      axios.post(process.env.VUE_APP_API_URL+"/board/class/yunghun97",formData, 
+      axios.post(process.env.VUE_APP_API_URL+"/board/class",formData, 
       { headers: {'Content-Type' : 'multipart/form-data;charset=utf-8' } }
       )
       .then((res)=>{
@@ -221,8 +231,8 @@ export default defineComponent({
         for (var i=1; i<7; i++) {
           day.forEach((d) => {
             const subject = {
-              'start_time': (document.getElementById(`start${i}`) as HTMLInputElement).value,
-              'end_time': (document.getElementById(`end${i}`) as HTMLInputElement).value,
+              'start_time': (document.getElementById(`start${i}`) as HTMLInputElement).innerHTML,
+              'end_time': (document.getElementById(`end${i}`) as HTMLInputElement).innerHTML,
               'subject': (document.getElementById(`${d}${i}`) as HTMLInputElement).value,
             }
             if (subject.subject !== '') {
@@ -247,34 +257,6 @@ export default defineComponent({
           router.push({name: 'BoardTable'})
         })
      },
-
-    // get 요청 확인
-    //  show() {
-    //     axios.get(process.env.VUE_APP_API_URL+"/timetable/week",{
-    //         params:{
-    //               school: this.userinfo.school,
-    //               grade: this.userinfo.grade,
-    //               classes: this.userinfo.class_number,
-    //               date: '2022-02-07',
-    //               },
-    //         })
-    //     .then((res) => {
-    //       console.log(res.data)
-    //     })
-    //     },
-
-
-    // // 몇 주차인지 정하면, 월요일 날짜 구하는 함수
-    // getDate() {
-    //   const y = +this.timeweek.split("-")[0];
-    //   const w = +this.timeweek.split("W")[1];
-    //   let date = new Date(y, 0, (1 + w * 7));
-    //   date.setDate(date.getDate() + (1 - date.getDay()))
-    //   this.monDate = date
-    //   //console.log(date.getFullYear())
-    //   //console.log(date.getMonth())
-    //   //console.log(date.getDate())
-    // },
   },
 });
 </script>

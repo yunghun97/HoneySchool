@@ -3,7 +3,7 @@ interface BoardArticles {
     category: string,
     title: string,
     content?: string,
-    writer: string,
+    user: any,
     date: number,
   }
 // type boardType = Array<BoardArticles>;

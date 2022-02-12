@@ -3,7 +3,9 @@
         <h1>{{ currentarticle.board.title }}</h1>
         <p v-if="currentarticle.board.user!==null">작성자 : {{ currentarticle.board.user.name }}</p>
         <p>작성날짜 : {{currentarticle.board.date.split("T")[0] }}</p>
-        <h2>{{ currentarticle.board.content }}</h2>
+        <div v-for="content in currentarticle.board.content.split('\r')" :key="content">
+            <h2>{{ content }}</h2>
+        </div>
         <div v-if="currentarticle.files.length > 0" class="content-files">
             <p>첨부파일</p>
             <div v-for="idx in currentarticle.files.length" :key="idx">

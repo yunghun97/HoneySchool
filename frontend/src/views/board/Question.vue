@@ -1,11 +1,10 @@
 <template>
-
     <div class="box">
     <div>
       <div class="card ask" @click="$router.push({name: 'AskQuestion'})">
         <h2>질문 할래요</h2>
       </div>
-      <div class="card ans">
+      <div class="card ans" @click="checkAns">
         <h2>선생님 답변 볼래요</h2>
       </div>
     </div>
@@ -14,12 +13,31 @@
 
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import axios from "axios";
-import Record from '../../components/Board/Record.vue'
-import router from '../../router';
+import { defineComponent, computed } from 'vue';
+import { useStore } from 'vuex';
+import router from "../../router";
+import BoardArticles from "../../types/board/BoardArticles";
 export default defineComponent({
     name:"Question",
+    setup() {
+      const store = useStore();
+      const localStorageData = localStorage.getItem("vuex");
+      let userinfoData;
+      if (localStorageData !== null) {
+        userinfoData = JSON.parse(localStorageData);
+      }
+      let userinfo = userinfoData.accountStore.userinfo;
+      const checkAns = async() => {
+        await store.dispatch("boardStore/classifyCategorybyUser", ['question', userinfo])
+        const article = await computed(() => store.state.boardStore.question[0]).value as BoardArticles;
+        if (article === undefined) {
+                alert('작성한 질문이 없습니다.')
+              } else {
+                return router.push({name: 'AnswerQuestion', params: { article_id: article.id }})
+              }
+      }
+      return { checkAns, userinfo } 
+    }
 })
 </script>
 <style scoped>

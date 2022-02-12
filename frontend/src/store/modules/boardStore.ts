@@ -36,7 +36,6 @@ export const boardStore: Module<boardState, RootState> = {
   }),
   getters: {
     getArticleDetail: (state, id:number) => {
-      console.log('here!')
       return state.classBoardAll.find(article => article.id === id)
     },
   }, 
@@ -48,30 +47,29 @@ export const boardStore: Module<boardState, RootState> = {
       state[payload[0]] = payload[1]
     }
   },
-  actions: {    
-    getArticles ({ commit }) {
+  actions: {
+    getArticles ({ commit }, userinfo) {        
       axios.get(process.env.VUE_APP_API_URL+"/board/class",{
         params:{
-          school: "싸피초",
-          grade: 1,
-          classes: 1,
+          school: userinfo.school,
+          grade: userinfo.grade,
+          classes: userinfo.class_number,
         }
       })
       .then((response)=>{
-        //console.log(response.data);
         commit('GETARTICLES', response.data)
       })
       .catch(()=>
         alert("전체 받아오기 실패!")
       )    
     },
-    classifyCategory ({ commit }, category) {
+    classifyCategory ({ commit }, [category, userinfo]) {
       return axios.get(process.env.VUE_APP_API_URL+"/board/class/category",{
           params:{
-            school: "싸피초",
-            grade: 1,
+            school: userinfo.school,
+            grade: userinfo.grade,
+            classes: userinfo.class_number,
             category: category,
-            classes: 1,
           }
         })
         .then((response)=>{
@@ -81,6 +79,24 @@ export const boardStore: Module<boardState, RootState> = {
         .catch(()=>
           alert("카테고리 받아오기 실패!")
         )  
+    },
+    classifyCategorybyUser ({ commit }, [category, userinfo]) {
+      return axios.get(process.env.VUE_APP_API_URL+"/board/class/category/user",{
+        params:{
+          school: userinfo.school,
+          grade: userinfo.grade,
+          classes: userinfo.class_number,
+          category: category,
+          userId: userinfo.userId,
+        }
+      })
+      .then((response)=>{
+        const payload = [category as category, response.data]
+        commit('CLASSIFYCATEGORY', payload)
+      })
+      .catch(()=>
+        alert("카테고리 받아오기 실패!")
+      )  
     },
   },
 

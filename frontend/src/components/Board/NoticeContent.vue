@@ -5,7 +5,9 @@
             <p>작성자 : {{ currentarticle.board.user.name }}</p>
         </div>
         <p>작성날짜 : {{currentarticle.board.date.split("T")[0] }}</p>
-        <h2>{{ currentarticle.board.content }}</h2>
+        <div v-for="content in currentarticle.board.content.split('\r')" :key="content">
+            <h2>{{ content }}</h2>
+        </div>
     </div>
 </template>
 
