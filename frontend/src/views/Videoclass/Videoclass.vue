@@ -29,6 +29,10 @@
             <button class="btn btn-lg btn-success" @click="joinSession()">
               참석!
             </button>
+            <button class="btn btn-lg btn-info" @click="searchAllSession()">
+              검색!
+            </button>
+            
           </p>
         </div>
       </div>
@@ -646,8 +650,21 @@ export default {
           });
       });
     },
+    // 활성화된 모든 세션 검색하기
+    searchAllSession(){
+      return new Promise((resolve, reject) =>{
+        axios.get(process.env.VUE_APP_API_URL+"/lecture")
+        .then((response)=>{
+          console.log(response);
+        })
+        .catch((error)=>{
+          console.log(error)
+        })
+      })
+    },
 
-  joinConnection(){		
+    // 연결하기
+    joinConnection(){		
 
 			const headers = {
 				"Authorization": "OPENVIDUAPP:ssafy",

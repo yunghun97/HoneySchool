@@ -14,5 +14,7 @@ public interface TimetableRepository extends JpaRepository<Timetable, Integer>{
 //	List<Timetable> findAllByStartTimeBetween(Date start, Date end);
 	// 오늘 시간표 찾기 : startTime만 따졌다
 	List<Timetable> findAllBySchoolAndGradeAndClassesAndStartTimeBetweenOrderByStartTimeAsc(String school, int grade, int classes, Date start, Date end);
+	// 이번주 시간표 delete
+	void deleteAllBySchoolAndGradeAndClassesAndStartTimeBetween(String school, int grade, int classes, Date start, Date end);
 	
 }
