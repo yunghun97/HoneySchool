@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.honeySchool.api.dto.ClassBoardDto;
 import com.ssafy.honeySchool.api.dto.CommentDto;
 import com.ssafy.honeySchool.api.service.BoardService;
+import com.ssafy.honeySchool.api.service.CommentService;
 import com.ssafy.honeySchool.db.entity.ClassBoard;
 import com.ssafy.honeySchool.db.entity.ClassBoardFile;
 import com.ssafy.honeySchool.db.entity.Comment;
@@ -48,10 +49,13 @@ public class BoardController {
 	private ClassBoardRepository classBoardRepository;
 	
 	@Autowired
-	CommentRepository commentRepository;
+	private CommentRepository commentRepository;
 	
 	@Autowired
-	ClassBoardFileRepository classBoardFileRepository;
+	private ClassBoardFileRepository classBoardFileRepository;
+
+	@Autowired
+	private CommentService commentService;
 	
 	// 서버 상대경로 얻을 때 사용
 	@Autowired
@@ -60,9 +64,8 @@ public class BoardController {
 	@Autowired
     private BoardService boardService;
 	
-	// User 객체 못가져와서 임시로 사용
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	
 	// 반 게시판 전체 목록
 	@GetMapping("/class")
@@ -78,7 +81,7 @@ public class BoardController {
 		}				
 		return new ResponseEntity<List<ClassBoardDto>>(classBoardDtos, HttpStatus.OK);
 	}
-	// User 객체 못가져와서 임시로 url에 써서 받아옴
+	// 반 게시판 글쓰기
 	@PostMapping("/class")
 	public ResponseEntity<?> createBoard(
 			ClassBoard body, 
@@ -125,13 +128,18 @@ public class BoardController {
 	}
 	// Jpa로 category 구분해서 가져오기 (pk 내림차순)
 	@GetMapping("/class/category")
-	public ResponseEntity<List<ClassBoard>> selectCategory(HttpServletRequest req) {
+	public ResponseEntity<?> selectCategory(HttpServletRequest req) {
 		String category = req.getParameter("category");
 		String school = req.getParameter("school");		
 		int grade = Integer.parseInt(req.getParameter("grade"));
 		int classes = Integer.parseInt(req.getParameter("classes"));	
-		
-		return new ResponseEntity<List<ClassBoard>>(classBoardRepository.findBySchoolAndGradeAndClassesAndCategoryOrderByIdDesc(school, grade, classes, category),HttpStatus.OK);
+		List<ClassBoard> classBoards = classBoardRepository.findBySchoolAndGradeAndClassesAndCategoryOrderByIdDesc(school, grade, classes, category);
+		// dto로 묶기
+		List<ClassBoardDto> classBoardDtos = new ArrayList<ClassBoardDto>();
+		for(int i = 0; i < classBoards.size(); i++) {
+			classBoardDtos.add(ClassBoardDto.from(classBoards.get(i)));
+		}		
+		return new ResponseEntity<List<ClassBoardDto>>(classBoardDtos, HttpStatus.OK);
 	}
 	// 특정 category에서 특정 user가 쓴 글 모아보기 (pk 내림차순)
 	// User 부분 수정함
@@ -167,7 +175,7 @@ public class BoardController {
 		
 		// question 파라미터 있는지 확인
 		List<Comment> comments = new ArrayList<Comment>(); 
-        if (req.getParameterMap().containsKey("userId")) {  // 질문게시판
+        if (req.getParameterMap().containsKey("userId")) {  // 숙제게시판
         	User user = userRepository.findByUserId(req.getParameter("userId")).get();
         	comments = commentRepository.findCommentByClassBoardAndUserAndParentId(detail, user, 0).get();    		        	
     	} else {  // 다른 게시판
@@ -181,10 +189,13 @@ public class BoardController {
 			commentdtos.add(CommentDto.from(comments.get(i)));
 		}		
 		List<ClassBoardFile> files = classBoardFileRepository.findByBoardIdAndIsDeleted(id, DeleteYn.N);
+		// 댓글, 대댓글 정렬
+		List<CommentDto> sortCommentDtos = commentService.sortCommentDtos(commentdtos);
+		
 		// Map 사용해서 묶기
 		Map<String, Object> map = new HashMap<>();
 		map.put("board", detailDto);
-		map.put("comments", commentdtos);
+		map.put("comments", sortCommentDtos);
 		map.put("files", files);
 		return new ResponseEntity<>(map, HttpStatus.OK);
 //		return new ResponseEntity<ClassBoard>(detail, HttpStatus.OK);
@@ -208,7 +219,7 @@ public class BoardController {
 	// Request로 첨부파일 수정 여부 주시면 됩니다 (여기서는 String 'Y', 'N'으로 써놨어요)
 	@Transactional
 	@PutMapping("/class")
-	public ResponseEntity<ClassBoard> updateBoard(
+	public ResponseEntity<?> updateBoard(
 			ClassBoard body, 
 			HttpServletRequest req, 
 			@RequestPart(value="files", required = false) List<MultipartFile> files) 
@@ -236,25 +247,9 @@ public class BoardController {
 		String title = body.getTitle();
 		String content = body.getContent();
 		board.update(category, title, content);
+		// Dto로 변경
+		ClassBoardDto classBoardDto = ClassBoardDto.from(board);
 		System.out.println("글 수정 됐어");
-		return new ResponseEntity<ClassBoard>(board, HttpStatus.OK);
+		return new ResponseEntity<ClassBoardDto>(classBoardDto, HttpStatus.OK);
 	}
-//	// 테스트 : 로컬 폴더에 파일 업로드 - 잘 작동
-//	@PostMapping("/upload")
-//    public ResponseEntity upload(@RequestPart MultipartFile file) {
-////		String rootPath = request.getSession().getServletContext().getRealPath("/resources/uploadFiles/");
-////		String rootPath = request.getSession().getServletContext().getRealPath("/");
-//		String rootPath = request.getServletContext().getRealPath("/");
-//		System.out.println(rootPath);
-////		String savePath = rootPath + file.getOriginalFilename();
-////		System.out.println(savePath);
-////		String originalFileName = file.getOriginalFilename();
-//        File uploadFile = new File(rootPath + file.getOriginalFilename());
-////        try {
-////            file.transferTo(destination);
-////        } catch (IOException e) {
-////            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(originalFileName);
-////        }
-//        return ResponseEntity.status(HttpStatus.CREATED).body(file.getOriginalFilename());
-//    }
 }

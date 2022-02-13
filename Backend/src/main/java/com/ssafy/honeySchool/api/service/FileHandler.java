@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.honeySchool.db.entity.ClassBoardFile;
 import com.ssafy.honeySchool.db.entity.DeleteYn;
+import com.ssafy.honeySchool.db.entity.NoticeFile;
 
 @Component
 public class FileHandler {
@@ -25,6 +26,7 @@ public class FileHandler {
 	@Autowired
 	private HttpServletRequest request;
 	
+	// classBoardFile 저장
     public List<ClassBoardFile> parseFileInfo(
     		int boardID,
             List<MultipartFile> multipartFiles,
@@ -236,5 +238,162 @@ public class FileHandler {
         }
 
         return fileList;
+    }
+    // noticeFile 저장
+    public List<NoticeFile> parseNoticeFileInfo(
+    		int noticeId,
+    		List<MultipartFile> multipartFiles,
+    		String rootPath
+    		) throws Exception{
+    	
+    	// 반환을 할 파일 리스트
+    	List<NoticeFile> fileList = new ArrayList<>();
+
+    	if (multipartFiles == null) {
+    		return fileList;
+    	}
+
+    	// 파일 이름을 업로드 한 날짜로 바꾸어서 저장할 것이다
+    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+    	String current_date = simpleDateFormat.format(new Date());
+
+    	// 경로를 지정하고 그곳에다가 저장할 심산이다
+    	List<String> fileNameList = new ArrayList<String>();
+    	fileNameList.add("images/");
+    	fileNameList.add("audios/");
+    	fileNameList.add("etc/");
+    	String filePath;
+    	File file;
+    	for (String fileName : fileNameList) {
+    		filePath = fileName + current_date;
+    		file = new File(rootPath + "/" + filePath);  // 날짜 폴더가 존재하지 않을 때 만들어주기 위해서 rootPath 추가
+    		// 저장할 위치의 디렉토리가 존재하지 않을 경우
+    		if(!file.exists()){
+    			// mkdir() 함수와 다른 점은 상위 디렉토리가 존재하지 않을 때 그것까지 생성
+    			file.mkdirs();
+    		}
+    	}
+    	String imagePath = "images/" + current_date;
+    	String audioPath = "audios/" + current_date;
+    	String etcPath = "etc/" + current_date;
+    	
+    	// 파일들을 이제 만져볼 것이다
+    	for (MultipartFile multipartFile : multipartFiles){
+    		// 파일이 비어 있지 않을 때 작업을 시작해야 오류가 나지 않는다
+    		if(!multipartFile.isEmpty()){
+    			// jpeg, png, gif 파일들만 받아서 처리할 예정
+    			String contentType = multipartFile.getContentType();
+    			String originalFileExtension;
+    			String FileExtensionCategory;
+    			// 확장자 명이 없으면 이 파일은 잘 못 된 것이다
+    			if (ObjectUtils.isEmpty(contentType)){
+    				break;
+    			}
+    			// 추가하지 않은 확장자를 파일로 넣으면 오류 뜨지 않고 글만 저장된다.
+    			else{
+    				// image, audio면 모두 저장하게 하려고 했는데 확장자랑 content-type이 일치 안하는 것도 있길래 원래 방식대로 바꿨다
+    				// image
+    				if(contentType.contains("image/jpeg")){
+    					originalFileExtension = ".jpg";
+    					FileExtensionCategory = "images";
+    				}
+    				else if(contentType.contains("image/png")){
+    					originalFileExtension = ".png";
+    					FileExtensionCategory = "images";
+    				}
+    				else if(contentType.contains("image/gif")){
+    					originalFileExtension = ".gif";
+    					FileExtensionCategory = "images";
+    				}
+    				// audio
+    				else if(contentType.contains("audio/mp4")){
+    					originalFileExtension = ".mp4";
+    					FileExtensionCategory = "audios";
+    				}
+    				else if(contentType.contains("audio/mpeg")){
+    					originalFileExtension = ".mpeg";
+    					FileExtensionCategory = "audios";
+    				}
+    				else if(contentType.contains("audio/ogg")){
+    					originalFileExtension = ".ogg";
+    					FileExtensionCategory = "audios";
+    				}
+    				else if(contentType.contains("audio/wav")){
+    					originalFileExtension = ".wav";
+    					FileExtensionCategory = "audios";
+    				}
+    				// etc
+    				else if(contentType.contains("text/plain")){
+    					originalFileExtension = ".txt";
+    					FileExtensionCategory = "etc";
+    				}
+    				else if(contentType.contains("application/pdf")){
+    					originalFileExtension = ".pdf";
+    					FileExtensionCategory = "etc";
+    				}
+    				else if(contentType.contains("application/vnd.openxmlformats-officedocument.wordprocessingml.document")){
+    					originalFileExtension = ".docx";
+    					FileExtensionCategory = "etc";
+    				}
+    				else if(contentType.contains("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")){
+    					originalFileExtension = ".xlsx";
+    					FileExtensionCategory = "etc";
+    				}
+    				else if(contentType.contains("application/vnd.openxmlformats-officedocument.presentationml.presentation")){
+    					originalFileExtension = ".pptx";
+    					FileExtensionCategory = "etc";
+    				}
+    				else if(contentType.contains("application/x-hwp")){
+    					originalFileExtension = ".hwp";
+    					FileExtensionCategory = "etc";
+    				}
+    				else if(contentType.contains("application/rtf")){
+    					originalFileExtension = ".rtf";
+    					FileExtensionCategory = "etc";
+    				}
+    				else if(contentType.contains("application/zip")){
+    					originalFileExtension = ".zip";
+    					FileExtensionCategory = "etc";
+    				}
+    				else if(contentType.contains("application/x-rar-compressed")){
+    					originalFileExtension = ".rar";
+    					FileExtensionCategory = "etc";
+    				}
+    				// 다른 파일 명이면 아무 일 하지 않는다
+    				else{
+    					break;
+    				}
+    			}
+    			// 카테고리 별로 저장할 폴더 정하기
+    			String path = "";
+    			if (FileExtensionCategory == "images") {
+    				path = imagePath;
+    			} else if (FileExtensionCategory == "audios") {
+    				path = audioPath;
+    			} else if (FileExtensionCategory == "etc") {
+    				path = etcPath;
+    			}
+    			// 각 이름은 겹치면 안되므로 나노 초까지 동원하여 지정
+    			String new_file_name = Long.toString(System.nanoTime()) + originalFileExtension;
+    			// 생성 후 리스트에 추가
+    			NoticeFile noticeFile = NoticeFile.builder()
+    					.noticeId(noticeId)
+    					.original_file_name(multipartFile.getOriginalFilename())
+    					.stored_file_path(path + "/" + new_file_name)
+    					.file_size(multipartFile.getSize())
+    					.isDeleted(DeleteYn.N)
+    					.build();
+    			fileList.add(noticeFile);
+    			
+    			// 받아온 상대경로를 절대경로로 변경
+    			String fullPath = rootPath + "/" + path + "/" + new_file_name;
+    			Path resultPath = Paths.get(fullPath).toAbsolutePath();
+
+    			file = new File(resultPath.toString());
+    			multipartFile.transferTo(file);
+    		}
+    	}
+    	
+    	return fileList;
     }
 }
