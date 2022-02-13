@@ -21,6 +21,8 @@ public class QClassBoardFile extends EntityPathBase<ClassBoardFile> {
 
     public final NumberPath<Integer> boardId = createNumber("boardId", Integer.class);
 
+    public final NumberPath<Integer> commentId = createNumber("commentId", Integer.class);
+
     public final NumberPath<Long> file_size = createNumber("file_size", Long.class);
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);

@@ -41,7 +41,7 @@
 
     <div id="session" v-if="sessionCamera">
       <div id="session-header">
-        <h1 id="session-title">{{ SessionId }}</h1>
+        <h1 id="session-title">{{ ClassName }}</h1>
         <input
           class="btn btn-large btn-primary"
           type="button"
@@ -337,6 +337,10 @@ export default {
       default: "",
     },
     SessionId: {
+      type: String,
+      default: "",
+    },
+    ClassName: {
       type: String,
       default: "",
     },
@@ -679,13 +683,10 @@ export default {
     },
 
     fullScreen() {
-      // this.publisherScreen.requestFullscreen();
       var elem = document.getElementById("mainVideoElement");
       if (elem.requestFullscreen()) {
-        console.log("풀스크린")
         elem.requestFullscreen();
       }
-      // document.documentElement.requestFullscreen();
     },
 
     // videofilter() {
