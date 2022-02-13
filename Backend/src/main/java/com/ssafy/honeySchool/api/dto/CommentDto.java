@@ -15,8 +15,17 @@ public class CommentDto {
 	public String content;
 	public int parent_id;
 	public User user;
-
 	
+	
+	// 댓글, 대댓글 정렬에 쓰려고
+	public int getId() {
+		return id;
+	}
+	public int getParent_id() {
+		return parent_id;
+	}
+
+
 	// 생성자	
 	public CommentDto(int id, String createdAt, String content, int parent_id, User user) {
 		super();
