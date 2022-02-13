@@ -1,20 +1,15 @@
 package com.ssafy.honeySchool.api.controller;
 
-import com.ssafy.honeySchool.api.request.ConnectReq;
 import com.ssafy.honeySchool.api.request.LectureReq;
-import com.ssafy.honeySchool.api.response.ConnectRes;
-import com.ssafy.honeySchool.api.response.LectureRes;
 import com.ssafy.honeySchool.api.service.LectureService;
 import io.swagger.annotations.Api;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.util.Base64;
-import java.util.List;
 import java.util.Map;
 
 /**
