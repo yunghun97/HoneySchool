@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.sun.istack.NotNull;
+import com.sun.istack.Nullable;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +29,8 @@ public class ClassBoardFile {
     @NotNull
     @Column(name = "board_id")
     private int boardId;
+    @Column(name = "comment_id")
+    private int commentId;
 
     // 원본 파일이름 과 서버에 저장된 파일 경로 를 분리한 이유?
     // 동일한 이름을 가진 파일이 업로드가 된다면 오류가 생긴다.

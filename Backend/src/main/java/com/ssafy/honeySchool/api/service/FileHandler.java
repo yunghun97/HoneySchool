@@ -28,7 +28,8 @@ public class FileHandler {
     public List<ClassBoardFile> parseFileInfo(
     		int boardID,
             List<MultipartFile> multipartFiles,
-            String rootPath
+            String rootPath,
+            int commentId  // 수정
     ) throws Exception{
     	
     	// 반환을 할 파일 리스트
@@ -73,23 +74,44 @@ public class FileHandler {
 //        String absolutePath =  request.getSession().getServletContext().getRealPath("/");
         
         // 경로를 지정하고 그곳에다가 저장할 심산이다
-        // images 폴더 없으면 추가
+        List<String> fileNameList = new ArrayList<String>();
+        fileNameList.add("images/");
+        fileNameList.add("audios/");
+        fileNameList.add("etc/");
+        String filePath;
+        File file;
+        for (String fileName : fileNameList) {
+        	filePath = fileName + current_date;
+            file = new File(rootPath + "/" + filePath);  // 날짜 폴더가 존재하지 않을 때 만들어주기 위해서 rootPath 추가
+            // 저장할 위치의 디렉토리가 존재하지 않을 경우
+            if(!file.exists()){
+                // mkdir() 함수와 다른 점은 상위 디렉토리가 존재하지 않을 때 그것까지 생성
+                file.mkdirs();
+            }
+        }
         String imagePath = "images/" + current_date;
-        File file = new File(rootPath + "/" + imagePath);  // 날짜 폴더가 존재하지 않을 때 만들어주기 위해서 rootPath 추가
-        // 저장할 위치의 디렉토리가 존재하지 않을 경우
-        if(!file.exists()){
-            // mkdir() 함수와 다른 점은 상위 디렉토리가 존재하지 않을 때 그것까지 생성
-            file.mkdirs();
-        }
-        // audios 폴더 없으면 추가 (귀찮아서 코드 복붙, 시간 많으면 중복 안나게 수정)
         String audioPath = "audios/" + current_date;
-        File file2 = new File(rootPath + "/" + audioPath);  // 날짜 폴더가 존재하지 않을 때 만들어주기 위해서 rootPath 추가
-        // 저장할 위치의 디렉토리가 존재하지 않을 경우
-        if(!file2.exists()){
-            // mkdir() 함수와 다른 점은 상위 디렉토리가 존재하지 않을 때 그것까지 생성
-            file2.mkdirs();
-        }
-
+        String etcPath = "etc/" + current_date;
+        
+//        // 옛날 파일 생성 코드
+//        // images 폴더 없으면 추가
+//        String imagePath = "images/" + current_date;
+//        File file = new File(rootPath + "/" + imagePath);  // 날짜 폴더가 존재하지 않을 때 만들어주기 위해서 rootPath 추가
+//        // 저장할 위치의 디렉토리가 존재하지 않을 경우
+//        if(!file.exists()){
+//            // mkdir() 함수와 다른 점은 상위 디렉토리가 존재하지 않을 때 그것까지 생성
+//            file.mkdirs();
+//        }
+//        // audios 폴더 없으면 추가 (귀찮아서 코드 복붙, 시간 많으면 중복 안나게 수정)
+//        String audioPath = "audios/" + current_date;
+//        File file2 = new File(rootPath + "/" + audioPath);  // 날짜 폴더가 존재하지 않을 때 만들어주기 위해서 rootPath 추가
+//        // 저장할 위치의 디렉토리가 존재하지 않을 경우
+//        if(!file2.exists()){
+//            // mkdir() 함수와 다른 점은 상위 디렉토리가 존재하지 않을 때 그것까지 생성
+//            file2.mkdirs();
+//        }
+        
+    
         // 파일들을 이제 만져볼 것이다
         for (MultipartFile multipartFile : multipartFiles){
             // 파일이 비어 있지 않을 때 작업을 시작해야 오류가 나지 않는다
@@ -99,12 +121,14 @@ public class FileHandler {
                 System.out.println(contentType);
                 String originalFileExtension;
                 String FileExtensionCategory;
-                    // 확장자 명이 없으면 이 파일은 잘 못 된 것이다
+                // 확장자 명이 없으면 이 파일은 잘 못 된 것이다
                 if (ObjectUtils.isEmpty(contentType)){
                     break;
                 }
                 // 추가하지 않은 확장자를 파일로 넣으면 오류 뜨지 않고 글만 저장된다.
                 else{
+                	// image, audio면 모두 저장하게 하려고 했는데 확장자랑 content-type이 일치 안하는 것도 있길래 원래 방식대로 바꿨다
+                	// image
                     if(contentType.contains("image/jpeg")){
                         originalFileExtension = ".jpg";
                         FileExtensionCategory = "images";
@@ -117,6 +141,7 @@ public class FileHandler {
                         originalFileExtension = ".gif";
                         FileExtensionCategory = "images";
                     }
+                    // audio
                     else if(contentType.contains("audio/mp4")){
                     	originalFileExtension = ".mp4";
                     	FileExtensionCategory = "audios";
@@ -129,6 +154,47 @@ public class FileHandler {
                     	originalFileExtension = ".ogg";
                     	FileExtensionCategory = "audios";
                     }
+                    else if(contentType.contains("audio/wav")){
+                    	originalFileExtension = ".wav";
+                    	FileExtensionCategory = "audios";
+                    }
+                    // etc
+                    else if(contentType.contains("text/plain")){
+                    	originalFileExtension = ".txt";
+                    	FileExtensionCategory = "etc";
+                    }
+                    else if(contentType.contains("application/pdf")){
+                    	originalFileExtension = ".pdf";
+                    	FileExtensionCategory = "etc";
+                    }
+                    else if(contentType.contains("application/vnd.openxmlformats-officedocument.wordprocessingml.document")){
+                    	originalFileExtension = ".docx";
+                    	FileExtensionCategory = "etc";
+                    }
+                    else if(contentType.contains("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")){
+                    	originalFileExtension = ".xlsx";
+                    	FileExtensionCategory = "etc";
+                    }
+                    else if(contentType.contains("application/vnd.openxmlformats-officedocument.presentationml.presentation")){
+                    	originalFileExtension = ".pptx";
+                    	FileExtensionCategory = "etc";
+                    }
+                    else if(contentType.contains("application/x-hwp")){
+                    	originalFileExtension = ".hwp";
+                    	FileExtensionCategory = "etc";
+                    }
+                    else if(contentType.contains("application/rtf")){
+                    	originalFileExtension = ".rtf";
+                    	FileExtensionCategory = "etc";
+                    }
+                    else if(contentType.contains("application/zip")){
+                    	originalFileExtension = ".zip";
+                    	FileExtensionCategory = "etc";
+                    }
+                    else if(contentType.contains("application/x-rar-compressed")){
+                    	originalFileExtension = ".rar";
+                    	FileExtensionCategory = "etc";
+                    }
                     // 다른 파일 명이면 아무 일 하지 않는다
                     else{
                         break;
@@ -140,12 +206,15 @@ public class FileHandler {
                 	path = imagePath;
                 } else if (FileExtensionCategory == "audios") {
                 	path = audioPath;
+                } else if (FileExtensionCategory == "etc") {
+                	path = etcPath;
                 }
                 // 각 이름은 겹치면 안되므로 나노 초까지 동원하여 지정
                 String new_file_name = Long.toString(System.nanoTime()) + originalFileExtension;
                 // 생성 후 리스트에 추가
                 ClassBoardFile classBoardFile = ClassBoardFile.builder()
                         .boardId(boardID)
+                        .commentId(commentId)
                         .original_file_name(multipartFile.getOriginalFilename())
                         .stored_file_path(path + "/" + new_file_name)
                         .file_size(multipartFile.getSize())

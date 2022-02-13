@@ -78,23 +78,6 @@ public class BoardController {
 		}				
 		return new ResponseEntity<List<ClassBoardDto>>(classBoardDtos, HttpStatus.OK);
 	}
-//	@PostMapping("/class")
-//	public HttpStatus insertBoard(ClassBoard body) throws SQLException{
-//		System.out.println("insert 집입");				
-//		// 데이터 저장하기
-//		classBoardRepository.save(ClassBoard.builder()
-//				.category(body.getCategory())
-//				.title(body.getTitle())
-//				.content(body.getContent())
-//				.writer(body.getWriter())
-//				.school(body.getSchool())
-//				.grade(body.getGrade())
-//				.classes(body.getClasses())
-//				.file_link(body.getFile_link())
-//				.viewcount(0)
-//				.build());				
-//		return HttpStatus.OK;
-//	}
 	// User 객체 못가져와서 임시로 url에 써서 받아옴
 	@PostMapping("/class")
 	public ResponseEntity<?> createBoard(
@@ -133,7 +116,7 @@ public class BoardController {
 				.viewcount(0)
 				.build());
         // 파일 저장
-        ClassBoard sameBoard = boardService.addBoard(board, files, rootPath);
+        ClassBoard sameBoard = boardService.addBoard(board, files, rootPath, 0);
         
 		// BoardService에서는 전달한 게시글의 id를 못찾는다. -> id를 DB에서 생성하기 때문에, 데이터가 DB에 들어가고 난 후에만 getId가 가능하다. 그전까지는 0으로 되는듯
 //		System.out.println("보드 id : " + board.getId());
@@ -206,7 +189,7 @@ public class BoardController {
 		return new ResponseEntity<>(map, HttpStatus.OK);
 //		return new ResponseEntity<ClassBoard>(detail, HttpStatus.OK);
 	}
-	// 전체게시판 글 삭제 - 첨부파일도 같이 지워짐
+	// 전체게시판 글 삭제 - 댓글, 첨부파일도 같이 지워짐
 	@DeleteMapping("/class")
 	public HttpStatus deleteBoard(HttpServletRequest req) {
 		String school = req.getParameter("school");		
@@ -217,7 +200,7 @@ public class BoardController {
 		classBoardFileRepository.deleteFile(id);
 		
 		ClassBoard board = classBoardRepository.findBySchoolAndGradeAndClassesAndId(school, grade, classes, id);
-		classBoardRepository.delete(board);
+		classBoardRepository.delete(board);  // 원래는 여기서 에러났는데, comment에서 board_id 외래키를 on delete cascade로 수정해주니 댓글도 다같이 자동 삭제된다.
 		return HttpStatus.OK;
 	}
 	// 전체게시판 글 수정
@@ -239,13 +222,13 @@ public class BoardController {
 		// 첨부파일 수정 여부
 		String fileIsChanged = req.getParameter("fileIsChanged");
 		if (fileIsChanged.equals("Y")) {
-			// 기존에 존재하던 첨부파일 모두 삭제
-			classBoardFileRepository.deleteFile(id);
+			// 기존에 존재하던 첨부파일 모두 삭제 (댓글 빼고 글만)
+			classBoardFileRepository.deleteBoardFile(id);
 			// 현재 추가하는 첨부파일 저장
 			String rootPath = request.getSession().getServletContext().getRealPath("/uploads");
 			String resourcesPath = rootPath.substring(0, rootPath.length()-14) + "resources\\static\\uploads";	
 			rootPath = resourcesPath;
-			ClassBoard sameBoard = boardService.addBoard(board, files, rootPath);
+			ClassBoard sameBoard = boardService.addBoard(board, files, rootPath, 0);
 			System.out.println("첨부파일 저장 됐어");
 		}
 		// 수정 내용 저장
