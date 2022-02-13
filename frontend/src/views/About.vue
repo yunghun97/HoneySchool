@@ -12,6 +12,7 @@
     <div class="row justify-content-center" style="height: 500px">
       <!-- 선생님, 학생 분기 화상수업 -->
       <div class="col-5" id="createSession">
+        <h3>지금은 {{ thisClassName }} 수업시간 입니다.</h3>
         <div v-if="userinfo.position === 'T'">
           <button class="btn-primary" @click="joinSession">수업 만들기, 참석하기</button>
         </div>
@@ -33,7 +34,7 @@
           </thead>
           <tbody>
             <tr v-for="(sub, i) in timetableData" :key="sub.id">
-              <div v-if="thisClass === i">
+              <div v-if="thisClass === i + 1">
                 <th scope="row" id="current">
                   {{ i + 1 }}교시({{ sub.startTime }} ~ {{ sub.endTime }})
                 </th>
@@ -72,9 +73,10 @@ export default {
 
     // 오늘의 시간표 GET & 현재시각과 비교 => 현재 수업 확인
     let timetableData = ref([]);
-    let thisClass = ref(0);
-    // let myclassName = ref("");
-    let myclassName = ref(
+    let thisClass = ref(10);
+    let thisClassName = ref("");
+    // let mySessionName = ref("");
+    let mySessionName = ref(
       dayjs().format("YYMMDD") +
         "_" +
         "1" +
@@ -110,14 +112,20 @@ export default {
           response.data.forEach(function (value: any, index: any, array: any) {
             timeNow.value = dayjs().format("HH:mm:ss");
             let today = new Date();
-            let hour = Number(today.getHours());
-            let minutes = Number(today.getMinutes());
+            // let hour = Number(today.getHours());
+            // let minutes = Number(today.getMinutes());
+            let hour = 13;
+            let minutes = 30;
             let startTimeH = Number(value.startTime.substring(0, 2));
             let startTimeM = Number(value.startTime.substring(3, 5));
-            if (startTimeH == hour && startTimeM <= minutes) {
-              // 이번교시 숫자 저장 (1~6교시)
+            let endTimeH = Number(value.endTime.substring(0, 2));
+            let endTimeM = Number(value.endTime.substring(3, 5));
+            // 수업시간 기준으로 교시 지정
+            if ((startTimeH == hour && startTimeM <= minutes) || (endTimeH == hour && endTimeM > minutes)) {
+              // 이번교시 번호와 이름 저장 (1~6교시)
               thisClass.value = index + 1;
-              myclassName.value =
+              thisClassName.value = value.subject;
+              mySessionName.value =
                 dayjs().format("YYMMDD") +
                 "_" +
                 // userinfo.school +
@@ -128,8 +136,6 @@ export default {
                 userinfo.class_number +
                 "_" +
                 String(index + 1);
-              console.log("이번 수업시간");
-              console.log(myclassName.value);
             }
           });
         };
@@ -145,10 +151,10 @@ export default {
         .get(process.env.VUE_APP_API_URL + "/lecture")
         .then((response) => {
           let classOn = false;
-          console.log(myclassName.value);
+          console.log(mySessionName.value);
           console.log(response.data.content);
           response.data.content.forEach((element: any) => {
-            if (element.id === myclassName.value) {
+            if (element.id === mySessionName.value) {
               classOn = true;
             }
           });
@@ -157,12 +163,12 @@ export default {
             if (userinfo.position === "S") {
               router.push({
                 name: "Videoclass",
-                params: { UserName: userinfo.name, SessionId: myclassName.value },
+                params: { UserName: userinfo.name, SessionId: mySessionName.value, ClassName: thisClassName.value },
               });
             } else {
               router.push({
                 name: "Videoclass",
-                params: { UserName: "선생님", SessionId: myclassName.value },
+                params: { UserName: userinfo.name + "선생님", SessionId: mySessionName.value, ClassName: thisClassName.value },
               });
             }
           } else {
@@ -171,7 +177,7 @@ export default {
             } else {
               router.push({
                 name: "Videoclass",
-                params: { UserName: "선생님", SessionId: myclassName.value },
+                params: { UserName: userinfo.name + "선생님", SessionId: mySessionName.value, ClassName: thisClassName.value },
               });
             }
           }
@@ -181,30 +187,13 @@ export default {
         });
     };
 
-    // 1분마다 활성화된 모든 세션 중 내 수업 탐색
-    // const myClass = () => {
-    //   axios
-    //     .get(process.env.VUE_APP_API_URL + "/lecture")
-    //     .then((response) => {
-    //       console.log(response.data.content);
-    //       response.data.content.forEach((element: any) => {
-    //         if (element.id === myclassName) {
-    //           console.log("일치");
-    //         }
-    //       });
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // };
-    // setInterval(myClass, 10000);
-
     return {
       userinfo,
       timetableData,
       dateNow,
       timeNow,
       thisClass,
+      thisClassName,
       joinSession,
     };
   },
