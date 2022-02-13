@@ -42,6 +42,8 @@ export const boardStore: Module<boardState, RootState> = {
   mutations: {
     GETARTICLES (state, data) {
       state.classBoardAll = data
+      console.log('Did!')
+      console.log('Here!', state.classBoardAll)
     },
     CLASSIFYCATEGORY (state, payload) {
       state[payload[0]] = payload[1]
@@ -58,10 +60,7 @@ export const boardStore: Module<boardState, RootState> = {
       })
       .then((response)=>{
         commit('GETARTICLES', response.data)
-      })
-      .catch(()=>
-        alert("전체 받아오기 실패!")
-      )    
+      })   
     },
     classifyCategory ({ commit }, [category, userinfo]) {
       return axios.get(process.env.VUE_APP_API_URL+"/board/class/category",{
@@ -76,9 +75,6 @@ export const boardStore: Module<boardState, RootState> = {
           const payload = [category as category, response.data]
           commit('CLASSIFYCATEGORY', payload)
         })
-        .catch(()=>
-          alert("카테고리 받아오기 실패!")
-        )  
     },
     classifyCategorybyUser ({ commit }, [category, userinfo]) {
       return axios.get(process.env.VUE_APP_API_URL+"/board/class/category/user",{
@@ -94,9 +90,6 @@ export const boardStore: Module<boardState, RootState> = {
         const payload = [category as category, response.data]
         commit('CLASSIFYCATEGORY', payload)
       })
-      .catch(()=>
-        alert("카테고리 받아오기 실패!")
-      )  
     },
   },
 

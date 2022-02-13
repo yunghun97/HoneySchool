@@ -90,16 +90,24 @@ export default {
     
     let isloading = ref<boolean>(true);
     let article = ref<any>()
-    const load = async() => {
-      await store.dispatch('boardStore/getArticles', userinfo)
-      article.value = await computed(() => store.state.boardStore.classBoardAll).value;
-      //console.log(article.value)
-    }
-    load().then(() => {isloading.value = false})
+
+    store.dispatch('boardStore/getArticles', userinfo)
+    const articles = computed(() => store.state.boardStore.classBoardAll);
+    article.value = articles.value
+    console.log('now', articles)
+    // const load = async() => {
+    //   await store.dispatch('boardStore/getArticles', userinfo)
+    //   article.value = await computed(() => store.state.boardStore.classBoardAll).value;
+    //   return article.value
+    // }
+    // load().then(() => {
+    //   isloading.value = false 
+    //   console.log('now',article.value)
+    // })
 
     // 카테고리 선택 시 구분하기
     const onlyCategory = async(categoryName:string) => {
-      isloading.value = false;
+      isloading.value = true;
       if (categoryName === 'all') {
         article.value = computed(() => store.state.boardStore.classBoardAll).value;
       } else {
@@ -116,11 +124,10 @@ export default {
         } else if (categoryName === 'question') {
           article.value = computed(() => store.state.boardStore.question).value
         }
-
         isloading.value = false;
       }
     }
-    return { userinfo, isloading, onlyCategory, article, load};
+    return { userinfo, isloading, onlyCategory, article, articles};
   } 
 }
 </script>

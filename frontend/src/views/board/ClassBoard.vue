@@ -86,8 +86,9 @@ export default defineComponent({
         ])
 
         const pushRouter = async(category:string) => {
-          await store.dispatch('boardStore/getArticles', userinfo)
           if (category == "all") {
+            await store.dispatch('boardStore/getArticles', userinfo)
+            await computed(() => store.state.boardStore.classBoardAll).value
             return router.push({name: 'BoardTable'})
           } else {
             await store.dispatch("boardStore/classifyCategory", [category, userinfo])

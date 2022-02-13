@@ -25,24 +25,24 @@
     <div style="background-color:#F99D07">
         <div class="note">
             <div>
-                <div class="card mb-3" style="max-width: 120vh; height:60vh;">
+                <div class="card mb-3" style="width: 100vh; height:60vh; padding:30px;">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <div class="card-body">
                                 <h5 class="card-title">질문 내용</h5>
                                 <p class="card-text"><small class="text-muted">작성 날짜 : {{ currentarticle.board.date.split("T")[0] }}</small></p>
-                                <!-- <a :href="`http://localhost:9999/static/uploads/${currentarticle.board.files[0].stored_file_path}`">녹음 파일 링크</a> -->
+                                <a :href="`http://localhost:9999/static/uploads/${currentarticle.files[0].stored_file_path}`">질문 내용 듣기</a>
                             </div>
-                        {{ currentarticle }}
+                        <!-- {{ currentarticle }} -->
                         </div>
                         <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">선생님의 답변</h5>
                             <div v-if="currentarticle.comments.length > 0">
                                 <div v-for="idx in currentarticle.comments.length" :key="idx">
-                                    <p class="card-text"><small class="text-muted">답변 날짜 : {{ currentarticle.comments.date}}</small></p>
-                                    <p class="card-text"><small class="text-muted">작성자 : {{ currentarticle.comments.user.name}}</small></p>
-                                    <p class="card-text">{{ currentarticle.comments.content}}</p>
+                                    <p class="card-text"><small class="text-muted">답변 날짜 : {{ currentarticle.comments[idx-1].createdAt}}</small></p>
+                                    <p class="card-text"><small class="text-muted">작성자 : {{ currentarticle.comments[idx-1].user.name}}</small></p>
+                                    <p class="card-text">{{ currentarticle.comments[idx-1].content}}</p>
                                 </div>
                             </div>
                             <div v-else>

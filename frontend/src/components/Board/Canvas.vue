@@ -20,7 +20,7 @@
         @mousemove="getCoordinate($event)"
       />
       <div class="button-container">
-        <button type="button" class="btn btn-outline-dark btn-lg" @click.prevent="eraser = !eraser">
+        <button type="button" class="btn btn-dark btn-lg" @click.prevent="eraser = !eraser">
           <span v-if="eraser">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,15 @@
             연필
           </span>
         </button>
-        <button type="button" class="btn btn-outline-danger btn-lg" @click.prevent="$refs.VueCanvasDrawing.undo()">
+        <!-- <button type="button" @click.prevent="disabled = !disabled">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
+              <path v-if="!disabled" d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2zM3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H3z"/>
+              <path v-else d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+            </svg>
+            <span v-if="!disabled">Unlock</span>
+            <span v-else>Lock</span>
+          </button> -->
+        <button type="button" class="btn btn-danger btn-lg" @click.prevent="$refs.VueCanvasDrawing.undo()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -71,7 +79,7 @@
           </svg>
           되돌리기
         </button>
-        <button type="button" class="btn btn-outline-success btn-lg" @click.prevent="$refs.VueCanvasDrawing.redo()">
+        <button type="button" class="btn btn-success btn-lg" @click.prevent="$refs.VueCanvasDrawing.redo()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -90,7 +98,7 @@
           </svg>
           되돌리기 취소
         </button>
-        <button type="button" class="btn btn-outline-primary btn-lg" @click.prevent="$refs.VueCanvasDrawing.reset()">
+        <button type="button" class="btn btn-primary btn-lg" @click.prevent="$refs.VueCanvasDrawing.reset()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -109,19 +117,25 @@
         제출하기
         </button>
       </div>
+    </div> 
     </div>
+  <div>
+
   </div>
+
 </template>
 
 <script>
-import axios from "axios";
 import VueDrawingCanvas from "vue-drawing-canvas";
+import { mapState, route } from "vuex";
+import axios from 'axios';
+import router from '../../router';
 export default {
   name: "App",
   components: {
     VueDrawingCanvas,
   },
-  props : ['filepath'],
+  props: ['article'],
   data() {
     return {
       x: 0,
@@ -134,15 +148,22 @@ export default {
       color: "#000000",
       strokeType: "dash",
       backgroundColor: "#FFFFFF",
-      backgroundImage: this.filepath,
+      backgroundImage: `http://localhost:9999/static/uploads/${this.article.files[0].stored_file_path}`,
+      // TODO: background image cross origin 문제 해결
+      //"`http://localhost:9999/static/uploads/${currentarticle.files[0].stored_file_path}`",
       watermark: null,
+      id : this.article.board.id
     };
   },
+  computed: {
+    ...mapState('accountStore', ['userinfo'])
+  },
   methods: {
-    // async setImage(event) {
-    //   this.backgroundImage = URL.createObjectURL(event.target.files[0]);
-    //   await this.$refs.VueCanvasDrawing.redraw();
-    // },
+    async setImage(event) {
+      let URL = window.URL;
+      this.backgroundImage = URL.createObjectURL(event.target.files[0]);
+      await this.$refs.VueCanvasDrawing.redraw();
+    },
     async setWatermarkImage(event) {
       let URL = window.URL;
       this.watermark = {
@@ -164,7 +185,6 @@ export default {
     },
     // base64 to imagefile
     dataURItoBlob(dataURI) {
-    // convert base64/URLEncoded data component to raw binary data held in a string
         var byteString;
         if (dataURI.split(',')[0].indexOf('base64') >= 0)
             byteString = atob(dataURI.split(',')[1]);
@@ -175,24 +195,22 @@ export default {
         for (var i = 0; i < byteString.length; i++) {
             ia[i] = byteString.charCodeAt(i);
         }
-        return new File([ia], '김싸피숙제',{type:mimeString});
+        return new File([ia], this.userinfo.name +'의 숙제',{type:mimeString});
     },
+    // imagefile로 변환한 파일을 첨부하여 숙제 제출
     saveImage() {
-        const formData = new FormData()
-            formData.append('category', 'assignment');
-            formData.append('title', '김싸피 숙제제출');
-            formData.append('content', '');
-            formData.append('files', this.dataURItoBlob(this.image));
-                
-        //     // 글작성하느라 임의로 추가한내용
-            formData.append('grade', '1');
-            formData.append('classes', '1');
-            formData.append('school', "싸피초");
-
-        // TODO : 댓글로 작성하기
-            axios.post(process.env.VUE_APP_API_URL+"/board/class/yunghun97",formData, 
-            {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
-            )
+      console.log(this.id)
+      const formData = new FormData()
+        formData.append('userId', this.userinfo.userId);
+        formData.append('content', '');
+        formData.append('files', this.dataURItoBlob(this.image));
+        axios.post(process.env.VUE_APP_API_URL+`/board/class/182/comment/`, formData, 
+            { headers: {'Content-Type' : 'multipart/form-data;charset=utf-8' }})
+        .then(()=> {
+          // TODO: router push 
+          console.log('숙제 작성!')
+          router.push({ name: 'Assignment', params: {article_id: this.id}})
+        })
     }
   },
 };
@@ -211,6 +229,9 @@ body {
 .button-container {
   display: flex;
   flex-direction: row;
+  position: fixed;
+  bottom: 10px;
+
 }
 .button-container > * {
   margin-top: 15px;

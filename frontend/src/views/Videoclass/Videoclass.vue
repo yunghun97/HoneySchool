@@ -369,8 +369,7 @@ export default {
           this.subscribersScreen.push(subscriberScreen);
         }
           console.log("사람입장");
-          console.log(stream.session.remoteConnections);
-          this.updateUserList(stream.session.remoteConnections); 
+          this.UserList(); 
       });
       
       // On every Stream destroyed...
@@ -382,8 +381,7 @@ export default {
           this.subscribersCamera.splice(index, 1);
         }
         console.log("사람 퇴장");
-        console.log(stream.session.remoteConnections);
-        this.updateUserList(stream.session.remoteConnections);
+        this.UserList();
       });
 
       // On every asynchronous exception...
@@ -799,6 +797,11 @@ export default {
           this.participants.push(JSON.parse(UserList.get(i).data).clientData);            
         };
         console.log('목록',this.participants);
+    },
+    UserList(){
+      this.subscribersCamera.forEach((sub) => {
+        console.log("check",sub)
+      })
     }
 
   },
