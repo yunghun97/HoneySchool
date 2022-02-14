@@ -793,14 +793,15 @@ export default {
         this.quizContent = "";
       }
     },
-    updateUserList(UserList){                      
+    updateUserList(UserList){ 
+        console.log("사용자 업데이트!");     
+        console.log(UserList);                
         this.participants = [this.myUserName];
         for(let i of UserList.keys()){
           this.participants.push(JSON.parse(UserList.get(i).data).clientData);            
         };
         console.log(this.participants);
-    }
-
+    },
   },
 };
 </script>
@@ -855,7 +856,7 @@ export default {
   width: 100%;
 }
 .iconsOnVideo {
-  position: absolute;
+  position: absolute; 
   left: 40%;
   bottom: 25%;
   /* bottom: 3px; */

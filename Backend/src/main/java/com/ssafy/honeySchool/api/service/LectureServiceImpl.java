@@ -169,21 +169,21 @@ public class LectureServiceImpl implements LectureService{
 	}
 	@Override
 	public List<LectureUserHistory> selectAllLectureHistory(String userId) {
-		List<LectureUserHistory> history = lectureRepository.findAllByUserId(userId);
+		User user = userRepository.findByUserId(userId).get();
+		List<LectureUserHistory> history = lectureRepository.findAllByUser(user);
 		return history;
 	}
 
 	// 사용자의 참여 기록 넣기
 	@Override
 	public LectureUserHistory insertLectureHistory(LectureUserHistory body, String userId) {
-		boolean join = false;
-		
+	
 		User user = userRepository.findByUserId(userId).get();
 		LectureUserHistory lectureUserHistory = new LectureUserHistory();
 		lectureUserHistory.setUser(user);
-		lectureUserHistory.setJoin(join);
+		lectureUserHistory.setJoin(body.isJoin());
 		lectureUserHistory.setLink(body.getLink());
-		lectureUserHistory.e
-					
+		return lectureRepository.save(lectureUserHistory);				
 	}
+
 }
