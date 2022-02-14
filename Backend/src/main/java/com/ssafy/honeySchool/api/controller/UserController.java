@@ -1,7 +1,9 @@
 package com.ssafy.honeySchool.api.controller;
 
+import com.ssafy.honeySchool.api.dto.UserNameDto;
 import com.ssafy.honeySchool.api.request.UserModifyPutReq;
 import com.ssafy.honeySchool.api.request.UserRegisterPostReq;
+import com.ssafy.honeySchool.api.response.UserListRes;
 import com.ssafy.honeySchool.api.response.UserRes;
 import com.ssafy.honeySchool.api.response.UserInfoRes;
 import com.ssafy.honeySchool.api.service.UserService;
@@ -9,6 +11,7 @@ import com.ssafy.honeySchool.common.auth.HoneySchoolUserDetails;
 import com.ssafy.honeySchool.common.model.response.BaseResponseBody;
 import com.ssafy.honeySchool.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +21,11 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.List;
 
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -51,7 +58,7 @@ public class UserController {
     }
 
     @GetMapping("/userInfo")
-    @ApiOperation(value = "회원 Id 조회", notes = "회원 ID 응답.")
+    @ApiOperation(value = "회원 정보", notes = "회원의 정보를 가져온다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
@@ -66,24 +73,25 @@ public class UserController {
         HoneySchoolUserDetails userDetails = (HoneySchoolUserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getUserByUserId(userId);
-
-        return ResponseEntity.status(200).body(UserRes.of(user));
+        int schoolNumber=userService.getSchoolNumberBySchool(user.getSchool());
+        System.out.println(schoolNumber);
+        return ResponseEntity.status(200).body(UserRes.of(user,schoolNumber));
     }
 
-    @GetMapping("/info/{id}")
-    @ApiOperation(value = "회원 정보", notes = "회원의 정보를 가져온다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<UserInfoRes> getUserInfo(@PathVariable String id) {
+//    @GetMapping("/info/{id}")
+//    @ApiOperation(value = "회원 정보", notes = "회원의 정보를 가져온다.")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "성공"),
+//            @ApiResponse(code = 401, message = "인증 실패"),
+//            @ApiResponse(code = 404, message = "사용자 없음"),
+//            @ApiResponse(code = 500, message = "서버 오류")
+//    })
+//    public ResponseEntity<UserInfoRes> getUserInfo(@PathVariable String id) {
+//
+//        User user = userService.getUserByUserId(id);
+//        return ResponseEntity.status(200).body(UserInfoRes.of(user));
+//    }
 
-        User user = userService.getUserByUserId(id);
-
-        return ResponseEntity.status(200).body(UserInfoRes.of(user));
-    }
     @DeleteMapping("/{id}")
     @ApiOperation(value = "회원 삭제", notes = "Id를 받아와서 회원 삭제를 진행한다.")
     @ApiResponses({
@@ -113,5 +121,20 @@ public class UserController {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
         else
             return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Fail"));
+    }
+
+    @PostMapping("/school")
+    public ResponseEntity<? extends BaseResponseBody> getSchoolInfo(){
+        String res=userService.getSchoolNameByOpenApi();
+        if(res.equals("Success"))
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        else
+            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Fail"));
+    }
+
+    @GetMapping("/{schoolId}/{grade}/{classNum}")
+    public ResponseEntity<UserListRes> getStudentList(@PathVariable int schoolId, @PathVariable int grade, @PathVariable int classNum){
+        List<UserNameDto> userList=userService.getUserList(schoolId,grade,classNum);
+        return ResponseEntity.status(200).body(UserListRes.of(userList));
     }
 }

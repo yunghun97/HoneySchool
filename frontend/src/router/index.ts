@@ -93,6 +93,8 @@ const routes: Array<RouteRecordRaw> = [
     path: "/videoclass",
     name: "Videoclass",
     component: Videoclass,
+    // 세션 명 props
+    props: true,
   },
   {
     path: "/classboard/question/askquestion",

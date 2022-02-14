@@ -1,6 +1,6 @@
 package com.ssafy.honeySchool.db.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -21,42 +23,38 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name="class_comment")
+@Table(name="notice")
 @NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
-public class ClassComment {
+public class Notice {
 	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private String title;
 	private String content;
-	private String writer;
-	private String file_link;
-	private Date date;
-	
-	// 다대일 관계 만들기
-	// ???
-	// private int board_id;
 	@ManyToOne
-	@JoinColumn(name = "board_id")
-	private ClassBoard classBoard;
-
+	@JoinColumn(name = "user_id")
+	private User user;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date date;
+	private int viewcount;
 	
+
+
 	@Builder
-	public ClassComment(String content, String writer, String file_link, ClassBoard classBoard) {
-//		super();
+	public Notice(String title, String content, User user, int viewcount) {		
+		this.title = title;
 		this.content = content;
-		this.writer = writer;
-		this.file_link = file_link;
-		this.classBoard = classBoard;
+		this.user = user;
+		this.viewcount = viewcount;
 	}
 	
-	// 댓글 수정
-	public void update(String content, String writer, String file_link) {		
+	// 수정
+	public void update(String title, String content) {		
+		this.title = title;
 		this.content = content;
-		this.writer = writer;
-		this.file_link = file_link;
 	}
 }
