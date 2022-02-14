@@ -235,9 +235,7 @@ export default defineComponent({
               'end_time': (document.getElementById(`end${i}`) as HTMLInputElement).innerHTML,
               'subject': (document.getElementById(`${d}${i}`) as HTMLInputElement).value,
             }
-            if (subject.subject !== '') {
-              timetable[day.indexOf(d)].push(subject)
-            }
+            timetable[day.indexOf(d)].push(subject)
           })
         }
         let data:any = {
