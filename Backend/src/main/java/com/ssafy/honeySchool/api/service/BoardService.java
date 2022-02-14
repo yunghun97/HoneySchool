@@ -4,16 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.honeySchool.api.dto.ClassBoardDto;
 import com.ssafy.honeySchool.db.entity.ClassBoard;
 import com.ssafy.honeySchool.db.entity.ClassBoardFile;
+import com.ssafy.honeySchool.db.entity.User;
 import com.ssafy.honeySchool.db.repository.ClassBoardFileRepository;
 import com.ssafy.honeySchool.db.repository.ClassBoardRepository;
 
 @Service
 public class BoardService {
+	
     private ClassBoardRepository classBoardRepository;
 
     private ClassBoardFileRepository classBoardFileRepository;
@@ -26,15 +31,34 @@ public class BoardService {
         this.classBoardFileRepository = classBoardFileRepository;
         this.fileHandler = new FileHandler();
     }
-
+    
+    // 페이지네이션
+    // 반 게시판 전체 목록 (페이징)
+    public Page<ClassBoardDto> findAll(String school, int grade, int classes, Pageable pageable) {
+		return classBoardRepository.findBySchoolAndGradeAndClassesOrderByIdDesc(school, grade, classes, pageable)
+        		.map(ClassBoardDto::from);
+    }
+    // Jpa로 category 구분해서 가져오기
+    public Page<ClassBoardDto> findAllByCategory(String school, int grade, int classes, String category, Pageable pageable) {
+    	return classBoardRepository.findBySchoolAndGradeAndClassesAndCategoryOrderByIdDesc(school, grade, classes, category, pageable)
+    			.map(ClassBoardDto::from);
+    }
+    // 특정 category에서 특정 user가 쓴 글 모아보기
+    public Page<ClassBoardDto> findAllByCategoryAndUser(String school, int grade, int classes, String category, User user, Pageable pageable) {
+    	return classBoardRepository.findBySchoolAndGradeAndClassesAndCategoryAndUserOrderByIdDesc(school, grade, classes, category, user, pageable)
+    			.map(ClassBoardDto::from);
+    }
+    
+    
     public ClassBoard addBoard(
             ClassBoard board,
             List<MultipartFile> files,
-            String rootPath
+            String rootPath,
+            int commentId  // 수정
     ) throws Exception {
     	
         // 파일을 저장하고 그 files 에 대한 list 를 가지고 있는다
-    	List<ClassBoardFile> list = fileHandler.parseFileInfo(board.getId(), files, rootPath);
+    	List<ClassBoardFile> list = fileHandler.parseFileInfo(board.getId(), files, rootPath, commentId);
         
         if(list.isEmpty()){
             // TODO : 파일이 없을 땐 어떻게 해야할까.. 고민을 해보아야 할 것

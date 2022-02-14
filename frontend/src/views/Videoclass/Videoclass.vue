@@ -5,6 +5,8 @@
         <!-- <img src="resources/images/openvidu_grey_bg_transp_cropped.png" /> -->
       </div>
       <div id="join-dialog" class="jumbotron vertical-center">
+        <h1>{{ $route.params.UserName }}</h1>
+        <h1>{{ $route.params.SessionId }}</h1>
         <h1>Join a video session</h1>
         <div class="form-group">
           <p>
@@ -32,7 +34,6 @@
             <button class="btn btn-lg btn-info" @click="searchAllSession()">
               검색!
             </button>
-            
           </p>
         </div>
       </div>
@@ -40,13 +41,20 @@
 
     <div id="session" v-if="sessionCamera">
       <div id="session-header">
-        <h1 id="session-title">{{ mySessionId }}</h1>
+        <h1 id="session-title">{{ ClassName }}</h1>
         <input
           class="btn btn-large btn-primary"
           type="button"
           id="buttonScreenShare"
           @click="publishScreenShare"
           value="Screen share"
+        />
+        <input
+          class="btn btn-large btn-primary"
+          type="button"
+          id="fullScreen"
+          @click="fullScreen"
+          value="Full screen"
         />
         <input
           class="btn btn-large btn-danger"
@@ -69,7 +77,10 @@
         <div class="col-md-9">
           <div class="row">
             <div id="main-video" class="col-md-9">
-              <user-video :stream-manager="mainStreamManager" />
+              <user-video
+                :stream-manager="mainStreamManager"
+                id="mainVideoElement"
+              />
             </div>
             <div class="col-md-3">
               <div id="container-cameras" class="row panel panel-default">
@@ -126,8 +137,20 @@
                 <p class="panel-heading">User Screens</p>
                 <user-screen
                   :stream-manager="publisherScreen"
-                  @click="updateMainVideoStreamManager(publisherScreen)"
+                  @click="updateMainVideoStreamManagerScreen(publisherScreen)"
                 />
+                <!-- 전체 참여인원의 화면공유 화면 (필요시 활성화) -->
+                <!-- <p>Subscribers Screen</p>
+                <div
+                  v-for="sub in subscribersScreen"
+                  :key="sub.stream.connection.connectionId"
+                  class="subContainer"
+                >
+                  <user-screen
+                    :stream-manager="sub"
+                    @click="updateMainVideoStreamManagerScreen(sub)"
+                  />
+                </div> -->
               </div>
             </div>
           </div>
@@ -192,10 +215,23 @@
           </div>
         </div>
         <div class="col-md-3">
-          <p>유저 상태목록</p>
-          <li v-for="(value, index) in participants" v-bind:key="index">
-            <div>{{value}}</div>            
-          </li>          
+          <h4>유저 상태목록</h4>
+          <table v-if="studentList">
+            <thead>
+              <tr>
+                <th scope="col">번호</th>
+                <th scope="col">이름</th>
+                <th scope="col">접속</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(student, index) in studentList" :key="index">
+                <th>{{ student.studentNumber }}번</th>
+                <td>{{ student.name }}</td>
+                <!-- <td v-if=""></td> -->
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -297,6 +333,7 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "./UserVideo";
 import UserScreen from "./UserScreen";
+import { ref } from '@vue/reactivity';
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
@@ -311,8 +348,26 @@ export default {
     UserScreen,
   },
 
+  props: {
+    UserName: {
+      type: String,
+      default: "",
+    },
+    SessionId: {
+      type: String,
+      default: "",
+    },
+    ClassName: {
+      type: String,
+      default: "",
+    },
+  },
+
   data() {
     return {
+      studentList: undefined,
+      userinfo: undefined,
+      // studentListOn: false,
       OVCamera: undefined,
       OVScreen: undefined,
       sessionCamera: undefined,
@@ -330,14 +385,51 @@ export default {
       screensharing: false,
       muted: true,
       left: false,
-    
+
       quizContent: "",
       quizReceived: "아직 도착한 퀴즈가 없습니다.",
 
       participants: [],
     };
   },
+
+  created() {
+    console.log(this.UserName);
+    console.log(this.SessionId);
+    const localStorageData = localStorage.getItem("vuex");
+    let userinfoData;
+    if (localStorageData !== null) {
+      userinfoData = JSON.parse(localStorageData);
+    }
+    this.userinfo = userinfoData.accountStore.userinfo;
+
+    // 학급 인원 리스트 조회
+    axios
+      .get(
+        process.env.VUE_APP_API_URL +
+          "/users/" +
+          this.userinfo.school_number +
+          "/" +
+          this.userinfo.grade +
+          "/" +
+          this.userinfo.class_number
+      )
+      .then((response) => {
+        console.log(response.data);
+        this.studentList = response.data.userList;
+        // studentListOn.value = true;
+        // console.log(studentListOn)
+        console.log(this.studentList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    this.joinSession();
+  },
+
   methods: {
+    // 세션 입장
     joinSession() {
       // --- Get an OpenVidu object ---
       this.OVCamera = new OpenVidu();
@@ -353,26 +445,36 @@ export default {
       // 새로운 카메라 타입을 받았을 때
       this.sessionCamera.on("streamCreated", ({ stream }) => {
         if (stream.typeOfVideo == "CAMERA") {
-          console.log("카메라 타입");          
+          console.log("카메라 타입");
           console.log(stream.typeOfVideo);
           const subscriberCamera = this.sessionCamera.subscribe(stream);
           subscriberCamera.raisehand = false;
           subscriberCamera.muted = true;
           subscriberCamera.left = false;
           this.subscribersCamera.push(subscriberCamera);
-        }
-        else if (stream.typeOfVideo == "SCREEN") {
+        } else if (stream.typeOfVideo == "SCREEN") {
           console.log("스크린 타입");
           console.log(stream.typeOfVideo);
           const subscriberScreen = this.sessionScreen.subscribe(stream);
           console.log(subscriberScreen.data);
           this.subscribersScreen.push(subscriberScreen);
         }
-          console.log("사람입장");
-          console.log(stream.session.remoteConnections);
-          this.updateUserList(stream.session.remoteConnections); 
+        console.log("사람입장");
+        console.log(stream.session.remoteConnections);
+        this.updateUserList(stream.session.remoteConnections);
       });
-      
+
+      // 스크린 타입의 비디오 추가
+      this.sessionScreen.on("streamCreated", ({ stream }) => {
+        if (stream.typeOfVideo == "SCREEN") {
+          console.log("스크린 타입");
+          console.log(stream.typeOfVideo);
+          const subscriberScreen = this.sessionScreen.subscribe(stream);
+          console.log(subscriberScreen.data);
+          this.subscribersScreen.push(subscriberScreen);
+        }
+      });
+
       // On every Stream destroyed...
       this.sessionCamera.on("streamDestroyed", ({ stream }) => {
         const index = this.subscribersCamera.indexOf(stream.streamManager, 0);
@@ -446,22 +548,37 @@ export default {
       this.sessionCamera.on("signal:updateMainstream", (event) => {
         this.subscribersCamera.forEach((sub) => {
           if (event.data === sub.stream.connection.connectionId) {
-           this.changeMainVideo(sub)
+            this.changeMainVideo(sub);
           }
         });
-        if (event.data === this.publisherCamera.stream.connection.connectionId) {
-          this.changeMainVideo(this.publisherCamera)
+        if (
+          event.data === this.publisherCamera.stream.connection.connectionId
+        ) {
+          this.changeMainVideo(this.publisherCamera);
         }
       });
-      
+      // mainstream 스크린 화면 전체 바꾸기
+      this.sessionScreen.on("signal:updateMainstream", (event) => {
+        this.subscribersScreen.forEach((sub) => {
+          if (event.data === sub.stream.connection.connectionId) {
+            this.changeMainVideo(sub);
+          }
+        });
+        if (
+          event.data === this.publisherScreen.stream.connection.connectionId
+        ) {
+          this.changeMainVideo(this.publisherScreen);
+        }
+      });
 
       // --- Connect to the session with a valid user token ---
 
       // 'getToken' method is simulating what your server-side should do.
       // 'token' parameter should be retrieved and returned by your own backend
-      this.getToken(this.mySessionId).then((token) => {
+      // Change: mySessionId => SessionId, myUserName => UserName
+      this.getToken(this.SessionId).then((token) => {
         this.sessionCamera
-          .connect(token, { clientData: this.myUserName })
+          .connect(token, { clientData: this.UserName })
           .then(() => {
             // --- Get your own camera stream with the desired properties ---
 
@@ -494,22 +611,23 @@ export default {
           });
       });
       // 화면 공유 생성
-      this.getToken(this.mySessionId).then((tokenScreen) => {
-        // Create a token for screen share
-        this.sessionScreen
-          .connect(tokenScreen, { clientData: this.myUserName+"_화면 공유" })
-          .then(() => {
-            console.log("Session screen connected");
-          })
-          .catch((error) => {
-            console.warn(
-              "There was an error connecting to the session for screen share:",
-              error.code,
-              error.message
-            );
-          });          
-      });
-
+      if (this.userinfo.position === "T") {
+        this.getToken(this.SessionId).then((tokenScreen) => {
+          // Create a token for screen share
+          this.sessionScreen
+            .connect(tokenScreen, { clientData: this.UserName + "_화면 공유" })
+            .then(() => {
+              console.log("Session screen connected");
+            })
+            .catch((error) => {
+              console.warn(
+                "There was an error connecting to the session for screen share:",
+                error.code,
+                error.message
+              );
+            });
+        });
+      }
       window.addEventListener("beforeunload", this.leaveSession);
     },
 
@@ -517,6 +635,8 @@ export default {
       // --- 9.1) To create a publisherScreen it is very important that the property 'videoSource' is set to 'screen'
       let publisher = this.OVScreen.initPublisher(undefined, {
         videoSource: "screen",
+        publishAudio: false,
+        insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
       });
       this.publisherScreen = publisher;
       // --- 9.2) If the user grants access to the screen share function, publish the screen stream
@@ -534,12 +654,14 @@ export default {
         this.sessionScreen.publish(this.publisherScreen);
         // Screen sharing 시 메인 stream으로 자동 이동
         this.mainStreamManager = this.publisherScreen;
+        this.updateMainVideoStreamManagerScreen(this.publisherScreen);
       });
 
       this.publisherScreen.on("videoElementCreated", ({ stream }) => {
         const subscriberScreen = this.sessionScreen.subscribe(stream);
         subscriberScreen.event.element["muted"] = true;
         this.subscribersScreen.push(subscriberScreen);
+        this.updateMainVideoStreamManagerScreen(this.publisherScreen);
       });
 
       this.publisherScreen.once("accessDenied", (event) => {
@@ -550,16 +672,24 @@ export default {
     leaveSession() {
       // --- Leave the session by calling 'disconnect' method over the Session object ---
       const headers = {
-				"Authorization": "OPENVIDUAPP:ssafy"
-			}
-			// --- Leave the session by calling 'disconnect' method over the Session object ---			
-			axios.delete(process.env.VUE_APP_API_URL+"/lecture/connect?sessionId="+this.mySessionId+"&connectionId="+this.connectionId,{headers})
-				.then((response)=>{
-					console.log(response);
-				})
-				.catch((error)=>{
-					alert("세션 나가기 오류");
-				})			
+        Authorization: "OPENVIDUAPP:ssafy",
+      };
+      // --- Leave the session by calling 'disconnect' method over the Session object ---
+      axios
+        .delete(
+          process.env.VUE_APP_API_URL +
+            "/lecture/connect?sessionId=" +
+            this.SessionId +
+            "&connectionId=" +
+            this.connectionId,
+          { headers }
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          alert("세션 나가기 오류");
+        });
       if (this.sessionCamera) {
         this.sessionCamera.disconnect();
         this.sessionScreen.disconnect();
@@ -578,7 +708,6 @@ export default {
 
       this.connectionId = "";
 
-
       window.removeEventListener("beforeunload", this.leaveSession);
       this.$router.push({ name: "About" });
     },
@@ -590,9 +719,25 @@ export default {
         type: "updateMainstream",
       });
     },
+
+    updateMainVideoStreamManagerScreen(screen) {
+      this.sessionScreen.signal({
+        data: screen.stream.connection.connectionId,
+        to: [],
+        type: "updateMainstream",
+      });
+    },
+
     changeMainVideo(updatedMain) {
       if (this.mainStreamManager === updatedMain) return;
       this.mainStreamManager = updatedMain;
+    },
+
+    fullScreen() {
+      var elem = document.getElementById("mainVideoElement");
+      if (elem.requestFullscreen()) {
+        elem.requestFullscreen();
+      }
     },
 
     // videofilter() {
@@ -617,8 +762,8 @@ export default {
      *   3) The Connection.token must be consumed in Session.connect() method
      */
 
-    getToken(mySessionId) {
-      return this.createSession(mySessionId).then((sessionId) =>
+    getToken(SessionId) {
+      return this.createSession(SessionId).then((sessionId) =>
         this.createToken(sessionId)
       );
     },
@@ -626,17 +771,17 @@ export default {
     // See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-openviduapisessions
     createSession(sessionId) {
       const headers = {
-				"Authorization": "OPENVIDUAPP:ssafy"
-			}
+        Authorization: "OPENVIDUAPP:ssafy",
+      };
       return new Promise((resolve, reject) => {
         axios
           .post(
-            process.env.VUE_APP_API_URL+"/lecture/",
+            process.env.VUE_APP_API_URL + "/lecture/",
             JSON.stringify({
               customSessionId: sessionId,
             }),
             {
-              headers
+              headers,
             }
           )
           .then((response) => response.data)
@@ -661,48 +806,57 @@ export default {
       });
     },
     // 해당 세션 정보 가져오기
-    searchSession(){
+    searchSession() {
       console.log("검색 실행");
-      axios.get(process.env.VUE_APP_API_URL+"/lecture/session?sessionId="+this.mySessionId) 
-      .then((response)=>{
-        console.log(response.data.connections.content);
-        return response;
-      })
-      .catch((error)=>{
-        console.log(error);
-      })
+      axios
+        .get(
+          process.env.VUE_APP_API_URL +
+            "/lecture/session?sessionId=" +
+            this.SessionId
+        )
+        .then((response) => {
+          console.log(response.data.connections.content);
+          return response;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     // 활성화된 모든 세션 검색하기
-    searchAllSession(){
-      return new Promise((resolve, reject) =>{
-        axios.get(process.env.VUE_APP_API_URL+"/lecture")
-        .then((response)=>{
-          console.log(response);
-        })
-        .catch((error)=>{
-          console.log(error)
-        })
-      })
+    searchAllSession() {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(process.env.VUE_APP_API_URL + "/lecture")
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
     },
 
     // 연결하기
-    joinConnection(){		
-
-			const headers = {
-				"Authorization": "OPENVIDUAPP:ssafy",
-			}
-			return new Promise((resolve, reject) => {
-				axios.post(process.env.VUE_APP_API_URL+"/lecture/connect",{
-					customSessionId: this.mySessionId,
-				},{headers})
-				.then((response)=>{
-					this.connectionId = response.data.id;
-					resolve(response.data.token);
-				})
-				.catch(error =>
-					reject(error.response));				
-			})
-		},    
+    joinConnection() {
+      const headers = {
+        Authorization: "OPENVIDUAPP:ssafy",
+      };
+      return new Promise((resolve, reject) => {
+        axios
+          .post(
+            process.env.VUE_APP_API_URL + "/lecture/connect",
+            {
+              customSessionId: this.SessionId,
+            },
+            { headers }
+          )
+          .then((response) => {
+            this.connectionId = response.data.id;
+            resolve(response.data.token);
+          })
+          .catch((error) => reject(error.response));
+      });
+    },
     // See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-openviduapisessionsltsession_idgtconnection
     createToken(sessionId) {
       return this.joinConnection(sessionId);
@@ -793,14 +947,15 @@ export default {
         this.quizContent = "";
       }
     },
-    updateUserList(UserList){ 
-        console.log("사용자 업데이트!");     
-        console.log(UserList);                
-        this.participants = [this.myUserName];
-        for(let i of UserList.keys()){
-          this.participants.push(JSON.parse(UserList.get(i).data).clientData);            
-        };
-        console.log(this.participants);
+    updateUserList(UserList) {
+      // this.participants = [this.UserName];
+      this.participants = [];
+      for (let i of UserList.keys()) {
+        this.participants.push(JSON.parse(UserList.get(i).data).clientData);
+      }
+      console.log("참가자 목록");
+      console.log(UserList);
+      console.log(this.participants);
     },
   },
 };
@@ -856,7 +1011,7 @@ export default {
   width: 100%;
 }
 .iconsOnVideo {
-  position: absolute; 
+  position: absolute;
   left: 40%;
   bottom: 25%;
   /* bottom: 3px; */

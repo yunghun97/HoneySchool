@@ -27,8 +27,10 @@ public class UserRes {
 	private int student_number;
 	@ApiModelProperty(name="선생/학생")
 	private String position;
+	@ApiModelProperty(name="학교 번호")
+	private int school_number;
 
-	public static UserRes of(User user) {
+	public static UserRes of(User user,int school_number) {
 		UserRes res = new UserRes();
 		res.setUserId(user.getUserId());
 		res.setStudent_number(user.getNumber());
@@ -37,6 +39,7 @@ public class UserRes {
 		res.setGrade(user.getGrade());
 		res.setPosition(user.getPosition());
 		res.setSchool(user.getSchool());
+		res.setSchool_number(school_number);
 		return res;
 	}
 }
