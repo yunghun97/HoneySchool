@@ -186,14 +186,15 @@ a:hover .demo-logo {
 #container-cameras video {
 	position: relative;
 	/* float: left; */
-	/* width: 50%; */
+	width: 75%;
 	cursor: pointer;
 }
 
 #container-cameras div {
 	/* float: left; */
-	/* width: 50%; */
+	width: 75%;
 	position: relative;
+	justify-content: center;
 	/* margin-left: -50%; */
 }
 
@@ -210,14 +211,15 @@ a:hover .demo-logo {
 #container-screens video {
 	position: relative;
 	/* float: left; */
-	width: 50%;
+	width: 75%;
 	cursor: pointer;
 }
 
 #container-screens div {
 	/* float: left; */
-	/* width: 50%; */
+	width: 75%;
 	position: relative;
+	justify-content: center;
 	/* margin-left: -50%; */
 }
 
