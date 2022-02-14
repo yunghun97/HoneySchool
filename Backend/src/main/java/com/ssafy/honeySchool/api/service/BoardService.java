@@ -4,17 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.honeySchool.api.dto.ClassBoardDto;
 import com.ssafy.honeySchool.db.entity.ClassBoard;
 import com.ssafy.honeySchool.db.entity.ClassBoardFile;
+import com.ssafy.honeySchool.db.entity.User;
 import com.ssafy.honeySchool.db.repository.ClassBoardFileRepository;
 import com.ssafy.honeySchool.db.repository.ClassBoardRepository;
 
 @Service
 public class BoardService {
-//    private ClassBoardRepository classBoardRepository;
+	
+    private ClassBoardRepository classBoardRepository;
 
     private ClassBoardFileRepository classBoardFileRepository;
 
@@ -22,11 +27,29 @@ public class BoardService {
 
     @Autowired
     public BoardService(ClassBoardRepository classBoardRepository, ClassBoardFileRepository classBoardFileRepository) {
-//        this.classBoardRepository = classBoardRepository;
+        this.classBoardRepository = classBoardRepository;
         this.classBoardFileRepository = classBoardFileRepository;
         this.fileHandler = new FileHandler();
     }
-
+    
+    // 페이지네이션
+    // 반 게시판 전체 목록 (페이징)
+    public Page<ClassBoardDto> findAll(String school, int grade, int classes, Pageable pageable) {
+		return classBoardRepository.findBySchoolAndGradeAndClassesOrderByIdDesc(school, grade, classes, pageable)
+        		.map(ClassBoardDto::from);
+    }
+    // Jpa로 category 구분해서 가져오기
+    public Page<ClassBoardDto> findAllByCategory(String school, int grade, int classes, String category, Pageable pageable) {
+    	return classBoardRepository.findBySchoolAndGradeAndClassesAndCategoryOrderByIdDesc(school, grade, classes, category, pageable)
+    			.map(ClassBoardDto::from);
+    }
+    // 특정 category에서 특정 user가 쓴 글 모아보기
+    public Page<ClassBoardDto> findAllByCategoryAndUser(String school, int grade, int classes, String category, User user, Pageable pageable) {
+    	return classBoardRepository.findBySchoolAndGradeAndClassesAndCategoryAndUserOrderByIdDesc(school, grade, classes, category, user, pageable)
+    			.map(ClassBoardDto::from);
+    }
+    
+    
     public ClassBoard addBoard(
             ClassBoard board,
             List<MultipartFile> files,
