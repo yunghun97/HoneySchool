@@ -1,17 +1,17 @@
 import axios from "axios";
 import { Module } from "vuex";
 import { RootState } from "../index";
+import BoardArticles from "../../types/board/BoardArticles"
 
-
-interface BoardArticles {
-  [index: number] : number | string,
-  id: number,
-  category: string,
-  title: string,
-  content: string,
-  writer: string,
-  date: number,
-}
+// interface BoardArticles {
+//   [index: number] : number | string,
+//   id: number,
+//   category: string,
+//   title: string,
+//   content: string,
+//   writer: string,
+//   date: number,
+// }
 type category = 'notice' | 'handouts' | 'photo' | 'assignment' | 'question'
 type boardType = Array<BoardArticles>;
 
@@ -36,7 +36,6 @@ export const boardStore: Module<boardState, RootState> = {
   }),
   getters: {
     getArticleDetail: (state, id:number) => {
-      console.log('here!')
       return state.classBoardAll.find(article => article.id === id)
     },
   }, 
@@ -48,39 +47,54 @@ export const boardStore: Module<boardState, RootState> = {
       state[payload[0]] = payload[1]
     }
   },
-  actions: {    
-    getArticles ({ commit }) {
-      axios.get(process.env.VUE_APP_API_URL+"/board/class",{
+  actions: {
+    getArticles ({ commit }, data) {        
+      return axios.get(process.env.VUE_APP_API_URL+"/board/class",{
         params:{
-          school: "싸피초",
-          grade: 1,
-          classes: 1,
+          school: data[0].school,
+          grade: data[0].grade,
+          classes: data[0].class_number,
+          page: data[1],
+          size: 20,
         }
       })
-      .then((response)=>{
-        //console.log(response.data);
-        commit('GETARTICLES', response.data)
+      .then((response :any)=>{
+        commit('GETARTICLES', response.data.content)
       })
-      .catch(()=>
-        alert("전체 받아오기 실패!")
-      )    
+       
     },
-    classifyCategory ({ commit }, category) {
+    classifyCategory ({ commit }, data) {
       return axios.get(process.env.VUE_APP_API_URL+"/board/class/category",{
           params:{
-            school: "싸피초",
-            grade: 1,
-            category: category,
-            classes: 1,
+            school: data[1].school,
+            grade: data[1].grade,
+            classes: data[1].class_number,
+            category: data[0],
+            page: data[2],
+            size: 20,
           }
         })
         .then((response)=>{
-          const payload = [category as category, response.data]
+          const payload = [data[0] as category, response.data.content]
           commit('CLASSIFYCATEGORY', payload)
         })
-        .catch(()=>
-          alert("카테고리 받아오기 실패!")
-        )  
+    },
+    classifyCategorybyUser ({ commit }, data) {
+      return axios.get(process.env.VUE_APP_API_URL+"/board/class/category/user",{
+        params:{
+          school: data[1].school,
+          grade: data[1].grade,
+          classes: data[1].class_number,
+          category: data[0],
+          userId: data[1].userId,
+          page: data[2],
+          size: 20,
+        }
+      })
+      .then((response)=>{
+        const payload = [ data[0] as category, response.data.content]
+        commit('CLASSIFYCATEGORY', payload)
+      })
     },
   },
 

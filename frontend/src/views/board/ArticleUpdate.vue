@@ -70,6 +70,14 @@ export default {
         let id = +route.params.article_id;
  
         let isLoading = ref<boolean>(true);
+        //user정보
+        const localStorageData = localStorage.getItem("vuex");
+        let userinfoData;
+        if (localStorageData !== null) {
+        userinfoData = JSON.parse(localStorageData);
+        }
+        let userinfo = userinfoData.accountStore.userinfo;
+
         // article detail 요청            
         let currentarticle = ref({
             id: route.params.article_id as string,
@@ -81,9 +89,9 @@ export default {
         const articleDetail = () => {
             return axios.get(process.env.VUE_APP_API_URL+"/board/class/detail",{
                 params:{
-                school: "싸피초",
-                grade: 1,
-                classes: 1,
+                school: userinfo.school,
+                grade: userinfo.grade,
+                classes: userinfo.class_number,
                 id : route.params.article_id
                 }
             })
@@ -129,24 +137,20 @@ export default {
             } else {
                 formData.append('fileIsChanged', 'N');
             }
-           
-            // 글작성하느라 임의로 추가한내용
-            formData.append('grade', '1');
-            formData.append('classes', '1');
-            formData.append('school', "싸피초");
+            formData.append('school', userinfo.school);
+            formData.append('grade', userinfo.grade);
+            formData.append('classes', userinfo.class_number);
 
-            console.log(...formData.entries())
-            //TODO : PUT 요청 보내기
+            // console.log(...formData.entries())
             axios.put(process.env.VUE_APP_API_URL+"/board/class/",formData,
             {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
             )
             .then((response) => {
-                console.log(response.data)
                 router.push({name: 'ArticleDetail', params: { category:updatingarticle.category ,article_id: updatingarticle.id }})
             })
 
         }
-        return { id, isLoading, currentarticle, isUploading, selectedFile, fileSelect, clearFiles, updateArticle}
+        return { id, isLoading, currentarticle, isUploading, userinfo, selectedFile, fileSelect, clearFiles, updateArticle}
     }
 }
 
