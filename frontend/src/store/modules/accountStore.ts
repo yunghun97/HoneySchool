@@ -61,7 +61,6 @@ export const accountStore: Module<accountState, RootState> = {
         .then((response) => {
           localStorage.setItem("accessToken", response.data.accessToken);
           commit("setToken", response.data.accessToken);
-          // commit("setUserid", user_id);
           axios
             .get(process.env.VUE_APP_API_URL + "/users/userInfo/", {
               headers: {

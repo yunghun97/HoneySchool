@@ -73,11 +73,11 @@
                 :class="{ 'is-invalid': errors.school }"
               >
                 <option disabled value="" selected>학교를 선택하세요.</option>
-                <option value="샘머리 초등학교">샘머리 초등학교</option>
-                <option value="노형 초등학교">노형 초등학교</option>
-                <option value="갑천 초등학교">갑천 초등학교</option>
-                <option value="지장 초등학교">지장 초등학교</option>
-                <option value="불당 초등학교">불당 초등학교</option>
+                <option value="샘머리초등학교">샘머리초등학교</option>
+                <option value="노형초등학교">노형초등학교</option>
+                <option value="갑천초등학교">갑천초등학교</option>
+                <option value="지장초등학교">지장초등학교</option>
+                <option value="불당초등학교">불당초등학교</option>
               </Field>
               <div class="invalid-feedback">{{ errors.school }}</div>
             </div>
