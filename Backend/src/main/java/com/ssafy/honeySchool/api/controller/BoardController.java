@@ -8,11 +8,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -67,20 +70,31 @@ public class BoardController {
 	@Autowired
 	private UserRepository userRepository;
 	
-	// 반 게시판 전체 목록
+	// 반 게시판 전체 목록 (페이징)
 	@GetMapping("/class")
-	public ResponseEntity<?> selectBoard(HttpServletRequest req) throws SQLException{
+    public ResponseEntity selectBoard(HttpServletRequest req, Pageable pageable) {
 		String school = req.getParameter("school");		
 		int grade = Integer.parseInt(req.getParameter("grade"));
 		int classes = Integer.parseInt(req.getParameter("classes"));
-		List<ClassBoard> classBoards = classBoardRepository.findBySchoolAndGradeAndClassesOrderByIdDesc(school, grade, classes);
-		// dto로 묶기
-		List<ClassBoardDto> classBoardDtos = new ArrayList<ClassBoardDto>();
-		for(int i = 0; i < classBoards.size(); i++) {
-			classBoardDtos.add(ClassBoardDto.from(classBoards.get(i)));
-		}				
-		return new ResponseEntity<List<ClassBoardDto>>(classBoardDtos, HttpStatus.OK);
-	}
+		Page<ClassBoardDto> boardDtos = boardService.findAll(school, grade, classes, pageable);
+//		List<ClassBoardDto> boardDtos = boardService.findAll(school, grade, classes, pageable).getContent();
+        
+        return new ResponseEntity<>(boardDtos, HttpStatus.OK);
+    }
+//	// 반 게시판 전체 목록 (페이징 전)
+//	@GetMapping("/class")
+//	public ResponseEntity<?> selectBoard(HttpServletRequest req) throws SQLException{
+//		String school = req.getParameter("school");		
+//		int grade = Integer.parseInt(req.getParameter("grade"));
+//		int classes = Integer.parseInt(req.getParameter("classes"));
+//		List<ClassBoard> classBoards = classBoardRepository.findBySchoolAndGradeAndClassesOrderByIdDesc(school, grade, classes);
+//		// dto로 묶기
+//		List<ClassBoardDto> classBoardDtos = new ArrayList<ClassBoardDto>();
+//		for(int i = 0; i < classBoards.size(); i++) {
+//			classBoardDtos.add(ClassBoardDto.from(classBoards.get(i)));
+//		}				
+//		return new ResponseEntity<List<ClassBoardDto>>(classBoardDtos, HttpStatus.OK);
+//	}
 	// 반 게시판 글쓰기
 	@PostMapping("/class")
 	public ResponseEntity<?> createBoard(
@@ -126,38 +140,46 @@ public class BoardController {
 		URI uriLocation = new URI("/board/" + board.getId());
         return ResponseEntity.created(uriLocation).body("{}");	
 	}
-	// Jpa로 category 구분해서 가져오기 (pk 내림차순)
+	// Jpa로 category 구분해서 가져오기 (페이징)
 	@GetMapping("/class/category")
-	public ResponseEntity<?> selectCategory(HttpServletRequest req) {
+    public ResponseEntity selectCategory(HttpServletRequest req, Pageable pageable) {
 		String category = req.getParameter("category");
 		String school = req.getParameter("school");		
 		int grade = Integer.parseInt(req.getParameter("grade"));
-		int classes = Integer.parseInt(req.getParameter("classes"));	
-		List<ClassBoard> classBoards = classBoardRepository.findBySchoolAndGradeAndClassesAndCategoryOrderByIdDesc(school, grade, classes, category);
-		// dto로 묶기
-		List<ClassBoardDto> classBoardDtos = new ArrayList<ClassBoardDto>();
-		for(int i = 0; i < classBoards.size(); i++) {
-			classBoardDtos.add(ClassBoardDto.from(classBoards.get(i)));
-		}		
-		return new ResponseEntity<List<ClassBoardDto>>(classBoardDtos, HttpStatus.OK);
+		int classes = Integer.parseInt(req.getParameter("classes"));
+		Page<ClassBoardDto> boardDtos = boardService.findAllByCategory(school, grade, classes, category, pageable);
+//		List<ClassBoardDto> boardDtos = boardService.findAllByCategory(school, grade, classes, category, pageable).getContent();
+        
+        return new ResponseEntity<>(boardDtos, HttpStatus.OK);
 	}
-	// 특정 category에서 특정 user가 쓴 글 모아보기 (pk 내림차순)
+//	// Jpa로 category 구분해서 가져오기 (pk 내림차순)
+//	@GetMapping("/class/category")
+//	public ResponseEntity<?> selectCategory(HttpServletRequest req) {
+//		String category = req.getParameter("category");
+//		String school = req.getParameter("school");		
+//		int grade = Integer.parseInt(req.getParameter("grade"));
+//		int classes = Integer.parseInt(req.getParameter("classes"));	
+//		List<ClassBoard> classBoards = classBoardRepository.findBySchoolAndGradeAndClassesAndCategoryOrderByIdDesc(school, grade, classes, category);
+//		// dto로 묶기
+//		List<ClassBoardDto> classBoardDtos = new ArrayList<ClassBoardDto>();
+//		for(int i = 0; i < classBoards.size(); i++) {
+//			classBoardDtos.add(ClassBoardDto.from(classBoards.get(i)));
+//		}		
+//		return new ResponseEntity<List<ClassBoardDto>>(classBoardDtos, HttpStatus.OK);
+//	}
+	// 특정 category에서 특정 user가 쓴 글 모아보기 (페이징, pk 내림차순)
 	// User 부분 수정함
 	@GetMapping("/class/category/user")
-	public ResponseEntity<?> selectCategoryAndUser(HttpServletRequest req) throws SQLException{
+	public ResponseEntity<?> selectCategoryAndUser(HttpServletRequest req, Pageable pageable) throws SQLException{
 		String category = req.getParameter("category");
 		String school = req.getParameter("school");		
 		int grade = Integer.parseInt(req.getParameter("grade"));
 		int classes = Integer.parseInt(req.getParameter("classes"));
 		// User 수정 함
-        User user = userRepository.findByUserId(req.getParameter("userId")).get();
-        // dto로 묶기
-        List<ClassBoard> classBoards = classBoardRepository.findByCategoryAndSchoolAndGradeAndClassesAndUserOrderByIdDesc(category, school, grade, classes, user);
- 		List<ClassBoardDto> classBoardDtos = new ArrayList<ClassBoardDto>();
- 		for(int i = 0; i < classBoards.size(); i++) {
- 			classBoardDtos.add(ClassBoardDto.from(classBoards.get(i)));
- 		}				
-		return new ResponseEntity<List<ClassBoardDto>>(classBoardDtos, HttpStatus.OK);
+		User user = userRepository.findByUserId(req.getParameter("userId")).get();
+//		List<ClassBoardDto> boardDtos = boardService.findAllByCategoryAndUser(school, grade, classes, category, user, pageable).getContent();			
+		Page<ClassBoardDto> boardDtos = boardService.findAllByCategoryAndUser(school, grade, classes, category, user, pageable);			
+		return new ResponseEntity<>(boardDtos, HttpStatus.OK);
 	}
 	// 전체게시판 글 상세 (+ 댓글 같이 가져옴)
 	@Transactional

@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.honeySchool.api.dto.ClassBoardDto;
+import com.ssafy.honeySchool.api.dto.NoticeDto;
 import com.ssafy.honeySchool.db.entity.ClassBoard;
 import com.ssafy.honeySchool.db.entity.ClassBoardFile;
 import com.ssafy.honeySchool.db.entity.Notice;
@@ -19,7 +24,7 @@ import com.ssafy.honeySchool.db.repository.NoticeRepository;
 @Service
 public class NoticeService {
 	
-//	private NoticeRepository noticeRepository;
+	private NoticeRepository noticeRepository;
 
     private NoticeFileRepository noticeFileRepository;
 
@@ -27,10 +32,19 @@ public class NoticeService {
 
     @Autowired
     public NoticeService(NoticeRepository noticeRepository, NoticeFileRepository noticeFileRepository) {
-//        this.noticeRepository = noticeRepository;
+        this.noticeRepository = noticeRepository;
         this.noticeFileRepository = noticeFileRepository;
         this.fileHandler = new FileHandler();
     }
+    
+    
+    // 페이지네이션
+    // 반 게시판 전체 목록 (페이징)
+    public Page<NoticeDto> findAll(Pageable pageable) {
+		return noticeRepository.findAll(pageable)
+        		.map(NoticeDto::from);
+    }
+    
 
     public Notice addNotice(
             Notice notice,
