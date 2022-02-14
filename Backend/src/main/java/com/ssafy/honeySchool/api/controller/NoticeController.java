@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,14 +69,10 @@ public class NoticeController {
 	
 	// 공지사항 전체 목록
 	@GetMapping("/notice")
-	public ResponseEntity<?> selectNotice() throws SQLException{
-		List<Notice> notices = noticeRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-		// dto로 묶기
-		List<NoticeDto> noticeDtos = new ArrayList<NoticeDto>();
-		for(int i = 0; i < notices.size(); i++) {
-			noticeDtos.add(NoticeDto.from(notices.get(i)));
-		}				
-		return new ResponseEntity<List<NoticeDto>>(noticeDtos, HttpStatus.OK);
+	public ResponseEntity<?> selectNotice(Pageable pageable) throws SQLException{
+//		List<NoticeDto> noticeDtos = noticeService.findAll(pageable).getContent();				
+		Page<NoticeDto> noticeDtos = noticeService.findAll(pageable);				
+		return new ResponseEntity<Page<NoticeDto>>(noticeDtos, HttpStatus.OK);
 	}
 	// 공지사항 쓰기
 	@PostMapping("/notice")
