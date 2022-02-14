@@ -1,44 +1,5 @@
 <template>
   <div id="main-container" class="container">
-    <div id="join" v-if="!sessionCamera">
-      <div id="img-div">
-        <!-- <img src="resources/images/openvidu_grey_bg_transp_cropped.png" /> -->
-      </div>
-      <div id="join-dialog" class="jumbotron vertical-center">
-        <h1>{{ $route.params.UserName }}</h1>
-        <h1>{{ $route.params.SessionId }}</h1>
-        <h1>Join a video session</h1>
-        <div class="form-group">
-          <p>
-            <label>Participant</label>
-            <input
-              v-model="myUserName"
-              class="form-control"
-              type="text"
-              required
-            />
-          </p>
-          <p>
-            <label>세션</label>
-            <input
-              v-model="mySessionId"
-              class="form-control"
-              type="text"
-              required
-            />
-          </p>
-          <p class="text-center">
-            <button class="btn btn-lg btn-success" @click="joinSession()">
-              참석!
-            </button>
-            <button class="btn btn-lg btn-info" @click="searchAllSession()">
-              검색!
-            </button>
-          </p>
-        </div>
-      </div>
-    </div>
-
     <div id="session" v-if="sessionCamera">
       <div id="session-header">
         <h1 id="session-title">{{ ClassName }}</h1>
@@ -55,6 +16,13 @@
           id="fullScreen"
           @click="fullScreen"
           value="Full screen"
+        />
+        <input
+          class="btn btn-large btn-primary"
+          type="button"
+          id="selectHistory"
+          @click="selectHistory"
+          value="Select History"
         />
         <input
           class="btn btn-large btn-danger"
@@ -74,7 +42,13 @@
         />
       </div>
       <div class="row">
-        <div class="col-md-9">
+        <!-- 선생님에게만 유저 접속 정보 표시 -->
+        <div
+          :class="{
+            'col-md-9': userinfo.position === 'T',
+            'col-md-12': userinfo.position === 'S',
+          }"
+        >
           <div class="row">
             <div id="main-video" class="col-md-9">
               <user-video
@@ -105,7 +79,7 @@
                       src="@/assets/videoclass/hand.png"
                       alt="손들기"
                       v-if="sub.raisehand"
-                      style="width: 30px; height: 30px"
+                      style="width: 27px; height: 27px"
                       @click="handDownThisStudent(sub.stream.connection)"
                     />
                     <!-- mic icon -->
@@ -128,12 +102,16 @@
                       src="@/assets/videoclass/clock.png"
                       alt="자리비움"
                       v-if="sub.left"
-                      style="width: 30px; height: 30px"
+                      style="width: 27px; height: 27px; margin-left:10px;"
                     />
                   </div>
                 </div>
               </div>
-              <div id="container-screens" class="row panel panel-default">
+              <div
+                v-if="userinfo.position === 'T'"
+                id="container-screens"
+                class="row panel panel-default"
+              >
                 <p class="panel-heading">User Screens</p>
                 <user-screen
                   :stream-manager="publisherScreen"
@@ -214,7 +192,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div v-if="userinfo.position === 'T'" class="col-md-3">
           <h4>유저 상태목록</h4>
           <table v-if="studentList">
             <thead>
@@ -228,7 +206,8 @@
               <tr v-for="(student, index) in studentList" :key="index">
                 <th>{{ student.studentNumber }}번</th>
                 <td>{{ student.name }}</td>
-                <!-- <td v-if=""></td> -->
+                <td v-if="participants.includes(student.name)">접속중</td>
+                <td v-else>미접속</td>
               </tr>
             </tbody>
           </table>
@@ -333,7 +312,7 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "./UserVideo";
 import UserScreen from "./UserScreen";
-import { ref } from '@vue/reactivity';
+import { ref } from "@vue/reactivity";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
@@ -377,31 +356,33 @@ export default {
       publisherScreen: undefined,
       subscribersCamera: [],
       subscribersScreen: [],
-      mySessionId: "SessionA",
-      myUserName: "Participant" + Math.floor(Math.random() * 100),
 
       myConnectionId: "",
       raisehand: false,
       screensharing: false,
       muted: true,
       left: false,
-
+    
       quizContent: "",
       quizReceived: "아직 도착한 퀴즈가 없습니다.",
 
-      participants: [],
+      // 참여자 목록
+      participants: ref([]),
+      // 입장, 퇴장 구분
+      isEnter: false,
     };
   },
 
   created() {
-    console.log(this.UserName);
-    console.log(this.SessionId);
+    // console.log(this.UserName);
+    // console.log(this.SessionId);
     const localStorageData = localStorage.getItem("vuex");
     let userinfoData;
     if (localStorageData !== null) {
       userinfoData = JSON.parse(localStorageData);
     }
     this.userinfo = userinfoData.accountStore.userinfo;
+    console.log(this.userinfo);
 
     // 학급 인원 리스트 조회
     axios
@@ -431,6 +412,11 @@ export default {
   methods: {
     // 세션 입장
     joinSession() {
+      // 수업 입장 로그 기록
+      if (this.userinfo.position === "S") {
+        this.isEnter = true;
+        this.insertHistory(this.isEnter);
+      }
       // --- Get an OpenVidu object ---
       this.OVCamera = new OpenVidu();
       this.OVScreen = new OpenVidu();
@@ -452,6 +438,7 @@ export default {
           subscriberCamera.muted = true;
           subscriberCamera.left = false;
           this.subscribersCamera.push(subscriberCamera);
+          this.participants.push(JSON.parse(stream.connection.data).clientData);
         } else if (stream.typeOfVideo == "SCREEN") {
           console.log("스크린 타입");
           console.log(stream.typeOfVideo);
@@ -459,9 +446,7 @@ export default {
           console.log(subscriberScreen.data);
           this.subscribersScreen.push(subscriberScreen);
         }
-        console.log("사람입장");
-        console.log(stream.session.remoteConnections);
-        this.updateUserList(stream.session.remoteConnections);
+        // this.updateUserList(stream.session.remoteConnections);
       });
 
       // 스크린 타입의 비디오 추가
@@ -473,8 +458,10 @@ export default {
           console.log(subscriberScreen.data);
           this.subscribersScreen.push(subscriberScreen);
         }
+          console.log("사람입장");
+          this.UserList(); 
       });
-
+      
       // On every Stream destroyed...
       this.sessionCamera.on("streamDestroyed", ({ stream }) => {
         const index = this.subscribersCamera.indexOf(stream.streamManager, 0);
@@ -482,10 +469,10 @@ export default {
         // 사용자 목록 업데이트
         if (index >= 0) {
           this.subscribersCamera.splice(index, 1);
+          this.participants.splice(index, 1);
         }
         console.log("사람 퇴장");
-        console.log(stream.session.remoteConnections);
-        this.updateUserList(stream.session.remoteConnections);
+        // this.updateUserList(stream.session.remoteConnections);
       });
 
       // On every asynchronous exception...
@@ -670,6 +657,11 @@ export default {
     },
 
     leaveSession() {
+      // 수업 퇴장 로그 기록
+      if (this.userinfo.position === "S") {
+        this.isEnter = false;
+        this.insertHistory(this.isEnter);
+      }
       // --- Leave the session by calling 'disconnect' method over the Session object ---
       const headers = {
         Authorization: "OPENVIDUAPP:ssafy",
@@ -740,9 +732,42 @@ export default {
       }
     },
 
-    // videofilter() {
-    //   this.mainStreamManager.stream
-    //     .applyFilter("GStreamerFilter", { "command": "videobalance saturation=0.0" })
+    // 학생 수업 참석 로그 저장 및 조회
+    insertHistory(isEnter) {
+      let userId = this.userinfo.userId;
+      // join: true면 참석
+      axios
+        .post(
+          process.env.VUE_APP_API_URL + "/lecture/history/" + userId,
+          JSON.stringify({
+            link: this.sessionId,
+            join: isEnter,
+          })
+        )
+        .then((res) => {
+          console.log("로그확인 성공");
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log("로그확인 에러");
+          console.log(err);
+        });
+    },
+    selectHistory() {
+      let userId = this.userinfo.userId;
+      axios
+        .get(process.env.VUE_APP_API_URL + "/lecture/history?userId=" + userId)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    // videoFilter() {
+    //   this.publisherCamera.stream
+    //     .applyFilter("GStreamerFilter", { "command": "videoflip method=vertical-flip" })
     //     .then(() => {
     //       console.log("Video rotated!");
     //     })
@@ -947,16 +972,20 @@ export default {
         this.quizContent = "";
       }
     },
-    updateUserList(UserList) {
-      // this.participants = [this.UserName];
-      this.participants = [];
-      for (let i of UserList.keys()) {
-        this.participants.push(JSON.parse(UserList.get(i).data).clientData);
-      }
-      console.log("참가자 목록");
-      console.log(UserList);
-      console.log(this.participants);
-    },
+    // updateUserList(UserList) {
+    //   // this.participants = [this.UserName];
+    //   let tempList = [];
+    //   // console.log(UserList);
+    //   for (let i of UserList.keys()) {
+    //     // this.participants.push(JSON.parse(UserList.get(i).data).clientData);
+    //     console.log(JSON.parse(UserList.get(i).data).clientData);
+    //     tempList.push(JSON.parse(UserList.get(i).data).clientData);
+    //   }
+    //   this.participants.values = tempList;
+    //   console.log("참가자 목록");
+    //   console.log(UserList);
+    //   console.log(this.participants.values);
+    // },
   },
 };
 </script>
@@ -1012,9 +1041,7 @@ export default {
 }
 .iconsOnVideo {
   position: absolute;
-  left: 40%;
-  bottom: 25%;
-  /* bottom: 3px; */
-  /* left: 20%; */
+  left: 0;
+  top:-95px;
 }
 </style>
