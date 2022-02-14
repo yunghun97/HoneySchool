@@ -77,7 +77,10 @@
         <div class="col-md-9">
           <div class="row">
             <div id="main-video" class="col-md-9">
-              <user-video :stream-manager="mainStreamManager" id="mainVideoElement" />
+              <user-video
+                :stream-manager="mainStreamManager"
+                id="mainVideoElement"
+              />
             </div>
             <div class="col-md-3">
               <div id="container-cameras" class="row panel panel-default">
@@ -212,10 +215,23 @@
           </div>
         </div>
         <div class="col-md-3">
-          <p>유저 상태목록</p>
-          <li v-for="(value, index) in participants" v-bind:key="index">
-            <div>{{ value }}</div>
-          </li>
+          <h4>유저 상태목록</h4>
+          <table v-if="studentList">
+            <thead>
+              <tr>
+                <th scope="col">번호</th>
+                <th scope="col">이름</th>
+                <th scope="col">접속</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(student, index) in studentList" :key="index">
+                <th>{{ student.studentNumber }}번</th>
+                <td>{{ student.name }}</td>
+                <!-- <td v-if=""></td> -->
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -317,6 +333,7 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "./UserVideo";
 import UserScreen from "./UserScreen";
+import { ref } from '@vue/reactivity';
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
@@ -348,6 +365,9 @@ export default {
 
   data() {
     return {
+      studentList: undefined,
+      userinfo: undefined,
+      // studentListOn: false,
       OVCamera: undefined,
       OVScreen: undefined,
       sessionCamera: undefined,
@@ -376,10 +396,40 @@ export default {
   created() {
     console.log(this.UserName);
     console.log(this.SessionId);
+    const localStorageData = localStorage.getItem("vuex");
+    let userinfoData;
+    if (localStorageData !== null) {
+      userinfoData = JSON.parse(localStorageData);
+    }
+    this.userinfo = userinfoData.accountStore.userinfo;
+
+    // 학급 인원 리스트 조회
+    axios
+      .get(
+        process.env.VUE_APP_API_URL +
+          "/users/" +
+          this.userinfo.school_number +
+          "/" +
+          this.userinfo.grade +
+          "/" +
+          this.userinfo.class_number
+      )
+      .then((response) => {
+        console.log(response.data);
+        this.studentList = response.data.userList;
+        // studentListOn.value = true;
+        // console.log(studentListOn)
+        console.log(this.studentList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     this.joinSession();
   },
 
   methods: {
+    // 세션 입장
     joinSession() {
       // --- Get an OpenVidu object ---
       this.OVCamera = new OpenVidu();
@@ -563,22 +613,23 @@ export default {
           });
       });
       // 화면 공유 생성
-      this.getToken(this.SessionId).then((tokenScreen) => {
-        // Create a token for screen share
-        this.sessionScreen
-          .connect(tokenScreen, { clientData: this.UserName + "_화면 공유" })
-          .then(() => {
-            console.log("Session screen connected");
-          })
-          .catch((error) => {
-            console.warn(
-              "There was an error connecting to the session for screen share:",
-              error.code,
-              error.message
-            );
-          });          
-      });
-
+      if (this.userinfo.position === "T") {
+        this.getToken(this.SessionId).then((tokenScreen) => {
+          // Create a token for screen share
+          this.sessionScreen
+            .connect(tokenScreen, { clientData: this.UserName + "_화면 공유" })
+            .then(() => {
+              console.log("Session screen connected");
+            })
+            .catch((error) => {
+              console.warn(
+                "There was an error connecting to the session for screen share:",
+                error.code,
+                error.message
+              );
+            });
+        });
+      }
       window.addEventListener("beforeunload", this.leaveSession);
     },
 
@@ -899,10 +950,13 @@ export default {
       }
     },
     updateUserList(UserList) {
-      this.participants = [this.UserName];
+      // this.participants = [this.UserName];
+      this.participants = [];
       for (let i of UserList.keys()) {
         this.participants.push(JSON.parse(UserList.get(i).data).clientData);
       }
+      console.log("참가자 목록");
+      console.log(UserList);
       console.log(this.participants);
     },
   },
