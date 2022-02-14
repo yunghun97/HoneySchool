@@ -4,27 +4,40 @@ import com.ssafy.honeySchool.api.request.LectureReq;
 import com.ssafy.honeySchool.api.response.LectureRes;
 import com.ssafy.honeySchool.common.util.ThrowingConsumer;
 import com.ssafy.honeySchool.db.entity.Lecture;
+import com.ssafy.honeySchool.db.entity.LectureUserHistory;
+import com.ssafy.honeySchool.db.entity.User;
+import com.ssafy.honeySchool.db.repository.LectureRepository;
+import com.ssafy.honeySchool.db.repository.UserRepository;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 
 import java.net.http.HttpResponse;
+import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
-@Service("lectureService")
+@Service
 public class LectureServiceImpl implements LectureService{
+	
+	@Autowired
+	LectureRepository lectureRepository;
+	@Autowired
+	UserRepository userRepository;
+	
     WebClient webClient=WebClient.builder()
             .baseUrl("https://i6b201.p.ssafy.io:5443")
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -154,4 +167,23 @@ public class LectureServiceImpl implements LectureService{
                 .retrieve()
                 .bodyToMono(String.class);
 	}
+	@Override
+	public List<LectureUserHistory> selectAllLectureHistory(String userId) {
+		User user = userRepository.findByUserId(userId).get();
+		List<LectureUserHistory> history = lectureRepository.findAllByUser(user);
+		return history;
+	}
+
+	// 사용자의 참여 기록 넣기
+	@Override
+	public LectureUserHistory insertLectureHistory(LectureUserHistory body, String userId) {
+	
+		User user = userRepository.findByUserId(userId).get();
+		LectureUserHistory lectureUserHistory = new LectureUserHistory();
+		lectureUserHistory.setUser(user);
+		lectureUserHistory.setJoin(body.isJoin());
+		lectureUserHistory.setLink(body.getLink());
+		return lectureRepository.save(lectureUserHistory);				
+	}
+
 }
