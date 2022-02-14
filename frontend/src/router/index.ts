@@ -13,6 +13,7 @@ import Login from "../views/accounts/Login.vue";
 import Videoclass from "../views/Videoclass/Videoclass.vue";
 import AskQuestion from "../views/board/AskQuestion.vue";
 import TimeTable from "../views/board/TimeTable.vue";
+import AnswerQuestion from "../views/board/AnswerQuestion.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -69,7 +70,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Photo,
   },
   {
-    path: "/classboard/assignment",
+    path: "/classboard/assignment/:article_id",
     name: "Assignment",
     component: Assignment,
   },
@@ -96,7 +97,7 @@ const routes: Array<RouteRecordRaw> = [
     props: true,
   },
   {
-    path: "/classboard/askquestion",
+    path: "/classboard/question/askquestion",
     name: "AskQuestion",
     component: AskQuestion,
   },
@@ -104,6 +105,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/classboard/timetable",
     name: "TimeTable",
     component: TimeTable,
+  },
+  {
+    path: "/classboard/question/answerquestion/:article_id",
+    name: "AnswerQuestion",
+    component: AnswerQuestion,
   },
 ];
 

@@ -6,6 +6,8 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -14,10 +16,11 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity{
+public class User extends BaseEntity implements Serializable{
     private String name;
 
     private String position;

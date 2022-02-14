@@ -4,7 +4,7 @@
             <div>
                 <h1>선생님께 질문을 남겨보아요</h1>
                 <div class="recordbox">
-                    <Record @finished="finished" />
+                    <Record @finished="finished"/>
                 </div>
                 <div v-if="isfinished" class="mt-5">
                     <button @click="postQuestion" class="btn btn-warning btn-lg">질문 다 했어요</button>
@@ -16,9 +16,10 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import { mapState } from "vuex";
 import axios from "axios";
-import Record from '@/components/Board/Record.vue'
-import router from '@/router';
+import Record from '../../components/Board/Record.vue'
+import router from '../../router';
 export default defineComponent({
     name:"AskQuestion",
     components: { Record },
@@ -29,31 +30,32 @@ export default defineComponent({
             submitted: ref<boolean>(false)
         }
     },
+    computed: {
+        ...mapState('accountStore', ['userinfo'])
+    },
     methods: {
         finished(value:any) {
             this.isfinished = true
-            this.recordfile = value
+            // BLOB to file
+            this.recordfile = new File([value], "recordfile.wav", {type: "audio/wav", lastModified: Date.now()});
         },
         postQuestion() {
             const formData = new FormData()
             formData.append('category', 'question');
-            formData.append('title', '김싸피 질문글');
-            formData.append('content', '김싸피 질문 녹음입니다.');
-            formData.append('file_link', '녹음파일'); // TODO : this.recordfile로 넘겨주기
-                
-            // 글작성하느라 임의로 추가한내용
-            formData.append('writer', "김싸피"); // user가 기본키여서 김싸피만 user로 등록되어있어서 작성자 바꿀려면 사람 User에서 추가해야합니다.
-            formData.append('grade', '1');
-            formData.append('classes', '1');
-            formData.append('school', "싸피초");
-
+            formData.append('title', `${this.userinfo.name}의 질문`);
+            formData.append('content', '');
+            formData.append('files', this.recordfile);
+            formData.append('school', this.userinfo.school);
+            formData.append('grade', this.userinfo.grade);
+            formData.append('classes', this.userinfo.class_number);
+            formData.append('userId', this.userinfo.userId);
+            //console.log(...formData.entries())
             axios.post(process.env.VUE_APP_API_URL+"/board/class",formData, 
             {headers: {'Content-Type' : 'multipart/form-data;charset=utf-8'} }
             )
-            .then((response)=>{
+            .then(()=>{
                 alert('질문 성공! 답변을 기다려주세요!')
                 this.submitted = true
-                //console.log(formData)
                 router.push({name: 'ClassBoard'})
             })
             .catch(()=>{
@@ -70,8 +72,6 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     margin-top:5%;
-    /* min-height: 90vh; */
-
 }
 .note {
     margin: auto;

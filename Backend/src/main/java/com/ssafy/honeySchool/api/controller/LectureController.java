@@ -2,6 +2,8 @@ package com.ssafy.honeySchool.api.controller;
 
 import com.ssafy.honeySchool.api.request.LectureReq;
 import com.ssafy.honeySchool.api.service.LectureService;
+import com.ssafy.honeySchool.db.entity.LectureUserHistory;
+
 import io.swagger.annotations.Api;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +65,13 @@ public class LectureController {
     public HttpStatus disconnectLecture(@RequestParam(value= "sessionId") String sessionId, @RequestParam(value="connectionId") String connectionId) {
         String header = "Basic "+ Base64.getEncoder().encodeToString(this.defaultHeader.getBytes());
         return lectureService.disconnectLecture(sessionId,connectionId,header);
+    }
+    @GetMapping("/history")
+    public ResponseEntity<List<LectureUserHistory>> selectAllHistory(@RequestParam(value="userId") String userId){
+    	return new ResponseEntity(lectureService.selectAllLectureHistory(userId),HttpStatus.OK);
+    }
+    @PostMapping("/history/{userId}")
+    public LectureUserHistory insertHistory(@RequestBody LectureUserHistory body, @PathVariable("userId") String userId) {
+    	return lectureService.insertLectureHistory(body, userId);
     }
 }

@@ -79,27 +79,27 @@ export default {
     let mySessionName = ref(
       dayjs().format("YYMMDD") +
         "_" +
-        "1" +
+        userinfo.school_number +
         "_" +
         userinfo.grade +
         "_" +
         userinfo.class_number +
         "_" +
-        "1"
+        thisClass.value
     );
     let dateNow = dayjs().format("YYYY-MM-DD");
     let timeNow = ref(dayjs().format("HH:mm:ss"));
     axios
       .get(process.env.VUE_APP_API_URL + "/timetable/today", {
         params: {
-          school: "노형 초등학교",
-          grade: 1,
-          classes: 1,
-          date: "2022-02-11",
-          // school: userinfo.school,
-          // grade: userinfo.grade,
-          // classes: userinfo.class_number,
-          // date: dayjs().format("YYYY-MM-DD"),
+          // school: "노형 초등학교",
+          // grade: 1,
+          // classes: 1,
+          // date: "2022-02-11",
+          school: userinfo.school,
+          grade: userinfo.grade,
+          classes: userinfo.class_number,
+          date: dayjs().format("YYYY-MM-DD"),
         },
       })
       .then((response) => {
@@ -114,8 +114,8 @@ export default {
             let today = new Date();
             // let hour = Number(today.getHours());
             // let minutes = Number(today.getMinutes());
-            let hour = 13;
-            let minutes = 30;
+            let hour = 9;
+            let minutes = 50;
             let startTimeH = Number(value.startTime.substring(0, 2));
             let startTimeM = Number(value.startTime.substring(3, 5));
             let endTimeH = Number(value.endTime.substring(0, 2));
@@ -128,8 +128,7 @@ export default {
               mySessionName.value =
                 dayjs().format("YYMMDD") +
                 "_" +
-                // userinfo.school +
-                "1" +
+                userinfo.school_number +
                 "_" +
                 userinfo.grade +
                 "_" +
