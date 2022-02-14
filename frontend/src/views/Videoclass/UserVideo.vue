@@ -4,7 +4,7 @@
       <ov-video :stream-manager="streamManager"/>
     </div>
     <div>
-      <p>{{ clientData }}</p>
+      <p style="margin-top:25px">{{ clientData }}</p>
     </div>
   </div>
 </template>

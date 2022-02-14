@@ -79,7 +79,7 @@
                       src="@/assets/videoclass/hand.png"
                       alt="손들기"
                       v-if="sub.raisehand"
-                      style="width: 30px; height: 30px"
+                      style="width: 27px; height: 27px"
                       @click="handDownThisStudent(sub.stream.connection)"
                     />
                     <!-- mic icon -->
@@ -102,7 +102,7 @@
                       src="@/assets/videoclass/clock.png"
                       alt="자리비움"
                       v-if="sub.left"
-                      style="width: 30px; height: 30px"
+                      style="width: 27px; height: 27px; margin-left:10px;"
                     />
                   </div>
                 </div>
@@ -1041,9 +1041,7 @@ export default {
 }
 .iconsOnVideo {
   position: absolute;
-  left: 40%;
-  bottom: 25%;
-  /* bottom: 3px; */
-  /* left: 20%; */
+  left: 0;
+  top:-95px;
 }
 </style>
