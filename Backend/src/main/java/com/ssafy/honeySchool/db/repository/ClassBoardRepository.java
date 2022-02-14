@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ssafy.honeySchool.db.entity.ClassBoard;
 import com.ssafy.honeySchool.db.entity.User;
+
 @Repository
 public interface ClassBoardRepository extends JpaRepository<ClassBoard, Integer>{
 //	// 전체 검색 (pk 오름차순)

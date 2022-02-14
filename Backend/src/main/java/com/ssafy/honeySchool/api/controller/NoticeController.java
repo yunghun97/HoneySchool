@@ -36,6 +36,7 @@ import com.ssafy.honeySchool.db.entity.ClassBoardFile;
 import com.ssafy.honeySchool.db.entity.Comment;
 import com.ssafy.honeySchool.db.entity.DeleteYn;
 import com.ssafy.honeySchool.db.entity.Notice;
+import com.ssafy.honeySchool.db.entity.NoticeFile;
 import com.ssafy.honeySchool.db.entity.User;
 import com.ssafy.honeySchool.db.repository.ClassBoardFileRepository;
 import com.ssafy.honeySchool.db.repository.ClassBoardRepository;
@@ -75,7 +76,7 @@ public class NoticeController {
 		}				
 		return new ResponseEntity<List<NoticeDto>>(noticeDtos, HttpStatus.OK);
 	}
-	// 
+	// 공지사항 쓰기
 	@PostMapping("/notice")
 	public ResponseEntity<?> createNotice(
 			HttpServletRequest req,
@@ -103,44 +104,22 @@ public class NoticeController {
 		URI uriLocation = new URI("/board/" + notice.getId());
         return ResponseEntity.created(uriLocation).body("{}");	
 	}
-//	// 전체게시판 글 상세 (+ 댓글 같이 가져옴)
-//	@Transactional
-//	@GetMapping("/class/detail")
-//	public ResponseEntity<Map<String, Object>> detailBoard(HttpServletRequest req) {
-//		String school = req.getParameter("school");		
-//		int grade = Integer.parseInt(req.getParameter("grade"));
-//		int classes = Integer.parseInt(req.getParameter("classes"));
-//		int id = Integer.parseInt(req.getParameter("id"));
-//		classBoardRepository.updateView(id);
-//		// 글정보, 댓글, 파일정보 같이 묶어서 응답
-//		ClassBoard detail = classBoardRepository.findBySchoolAndGradeAndClassesAndId(school, grade, classes, id);
-//		// ClassBoard dto로 바꾸기
-//		ClassBoardDto detailDto = ClassBoardDto.from(detail);
-//		
-//		// question 파라미터 있는지 확인
-//		List<Comment> comments = new ArrayList<Comment>(); 
-//        if (req.getParameterMap().containsKey("userId")) {  // 질문게시판
-//        	User user = userRepository.findByUserId(req.getParameter("userId")).get();
-//        	comments = commentRepository.findCommentByClassBoardAndUserAndParentId(detail, user, 0).get();    		        	
-//    	} else {  // 다른 게시판
-//    		comments = commentRepository.findCommentByClassBoardOrderByParentIdAsc(detail).get();    		
-//    	}
-//		
-//		
-//		// 댓글 dto로 바꾸기
-//		List<CommentDto> commentdtos = new ArrayList<CommentDto>();
-//		for(int i = 0; i < comments.size(); i++) {
-//			commentdtos.add(CommentDto.from(comments.get(i)));
-//		}		
-//		List<ClassBoardFile> files = classBoardFileRepository.findByBoardIdAndIsDeleted(id, DeleteYn.N);
-//		// Map 사용해서 묶기
-//		Map<String, Object> map = new HashMap<>();
-//		map.put("board", detailDto);
-//		map.put("comments", commentdtos);
-//		map.put("files", files);
-//		return new ResponseEntity<>(map, HttpStatus.OK);
-////		return new ResponseEntity<ClassBoard>(detail, HttpStatus.OK);
-//	}
+	// 공지사항 상세 (+ 파일 같이 가져옴)
+	@Transactional
+	@GetMapping("/notice/{noticeId}")
+	public ResponseEntity<Map<String, Object>> detailNotice(@PathVariable int noticeId, HttpServletRequest req) {
+		Notice notice = noticeRepository.findById(noticeId);
+		noticeRepository.updateView(noticeId);  // 조회수 증가
+		// notice dto로 바꾸기
+		NoticeDto noticeDto = NoticeDto.from(notice);
+		
+		List<NoticeFile> files = noticeFileRepository.findAllByNoticeIdAndIsDeleted(noticeId, DeleteYn.N);
+		// Map 사용해서 묶기
+		Map<String, Object> map = new HashMap<>();
+		map.put("board", noticeDto);
+		map.put("files", files);
+		return new ResponseEntity<>(map, HttpStatus.OK);
+	}
 	// 공지사항 삭제 - 첨부파일도 같이 지워짐
 	@DeleteMapping("/notice/{noticeId}")
 	public HttpStatus deleteBoard(@PathVariable int noticeId) {
@@ -151,42 +130,28 @@ public class NoticeController {
 		noticeRepository.delete(notice);
 		return HttpStatus.OK;
 	}
-//	// 전체게시판 글 수정
-//	// API 명세서랑 다르게 일단 entity 자체를 리턴했습니다
-//	// Request로 첨부파일 수정 여부 주시면 됩니다 (여기서는 String 'Y', 'N'으로 써놨어요)
-//	@Transactional
-//	@PutMapping("/class")
-//	public ResponseEntity<?> updateBoard(
-//			ClassBoard body, 
-//			HttpServletRequest req, 
-//			@RequestPart(value="files", required = false) List<MultipartFile> files) 
-//	throws Exception{
-//		String school = body.getSchool();		
-//		int grade = body.getGrade();
-//		int classes = body.getClasses();
-//		int id = body.getId();
-//		ClassBoard board = classBoardRepository.findBySchoolAndGradeAndClassesAndId(school, grade, classes, id);
-//		
-//		// 첨부파일 수정 여부
-//		String fileIsChanged = req.getParameter("fileIsChanged");
-//		if (fileIsChanged.equals("Y")) {
-//			// 기존에 존재하던 첨부파일 모두 삭제 (댓글 빼고 글만)
-//			classBoardFileRepository.deleteBoardFile(id);
-//			// 현재 추가하는 첨부파일 저장
-//			String rootPath = request.getSession().getServletContext().getRealPath("/uploads");
-//			String resourcesPath = rootPath.substring(0, rootPath.length()-14) + "resources\\static\\uploads";	
-//			rootPath = resourcesPath;
-//			ClassBoard sameBoard = boardService.addBoard(board, files, rootPath, 0);
-//			System.out.println("첨부파일 저장 됐어");
-//		}
-//		// 수정 내용 저장
-//		String category = body.getCategory();
-//		String title = body.getTitle();
-//		String content = body.getContent();
-//		board.update(category, title, content);
-//		// Dto로 변경
-//		ClassBoardDto classBoardDto = ClassBoardDto.from(board);
-//		System.out.println("글 수정 됐어");
-//		return new ResponseEntity<ClassBoardDto>(classBoardDto, HttpStatus.OK);
-//	}
+	// 공지사항 수정
+	@Transactional
+	@PutMapping("/notice/{noticeId}")
+	public ResponseEntity<?> updateNotice(
+			@PathVariable int noticeId,
+			HttpServletRequest req, 
+			@RequestPart(value="files", required = false) List<MultipartFile> files) 
+	throws Exception{
+		Notice notice = noticeRepository.findById(noticeId);
+		// 기존에 존재하던 첨부파일 모두 삭제 (댓글 빼고 글만)
+		noticeFileRepository.deleteFile(noticeId);
+		// 현재 추가하는 첨부파일 저장
+		String rootPath = request.getSession().getServletContext().getRealPath("/uploads");
+		String resourcesPath = rootPath.substring(0, rootPath.length()-14) + "resources\\static\\uploads";	
+		rootPath = resourcesPath;
+		Notice sameNotice = noticeService.addNotice(notice, files, rootPath);
+		// 수정 내용 저장
+		String title = req.getParameter("title");
+		String content = req.getParameter("content");
+		notice.update(title, content);
+		// Dto로 변경
+		NoticeDto noticeDto = NoticeDto.from(notice);
+		return new ResponseEntity<NoticeDto>(noticeDto, HttpStatus.OK);
+	}
 }
