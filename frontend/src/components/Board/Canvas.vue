@@ -148,9 +148,8 @@ export default {
       color: "#000000",
       strokeType: "dash",
       backgroundColor: "#FFFFFF",
-      backgroundImage: `http://localhost:9999/static/uploads/${this.article.files[0].stored_file_path}`,
+      backgroundImage: this.article.files.length === 0 ? null : `http://localhost:9999/static/uploads/${this.article.files[0].stored_file_path}`,
       // TODO: background image cross origin 문제 해결
-      //"`http://localhost:9999/static/uploads/${currentarticle.files[0].stored_file_path}`",
       watermark: null,
       id : this.article.board.id
     };
@@ -199,17 +198,14 @@ export default {
     },
     // imagefile로 변환한 파일을 첨부하여 숙제 제출
     saveImage() {
-      console.log(this.id)
       const formData = new FormData()
         formData.append('userId', this.userinfo.userId);
         formData.append('content', '');
         formData.append('files', this.dataURItoBlob(this.image));
-        axios.post(process.env.VUE_APP_API_URL+`/board/class/182/comment/`, formData, 
+        axios.post(process.env.VUE_APP_API_URL+`/board/class/${this.id}/comment/`, formData, 
             { headers: {'Content-Type' : 'multipart/form-data;charset=utf-8' }})
         .then(()=> {
-          // TODO: router push 
-          console.log('숙제 작성!')
-          router.push({ name: 'Assignment', params: {article_id: this.id}})
+          this.$emit('submitted')
         })
     }
   },

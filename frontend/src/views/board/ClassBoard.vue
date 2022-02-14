@@ -87,11 +87,9 @@ export default defineComponent({
 
         const pushRouter = async(category:string) => {
           if (category == "all") {
-            await store.dispatch('boardStore/getArticles', userinfo)
-            await computed(() => store.state.boardStore.classBoardAll).value
             return router.push({name: 'BoardTable'})
           } else {
-            await store.dispatch("boardStore/classifyCategory", [category, userinfo])
+            await store.dispatch("boardStore/classifyCategory", [category, userinfo, 0])
               if (category == "notice") {
                 const article = await computed(() => store.state.boardStore.notice[0]).value as BoardArticles;
                 if (article === undefined) {
@@ -115,7 +113,11 @@ export default defineComponent({
                 }
               } else if (category == "assignment") {
                 const article = computed(() => store.state.boardStore.assignment[0]).value as BoardArticles;
-                return router.push({name: 'Assignment', params: { article_id: article.id }})
+                if (article === undefined) {
+                  alert('아직 게시글이 없습니다.')
+                } else {
+                  return router.push({name: 'Assignment', params: { article_id: article.id }})
+                }
               } else if (category == "questions") {
                 const article = computed(() => store.state.boardStore.question[0]);
                 return router.push({name: 'Question'})

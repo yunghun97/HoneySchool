@@ -1,17 +1,17 @@
 import axios from "axios";
 import { Module } from "vuex";
 import { RootState } from "../index";
+import BoardArticles from "../../types/board/BoardArticles"
 
-
-interface BoardArticles {
-  [index: number] : number | string,
-  id: number,
-  category: string,
-  title: string,
-  content: string,
-  writer: string,
-  date: number,
-}
+// interface BoardArticles {
+//   [index: number] : number | string,
+//   id: number,
+//   category: string,
+//   title: string,
+//   content: string,
+//   writer: string,
+//   date: number,
+// }
 type category = 'notice' | 'handouts' | 'photo' | 'assignment' | 'question'
 type boardType = Array<BoardArticles>;
 
@@ -42,52 +42,57 @@ export const boardStore: Module<boardState, RootState> = {
   mutations: {
     GETARTICLES (state, data) {
       state.classBoardAll = data
-      console.log('Did!')
-      console.log('Here!', state.classBoardAll)
     },
     CLASSIFYCATEGORY (state, payload) {
       state[payload[0]] = payload[1]
     }
   },
   actions: {
-    getArticles ({ commit }, userinfo) {        
-      axios.get(process.env.VUE_APP_API_URL+"/board/class",{
+    getArticles ({ commit }, data) {        
+      return axios.get(process.env.VUE_APP_API_URL+"/board/class",{
         params:{
-          school: userinfo.school,
-          grade: userinfo.grade,
-          classes: userinfo.class_number,
+          school: data[0].school,
+          grade: data[0].grade,
+          classes: data[0].class_number,
+          page: data[1],
+          size: 20,
         }
       })
-      .then((response)=>{
-        commit('GETARTICLES', response.data)
-      })   
+      .then((response :any)=>{
+        commit('GETARTICLES', response.data.content)
+      })
+       
     },
-    classifyCategory ({ commit }, [category, userinfo]) {
+    classifyCategory ({ commit }, data) {
       return axios.get(process.env.VUE_APP_API_URL+"/board/class/category",{
           params:{
-            school: userinfo.school,
-            grade: userinfo.grade,
-            classes: userinfo.class_number,
-            category: category,
+            school: data[1].school,
+            grade: data[1].grade,
+            classes: data[1].class_number,
+            category: data[0],
+            page: data[2],
+            size: 20,
           }
         })
         .then((response)=>{
-          const payload = [category as category, response.data]
+          const payload = [data[0] as category, response.data.content]
           commit('CLASSIFYCATEGORY', payload)
         })
     },
-    classifyCategorybyUser ({ commit }, [category, userinfo]) {
+    classifyCategorybyUser ({ commit }, data) {
       return axios.get(process.env.VUE_APP_API_URL+"/board/class/category/user",{
         params:{
-          school: userinfo.school,
-          grade: userinfo.grade,
-          classes: userinfo.class_number,
-          category: category,
-          userId: userinfo.userId,
+          school: data[1].school,
+          grade: data[1].grade,
+          classes: data[1].class_number,
+          category: data[0],
+          userId: data[1].userId,
+          page: data[2],
+          size: 20,
         }
       })
       .then((response)=>{
-        const payload = [category as category, response.data]
+        const payload = [ data[0] as category, response.data.content]
         commit('CLASSIFYCATEGORY', payload)
       })
     },

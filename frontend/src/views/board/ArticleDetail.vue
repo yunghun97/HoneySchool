@@ -22,7 +22,7 @@
           <p>첨부파일</p>
            <div v-for="idx in currentarticle.files.length" :key="idx">
             <a 
-              href="`http://localhost:9999/static/uploads/${currentarticle.files[idx-1].stored_file_path}`"
+              :href="`http://localhost:9999/static/uploads/${currentarticle.files[idx-1].stored_file_path}`"
               v-if="currentarticle.files[idx-1].commentId===0"
             >
               첨부파일 {{idx}}
@@ -80,7 +80,7 @@
                   <p :class="'collapse show col'+comment.id" id="comment-cont">{{ comment.content }}</p>
                   <div v-for="file in comments.files" :key="file.id"  class="comment-list">
                     <a 
-                      href="`http://localhost:9999/static/uploads/${file.stored_file_path}`"
+                      :href="`http://localhost:9999/static/uploads/${file.stored_file_path}`"
                       v-if="file.commentId === comment.id"
                     >
                       첨부파일

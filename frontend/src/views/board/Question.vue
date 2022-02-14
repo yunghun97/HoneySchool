@@ -28,7 +28,7 @@ export default defineComponent({
       }
       let userinfo = userinfoData.accountStore.userinfo;
       const checkAns = async() => {
-        await store.dispatch("boardStore/classifyCategorybyUser", ['question', userinfo])
+        await store.dispatch("boardStore/classifyCategorybyUser", ['question', userinfo, 0])
         const article = await computed(() => store.state.boardStore.question[0]).value as BoardArticles;
         if (article === undefined) {
                 alert('작성한 질문이 없습니다.')

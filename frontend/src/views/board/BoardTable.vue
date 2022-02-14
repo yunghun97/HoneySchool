@@ -8,11 +8,9 @@
   </button>
   <div v-if="isLoading">
     <p>...LOADING</p>
-    
   </div>
   <div v-else>
-
-    <div v-if="articles === null">
+    <div v-if="article.length === 0">
       <h1>아직 작성된 글이 없습니다.</h1>
     </div>
     <div v-else class="box">
@@ -47,7 +45,6 @@
             <td class="table-warning">시간표</td>
             <td class="table-warning"></td>
             <td class="table-warning"></td>
-
           </tr>
           <tr 
           v-for="a in article" :key="a.id"
@@ -66,6 +63,11 @@
           </tr>
         </tbody>
       </table>
+        <ul class="pagination justify-content-center">
+          <div v-for="page in endpage" :key="page">
+            <li class="page-item"><span class="page-link" @click="changePage(page)">{{page}}</span></li>
+          </div>
+        </ul>
     </div>
   </div>
 </div>
@@ -73,8 +75,15 @@
 
 
 <script lang="ts">
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { useStore } from 'vuex';
+import axios from "axios";
+import BoardArticles from "../../types/board/BoardArticles"
+interface ResponseData {
+  [index: string] : any,
+  content: Array<BoardArticles>,
+  titalPages: number,
+}
 export default {
   name: "BoardTable",
   setup() {
@@ -86,59 +95,90 @@ export default {
       userinfoData = JSON.parse(localStorageData);
     }
     let userinfo = userinfoData.accountStore.userinfo;
-    // 전체 글 가져오기
-    
+    // 전체 글 가져오기    
     let isloading = ref<boolean>(true);
     let article = ref<any>()
-
-    store.dispatch('boardStore/getArticles', userinfo)
-    const articles = computed(() => store.state.boardStore.classBoardAll);
-    article.value = articles.value
-    console.log('now', articles)
-    // const load = async() => {
-    //   await store.dispatch('boardStore/getArticles', userinfo)
-    //   article.value = await computed(() => store.state.boardStore.classBoardAll).value;
-    //   return article.value
-    // }
-    // load().then(() => {
-    //   isloading.value = false 
-    //   console.log('now',article.value)
-    // })
-
+    let pageNow = ref<number>(0)
+    let endpage = ref<number>(0)
+    let categoryNow = ref<string>('all')
+    
+    const getAllArticle=(pageNum:number)=>{
+      axios.get(process.env.VUE_APP_API_URL+"/board/class", {
+        params: {
+            school: userinfo.school,
+            grade: userinfo.grade,
+            classes: userinfo.class_number,
+            page: pageNum,
+            size: 10,
+          }
+      })
+      .then((res) => {
+        const response = res.data as ResponseData
+        article.value = response.content
+        endpage.value = response.totalPages
+      })
+      .then(()=>{
+        isloading.value = false
+      })
+      return article.value
+    }
+    getAllArticle(pageNow.value)
+    // 카테고리별 글 가져오기
+    const getCategoryArticle = (categoryName:string, pageNum:number)=> {
+      axios.get(process.env.VUE_APP_API_URL+"/board/class/category",{
+        params:{
+          school: userinfo.school,
+          grade: userinfo.grade,
+          classes: userinfo.class_number,
+          category: categoryName,
+          page: pageNum,
+          size: 10,
+        }
+      })
+      .then((res) => {
+        const response = res.data as ResponseData
+        article.value = response.content
+        endpage.value = response.totalPages
+      })
+    }
     // 카테고리 선택 시 구분하기
     const onlyCategory = async(categoryName:string) => {
       isloading.value = true;
       if (categoryName === 'all') {
-        article.value = computed(() => store.state.boardStore.classBoardAll).value;
+        await getAllArticle(0)
       } else {
-        isloading.value = true;
-        await store.dispatch("boardStore/classifyCategory", [categoryName, userinfo])
-        if (categoryName === 'notice') {
-          article.value = computed(() => store.state.boardStore.notice).value
-        } else if (categoryName === 'handouts') {
-          article.value = computed(() => store.state.boardStore.handouts).value
-        } else if (categoryName === 'photo') {
-          article.value = computed(() => store.state.boardStore.photo).value
-        } else if (categoryName === 'assignment') {
-          article.value = computed(() => store.state.boardStore.assignment).value
-        } else if (categoryName === 'question') {
-          article.value = computed(() => store.state.boardStore.question).value
-        }
-        isloading.value = false;
+        await getCategoryArticle(categoryName, 0)
       }
+        categoryNow.value = categoryName;
+        pageNow.value = 0
+        isloading.value = false;
     }
-    return { userinfo, isloading, onlyCategory, article, articles};
+    // pagination
+    const changePage = async(page:number) => {
+      isloading.value = true;
+      pageNow.value = page
+      if (categoryNow.value === 'all') {
+        await getAllArticle(page)
+      } else {
+        await getCategoryArticle(categoryNow.value, page)
+      }
+      isloading.value = false;
+    }
+
+    return { userinfo, isloading, onlyCategory, article, getAllArticle, getCategoryArticle,
+            pageNow, endpage, categoryNow, changePage
+    };
   } 
 }
 </script>
 <style scoped>
 .box {
-    margin: 30px 30vh;
+  margin: 30px 30vh;
 }
 
 tbody>tr:hover {
-    cursor: pointer;
-    margin: 20px;
+  cursor: pointer;
+  margin: 20px;
 }
 .dropdown-item {
   cursor: pointer;
@@ -147,4 +187,5 @@ tbody>tr:hover {
   font-weight: bold;
   padding:0px;
 }
+
 </style>

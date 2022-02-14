@@ -56,8 +56,8 @@
               <tbody>
                 <tr>
                   <th>1</th>
-                  <td id="start1" value="9:00">9:00</td>
-                  <td id="end1">9:40</td>
+                  <td id="start1" value="9:00">09:00</td>
+                  <td id="end1">09:40</td>
                   <td><input type="text" class="form-control" id="mon1" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="tue1" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="wed1" placeholder="과목명"></td>
@@ -66,7 +66,7 @@
                 </tr>
                 <tr>
                   <th>2</th>
-                  <td id="start2">9:50</td>
+                  <td id="start2">09:50</td>
                   <td id="end2">10:30</td>
                   <td><input type="text" class="form-control" id="mon2" placeholder="과목명"></td>
                   <td><input type="text" class="form-control" id="tue2" placeholder="과목명"></td>
@@ -222,8 +222,8 @@ export default defineComponent({
     },
     // 시간표 작성
     saveTimetable() {
-        if (this.article.category.length <=0 || this.article.title.length <=0 || this.timeweek.length <=0) {
-          window.alert('제목, 분류 및 내용을 모두 작성해주세요')
+        if (this.article.category.length <=0 || this.timeweek.length <=0) {
+          window.alert('분류 및 내용을 모두 작성해주세요')
         return false;
         }
         const day=['mon','tue','wed','thu','fri'];
@@ -250,6 +250,7 @@ export default defineComponent({
           '4': timetable[3],
           '5': timetable[4]
         }
+        console.log(data)
         axios.post(process.env.VUE_APP_API_URL+"/timetable/week", data)
         .then(() => {
           router.push({name: 'BoardTable'})

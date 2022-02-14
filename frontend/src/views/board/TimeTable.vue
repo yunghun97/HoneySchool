@@ -77,15 +77,15 @@
           <td>{{idx}}교시</td>
           <td>{{ standardTime[idx-1][0] }}</td>
           <td>{{ standardTime[idx-1][1] }}</td>
-          <td v-if="table[0].length >= idx-1"><input type="text" class="form-control" :class="`mon${idx}`" :value="table[0][idx-1].subject"></td>
+          <td v-if="table[0].length >= idx-1"><input type="text" class="form-control" :id="`mon${idx}`" :value="table[0][idx-1].subject"></td>
           <td v-else class="table-warning"></td>
-          <td v-if="table[1].length >= idx-1"><input type="text" class="form-control" :class="`tue${idx}`" :value="table[1][idx-1].subject"></td>
+          <td v-if="table[1].length >= idx-1"><input type="text" class="form-control" :id="`tue${idx}`" :value="table[1][idx-1].subject"></td>
           <td v-else class="table-warning"></td>
-          <td v-if="table[2].length >= idx-1"><input type="text" class="form-control" :class="`wed${idx}`" :value="table[2][idx-1].subject"></td>
+          <td v-if="table[2].length >= idx-1"><input type="text" class="form-control" :id="`wed${idx}`" :value="table[2][idx-1].subject"></td>
           <td v-else class="table-warning"></td>
-          <td v-if="table[3].length >= idx-1"><input type="text" class="form-control" :class="`thu${idx}`" :value="table[3][idx-1].subject"></td>
+          <td v-if="table[3].length >= idx-1"><input type="text" class="form-control" :id="`thu${idx}`" :value="table[3][idx-1].subject"></td>
           <td v-else class="table-warning"></td>
-          <td v-if="table[4].length >= idx-1"><input type="text" class="form-control" :class="`fri${idx}`" :value="table[4][idx-1].subject"></td>
+          <td v-if="table[4].length >= idx-1"><input type="text" class="form-control" :id="`fri${idx}`" :value="table[4][idx-1].subject"></td>
           <td v-else class="table-warning"></td>
         </tr>
         <tr>
@@ -104,15 +104,15 @@
           <td>{{idx+4}}교시</td>
           <td>{{ standardTime[idx+3][0] }}</td>
           <td>{{ standardTime[idx+3][1] }}</td>
-          <td v-if="table[0].length >= idx+3"><input type="text" class="form-control" :class="`mon${idx+4}`" :value="table[0][idx+3].subject" ></td>
+          <td v-if="table[0].length >= idx+3"><input type="text" class="form-control" :id="`mon${idx+4}`" :value="table[0][idx+3].subject" ></td>
           <td v-else class="table-warning"></td>
-          <td v-if="table[1].length >= idx+3"><input type="text" class="form-control" :class="`tue${idx+4}`" :value="table[1][idx+3].subject"></td>
+          <td v-if="table[1].length >= idx+3"><input type="text" class="form-control" :id="`tue${idx+4}`" :value="table[1][idx+3].subject"></td>
           <td v-else class="table-warning"></td>
-          <td v-if="table[2].length >= idx+3"><input type="text" class="form-control" :class="`wed${idx+4}`" :value="table[2][idx+3].subject"></td>
+          <td v-if="table[2].length >= idx+3"><input type="text" class="form-control" :id="`wed${idx+4}`" :value="table[2][idx+3].subject"></td>
           <td v-else class="table-warning"></td>
-          <td v-if="table[3].length >= idx+3"><input type="text" class="form-control" :class="`thu${idx+4}`" :value="table[3][idx+3].subject"></td>
+          <td v-if="table[3].length >= idx+3"><input type="text" class="form-control" :id="`thu${idx+4}`" :value="table[3][idx+3].subject"></td>
           <td v-else class="table-warning"></td>
-          <td v-if="table[4].length >= idx+3"><input type="text" class="form-control" :class="`fri${idx+4}`" :value="table[4][idx+3].subject"></td>
+          <td v-if="table[4].length >= idx+3"><input type="text" class="form-control" :id="`fri${idx+4}`" :value="table[4][idx+3].subject"></td>
           <td v-else class="table-warning"></td>
         </tr>
       </tbody>
@@ -155,7 +155,8 @@ export default {
     if (day !== 1 )
         today.setHours(-24 * (day - 1));
     // 이번주의 week number 구하기
-    var dayNum = today.setDate(today.getDate() + 4 - day);
+    var gettoday = new Date();
+    var dayNum = gettoday.setDate(gettoday.getDate() + 4 - (gettoday.getDay() || 7));
     var yearStart = new Date(today.getFullYear(), 0, 1);
     var firstNum = yearStart.setDate(yearStart.getDate() + 4 - (yearStart.getDay() ||7))
     var weeknum = Math.ceil((((dayNum-firstNum) /86400000) + 1)/7);
@@ -166,14 +167,12 @@ export default {
               school: userinfo.school,
               grade: userinfo.grade,
               classes: userinfo.class_number,
-              date: '2022-02-07',
-            // `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`  
+              date: `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`,
+
               },
         })
         .then((response)=>{
-            timedetail.value = response.data
-            console.log(response.data)
-            
+            timedetail.value = response.data            
         })
         .catch(()=> {
             alert("아직 이번주 시간표가 없습니다!")

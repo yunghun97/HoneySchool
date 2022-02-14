@@ -38,7 +38,10 @@
     <img :src="`http://localhost:9999/static/uploads/${myimg}`" alt="X" class="assignmentImg">
   </div>
   <div class="canvas" v-else>
-    <Canvas :article="currentarticle" />
+    <Canvas 
+      :article="currentarticle"
+      @submitted='submitted'
+     />
   </div>
 </template>
 <script lang="ts">
@@ -101,6 +104,7 @@ export default ({
           })
           .then((response)=>{
               currentarticle.value = response.data
+              console.log(response.data)
           })
       }
       let done = ref<boolean>(false)
@@ -156,19 +160,21 @@ export default ({
               break }
           } 
       }
-      // 대댓글 조회 error
-      // const getReComment = () => {
-      //     axios.get(process.env.VUE_APP_API_URL+`/board/class/${route.params.article_id}/comment/${comId.value}`)
-      //     .then((res)=>{
-      //         console.log(res)
-      //     })
-      // }
       articleDetail().then(() => {
           getCurrentArticle()
           checkDone()
       }).then(() => {
           isLoading.value = false
       })
+      const submitted = () => {
+        alert('Did!')
+        isLoading.value = true
+        articleDetail().then(()=>{
+          checkDone()
+        }).then(() => {
+          isLoading.value = false
+        })
+      }
 
       watch(() => route.params, (newVal, oldVal) => {
           isLoading.value = true
@@ -186,7 +192,7 @@ export default ({
 
       return { isLoading, userinfo, articles, getCurrentArticle, currentarticle, 
       beforearticleidx, nextarticleidx, beforearticleid, nextarticleid, articlesdata,
-      done, comId, myimg, teacherCom }
+      done, comId, myimg, teacherCom, submitted }
     }
 })
 </script>
