@@ -137,8 +137,6 @@ export default
 }
 .btns {
     cursor: pointer;
-    /* border-radius: 50%;
-    box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.14); */
 }
 button {
     margin:5px;
