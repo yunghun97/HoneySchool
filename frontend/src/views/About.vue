@@ -1,23 +1,25 @@
 <template>
   <div class="main_page container">
-    <h1>This is an Main page</h1>
-    <h2>오늘 날짜 : {{ dateNow }}</h2>
-    <h2>현재 시간 : {{ timeNow }}</h2>
-    <h2>{{ thisClass }} 교시</h2>
-    <!-- 선생님, 학생 분기 인사말 -->
-    <h2 v-if="userinfo.position === 'S'">
-      {{ userinfo.school }} {{ userinfo.name }}학생 반갑습니다.
-    </h2>
-    <h2 v-else>{{ userinfo.school }} {{ userinfo.name }}선생님 반갑습니다.</h2>
+    <div class="top-container">
+      <!-- 선생님, 학생 분기 인사말 -->
+      <h2 v-if="userinfo.position === 'S'">
+        {{ userinfo.school }} {{ userinfo.name }}학생 반갑습니다.
+      </h2>
+      <h2 v-else>{{ userinfo.school }} {{ userinfo.name }}선생님 반갑습니다.</h2>
+      <h2>오늘 날짜 : {{ dateNow }}</h2>
+      <h2>현재 시간 : {{ timeNow }} &emsp;</h2>
+      <h2>현재 교시 : {{ thisClass }} 교시 &emsp; &nbsp; &nbsp;</h2>
+    </div>
     <div class="row justify-content-center" style="height: 500px">
       <!-- 선생님, 학생 분기 화상수업 -->
       <div class="col-5" id="createSession">
-        <h3>지금은 {{ thisClassName }} 수업시간 입니다.</h3>
+        <img src="@/assets/videoclass/videoclass.png">
+        <h3>지금은 <b>{{ thisClassName }}</b> 수업시간 입니다.</h3>
         <div v-if="userinfo.position === 'T'">
-          <button class="btn-primary" @click="joinSession">수업 만들기, 참석하기</button>
+          <button class="btn-class" @click="joinSession">수업 개설 및 참석하기</button>
         </div>
         <div v-else>
-          <button class="btn-primary" @click="joinSession">
+          <button class="btn-class" @click="joinSession">
             수업 참석하기
           </button>
         </div>
@@ -25,7 +27,24 @@
       <!-- 선생님, 학생 분기 시간표 -->
       <div class="col-5" id="timetable">
         <h1>{{ userinfo.grade }}학년 {{ userinfo.class_number }}반 시간표</h1>
-        <table class="timetable">
+        <div class="time">
+          <p>교시</p>
+          <p>시간</p>
+          <p>과목</p>
+        </div>
+        <div v-for="(sub, i) in timetableData" :key="sub.id" >
+          <div v-if="thisClass === i + 1" class="time" id="current">
+            <p>{{ i + 1 }}교시</p>
+            <p>{{ sub.startTime }} ~ {{ sub.endTime }}</p>
+            <p>{{ sub.subject }}</p>
+          </div>
+          <div v-else class="time">
+            <p>{{ i + 1 }}교시</p>
+            <p>{{ sub.startTime }} ~ {{ sub.endTime }}</p>
+            <p>{{ sub.subject }}</p>
+          </div>
+        </div>
+        <!-- <table class="timetable">
           <thead>
             <tr>
               <th scope="col">시간</th>
@@ -48,7 +67,7 @@
               </div>
             </tr>
           </tbody>
-        </table>
+        </table> -->
       </div>
     </div>
   </div>
@@ -104,8 +123,8 @@ export default {
       })
       .then((response) => {
         timetableData.value = response.data;
-        console.log(timetableData);
-        console.log(response.data);
+        // console.log(timetableData);
+        // console.log(response.data);
 
         // 현재 시각과 현재 수업교시 구하기, 1초마다 갱신
         const getThistime = () => {
@@ -200,18 +219,65 @@ export default {
 </script>
 <style scoped>
 #createSession {
-  background-color: #37b6f6;
-  border-radius: 50px;
+  background-color: #f99d07;
+  border-radius: 40px;
   margin: 30px;
+  padding: 20px;
+}
+
+#createSession > img {
+  width: 300px;
+  margin-bottom: 20px;
 }
 
 #timetable {
-  background-color: #f99d07;
-  border-radius: 50px;
-  margin: 30px;
+  background-color:#37b6f6;
+  border-radius: 40px;
+  margin: 30px 10px;
+  padding: 20px;
 }
 
 #current {
-  background-color: #882ff6;
+  background-color: #F9E104;
+}
+
+/* .container {
+  background-color: #F7F7F7;
+  height: 100%;
+  width: 100%;
+}
+  */
+.time {
+  display: flex;
+  justify-content: space-around;
+  background-color: #ffff;
+  border-radius: 12px;
+  margin: 10px auto 0;
+  padding: 7px 0;
+}
+
+.time > p {
+  margin:0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.btn-class {
+  background-color: #882FF6;
+  border: 1px solid #882FF6;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 10px 70px;
+  border-radius: 12px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+}
+
+.top-container {
+  background-color: #F7F7F7;
+  border-radius: 40px;
+  padding: 10px;
+  max-width: 1155px;
+  margin: auto;
 }
 </style>

@@ -1,10 +1,12 @@
 <template>
     <div class="box">
     <div>
-      <div class="card ask" @click="$router.push({name: 'AskQuestion'})">
+      <div class="cardbtn" id="ask" @click="$router.push({name: 'AskQuestion'})">
+        <img src="@/assets/board/recordquestion.png" alt="질문하기" class="card-icon">
         <h2>질문 할래요</h2>
       </div>
-      <div class="card ans" @click="checkAns">
+      <div class="cardbtn" id="ans" @click="checkAns">
+        <img src="@/assets/board/answer.png" alt="답변보기" class="card-icon">
         <h2>선생님 답변 볼래요</h2>
       </div>
     </div>
@@ -52,11 +54,11 @@ template {
   margin: 0;
   padding: 60px 0px;
 }
-.card:hover {
+.cardbtn:hover {
   transform: scale (1.15);
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.9);
 }
-.card {
+.cardbtn {
   display: inline-block;
   width: 40%;
 	height: 600px;
@@ -68,10 +70,14 @@ template {
   margin: 50px;
   padding: 80px;
 }
-.ask {
+#ask {
 	background-color: #31B4F2;
 }
-.ans {
+#ans {
 	background-color: #35D461;
+}
+.card-icon {
+  flex:auto;
+  margin-bottom:15px;
 }
 </style>
