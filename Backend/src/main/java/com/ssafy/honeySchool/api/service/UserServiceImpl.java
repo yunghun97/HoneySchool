@@ -118,6 +118,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<String> getSchoolList(String school){
+        Optional<List<String>> pSchool=schoolRepositorySupport.findSchoolContainsSchoolName(school);
+        if(!pSchool.isPresent()) return null;
+
+        return pSchool.get();
+    }
+
+    @Override
     public String getSchoolNameByOpenApi() {
         for (int i = 1; i < 65; i++) {
             String tmp=WebClient.create(schoolUrl)

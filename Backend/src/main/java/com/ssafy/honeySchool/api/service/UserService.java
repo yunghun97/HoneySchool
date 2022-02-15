@@ -4,6 +4,7 @@ package com.ssafy.honeySchool.api.service;
 import com.ssafy.honeySchool.api.dto.UserNameDto;
 import com.ssafy.honeySchool.api.request.UserModifyPutReq;
 import com.ssafy.honeySchool.api.request.UserRegisterPostReq;
+import com.ssafy.honeySchool.db.entity.School;
 import com.ssafy.honeySchool.db.entity.User;
 import reactor.core.publisher.Mono;
 
@@ -20,4 +21,5 @@ public interface UserService {
     List<UserNameDto> getUserList(int schoolNumber, int gradeNumber, int classNumber);
     int getSchoolNumberBySchool(String school);
     String getSchoolNameByOpenApi();
+    List<String> getSchoolList(String school);
 }

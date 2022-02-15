@@ -50,8 +50,6 @@ public class UserController {
     public ResponseEntity<? extends BaseResponseBody> register(
             @RequestBody @ApiParam(value="회원가입 정보", required = true) UserRegisterPostReq registerInfo) {
 
-        // TODO: 중복 체크
-
         User user = userService.createUser(registerInfo);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
@@ -78,19 +76,18 @@ public class UserController {
         return ResponseEntity.status(200).body(UserRes.of(user,schoolNumber));
     }
 
-//    @GetMapping("/info/{id}")
-//    @ApiOperation(value = "회원 정보", notes = "회원의 정보를 가져온다.")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "성공"),
-//            @ApiResponse(code = 401, message = "인증 실패"),
-//            @ApiResponse(code = 404, message = "사용자 없음"),
-//            @ApiResponse(code = 500, message = "서버 오류")
-//    })
-//    public ResponseEntity<UserInfoRes> getUserInfo(@PathVariable String id) {
-//
-//        User user = userService.getUserByUserId(id);
-//        return ResponseEntity.status(200).body(UserInfoRes.of(user));
-//    }
+    @GetMapping("/IdCheck/{ckId}")
+    @ApiOperation(value = "아이디 중복 확인", notes = "아이디 중복을 확인한다.")
+    public ResponseEntity<? extends BaseResponseBody> CheckDuplicateId(
+            @PathVariable @ApiParam(value="회원 id 정보", required = true) String ckId) {
+
+        User user = userService.getUserByUserId(ckId);
+        if(user!=null)
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        else
+            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Fail"));
+    }
+
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "회원 삭제", notes = "Id를 받아와서 회원 삭제를 진행한다.")
@@ -123,7 +120,28 @@ public class UserController {
             return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Fail"));
     }
 
-    @PostMapping("/school")
+    @GetMapping("/schoolList/{school}")
+    @ApiOperation(value = "검색한 학교 리스트", notes = "학교를 검색해서 리스트를 가져온다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 404, message = "검색된 학교 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public List<String> getSchoolList(@PathVariable String school){
+        List<String> result=userService.getSchoolList(school);
+        if(result==null)
+            return null;
+        else
+            return result;
+    }
+
+    @PostMapping("/schoolData")
+    @ApiOperation(value = "회원 수정", notes = "Id를 받아와서 회원 수정을 진행한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
     public ResponseEntity<? extends BaseResponseBody> getSchoolInfo(){
         String res=userService.getSchoolNameByOpenApi();
         if(res.equals("Success"))
