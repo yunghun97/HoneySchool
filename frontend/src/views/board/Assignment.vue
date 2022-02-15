@@ -86,122 +86,119 @@ interface Article {
 
 }
 export default ({
-    name: 'Assignment',
-    components: { Canvas},
-    setup() {
-      const store = useStore();
-      const route = useRoute();
+  name: 'Assignment',
+  components: { Canvas},
+  setup() {
+    const store = useStore();
+    const route = useRoute();
 
-      let isLoading = ref<boolean>(true);
-      const localStorageData = localStorage.getItem("vuex");
-      let userinfoData;
-      if (localStorageData !== null) {
-      userinfoData = JSON.parse(localStorageData);
-      }
-      let userinfo = userinfoData.accountStore.userinfo;
-
-      let currentarticle = ref<Article>({comments:[], files:[]});
-      const articleDetail = () => {
-          return axios.get(process.env.VUE_APP_API_URL+"/board/class/detail",{
-              params:{
-              school: userinfo.school,
-              grade: userinfo.grade,
-              classes: userinfo.class_number,
-              id : route.params.article_id
-              }
-          })
-          .then((response)=>{
-              currentarticle.value = response.data
-              console.log(response.data)
-          })
-      }
-      let done = ref<boolean>(false)
-      let teacherCom = ref<any>('')
-      let myimg = ref<any>('')
-      let comId = ref<any>('')
-      const checkDone = () => {
-          for (var i = 0; i < currentarticle.value.comments.length; ++i) {
-              const userId = currentarticle.value.comments[i].user.userId
-              if (userId === userinfo.userId) {
-                  done.value = true
-                  comId.value = currentarticle.value.comments[i].id
-              } else if (comId.value === currentarticle.value.comments[i].parent_id) {
-                  teacherCom.value = currentarticle.value.comments[i]
-              }
-          }
-          for (var j = 0; j < currentarticle.value.files.length; ++j) {
-              const fileId = currentarticle.value.files[j].commentId
-              if (fileId === comId.value) {
-                  myimg.value = currentarticle.value.files[j].stored_file_path
-              }
-          }
-      }
-
-      const articles = computed(() => store.state.boardStore.assignment);
-      const articlesdata = articles.value as ArticleArray
-      
-      let nextarticleidx = ref<number>(articles.value.length);
-      let nextarticleid = ref<number>(0);
-
-      let beforearticleidx = ref<number>(-1);
-      let beforearticleid = ref<number>(0);
-
-      const getCurrentArticle = () => {
-          for (var i = 0; i < articles.value.length; ++i) {
-              const article = articlesdata[i] as BoardArticles
-              
-              if (article.id === +route.params.article_id) {
-                  if (i == 0) {
-                      beforearticleidx.value = -1
-                  }
-                  if (i >= 1) {
-                      beforearticleidx.value = i - 1
-                      beforearticleid.value = articlesdata[i - 1].id
-                  }
-                  if (i < articles.value.length - 1) {
-                      nextarticleidx.value = i + 1
-                      nextarticleid.value = articlesdata[i + 1].id
-
-                  } else if (i === articles.value.length -1) {
-                      nextarticleidx.value = -1
-                  }
-              break }
-          } 
-      }
-      articleDetail().then(() => {
-          getCurrentArticle()
-          checkDone()
-      }).then(() => {
-          isLoading.value = false
-      })
-      const submitted = () => {
-        alert('Did!')
-        isLoading.value = true
-        articleDetail().then(()=>{
-          checkDone()
-        }).then(() => {
-          isLoading.value = false
-        })
-      }
-
-      watch(() => route.params, (newVal, oldVal) => {
-          isLoading.value = true
-          articleDetail().then(() => {
-          done.value=false
-          myimg.value=''
-          comId.value=''
-          getCurrentArticle()
-          checkDone() 
-          }).then(() => {
-            isLoading.value = false
-          })
-      })
-
-
-      return { isLoading, userinfo, articles, getCurrentArticle, currentarticle, 
-      beforearticleidx, nextarticleidx, beforearticleid, nextarticleid, articlesdata,
-      done, comId, myimg, teacherCom, submitted }
+    let isLoading = ref<boolean>(true);
+    const localStorageData = localStorage.getItem("vuex");
+    let userinfoData;
+    if (localStorageData !== null) {
+    userinfoData = JSON.parse(localStorageData);
     }
+    let userinfo = userinfoData.accountStore.userinfo;
+
+    let currentarticle = ref<Article>({comments:[], files:[]});
+    const articleDetail = () => {
+      return axios.get(process.env.VUE_APP_API_URL+"/board/class/detail",{
+          params:{
+          school: userinfo.school,
+          grade: userinfo.grade,
+          classes: userinfo.class_number,
+          id : route.params.article_id
+          }
+      })
+      .then((response)=>{
+          currentarticle.value = response.data
+          console.log(response.data)
+      })
+    }
+    let done = ref<boolean>(false)
+    let teacherCom = ref<any>('')
+    let myimg = ref<any>('')
+    let comId = ref<any>('')
+    const checkDone = () => {
+      for (var i = 0; i < currentarticle.value.comments.length; ++i) {
+        const userId = currentarticle.value.comments[i].user.userId
+        if (userId === userinfo.userId) {
+          done.value = true
+          comId.value = currentarticle.value.comments[i].id
+        } else if (comId.value === currentarticle.value.comments[i].parent_id) {
+          teacherCom.value = currentarticle.value.comments[i]
+        }
+      }
+      for (var j = 0; j < currentarticle.value.files.length; ++j) {
+        const fileId = currentarticle.value.files[j].commentId
+        if (fileId === comId.value) {
+          myimg.value = currentarticle.value.files[j].stored_file_path
+        }
+      }
+    }
+
+    const articles = computed(() => store.state.boardStore.assignment);
+    const articlesdata = articles.value as ArticleArray
+    
+    let nextarticleidx = ref<number>(articles.value.length);
+    let nextarticleid = ref<number>(0);
+
+    let beforearticleidx = ref<number>(-1);
+    let beforearticleid = ref<number>(0);
+
+    const getCurrentArticle = () => {
+      for (var i = 0; i < articles.value.length; ++i) {
+        const article = articlesdata[i] as BoardArticles
+        
+      if (article.id === +route.params.article_id) {
+        if (i == 0) {
+          beforearticleidx.value = -1
+        }
+        if (i >= 1) {
+          beforearticleidx.value = i - 1
+          beforearticleid.value = articlesdata[i - 1].id
+        }
+        if (i < articles.value.length - 1) {
+          nextarticleidx.value = i + 1
+          nextarticleid.value = articlesdata[i + 1].id
+        } else if (i === articles.value.length -1) {
+          nextarticleidx.value = -1
+        }
+        break }
+      } 
+    }
+    articleDetail().then(() => {
+      getCurrentArticle()
+      checkDone()
+    }).then(() => {
+        isLoading.value = false
+    })
+    const submitted = () => {
+      alert('Did!')
+      isLoading.value = true
+      articleDetail().then(()=>{
+        checkDone()
+      }).then(() => {
+        isLoading.value = false
+      })
+    }
+
+    watch(() => route.params, (newVal, oldVal) => {
+      isLoading.value = true
+      articleDetail().then(() => {
+      done.value=false
+      myimg.value=''
+      comId.value=''
+      getCurrentArticle()
+      checkDone() 
+      }).then(() => {
+        isLoading.value = false
+      })
+    })
+    return { isLoading, userinfo, articles, getCurrentArticle, currentarticle, 
+    beforearticleidx, nextarticleidx, beforearticleid, nextarticleid, articlesdata,
+    done, comId, myimg, teacherCom, submitted }
+  }
 })
 </script>
 <style scoped>
