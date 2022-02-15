@@ -40,7 +40,7 @@
     </div>
     <div class="d-flex justify-content-center">
       <p class="p-3">
-        <router-link to="/signup" class="text-decoration-none text-dark font-A1-500">회원가입</router-link>
+        <router-link to="/signup" class="text-decoration-none link-color font-A1-500">회원가입</router-link>
       </p>
     </div>
   </div>
@@ -156,6 +156,9 @@ input.underline {
   background-color: #aae9e5;
   /* background-image: linear-gradient(310deg, #2dce89 0%, #2dcecc 100%); */
   background-image: linear-gradient(310deg, rgb(55, 211, 190) 0%, #aae9e5 100%);
+}
+.link-color {
+  color: rgb(49, 180, 242);
 }
 .card {
   box-shadow: 5px 5px 5px rgba(136, 152, 170, 0.15) !important;
