@@ -2,44 +2,7 @@
   <div id="main-container" class="container">
     <div id="session" v-if="sessionCamera">
       <div id="session-header">
-        <h1 id="session-title">{{ ClassName }}</h1>
-        <input
-          class="btn btn-large btn-primary"
-          type="button"
-          id="buttonScreenShare"
-          @click="publishScreenShare"
-          value="Screen share"
-        />
-        <input
-          class="btn btn-large btn-primary"
-          type="button"
-          id="fullScreen"
-          @click="fullScreen"
-          value="Full screen"
-        />
-        <input
-          class="btn btn-large btn-primary"
-          type="button"
-          id="selectHistory"
-          @click="selectHistory"
-          value="Select History"
-        />
-        <input
-          class="btn btn-large btn-danger"
-          type="button"
-          id="buttonLeaveSession"
-          @click="leaveSession"
-          value="Leave session"
-        />
-        <input
-          type="button"
-          class="btn btn-large btn-success"
-          id="buttonQuiz"
-          data-bs-toggle="modal"
-          data-bs-target="#sendquiz"
-          data-bs-whatever="@mdo"
-          value="퀴즈내기"
-        />
+        <h1 id="session-title">{{ userinfo.class_number }}반 {{ ClassName }}수업</h1>
       </div>
       <div class="row">
         <!-- 선생님에게만 유저 접속 정보 표시 -->
@@ -58,52 +21,85 @@
             </div>
             <div class="col-md-3">
               <div id="container-cameras" class="row panel panel-default">
-                <p class="panel-heading">User Cameras</p>
+                <p class="panel-heading">나의 화면</p>
                 <user-video
                   :stream-manager="publisherCamera"
                   @click="updateMainVideoStreamManager(publisherCamera)"
                 />
-                <p>Subscribers Camera</p>
-                <div
-                  v-for="sub in subscribersCamera"
-                  :key="sub.stream.connection.connectionId"
-                  class="subContainer"
-                >
-                  <user-video
-                    :stream-manager="sub"
-                    @click="updateMainVideoStreamManager(sub)"
-                  />
-                  <div class="iconsOnVideo">
-                    <!-- 손들기 icon-->
-                    <img
-                      src="@/assets/videoclass/hand.png"
-                      alt="손들기"
-                      v-if="sub.raisehand"
-                      style="width: 27px; height: 27px"
-                      @click="handDownThisStudent(sub.stream.connection)"
+                <p>친구들 화면</p>
+                <div id="container-friendsCamera">
+                  <div
+                    v-for="sub in subscribersCamera"
+                    :key="sub.stream.connection.connectionId"
+                    class="subContainer"
+                  >
+                    <user-video
+                      :stream-manager="sub"
+                      @click="updateMainVideoStreamManager(sub)"
                     />
-                    <!-- mic icon -->
-                    <span>
-                      <fa
-                        icon="microphone-slash"
-                        class="fontawesome"
-                        v-if="sub.muted"
-                        @click="changeMuteThisStudent(sub.stream.connection)"
-                      ></fa>
-                      <fa
-                        icon="microphone"
-                        class="fontawesome-active"
-                        v-else
-                        @click="changeMuteThisStudent(sub.stream.connection)"
-                      ></fa>
-                    </span>
-                    <!-- 자리비움 icon -->
-                    <img
-                      src="@/assets/videoclass/clock.png"
-                      alt="자리비움"
-                      v-if="sub.left"
-                      style="width: 27px; height: 27px; margin-left:10px;"
-                    />
+                    <!-- 선생님 아이콘 제어 -->
+                    <div v-if="userinfo.position === 'T'" class="iconsOnVideo">
+                      <!-- 손들기 icon-->
+                      <img
+                        src="@/assets/videoclass/hand.png"
+                        alt="손들기"
+                        v-if="sub.raisehand"
+                        style="width: 27px; height: 27px"
+                        @click="handDownThisStudent(sub.stream.connection)"
+                      />
+                      <!-- mic icon -->
+                      <span>
+                        <fa
+                          icon="microphone-slash"
+                          class="fontawesome"
+                          v-if="sub.muted"
+                          @click="changeMuteThisStudent(sub.stream.connection)"
+                        ></fa>
+                        <fa
+                          icon="microphone"
+                          class="fontawesome-active"
+                          v-else
+                          @click="changeMuteThisStudent(sub.stream.connection)"
+                        ></fa>
+                      </span>
+                      <!-- 자리비움 icon -->
+                      <img
+                        src="@/assets/videoclass/clock.png"
+                        alt="자리비움"
+                        v-if="sub.left"
+                        style="width: 27px; height: 27px; margin-left: 10px"
+                      />
+                    </div>
+                    <!-- 학생 아이콘 표시 -->
+                    <div v-else class="iconsOnVideo">
+                      <!-- 손들기 icon-->
+                      <img
+                        src="@/assets/videoclass/hand.png"
+                        alt="손들기"
+                        v-if="sub.raisehand"
+                        style="width: 27px; height: 27px"
+                      />
+                      <!-- mic icon -->
+                      <span>
+                        <fa
+                          icon="microphone-slash"
+                          class="fontawesome"
+                          v-if="sub.muted"
+                        ></fa>
+                        <fa
+                          icon="microphone"
+                          class="fontawesome-active"
+                          v-else
+                        ></fa>
+                      </span>
+                      <!-- 자리비움 icon -->
+                      <img
+                        src="@/assets/videoclass/clock.png"
+                        alt="자리비움"
+                        v-if="sub.left"
+                        style="width: 27px; height: 27px; margin-left: 10px"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -112,7 +108,7 @@
                 id="container-screens"
                 class="row panel panel-default"
               >
-                <p class="panel-heading">User Screens</p>
+                <p class="panel-heading">화면 공유</p>
                 <user-screen
                   :stream-manager="publisherScreen"
                   @click="updateMainVideoStreamManagerScreen(publisherScreen)"
@@ -132,7 +128,8 @@
               </div>
             </div>
           </div>
-          <div class="navbar">
+          <!-- 학생 Navbar -->
+          <div v-if="userinfo.position === 'S'" class="navbar">
             <!-- 손들기 btn -->
             <div class="nav-cont" v-if="raisehand" @click="handDown()">
               <span class="main-btn">
@@ -183,6 +180,50 @@
               </span>
               <p>퀴즈 풀기</p>
             </div>
+            <!-- 전체 화면 -->
+            <div class="nav-cont" @click="fullScreen">
+              <span class="main-btn">
+                <fa icon="user-clock" class="fontawesome"></fa>
+              </span>
+              <p>전체 화면</p>
+            </div>
+            <!-- 방 나가기 btn -->
+            <div class="nav-cont" @click="leaveSession">
+              <span class="main-btn">
+                <fa icon="sign-out-alt" class="fontawesome"></fa>
+              </span>
+              <p>나가기</p>
+            </div>
+          </div>
+
+          <!-- 선생님 Navbar -->
+          <div v-else class="navbar">
+            <!-- 화면 공유 (Screen sharing) -->
+            <div class="nav-cont" @click="publishScreenShare()">
+              <span class="main-btn">
+                <fa icon="hand-paper" class="fontawesome"></fa>
+              </span>
+              <p>화면 공유</p>
+            </div>
+            <!-- 퀴즈 내기 -->
+            <div class="nav-cont">
+              <span
+                class="main-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#sendquiz"
+                data-bs-whatever="@mdo"
+              >
+                <fa icon="microphone-slash" class="fontawesome"></fa>
+              </span>
+              <p>퀴즈 내기</p>
+            </div>
+            <!-- 전체 화면 -->
+            <div class="nav-cont" @click="fullScreen">
+              <span class="main-btn">
+                <fa icon="user-clock" class="fontawesome"></fa>
+              </span>
+              <p>전체 화면</p>
+            </div>
             <!-- 방 나가기 btn -->
             <div class="nav-cont" @click="leaveSession">
               <span class="main-btn">
@@ -192,8 +233,8 @@
             </div>
           </div>
         </div>
-        <div v-if="userinfo.position === 'T'" class="col-md-3">
-          <h4>유저 상태목록</h4>
+        <div v-if="userinfo.position === 'T'" class="col-md-3" id="container-users">
+          <p>유저 상태목록</p>
           <table v-if="studentList">
             <thead>
               <tr>
@@ -362,7 +403,7 @@ export default {
       screensharing: false,
       muted: true,
       left: false,
-    
+
       quizContent: "",
       quizReceived: "아직 도착한 퀴즈가 없습니다.",
 
@@ -458,10 +499,8 @@ export default {
           console.log(subscriberScreen.data);
           this.subscribersScreen.push(subscriberScreen);
         }
-          console.log("사람입장");
-          this.UserList(); 
       });
-      
+
       // On every Stream destroyed...
       this.sessionCamera.on("streamDestroyed", ({ stream }) => {
         const index = this.subscribersCamera.indexOf(stream.streamManager, 0);
@@ -740,7 +779,7 @@ export default {
         .post(
           process.env.VUE_APP_API_URL + "/lecture/history/" + userId,
           JSON.stringify({
-            link: this.sessionId,
+            link: this.SessionId,
             join: isEnter,
           })
         )
@@ -1042,6 +1081,6 @@ export default {
 .iconsOnVideo {
   position: absolute;
   left: 0;
-  top:-95px;
+  top: -95px;
 }
 </style>
