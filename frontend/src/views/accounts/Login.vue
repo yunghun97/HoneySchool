@@ -1,6 +1,6 @@
 <template>
   <div id="outer-div">
-    <h3 class="my-4 font-A1">로그인</h3>
+    <h3 class="my-4 font-A1-500">로그인</h3>
     <div class="d-flex justify-content-center">
       <div id="login-form" class="card m-2 p-4">
         <div class="card-body">
@@ -15,7 +15,7 @@
                 name="user_id"
                 type="text"
                 placeholder="아이디"
-                class="form-control underline font-A1"
+                class="form-control underline font-A1-200"
                 :class="{ 'is-invalid': errors.user_id }"
               />
               <div class="invalid-feedback">{{ errors.user_id }}</div>
@@ -26,13 +26,13 @@
                 name="password"
                 type="password"
                 placeholder="비밀번호"
-                class="form-control underline font-A1"
+                class="form-control underline font-A1-200"
                 :class="{ 'is-invalid': errors.password }"
               />
               <div class="invalid-feedback">{{ errors.password }}</div>
             </div>
             <div class="form-group d-grid gap-2 pt-4">
-              <button type="submit" class="login-btn d-block font-A1">로그인</button>
+              <button type="submit" class="login-btn d-block font-A1-500">로그인</button>
             </div>
           </Form>
         </div>
@@ -40,7 +40,7 @@
     </div>
     <div class="d-flex justify-content-center">
       <p class="p-3">
-        <router-link to="/signup" class="text-decoration-none text-dark font-A1">회원가입</router-link>
+        <router-link to="/signup" class="text-decoration-none text-dark font-A1-500">회원가입</router-link>
       </p>
     </div>
   </div>
@@ -140,7 +140,6 @@ input.underline {
 }
 .login-btn {
   display: inline-block;
-  font-weight: 700;
   line-height: 1.5;
   color: #67748e;
   text-align: center;
@@ -149,8 +148,9 @@ input.underline {
   user-select: none;
   border: 1px solid transparent;
   padding: 0.625rem 1.25rem;
-  font-size: 0.875rem;
   transition: all 0.15s ease-in;
+  /* font-weight: 500; */
+  /* font-size: 0.875rem; */
   /* background-color: transparent; */
   border-radius: 0.3rem;
   background-color: #aae9e5;
@@ -160,8 +160,21 @@ input.underline {
 .card {
   box-shadow: 5px 5px 5px rgba(136, 152, 170, 0.15) !important;
 }
-.font-A1 {
+.font-A1-200{
   font-family: 'Gothic A1', sans-serif;
+  font-weight: 200;
+}
+.font-A1-300{
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: 300;
+}
+.font-A1-400{
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: 400;
+}
+.font-A1-500{
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: 500;
 }
 /* .pinkColor {
   color: rgb(254, 183, 211);
