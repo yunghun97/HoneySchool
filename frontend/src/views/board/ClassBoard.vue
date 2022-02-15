@@ -8,7 +8,7 @@
     :key="category"
   >
     <div
-      class="card"
+      class="cardbtn"
       @click="pushRouter(category.url)"
       :style="{backgroundColor : category.color}"
     >
@@ -131,8 +131,8 @@ export default defineComponent({
 </script>
 <style scoped>
 .root {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 .box {
   background-color: #fcf1c9;
@@ -145,27 +145,26 @@ export default defineComponent({
   margin: 0;
   padding: 10px;
 }
-.card:hover {
+.cardbtn:hover {
   transform: scale (1.15);
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.9);
 }
-.card {
+.cardbtn {
   display: flex;
   flex-direction: column;
   min-width: 50px;
   border-radius: 18px;
   box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
-  font-family: roboto;
   text-align: center;
   transition: 0.5s ease;
   cursor: pointer;
   margin: 10px;
-  padding: 30px
+  padding: 30px;
 }
 .card-name {
   margin-top: 20px;
 }
 .card-icon {
-  flex:auto;
+  flex: auto;
 }
 </style>
