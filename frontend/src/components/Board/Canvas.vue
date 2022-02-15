@@ -13,11 +13,9 @@
         :background-image="backgroundImage"
         :watermark="watermark"
         saveAs="jpeg"
-        :styles="{
-          border: 'solid 3px #000',
-        }"
         :lock="disabled"
         @mousemove="getCoordinate($event)"
+        class="canvasdrawing"
       />
       <div class="button-container">
         <button type="button" class="btn btn-dark btn-lg" @click.prevent="eraser = !eraser">
@@ -163,20 +161,6 @@ export default {
       this.backgroundImage = URL.createObjectURL(event.target.files[0]);
       await this.$refs.VueCanvasDrawing.redraw();
     },
-    async setWatermarkImage(event) {
-      let URL = window.URL;
-      this.watermark = {
-        type: "Image",
-        source: URL.createObjectURL(event.target.files[0]),
-        x: 0,
-        y: 0,
-        imageStyle: {
-          width: 600,
-          height: 400,
-        },
-      };
-      await this.$refs.VueCanvasDrawing.redraw();
-    },
     getCoordinate(event) {
       let coordinates = this.$refs.VueCanvasDrawing.getCoordinates(event);
       this.x = coordinates.x;
@@ -227,10 +211,13 @@ body {
   flex-direction: row;
   position: fixed;
   bottom: 10px;
-
 }
 .button-container > * {
   margin-top: 15px;
   margin-right: 10px;
+}
+.canvasdrawing {
+  border: 3px solid black;
+  border-radius: 20px;
 }
 </style>
