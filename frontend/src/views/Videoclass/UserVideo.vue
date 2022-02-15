@@ -1,10 +1,10 @@
 <template>
   <div v-if="streamManager">
-    <div>
+    <div id="video-mask">
       <ov-video :stream-manager="streamManager"/>
     </div>
     <div>
-      <p style="margin-top:25px">{{ clientData }}</p>
+      <p>{{ clientData }}</p>
     </div>
   </div>
 </template>
