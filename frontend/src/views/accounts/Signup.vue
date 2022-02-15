@@ -9,7 +9,7 @@
             :validation-schema="schema"
             v-slot="{ errors }"
           >
-            <div class="row pb-4">
+            <div class="row pb-2">
               <div class="col-4"></div>
               <label class="col-1 font-A1-500 fs-5 px-0 height label-height">구분</label>
               <div class="form-row col-3 d-flex justify-content-center align-content-center">
@@ -49,8 +49,8 @@
                   /> -->
                   <p class="font-A1-500 fs-4 px-2 p-border my-0">교직원</p>
                 </label>
-                <p class="text-danger">{{ errors.position }}</p>
               </div>
+              <p class="text-danger">{{ errors.position }}</p>
               <div class="col-4"></div>
             </div>
             <!-- <div class="row mb-3">
