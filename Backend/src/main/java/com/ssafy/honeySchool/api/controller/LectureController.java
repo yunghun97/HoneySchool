@@ -8,9 +8,11 @@ import io.swagger.annotations.Api;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Base64;
 import java.util.Map;
 
@@ -68,7 +70,7 @@ public class LectureController {
     }
     @GetMapping("/history")
     public ResponseEntity<List<LectureUserHistory>> selectAllHistory(@RequestParam(value="userId") String userId){
-    	return new ResponseEntity(lectureService.selectAllLectureHistory(userId),HttpStatus.OK);
+    	return new ResponseEntity<List<LectureUserHistory>>(lectureService.selectAllLectureHistory(userId),HttpStatus.OK);
     }
     @PostMapping("/history/{userId}")
     public LectureUserHistory insertHistory(@RequestBody LectureUserHistory body, @PathVariable("userId") String userId) {
