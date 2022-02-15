@@ -496,7 +496,7 @@ input[type="radio"]:checked + label > p {
   width: 200px;
 }
 .p-border {
-  border : 1px solid rgb(49, 180, 242);
+  border : 1px solid gray;
   border-radius: 10px;
 }
 .label-height {
