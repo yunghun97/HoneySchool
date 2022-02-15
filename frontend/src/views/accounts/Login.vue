@@ -1,11 +1,6 @@
 <template>
   <div id="outer-div">
-    <img
-      class="profile mb-3"
-      src="@/assets/board/all.png"
-      alt="login image"
-    />
-    <h3 class="my-4">로그인</h3>
+    <h3 class="my-4 font-A1-500">로그인</h3>
     <div class="d-flex justify-content-center">
       <div id="login-form" class="card m-2 p-4">
         <div class="card-body">
@@ -15,39 +10,38 @@
             v-slot="{ errors }"
           >
             <div class="form-group py-2 d-flex flex-column align-items-start">
-              <label class="py-2 fs-5">아이디</label>
+              <!-- <label class="py-2 fs-5">아이디</label> -->
               <Field
                 name="user_id"
                 type="text"
-                class="form-control"
+                placeholder="아이디"
+                class="form-control underline font-A1-200"
                 :class="{ 'is-invalid': errors.user_id }"
               />
               <div class="invalid-feedback">{{ errors.user_id }}</div>
             </div>
             <div class="form-group py-2 d-flex flex-column align-items-start">
-              <label class="py-2 fs-5">비밀번호</label>
+              <!-- <label class="py-2 fs-5">비밀번호</label> -->
               <Field
                 name="password"
                 type="password"
-                class="form-control"
+                placeholder="비밀번호"
+                class="form-control underline font-A1-200"
                 :class="{ 'is-invalid': errors.password }"
               />
               <div class="invalid-feedback">{{ errors.password }}</div>
             </div>
             <div class="form-group d-grid gap-2 pt-4">
-              <button type="submit" class="btn bg-primary d-block">로그인</button>
+              <button type="submit" class="login-btn d-block font-A1-500">로그인</button>
             </div>
           </Form>
         </div>
       </div>
     </div>
     <div class="d-flex justify-content-center">
-      <div id="signup-button" class="card m-2 p-4 d-flex flex-column justify-content-center">
-        <p class="m-0">
-          아직 회원이 아니신가요?
-          <router-link to="/signup" class="text-decoration-none">회원가입 하세요.</router-link>
-        </p>
-      </div>
+      <p class="p-3">
+        <router-link to="/signup" class="text-decoration-none text-dark font-A1-500">회원가입</router-link>
+      </p>
     </div>
   </div>
 </template>
@@ -125,9 +119,6 @@ input[type="radio"]:checked + label > img {
 /* pyun */
 #login-form {
   width: 600px;
-  height: 450px;
-  background-color: rgb(255, 237, 169);
-  border-radius: 15px;
 }
 #signup-button {
   width: 600px;
@@ -136,14 +127,55 @@ input[type="radio"]:checked + label > img {
 }
 #outer-div {
   margin : 50px;
+  /* background-color: rgb(255, 237, 169); */
 }
 input {
     height: 50px;
 }
-.btn {
-  height: 50px;
+input.underline {
+  border-left-width:0;
+  border-right-width:0;
+  border-top-width:0;
+  border-bottom-width:1;
 }
-
+.login-btn {
+  display: inline-block;
+  line-height: 1.5;
+  color: #67748e;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.625rem 1.25rem;
+  transition: all 0.15s ease-in;
+  /* font-weight: 500; */
+  /* font-size: 0.875rem; */
+  /* background-color: transparent; */
+  border-radius: 0.3rem;
+  background-color: #aae9e5;
+  /* background-image: linear-gradient(310deg, #2dce89 0%, #2dcecc 100%); */
+  background-image: linear-gradient(310deg, rgb(55, 211, 190) 0%, #aae9e5 100%);
+}
+.card {
+  box-shadow: 5px 5px 5px rgba(136, 152, 170, 0.15) !important;
+}
+.font-A1-200{
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: 200;
+}
+.font-A1-300{
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: 300;
+}
+.font-A1-400{
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: 400;
+}
+.font-A1-500{
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: 500;
+}
 /* .pinkColor {
   color: rgb(254, 183, 211);
 } */
