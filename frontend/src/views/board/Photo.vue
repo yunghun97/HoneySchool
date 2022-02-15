@@ -28,31 +28,31 @@
       <div 
         class="note"
     >
-            <div class="content">
-              <h5>{{ currentarticle.board.title }}</h5>
-              <p v-if="currentarticle.board.user!==null"><small>작성자 : {{ currentarticle.board.user.name }}  |  작성날짜 : {{currentarticle.board.date.split(" ")[0] }}</small></p>
-              <!-- <p>{{ currentarticle.board.content }}</p> -->
-              <div v-if="currentarticle.files.length > 0">
-                <!-- <div v-for="file in currentarticle.files" :key="file.id">
-                  <img :src="`http://localhost:9999/static/uploads/${file.stored_file_path}`" class="w-100" alt="사진을 찾을 수 없습니다.">
-                </div> -->
-                <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
-                  <div class="carousel-inner">
-                    <div class="carousel-item" v-for="(image, idx) in currentarticle.files" :key="idx" :class="{ active: idx==0 }">
-                      <img :src="`http://localhost:9999/static/uploads/${image.stored_file_path}`" alt="사진을 찾을 수 없습니다.">
-                    </div>
-                  </div>
-                  <fa icon="angle-left" class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev" style="color:#87C7F1;">
-                    <!-- <span class="carousel-control-prev-icon" aria-hidden="false"></span> -->
-                    <span class="visually-hidden">Previous</span>
-                  </fa>
-                  <fa icon="angle-right" class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next" style="color:#87C7F1;">
-                    <!-- <span class="carousel-control-next-icon" aria-hidden="false"></span> -->
-                    <span class="visually-hidden">Next</span>
-                  </fa>
+        <div class="content">
+          <h5>{{ currentarticle.board.title }}</h5>
+          <p v-if="currentarticle.board.user!==null"><small>작성자 : {{ currentarticle.board.user.name }} &nbsp; | &nbsp; 작성날짜 : {{currentarticle.board.date.split(" ")[0] }}</small></p>
+          <!-- <p>{{ currentarticle.board.content }}</p> -->
+          <div v-if="currentarticle.files.length > 0">
+            <!-- <div v-for="file in currentarticle.files" :key="file.id">
+              <img :src="`http://localhost:9999/static/uploads/${file.stored_file_path}`" class="w-100" alt="사진을 찾을 수 없습니다.">
+            </div> -->
+            <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item" v-for="(image, idx) in currentarticle.files" :key="idx" :class="{ active: idx==0 }">
+                  <img :src="`http://localhost:9999/static/uploads/${image.stored_file_path}`" alt="사진을 찾을 수 없습니다.">
                 </div>
               </div>
+              <fa icon="angle-left" class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev" style="color:#87C7F1;">
+                <!-- <span class="carousel-control-prev-icon" aria-hidden="false"></span> -->
+                <span class="visually-hidden">Previous</span>
+              </fa>
+              <fa icon="angle-right" class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next" style="color:#87C7F1;">
+                <!-- <span class="carousel-control-next-icon" aria-hidden="false"></span> -->
+                <span class="visually-hidden">Next</span>
+              </fa>
             </div>
+          </div>
+        </div>
         </div>
     </div>
   </div>
