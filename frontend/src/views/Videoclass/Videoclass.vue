@@ -1,8 +1,10 @@
 <template>
   <div id="main-container" class="container">
     <div id="session" v-if="sessionCamera">
-      <div id="session-header">
-        <h1 id="session-title">{{ userinfo.class_number }}반 {{ ClassName }}수업</h1>
+      <div id="session-header" class="container">
+        <h1 id="session-title">
+          {{ userinfo.class_number }}반 {{ ClassName }}수업
+        </h1>
       </div>
       <div class="row">
         <!-- 선생님에게만 유저 접속 정보 표시 -->
@@ -13,19 +15,160 @@
           }"
         >
           <div class="row">
-            <div id="main-video" class="col-md-9">
-              <user-video
-                :stream-manager="mainStreamManager"
-                id="mainVideoElement"
-              />
+            <div class="col-md-9">
+              <div class="row" id="main-video">
+                <user-video
+                  :stream-manager="mainStreamManager"
+                  id="mainVideoElement"
+                />
+              </div>
+              <hr size="5px" />
+              <div class="row">
+                <!-- 학생 Navbar -->
+                <div v-if="userinfo.position === 'S'" class="navbar">
+                  <!-- 손들기 btn -->
+                  <div class="nav-cont" v-if="raisehand" @click="handDown()">
+                    <span class="main-btn">
+                      <fa icon="hand-paper" class="fontawesome-active"></fa>
+                    </span>
+                    <p>손 내리기</p>
+                  </div>
+                  <div class="nav-cont" v-else @click="raiseHand()">
+                    <span class="main-btn">
+                      <fa icon="hand-paper" class="fontawesome"></fa>
+                    </span>
+                    <p>손 들기</p>
+                  </div>
+                  <!-- 음소거 btn -->
+                  <div class="nav-cont" v-if="muted" @click="changeMuteStatus">
+                    <span class="main-btn">
+                      <fa icon="microphone-slash" class="fontawesome"></fa>
+                    </span>
+                    <p>마이크 켜기</p>
+                  </div>
+                  <div class="nav-cont" v-else @click="changeMuteStatus">
+                    <span class="main-btn">
+                      <fa icon="microphone" class="fontawesome-active"></fa>
+                    </span>
+                    <p>마이크 끄기</p>
+                  </div>
+                  <!-- 자리비움 btn -->
+                  <div class="nav-cont" v-if="left" @click="alarmReturn">
+                    <span class="main-btn">
+                      <fa icon="user-clock" class="fontawesome-active"></fa>
+                    </span>
+                    <p>자리 돌아오기</p>
+                  </div>
+                  <div class="nav-cont" v-else @click="alarmLeft">
+                    <span class="main-btn">
+                      <fa icon="user-clock" class="fontawesome"></fa>
+                    </span>
+                    <p>자리 비우기</p>
+                  </div>
+                  <!-- 퀴즈 링크 btn -->
+                  <div
+                    class="nav-cont"
+                    data-bs-toggle="modal"
+                    data-bs-target="#recievedquiz"
+                  >
+                    <span class="main-btn">
+                      <fa icon="smile" class="fontawesome"></fa>
+                    </span>
+                    <p>퀴즈 풀기</p>
+                  </div>
+                  <!-- 전체 화면 -->
+                  <div class="nav-cont" @click="fullScreen">
+                    <span class="main-btn">
+                      <fa icon="expand" class="fontawesome"></fa>
+                    </span>
+                    <p>전체 화면</p>
+                  </div>
+                  <!-- 방 나가기 btn -->
+                  <div class="nav-cont" @click="leaveSession">
+                    <span class="main-btn">
+                      <fa icon="sign-out-alt" class="fontawesome"></fa>
+                    </span>
+                    <p>나가기</p>
+                  </div>
+                </div>
+
+                <!-- 선생님 Navbar -->
+                <div v-else class="navbar">
+                  <!-- 음소거 btn -->
+                  <div class="nav-cont" v-if="muted" @click="changeMuteStatus">
+                    <span class="main-btn">
+                      <fa icon="microphone-slash" class="fontawesome"></fa>
+                    </span>
+                    <p>마이크 켜기</p>
+                  </div>
+                  <div class="nav-cont" v-else @click="changeMuteStatus">
+                    <span class="main-btn">
+                      <fa icon="microphone" class="fontawesome-active"></fa>
+                    </span>
+                    <p>마이크 끄기</p>
+                  </div>
+                  <!-- 화면 공유 (Screen sharing) -->
+                  <div class="nav-cont" @click="publishScreenShare()">
+                    <span class="main-btn">
+                      <fa icon="share-square" class="fontawesome"></fa>
+                    </span>
+                    <p>화면 공유</p>
+                  </div>
+                  <!-- 퀴즈 내기 -->
+                  <div class="nav-cont">
+                    <span
+                      class="main-btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#sendquiz"
+                      data-bs-whatever="@mdo"
+                    >
+                      <fa icon="smile" class="fontawesome"></fa>
+                    </span>
+                    <p>퀴즈 내기</p>
+                  </div>
+                  <!-- 전체 화면 -->
+                  <div class="nav-cont" @click="fullScreen">
+                    <span class="main-btn">
+                      <fa icon="expand" class="fontawesome"></fa>
+                    </span>
+                    <p>전체 화면</p>
+                  </div>
+                  <!-- 방 나가기 btn -->
+                  <div class="nav-cont" @click="leaveSession">
+                    <span class="main-btn">
+                      <fa icon="sign-out-alt" class="fontawesome"></fa>
+                    </span>
+                    <p>나가기</p>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="col-md-3">
               <div id="container-cameras" class="row panel panel-default">
-                <p class="panel-heading">나의 화면</p>
+                <p>나의 화면</p>
                 <user-video
                   :stream-manager="publisherCamera"
                   @click="updateMainVideoStreamManager(publisherCamera)"
                 />
+                <!-- 화면 공유 (선생님에게만 표시) -->
+                <p v-if="userinfo.position === 'T'" class="panel-heading">화면 공유</p>
+                <user-screen
+                  v-if="userinfo.position === 'T'"
+                  :stream-manager="publisherScreen"
+                  @click="updateMainVideoStreamManagerScreen(publisherScreen)"
+                />
+                <!-- 전체 참여인원의 화면공유 화면 (필요시 활성화) -->
+                <!-- <p>Subscribers Screen</p>
+                <div
+                  v-for="sub in subscribersScreen"
+                  :key="sub.stream.connection.connectionId"
+                  class="subContainer"
+                >
+                  <user-screen
+                    :stream-manager="sub"
+                    @click="updateMainVideoStreamManagerScreen(sub)"
+                  />
+                </div> -->
                 <p>친구들 화면</p>
                 <div id="container-friendsCamera">
                   <div
@@ -103,139 +246,16 @@
                   </div>
                 </div>
               </div>
-              <div
-                v-if="userinfo.position === 'T'"
-                id="container-screens"
-                class="row panel panel-default"
-              >
-                <p class="panel-heading">화면 공유</p>
-                <user-screen
-                  :stream-manager="publisherScreen"
-                  @click="updateMainVideoStreamManagerScreen(publisherScreen)"
-                />
-                <!-- 전체 참여인원의 화면공유 화면 (필요시 활성화) -->
-                <!-- <p>Subscribers Screen</p>
-                <div
-                  v-for="sub in subscribersScreen"
-                  :key="sub.stream.connection.connectionId"
-                  class="subContainer"
-                >
-                  <user-screen
-                    :stream-manager="sub"
-                    @click="updateMainVideoStreamManagerScreen(sub)"
-                  />
-                </div> -->
-              </div>
-            </div>
-          </div>
-          <!-- 학생 Navbar -->
-          <div v-if="userinfo.position === 'S'" class="navbar">
-            <!-- 손들기 btn -->
-            <div class="nav-cont" v-if="raisehand" @click="handDown()">
-              <span class="main-btn">
-                <fa icon="hand-paper" class="fontawesome-active"></fa>
-              </span>
-              <p>손 내리기</p>
-            </div>
-            <div class="nav-cont" v-else @click="raiseHand()">
-              <span class="main-btn">
-                <fa icon="hand-paper" class="fontawesome"></fa>
-              </span>
-              <p>손 들기</p>
-            </div>
-            <!-- 음소거 btn -->
-            <div class="nav-cont" v-if="muted" @click="changeMuteStatus">
-              <span class="main-btn">
-                <fa icon="microphone-slash" class="fontawesome"></fa>
-              </span>
-              <p>마이크 켜기</p>
-            </div>
-            <div class="nav-cont" v-else @click="changeMuteStatus">
-              <span class="main-btn">
-                <fa icon="microphone" class="fontawesome-active"></fa>
-              </span>
-              <p>마이크 끄기</p>
-            </div>
-            <!-- 자리비움 btn -->
-            <div class="nav-cont" v-if="left" @click="alarmReturn">
-              <span class="main-btn">
-                <fa icon="user-clock" class="fontawesome-active"></fa>
-              </span>
-              <p>자리 돌아오기</p>
-            </div>
-            <div class="nav-cont" v-else @click="alarmLeft">
-              <span class="main-btn">
-                <fa icon="user-clock" class="fontawesome"></fa>
-              </span>
-              <p>자리 비우기</p>
-            </div>
-            <!-- 퀴즈 링크 btn -->
-            <div
-              class="nav-cont"
-              data-bs-toggle="modal"
-              data-bs-target="#recievedquiz"
-            >
-              <span class="main-btn">
-                <fa icon="smile" class="fontawesome"></fa>
-              </span>
-              <p>퀴즈 풀기</p>
-            </div>
-            <!-- 전체 화면 -->
-            <div class="nav-cont" @click="fullScreen">
-              <span class="main-btn">
-                <fa icon="user-clock" class="fontawesome"></fa>
-              </span>
-              <p>전체 화면</p>
-            </div>
-            <!-- 방 나가기 btn -->
-            <div class="nav-cont" @click="leaveSession">
-              <span class="main-btn">
-                <fa icon="sign-out-alt" class="fontawesome"></fa>
-              </span>
-              <p>나가기</p>
-            </div>
-          </div>
-
-          <!-- 선생님 Navbar -->
-          <div v-else class="navbar">
-            <!-- 화면 공유 (Screen sharing) -->
-            <div class="nav-cont" @click="publishScreenShare()">
-              <span class="main-btn">
-                <fa icon="hand-paper" class="fontawesome"></fa>
-              </span>
-              <p>화면 공유</p>
-            </div>
-            <!-- 퀴즈 내기 -->
-            <div class="nav-cont">
-              <span
-                class="main-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#sendquiz"
-                data-bs-whatever="@mdo"
-              >
-                <fa icon="microphone-slash" class="fontawesome"></fa>
-              </span>
-              <p>퀴즈 내기</p>
-            </div>
-            <!-- 전체 화면 -->
-            <div class="nav-cont" @click="fullScreen">
-              <span class="main-btn">
-                <fa icon="user-clock" class="fontawesome"></fa>
-              </span>
-              <p>전체 화면</p>
-            </div>
-            <!-- 방 나가기 btn -->
-            <div class="nav-cont" @click="leaveSession">
-              <span class="main-btn">
-                <fa icon="sign-out-alt" class="fontawesome"></fa>
-              </span>
-              <p>나가기</p>
             </div>
           </div>
         </div>
-        <div v-if="userinfo.position === 'T'" class="col-md-3" id="container-users">
+        <div
+          v-if="userinfo.position === 'T'"
+          class="col-md-3"
+          id="container-users"
+        >
           <p>유저 상태목록</p>
-          <table v-if="studentList">
+          <table v-if="studentList" cellpadding="10px" style="margin-left: auto; margin-right: auto;">
             <thead>
               <tr>
                 <th scope="col">번호</th>
@@ -247,8 +267,12 @@
               <tr v-for="(student, index) in studentList" :key="index">
                 <th>{{ student.studentNumber }}번</th>
                 <td>{{ student.name }}</td>
-                <td v-if="participants.includes(student.name)">접속중</td>
-                <td v-else>미접속</td>
+                <td v-if="participants.includes(student.name)">
+                  <fa icon="power-off" class="student-on"></fa>
+                </td>
+                <td v-else>
+                  <fa icon="power-off" class="student-off"></fa>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -637,23 +661,23 @@ export default {
           });
       });
       // 화면 공유 생성
-      if (this.userinfo.position === "T") {
-        this.getToken(this.SessionId).then((tokenScreen) => {
-          // Create a token for screen share
-          this.sessionScreen
-            .connect(tokenScreen, { clientData: this.UserName + "_화면 공유" })
-            .then(() => {
-              console.log("Session screen connected");
-            })
-            .catch((error) => {
-              console.warn(
-                "There was an error connecting to the session for screen share:",
-                error.code,
-                error.message
-              );
-            });
-        });
-      }
+      // if (this.userinfo.position === "T") {
+      this.getToken(this.SessionId).then((tokenScreen) => {
+        // Create a token for screen share
+        this.sessionScreen
+          .connect(tokenScreen, { clientData: this.UserName + "_화면 공유" })
+          .then(() => {
+            console.log("Session screen connected");
+          })
+          .catch((error) => {
+            console.warn(
+              "There was an error connecting to the session for screen share:",
+              error.code,
+              error.message
+            );
+          });
+      });
+      // }
       window.addEventListener("beforeunload", this.leaveSession);
     },
 
@@ -1030,6 +1054,28 @@ export default {
 </script>
 
 <style scoped>
+table {
+  border-top: 3px solid #444444;
+  border-spacing: 10px;
+}
+
+th {
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 500;
+  font-weight: bold;
+  border-top: 3px solid #444444;
+  font-size: 20px;
+}
+
+td {
+  text-align: center;
+  vertical-align: middle;
+  border-top: 3px solid #444444;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+}
+
 #buttonQuiz {
   float: right;
   margin-top: 20px;
@@ -1037,14 +1083,14 @@ export default {
 }
 .navbar {
   justify-content: space-evenly;
-  background-color: #ffeda9;
-  overflow: hidden;
-  position: fixed;
+  background-color: #87C7F1;
+  /* overflow: hidden; */
+  /* position: fixed; */
   bottom: 0;
-  width: 80%;
+  /* width: 80%; */
   height: 110px;
   border-radius: 20px;
-  padding: 0;
+  padding-top: 30px;
 }
 .nav-cont {
   display: block;
@@ -1052,7 +1098,11 @@ export default {
 }
 .nav-cont p {
   margin-bottom: 0;
-  margin-top: 10px;
+  margin-top: 20px;
+  /* font-family: "Gothic A1", sans-serif;
+  font-weight: 500; */
+  font-family: 'Jua', sans-serif;
+  font-size: 20px;
 }
 .main-btn {
   cursor: pointer;
@@ -1060,7 +1110,7 @@ export default {
   background: #ffff;
   border-radius: 100%;
   padding: 15px 10px;
-  margin-right: 15px;
+  /* margin-right: 5px; */
 }
 .fontawesome {
   width: 30px;
@@ -1069,6 +1119,12 @@ export default {
 .fontawesome-active {
   width: 30px;
   height: 30px;
+  color: #f52532;
+}
+.student-on {
+  color: greenyellow;
+}
+.student-off {
   color: #f52532;
 }
 .subContainer {
