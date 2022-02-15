@@ -14,6 +14,7 @@
     <router-link to="/login">Login</router-link> |
     <router-link to="/classboard">학급게시판</router-link> |
     <router-link to="/videoclass">화상수업</router-link> |
+    <router-link to="/profile">프로필</router-link> |
     <button v-if="userinfo.position === 'S' || userinfo.position === 'T'" class="btn-warning" @click="logout">Logout</button>
   </div>
   <router-view />
