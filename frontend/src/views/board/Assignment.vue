@@ -112,7 +112,7 @@ export default ({
       })
       .then((response)=>{
           currentarticle.value = response.data
-          console.log(response.data)
+          //console.log(response.data)
       })
     }
     let done = ref<boolean>(false)
