@@ -1,11 +1,20 @@
 <template>
   <div v-if="isLoading">
-    <p>...LOADING</p>
+    <div class="spinner-border" role="status"></div>
+    <p>LOADING...</p>
   </div>
   <div v-else class="box">
-    <div v-if="userinfo.position==='T'">
-      <button v-if="!isEditing" type="button" class="btn btn-primary" @click="requestEdit">수정하기</button>
-      <button v-else type="button" class="btn btn-primary" @click="editTimetable">수정완료</button>
+    <div class="buttons">
+      <button 
+      type="button" class="btn btn-outline-success buttonall"
+      @click="$router.go(-1)"
+      >
+        전체 게시판
+      </button>
+      <div v-if="userinfo.position==='T'">
+        <button v-if="!isEditing" type="button" class="btn btn-outline-primary" @click="requestEdit">수정하기</button>
+        <button v-else type="button" class="btn btn-primary" @click="editTimetable">수정완료</button>
+      </div>
     </div>
     <table class="table">
       <thead>
@@ -242,6 +251,14 @@ export default {
 </script>
 <style scoped>
 .box {
-    margin: 30px 30vh;
+  margin: 50px 30vh;
+}
+.btn {
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+.buttons {
+  display: flex;
+  justify-content: right;
 }
 </style>

@@ -59,7 +59,7 @@ export default defineComponent({
                 router.push({name: 'ClassBoard'})
             })
             .catch(()=>{
-                alert("글 작성 실패")
+                alert("질문글 작성 실패. 다시 시도해주세요.")
             })
 
         }

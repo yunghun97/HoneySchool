@@ -7,8 +7,9 @@
   >
     새로운 글 쓰기
   </button>
-  <div v-if="isLoading">
-    <p>...LOADING</p>
+   <div v-if="isLoading">
+    <div class="spinner-border" role="status"></div>
+    <p>LOADING...</p>
   </div>
   <div v-else>
     <div v-if="article.length === 0">

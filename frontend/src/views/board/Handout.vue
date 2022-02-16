@@ -28,7 +28,9 @@
             <div 
                 class="note"
                 >
-                <handout-content :currentarticle = currentarticle />
+                <div>
+                    <handout-content :currentarticle = currentarticle :isLoading="isLoading"/>
+                </div>
             </div>
         </div>
     </div>
@@ -73,6 +75,7 @@ export default
             })
             .then((response)=>{
                 currentarticle.value = response.data
+                isLoading.value = false
             })
         }
 
