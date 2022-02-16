@@ -93,14 +93,13 @@ public class UserServiceImpl implements UserService {
         if(!pUser.isPresent()) return null;
 
         User user= pUser.get();
-        user.setName(userModifyPutReq.getName());
-        user.setSchool(userModifyPutReq.getSchool());
-        user.setPosition(userModifyPutReq.getPosition());
-        user.setNumber(userModifyPutReq.getNumber());
-        user.setEmail(userModifyPutReq.getEmail());
+        if(!user.getName().equals(userModifyPutReq.getName())) user.setName(userModifyPutReq.getName());
+        if(!user.getSchool().equals(userModifyPutReq.getSchool())) user.setSchool(userModifyPutReq.getSchool());
+        if(user.getNumber()!=userModifyPutReq.getStudent_number()) user.setNumber(userModifyPutReq.getStudent_number());
+        if(user.getGrade()!=userModifyPutReq.getGrade()) user.setGrade(userModifyPutReq.getGrade());
         user.setPassword(passwordEncoder.encode(userModifyPutReq.getPassword()));
-        user.setGrade(userModifyPutReq.getGrade());
-        user.setClasses(userModifyPutReq.getClasses());
+        if(user.getClasses()!=userModifyPutReq.getClass_number()) user.setClasses(userModifyPutReq.getClass_number());
+
         return userRepository.save(user);
     }
 
