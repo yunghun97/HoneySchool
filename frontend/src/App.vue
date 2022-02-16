@@ -52,7 +52,7 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 
 export default {
-  setup() {
+  setup() {    
     const store = useStore();
     let userinfo = computed(() => store.state.accountStore.userinfo);
     const logout = () => store.commit("accountStore/logout");

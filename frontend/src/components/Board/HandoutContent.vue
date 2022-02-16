@@ -9,7 +9,7 @@
     <div v-if="currentarticle.files.length > 0" class="content-files">
       <p class="filelist"><img src="@/assets/board/handout.png" alt="" class="fileimg"> 첨부 파일 목록</p>
       <div v-for="idx in currentarticle.files.length" :key="idx">
-        <img src="@/assets/board/file.png" alt="" class="fileimg"><a :href="`http://localhost:9999/static/uploads/${currentarticle.files[idx-1].stored_file_path}`"> 첨부파일 {{idx}}</a>
+        <img src="@/assets/board/file.png" alt="" class="fileimg"><a :href="process.env.VUE_APP_FILE_URL+`${currentarticle.files[idx-1].stored_file_path}`"> 첨부파일 {{idx}}</a>
       </div>
     </div>
   </div>
