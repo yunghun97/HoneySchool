@@ -39,7 +39,7 @@
             <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
                 <div class="carousel-item" v-for="(image, idx) in currentarticle.files" :key="idx" :class="{ active: idx==0 }">
-                  <img :src="`//home/ubuntu/honeyschool/file/${image.stored_file_path}`" alt="사진을 찾을 수 없습니다.">
+                  <img :src="`https://i6b201.p.ssafy.io:9999/file/${image.stored_file_path}`" alt="사진을 찾을 수 없습니다.">
                 </div>
               </div>
               <fa icon="angle-left" class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev" style="color:#87C7F1;">
@@ -82,7 +82,6 @@ export default
     userinfoData = JSON.parse(localStorageData);
     }
     let userinfo = userinfoData.accountStore.userinfo;
-
     let currentarticle = ref({});
     const articleDetail = () => {
       return axios.get(process.env.VUE_APP_API_URL+"/board/class/detail",{

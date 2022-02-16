@@ -262,7 +262,7 @@ export default defineComponent({
 
 <style>
 .submit-form {
-  margin: auto;
+  margin: 50px auto;
   width: 100vh;
 }
 </style>

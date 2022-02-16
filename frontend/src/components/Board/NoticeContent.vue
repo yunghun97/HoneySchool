@@ -34,8 +34,9 @@ export default {
 </script>
 <style scoped>
 .content {
-        padding-top: 20vh;
-        margin-bottom: 50px;
+    padding-top: 20vh;
+    margin-bottom: 50px;
+    font-family: "Gothic A1", sans-serif;
 }
 p {
     margin-right: 25vh;

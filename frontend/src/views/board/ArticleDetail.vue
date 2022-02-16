@@ -28,7 +28,7 @@
           <p>첨부파일</p>
            <div v-for="idx in currentarticle.files.length" :key="idx">
             <a 
-              :href="`//home/ubuntu/honeyschool/file/${currentarticle.files[idx-1].stored_file_path}`"
+              :href="`https://i6b201.p.ssafy.io:9999/file/${currentarticle.files[idx-1].stored_file_path}`"
               v-if="currentarticle.files[idx-1].commentId===0"
             >
               첨부파일 {{idx}}
@@ -40,12 +40,14 @@
     <div class="container" >
         <div class="row">
             <div class="btns" v-if="currentarticle.board.user.userId === userinfo.userId">
-                <button 
-                    type="button" class="btn btn-primary"
-                    @click="$router.push({ name: 'ArticleUpdate', params: { article_id: id }})"
-                    >
-                    수정하기
-                </button>
+                <div>
+                  <button 
+                      type="button" class="btn btn-primary"
+                      @click="$router.push({ name: 'ArticleUpdate', params: { article_id: id }})"
+                      >
+                      수정하기
+                  </button>
+                </div>
                 <button 
                     type="button" class="btn btn-danger"
                     @click="deleteArticle"
@@ -86,7 +88,7 @@
                   <p :class="'collapse show col'+comment.id" id="comment-cont">{{ comment.content }}</p>
                   <div v-for="file in comments.files" :key="file.id"  class="comment-list">
                     <a 
-                      :href="`//home/ubuntu/honeyschool/file/${file.stored_file_path}`"
+                      :href="process.env.VUE_APP_FILE_URL+`${file.stored_file_path}`"
                       v-if="file.commentId === comment.id"
                     >
                       첨부파일
@@ -96,9 +98,13 @@
                     <!-- 댓글 삭제 -->
                     <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
                     <!-- 댓글 수정 -->
-                    <button class="btn btn-secondary comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.col'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
-                        <fa icon="edit" class="fa-icon"></fa>
-                    </button>
+                    <div v-if="currentarticle.board.category==='assignment' && userinfo.position==='S'">
+                    </div>
+                    <div v-else>
+                      <button class="btn btn-secondary comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.col'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
+                          <fa icon="edit" class="fa-icon"></fa>
+                      </button>
+                    </div>
                     <div :class="'collapse col'+comment.id">
                       <div class="card card-body">
                         <textarea class="form-control" rows="1" v-model="revisedComment"></textarea>
@@ -125,7 +131,9 @@
                 <div v-else class="reply">
                   <h3 class="comment-list"><fa icon="share" class="fa-icon-b"></fa> {{ comment.user.name }}: </h3>
                   <p class="comment-date"><small class="text-muted">{{ comment.createdAt }}</small></p>
-                  <p id="comment-cont">{{ comment.content }}</p>
+                  <div v-for="content in comment.content.split('\r')" :key="content" id="comment-cont">
+                    <p>{{ content }}</p>
+                  </div>
                   <div v-if="comment.user.userId === userinfo.userId">
                     <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
                   </div>
@@ -277,7 +285,7 @@ export default {
             if (revisedComment.value.length === 0) {
                 alert("댓글 내용을 작성해주세요")
             } else {
-                axios.put(process.env.VUE_APP_API_URL+`/board/class/${id}/comment/${comId}`, {
+                axios.put(`http://localhost:9999/static/uploads/board/class/${id}/comment/${comId}`, {
                     'content': revisedComment.value,
                     })
                 .then(() => {
@@ -387,5 +395,8 @@ img {
   margin-left: auto;
   margin-right: auto;
 
+}
+hr {
+  width: 100%;
 }
 </style>
