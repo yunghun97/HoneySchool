@@ -106,7 +106,7 @@ public class CommentController {
     		String rootPath = request.getSession().getServletContext().getRealPath("/uploads");
     		System.out.println("바뀐 static path?? : " + rootPath);
     		String resourcesPath = rootPath.substring(0, rootPath.length()-14) + "resources\\static\\uploads";	
-    		rootPath = resourcesPath;
+    		rootPath = "/home/ubuntu/honeyschool/file";
     		// 파일 저장
     		ClassBoard sameBoard = boardService.addBoard(classBoard, files, rootPath, comment.getId());    		
     	}
@@ -171,7 +171,7 @@ public class CommentController {
     		String rootPath = request.getSession().getServletContext().getRealPath("/uploads");
     		System.out.println("바뀐 static path?? : " + rootPath);
     		String resourcesPath = rootPath.substring(0, rootPath.length()-14) + "resources\\static\\uploads";	
-    		rootPath = resourcesPath;
+    		rootPath = "/home/ubuntu/honeyschool/file";
     		// 파일 저장
     		ClassBoard sameBoard = boardService.addBoard(classBoard, files, rootPath, newComment.getId());    		        	        		
         }
