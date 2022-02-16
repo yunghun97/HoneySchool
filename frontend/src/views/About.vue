@@ -13,7 +13,7 @@
     <div class="row justify-content-center" style="height: 500px">
       <!-- 선생님, 학생 분기 화상수업 -->
       <div class="col-5" id="createSession">
-        <!-- <img src="@/assets/videoclass/videoclass.png"> -->
+        <img src="@/assets/videoclass/videoclass.png">
         <h3>지금은 <b>{{ thisClassName }}</b> 수업시간 입니다.</h3>
         <div v-if="userinfo.position === 'T'">
           <button class="btn-class" @click="joinSession">수업 개설 및 참석하기</button>

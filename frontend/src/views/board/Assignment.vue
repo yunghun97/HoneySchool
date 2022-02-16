@@ -23,19 +23,24 @@
       </svg>
     </div>
     <div class="articleContent">
-      <h4>{{currentarticle.board.title}}</h4>
+      <h1 v-if="done"><span class="badge bg-warning articleBadge">숙제 완료!</span></h1><p></p>
+      <h3>{{currentarticle.board.title}}</h3>
       <span class="articleRight"><p>작성자 : {{ currentarticle.board.user.name }} &nbsp; | &nbsp; 작성 날짜 : {{ currentarticle.board.date.split(' ')[0] }}</p></span>
-      <h5>{{currentarticle.board.content}}</h5>
+      <div v-for="content in currentarticle.board.content.split('\r')" :key="content">
+        <h5>{{ content }}</h5>
+      </div>
     </div>
     <div>
     <div v-if="done">
       <div class="articleContent">
-        <h1><span class="badge bg-warning">완료!</span></h1><p></p>
         <div v-if="teacherCom === ''">
-            <h4>아직 선생님께서 확인중이에요</h4>
+            <h4>선생님의 한마디: 아직 선생님께서 확인중이에요</h4>
         </div>
         <div v-else>
-            <h4>선생님의 한마디: {{teacherCom.content}}</h4>
+          <h4>선생님의 한마디</h4>
+          <div v-for="content in teacherCom.content.split('\r')" :key="content">
+            <h5>{{ content }}</h5>
+          </div>
         </div>
       </div>
       <div class="image">
@@ -218,9 +223,17 @@ export default ({
 .articleContent {
   background-color: #ffff;
   border-radius: 20px;
-  margin: 20px auto;
+  margin: 15px auto;
   width: 1200px;
-  padding: 10px;
+  padding: 15px;
+  position:relative;
+}
+.articleBadge {
+  position:absolute;
+  /* transform: rotate(-20deg); */
+  /* bottom: 80px; */
+  left: 0;
+  top: 0;
 }
 .articleRight {
   text-align: right;

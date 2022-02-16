@@ -26,17 +26,18 @@
   <div style="background-color:#F99D07">
     <div class="note">
       <div class="anscontent">
-        <h5 class="card-title">질문 내용</h5>
+        <h4 class="card-title">질문 내용</h4>
         <p class="card-text"><small class="text-muted">작성 날짜 : {{ currentarticle.board.date.split("T")[0] }}</small></p>
        <a :href="`http://localhost:9999/static/uploads/${currentarticle.files[0].stored_file_path}`"> <img src="@/assets/board/recordfile.png" alt="" class="fileimg">질문 내용 듣기</a>
       </div>
       <div class="anscontent">
-        <h5 class="card-title">선생님의 답변</h5>
+        <h4 class="card-title">선생님의 답변</h4>
         <div v-if="currentarticle.comments.length > 0">
           <div v-for="idx in currentarticle.comments.length" :key="idx">
-            <p class="card-text"><small class="text-muted">답변 날짜 : {{ currentarticle.comments[idx-1].createdAt}}</small></p>
-            <p class="card-text"><small class="text-muted">작성자 : {{ currentarticle.comments[idx-1].user.name}}</small></p>
-            <p class="card-text">{{ currentarticle.comments[idx-1].content}}</p>
+            <p class="card-text"><small class="text-muted">작성자 : {{ currentarticle.board.user.name }} &nbsp; | &nbsp; 작성 날짜 : {{ currentarticle.board.date.split(' ')[0] }}</small></p>
+            <div v-for="content in currentarticle.comments[idx-1].content.split('\r')" :key="content">
+              <p>{{ content }}</p>
+            </div>
           </div>
         </div>
         <div v-else>
@@ -170,7 +171,7 @@ img {
 }
 .anscontent {
   border-radius: 18px;
-  box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
   border-radius: 20px;
   height: auto;
   width: 900px;
