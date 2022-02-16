@@ -28,7 +28,7 @@
       <div class="anscontent">
         <h4 class="card-title">질문 내용</h4>
         <p class="card-text"><small class="text-muted">작성 날짜 : {{ currentarticle.board.date.split("T")[0] }}</small></p>
-       <a :href="`https://i6b201.p.ssafy.io:9999/file/${currentarticle.files[0].stored_file_path}`"> <img src="@/assets/board/recordfile.png" alt="" class="fileimg">질문 내용 듣기</a>
+       <a :href="`https://i6b201.p.ssafy.io:9999/file/${currentarticle.files[0].stored_file_path}`" target='_black'> <img src="@/assets/board/recordfile.png" alt="" class="fileimg">질문 내용 듣기</a>
       </div>
       <div class="anscontent">
         <h4 class="card-title">선생님의 답변</h4>
