@@ -30,6 +30,7 @@
             <a 
               :href="`https://i6b201.p.ssafy.io:9999/file/${currentarticle.files[idx-1].stored_file_path}`"
               v-if="currentarticle.files[idx-1].commentId===0"
+              target='_black'
             >
               첨부파일 {{idx}}
             </a>
@@ -285,7 +286,7 @@ export default {
             if (revisedComment.value.length === 0) {
                 alert("댓글 내용을 작성해주세요")
             } else {
-                axios.put(`https://i6b201.p.ssafy.io:9999/file//board/class/${id}/comment/${comId}`, {
+                axios.put(`http://localhost:9999/static/uploads/board/class/${id}/comment/${comId}`, {
                     'content': revisedComment.value,
                     })
                 .then(() => {
