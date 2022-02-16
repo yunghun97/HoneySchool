@@ -3,6 +3,7 @@
   <button 
     type="button" class="btn btn-outline-success"
     @click="$router.push('create')"
+    v-if="userinfo.position==='T'"
   >
     새로운 글 쓰기
   </button>

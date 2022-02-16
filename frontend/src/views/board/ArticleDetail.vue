@@ -5,6 +5,12 @@
 
   <!-- Article Detail -->
   <div v-else>
+    <button 
+    type="button" class="btn btn-outline-success buttonall"
+    @click="$router.go(-1)"
+    >
+      전체 게시판
+    </button>
     <div class="card">
       <h4 class="card-header">{{ currentarticle.board.title }}</h4>
       <div class="card-body">
@@ -36,7 +42,7 @@
             <div class="btns" v-if="currentarticle.board.user.userId === userinfo.userId">
                 <button 
                     type="button" class="btn btn-primary"
-                    @click="$router.push({ name: 'ArticleUpdate', params: { category: currentarticle.category, article_id: id }})"
+                    @click="$router.push({ name: 'ArticleUpdate', params: { article_id: id }})"
                     >
                     수정하기
                 </button>
@@ -101,13 +107,17 @@
                     </div>
                   </div>
                     <!-- 대댓글 작성 -->
-                  <button class="btn btn-success comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.re'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
-                      <fa icon="reply" class="fa-icon"></fa>
-                  </button>
-                  <div :class="'collapse re'+comment.id">
-                    <div class="card card-body">
-                      <textarea class="form-control" rows="1" v-model="reComment"></textarea>
-                      <button type="button" class="btn btn-success" @click="postReCom(comment.id)"><fa icon="reply" class="fa-icon"></fa>작성</button>
+                  <div v-if="currentarticle.board.category==='assignment' && userinfo.position==='S'">
+                  </div>
+                  <div v-else>
+                    <button class="btn btn-success comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.re'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
+                        <fa icon="reply" class="fa-icon"></fa>
+                    </button>
+                    <div :class="'collapse re'+comment.id">
+                      <div class="card card-body">
+                        <textarea class="form-control" rows="1" v-model="reComment"></textarea>
+                        <button type="button" class="btn btn-success" @click="postReCom(comment.id)"><fa icon="reply" class="fa-icon"></fa>작성</button>
+                      </div>
                     </div>
                   </div>
                   <hr>
@@ -116,7 +126,9 @@
                   <h3 class="comment-list"><fa icon="share" class="fa-icon-b"></fa> {{ comment.user.name }}: </h3>
                   <p class="comment-date"><small class="text-muted">{{ comment.createdAt }}</small></p>
                   <p id="comment-cont">{{ comment.content }}</p>
-                  <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
+                  <div v-if="comment.user.userId === userinfo.userId">
+                    <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
+                  </div>
                   <hr>
                 </div>
               </div>
@@ -196,7 +208,6 @@ export default {
             )
             .then((res) => {
                 comments.value = res.data
-                console.log('c',comments.value)
             })
         }
         articleDetail().then(() => {
@@ -368,5 +379,11 @@ img {
     max-width: 600px;
     height: auto;
     
+}
+.buttonall {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
 }
 </style>
