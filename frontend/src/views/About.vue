@@ -81,6 +81,7 @@ import { useRouter } from "vue-router";
 
 export default {
   setup() {
+    let download = "undefined";
     const router = useRouter();
     // LocalStorage의 유저정보 도출
     const localStorageData = localStorage.getItem("vuex");
@@ -89,7 +90,6 @@ export default {
       userinfoData = JSON.parse(localStorageData);
     }
     let userinfo = userinfoData.accountStore.userinfo;
-
     // 오늘의 시간표 GET & 현재시각과 비교 => 현재 수업 확인
     let timetableData = ref([]);
     let thisClass = ref(10);
@@ -204,15 +204,33 @@ export default {
           console.log(error);
         });
     };
-
+    const getFile = () =>{
+      return axios.get(process.env.VUE_APP_API_URL+"/board/file")
+      .then((response)=> {
+        console.log(response)
+        download = response.data;        
+        // let blob = new Blob([response.data], {type: "image/jpeg"});
+        console.log(response.data);
+        let array = [];
+        for (let i = 0; i < response.data.length; i++) {
+          array.push(response.data.charCodeAt(i));
+        }
+        const blob = new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+        download = window.URL.createObjectURL(blob);
+        console.log(blob.size, blob.type);
+        console.log(download);        
+      })
+      .catch((error)=> console.log(error))
+    }
     return {
-      userinfo,
+      userinfo,      
       timetableData,
       dateNow,
       timeNow,
       thisClass,
       thisClassName,
-      joinSession,
+      joinSession,      
+      getFile,
     };
   },
 };

@@ -5,12 +5,15 @@ import com.ssafy.honeySchool.common.util.JwtTokenUtil;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.CacheControl;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.Filter;
 
@@ -57,6 +60,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 			.addResourceLocations("classpath:/dist/img/");
         registry.addResourceHandler("/js/**")
 				.addResourceLocations("classpath:/dist/js/");
+        
+        /*
+         *  이미지, 기타 파일 참조
+         */
+        
+//        .addResourceLocations("file:C:/Users/GWON/") 윈도우
+        registry.addResourceHandler("/file/**")
+        .addResourceLocations("file:/home/ubuntu/honeyschool/file/")
+        .setCacheControl(CacheControl.maxAge(20,TimeUnit.MINUTES));
     }
 
     public Filter requestLoggingFilter() {

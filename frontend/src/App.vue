@@ -1,5 +1,4 @@
-<template>
-  
+<template>  
   <div id="nav">
      <nav class="navbar navbar-light bg-white fixed-top">
   <div class="container-fluid">
@@ -52,7 +51,7 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 
 export default {
-  setup() {
+  setup() {    
     const store = useStore();
     let userinfo = computed(() => store.state.accountStore.userinfo);
     const logout = () => store.commit("accountStore/logout");
