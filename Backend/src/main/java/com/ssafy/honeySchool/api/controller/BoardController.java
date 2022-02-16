@@ -114,7 +114,7 @@ public class BoardController {
 		String resourcesPath = rootPath.substring(0, rootPath.length()-14) + "resources\\static\\uploads";	
 //		System.out.println("자른 거: " + resourcesPath + "resources\\static\\uploads");
 		
-		rootPath = resourcesPath;
+		rootPath = "/home/ubuntu/honeyschool/file";
 		System.out.println("루트패스 수정: " + rootPath);
 		
 		// User 수정 함
@@ -262,7 +262,7 @@ public class BoardController {
 			// 현재 추가하는 첨부파일 저장
 			String rootPath = request.getSession().getServletContext().getRealPath("/uploads");
 			String resourcesPath = rootPath.substring(0, rootPath.length()-14) + "resources\\static\\uploads";	
-			rootPath = resourcesPath;
+			rootPath = "/home/ubuntu/honeyschool/file";
 			ClassBoard sameBoard = boardService.addBoard(board, files, rootPath, 0);
 			System.out.println("첨부파일 저장 됐어");
 		}
