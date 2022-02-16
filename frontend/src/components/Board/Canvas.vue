@@ -14,6 +14,8 @@
         :watermark="watermark"
         saveAs="jpeg"
         :lock="disabled"
+        :width="1240"
+        :height="1724"
         @mousemove="getCoordinate($event)"
         class="canvasdrawing"
       />

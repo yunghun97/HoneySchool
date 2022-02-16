@@ -135,13 +135,8 @@ public class UserController {
             return result;
     }
 
+    // openapi로 학교 데이터 받아오기
     @PostMapping("/schoolData")
-    @ApiOperation(value = "회원 수정", notes = "Id를 받아와서 회원 수정을 진행한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
     public ResponseEntity<? extends BaseResponseBody> getSchoolInfo(){
         String res=userService.getSchoolNameByOpenApi();
         if(res.equals("Success"))

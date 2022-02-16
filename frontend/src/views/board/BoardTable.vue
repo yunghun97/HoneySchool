@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="root">
   <button 
     type="button" class="btn btn-outline-success"
     @click="$router.push('create')"
@@ -7,8 +7,9 @@
   >
     새로운 글 쓰기
   </button>
-  <div v-if="isLoading">
-    <p>...LOADING</p>
+   <div v-if="isLoading">
+    <div class="spinner-border" role="status"></div>
+    <p>LOADING...</p>
   </div>
   <div v-else>
     <div v-if="article.length === 0">
@@ -173,6 +174,9 @@ export default {
 }
 </script>
 <style scoped>
+.root {
+  font-family: "Gothic A1", sans-serif;
+}
 .box {
   margin: 30px 30vh;
 }

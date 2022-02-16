@@ -1,12 +1,18 @@
 <template>  
     <div class="content">
-        <h1>{{ currentarticle.board.title }}</h1>
-        <div v-if="currentarticle.board.user !== null">
-            <p>작성자 : {{ currentarticle.board.user.name }}</p>
+        <div v-if="isLoading">
+            <div class="spinner-border" role="status"></div>
+            <p>LOADING...</p>
         </div>
-        <p>작성날짜 : {{currentarticle.board.date.split(" ")[0] }}</p>
-        <div v-for="content in currentarticle.board.content.split('\r')" :key="content">
-            <h2>{{ content }}</h2>
+        <div v-else>
+            <h1>{{ currentarticle.board.title }}</h1>
+            <div v-if="currentarticle.board.user !== null">
+                <p>작성자 : {{ currentarticle.board.user.name }}</p>
+            </div>
+            <p>작성날짜 : {{currentarticle.board.date.split(" ")[0] }}</p>
+            <div v-for="content in currentarticle.board.content.split('\r')" :key="content">
+                <h2>{{ content }}</h2>
+            </div>
         </div>
     </div>
 </template>
@@ -18,7 +24,7 @@ import BoardArticles from "../../types/board/BoardArticles";
 
 export default {
     name: "NoticeContent",
-    props: ['currentarticle'],
+    props: ['currentarticle', 'isLoading'],
     // setup(props:any) {
     //     const state = reactive({
     //         currentarticle : computed(() => props.currentarticle)
@@ -28,8 +34,9 @@ export default {
 </script>
 <style scoped>
 .content {
-        padding-top: 20vh;
-        margin-bottom: 50px;
+    padding-top: 20vh;
+    margin-bottom: 50px;
+    font-family: "Gothic A1", sans-serif;
 }
 p {
     margin-right: 25vh;

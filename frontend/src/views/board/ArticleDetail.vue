@@ -1,8 +1,8 @@
 <template>
   <div v-if="isLoading">
-    <p>...LOADING</p>
+    <div class="spinner-border" role="status"></div>
+    <p>LOADING...</p>
   </div>
-
   <!-- Article Detail -->
   <div v-else>
     <button 
@@ -40,12 +40,14 @@
     <div class="container" >
         <div class="row">
             <div class="btns" v-if="currentarticle.board.user.userId === userinfo.userId">
-                <button 
-                    type="button" class="btn btn-primary"
-                    @click="$router.push({ name: 'ArticleUpdate', params: { article_id: id }})"
-                    >
-                    수정하기
-                </button>
+                <div>
+                  <button 
+                      type="button" class="btn btn-primary"
+                      @click="$router.push({ name: 'ArticleUpdate', params: { article_id: id }})"
+                      >
+                      수정하기
+                  </button>
+                </div>
                 <button 
                     type="button" class="btn btn-danger"
                     @click="deleteArticle"
@@ -96,9 +98,13 @@
                     <!-- 댓글 삭제 -->
                     <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
                     <!-- 댓글 수정 -->
-                    <button class="btn btn-secondary comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.col'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
-                        <fa icon="edit" class="fa-icon"></fa>
-                    </button>
+                    <div v-if="currentarticle.board.category==='assignment' && userinfo.position==='S'">
+                    </div>
+                    <div v-else>
+                      <button class="btn btn-secondary comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.col'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
+                          <fa icon="edit" class="fa-icon"></fa>
+                      </button>
+                    </div>
                     <div :class="'collapse col'+comment.id">
                       <div class="card card-body">
                         <textarea class="form-control" rows="1" v-model="revisedComment"></textarea>
@@ -125,7 +131,9 @@
                 <div v-else class="reply">
                   <h3 class="comment-list"><fa icon="share" class="fa-icon-b"></fa> {{ comment.user.name }}: </h3>
                   <p class="comment-date"><small class="text-muted">{{ comment.createdAt }}</small></p>
-                  <p id="comment-cont">{{ comment.content }}</p>
+                  <div v-for="content in comment.content.split('\r')" :key="content" id="comment-cont">
+                    <p>{{ content }}</p>
+                  </div>
                   <div v-if="comment.user.userId === userinfo.userId">
                     <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
                   </div>
@@ -333,6 +341,8 @@ export default {
 .btns {
     margin-bottom:20px;
     text-align: right;
+    display: flex;
+    justify-content: right;
 }
 .content-container {
     text-align: left;
@@ -385,5 +395,8 @@ img {
   margin-left: auto;
   margin-right: auto;
 
+}
+hr {
+  width: 100%;
 }
 </style>
