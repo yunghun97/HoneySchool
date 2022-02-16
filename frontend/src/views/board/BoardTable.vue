@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="root">
   <button 
     type="button" class="btn btn-outline-success"
     @click="$router.push('create')"
@@ -173,6 +173,9 @@ export default {
 }
 </script>
 <style scoped>
+.root {
+  font-family: "Gothic A1", sans-serif;
+}
 .box {
   margin: 30px 30vh;
 }

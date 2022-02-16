@@ -355,7 +355,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <p>{{ quizReceived }}</p>
+            <a>{{ quizReceived }}</a>
           </div>
           <div class="modal-footer">
             <button
