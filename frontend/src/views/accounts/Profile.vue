@@ -12,8 +12,11 @@
           <div class="row">
             <div class="col-2"></div>
             <p class="col-5 text-left my-0 px-2 py-1 fs-5 font-A1-500">구분</p>
-            <p class="col-5 text-left my-0 px-2 py-1 fs-5 font-A1-300">
-              {{ userinfo.position }}
+            <p class="col-5 text-left my-0 px-2 py-1 fs-5 font-A1-300" v-if="userinfo.position ==='S'">
+              학생
+            </p>
+            <p class="col-5 text-left my-0 px-2 py-1 fs-5 font-A1-300" v-else>
+              선생님
             </p>
           </div>
           <div class="row">
@@ -49,10 +52,10 @@
             <div class="col-1"></div>
           </div> -->
           <div class="mt-4 d-flex justify-content-center">
-            <button type="submit" class="login-btn d-block font-A1-500 mx-3">
+            <button type="button" class="login-btn d-block font-A1-500 mx-3">
               <router-link to="/editprofile" class="text-decoration-none font-A1-500 btn-color">정보 수정</router-link>
             </button>
-            <button type="submit" class="withdrawal-btn d-block font-A1-500 mx-3">회원 탈퇴</button>
+            <button type="button" class="withdrawal-btn d-block font-A1-500 mx-3" @click="leave">회원 탈퇴</button>
           </div>
         </div>
       </div>
@@ -60,17 +63,26 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import axios from "axios";
+import { useStore } from 'vuex';
 export default {
     name: "Profile",
-    created() {
+    setup() {
+
     const localStorageData = localStorage.getItem("vuex");
     let userinfoData;
     if (localStorageData !== null) {
       userinfoData = JSON.parse(localStorageData);
     }
-    this.userinfo = userinfoData.accountStore.userinfo;
-    console.log(this.userinfo);
+    let userinfo = userinfoData.accountStore.userinfo;
+
+    const store = useStore();
+    const leave = () => {
+      axios.delete(process.env.VUE_APP_API_URL+`/users/${userinfo.userId}`)
+      store.commit("accountStore/logout")
+    }
+    return {userinfo, leave}
     },
 };
 </script>
