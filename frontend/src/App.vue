@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-    <nav class="navbar navbar-light bg-white fixed-top">
+    <nav class="navbar navbar-light bg-white fixed-top pt-0">
       <!-- <div class="container-fluid" style="justify-content: start; background-color: white;"> -->
       <button
         class="navbar-toggler"
@@ -15,7 +15,7 @@
         <router-link to="/"
           ><img
             src="@/assets/logo_transparent.png"
-            style="width: 50px; height: 50px; margin-left: 10px"
+            style="width: 50px; height: 50px; margin-left: 10px;"
           />Honey school</router-link
         >
       </a>

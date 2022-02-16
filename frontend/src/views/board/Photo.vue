@@ -33,7 +33,7 @@
           <p v-if="currentarticle.board.user!==null" class="fs-5 d-flex justify-content-between">
             <!-- <span>작성자 : {{ currentarticle.board.user.name }} &nbsp; | &nbsp; 작성날짜 : {{currentarticle.board.date.split(" ")[0] }}</span></p> -->
             <span>작성자 : {{ currentarticle.board.user.name }}</span>
-            <span>작성날짜 : 
+            <span>날짜 : 
               <span class="color-blue">
                 {{currentarticle.board.date.split(" ")[0] }}
               </span>

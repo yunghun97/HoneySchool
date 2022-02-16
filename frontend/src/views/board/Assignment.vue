@@ -43,8 +43,8 @@
       <div v-if="done">
         <div class="articleContent">
           <div v-if="teacherCom === ''">
-              <h3>선생님의 한마디</h3>
-              <h3>아직 선생님께서 확인중이에요</h3> 
+              <b><h3 class="py-2">선생님의 한마디</h3></b>
+              <h4>아직 선생님께서 확인중이에요</h4> 
           </div>
           <div v-else>
             <h3>선생님의 한마디</h3>
