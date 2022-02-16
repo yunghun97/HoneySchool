@@ -61,6 +61,8 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation("org.springframework.boot:spring-boot-starter-mail")
+	
+	implementation 'org.apache.tika:tika-core:2.3.0'
 }
 
 def querydslDir = "src/main/generated/querydsl"
