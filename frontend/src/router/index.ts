@@ -23,15 +23,6 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
-  {
     path: "/classboard",
     name: "ClassBoard",
     component: ClassBoard,
@@ -136,7 +127,7 @@ router.beforeEach((to, from, next) => {
   const accessToken = localStorage.getItem("accessToken");
   if (to.name === "Login" || to.name === "Signup") {
     if (accessToken) {
-      next({ name: "About" });
+      next({ name: "Home" });
     }
   } else {
     if (!accessToken) {

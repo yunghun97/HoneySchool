@@ -32,8 +32,8 @@ export default {
   text-align: right;
 }
 .content-files {
-  text-align: left;
-  padding-left: 80px;
+  text-align: center;
+  /* padding-left: 80px; */
 }
 .fileimg {
   width: 30px;

@@ -1,5 +1,5 @@
 <template>  
-    <div>
+    <div class="font-A1">
         <!-- 이전 버튼 -->
         <div v-if="beforearticleidx === -1" class="beforebtn">
             <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
@@ -154,11 +154,12 @@ img {
 .nextbtn {
     float:right;
     margin:80px;
-
-    
 }
 .beforebtn {
     float:left;
     margin:80px;
+}
+.font-A1 {
+  font-family: "Gothic A1", sans-serif;
 }
 </style>

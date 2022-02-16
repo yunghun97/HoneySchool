@@ -1,7 +1,7 @@
 <template>
 <div class="root">
   <div
-  class="box">
+  class="box font-A1">
   <div
     cols="4"
     v-for="category in categories"
@@ -165,5 +165,8 @@ export default defineComponent({
 }
 .card-icon {
   flex: auto;
+}
+.font-A1 {
+  font-family: "Gothic A1", sans-serif;
 }
 </style>

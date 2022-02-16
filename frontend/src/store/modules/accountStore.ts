@@ -47,7 +47,7 @@ export const accountStore: Module<accountState, RootState> = {
     },
     setUser(state, userinfo) {
       state.userinfo = userinfo;
-      router.push({ name: "About" });
+      router.push({ name: "Home" });
       // console.log(state.accounts)
     },
   },
