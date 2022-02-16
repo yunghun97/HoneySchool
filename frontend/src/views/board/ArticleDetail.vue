@@ -28,7 +28,7 @@
           <p>첨부파일</p>
            <div v-for="idx in currentarticle.files.length" :key="idx">
             <a 
-              :href="process.env.VUE_APP_FILE_URL+`${currentarticle.files[idx-1].stored_file_path}`"
+              :href="`//home/ubuntu/honeyschool/file/${currentarticle.files[idx-1].stored_file_path}`"
               v-if="currentarticle.files[idx-1].commentId===0"
             >
               첨부파일 {{idx}}
@@ -86,7 +86,7 @@
                   <p :class="'collapse show col'+comment.id" id="comment-cont">{{ comment.content }}</p>
                   <div v-for="file in comments.files" :key="file.id"  class="comment-list">
                     <a 
-                      :href="process.env.VUE_APP_FILE_URL+`${file.stored_file_path}`"
+                      :href="`//home/ubuntu/honeyschool/file/${file.stored_file_path}`"
                       v-if="file.commentId === comment.id"
                     >
                       첨부파일

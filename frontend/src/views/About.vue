@@ -1,6 +1,6 @@
 <template>
   <div class="main_page container">
-    <div class="top-container">
+    <div class="top-container">      
       <!-- 선생님, 학생 분기 인사말 -->
       <h2 v-if="userinfo.position === 'S'">
         {{ userinfo.school }} {{ userinfo.name }}학생 반갑습니다.

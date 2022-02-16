@@ -146,7 +146,7 @@ export default {
       color: "#000000",
       strokeType: "dash",
       backgroundColor: "#FFFFFF",
-      backgroundImage: this.article.files.length === 0 ? null : process.env.VUE_APP_FILE_URL+`${this.article.files[0].stored_file_path}`,
+      backgroundImage: this.article.files.length === 0 ? null : `//home/ubuntu/honeyschool/file/${this.article.files[0].stored_file_path}`,
       // TODO: background image cross origin 문제 해결
       watermark: null,      
       id : this.article.board.id

@@ -39,7 +39,7 @@
             <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
                 <div class="carousel-item" v-for="(image, idx) in currentarticle.files" :key="idx" :class="{ active: idx==0 }">
-                  <img :src="`http://localhost:9999/static/uploads/${image.stored_file_path}`" alt="사진을 찾을 수 없습니다.">
+                  <img :src="`//home/ubuntu/honeyschool/file/${image.stored_file_path}`" alt="사진을 찾을 수 없습니다.">
                 </div>
               </div>
               <fa icon="angle-left" class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev" style="color:#87C7F1;">
