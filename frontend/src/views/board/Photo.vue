@@ -29,8 +29,16 @@
         class="note"
     >
         <div class="content">
-          <h5>{{ currentarticle.board.title }}</h5>
-          <p v-if="currentarticle.board.user!==null"><small>작성자 : {{ currentarticle.board.user.name }} &nbsp; | &nbsp; 작성날짜 : {{currentarticle.board.date.split(" ")[0] }}</small></p>
+          <h1>{{ currentarticle.board.title }}</h1>
+          <p v-if="currentarticle.board.user!==null" class="fs-5 d-flex justify-content-between">
+            <!-- <span>작성자 : {{ currentarticle.board.user.name }} &nbsp; | &nbsp; 작성날짜 : {{currentarticle.board.date.split(" ")[0] }}</span></p> -->
+            <span>작성자 : {{ currentarticle.board.user.name }}</span>
+            <span>작성날짜 : 
+              <span class="color-blue">
+                {{currentarticle.board.date.split(" ")[0] }}
+              </span>
+            </span>
+          </p>
           <!-- <p>{{ currentarticle.board.content }}</p> -->
           <div v-if="currentarticle.files.length > 0">
             <!-- <div v-for="file in currentarticle.files" :key="file.id">
@@ -177,10 +185,12 @@ img {
 .content {
   padding-top: 15vh;
   margin-bottom: 10px;
+  font-family: 'Gothic A1', sans-serif;
 }
 .content > p  {
   margin-right: 25vh;
-  text-align: right;
+  margin-left: 30vh;
+  /* text-align: right; */
 }
 .carousel {
   margin-left: auto;
@@ -198,5 +208,8 @@ img {
   height: 100px;
   margin-top: 250px;
   margin-right: 100px;
+}
+.color-blue {
+    color: #13a1ff;
 }
 </style>

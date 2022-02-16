@@ -1,5 +1,5 @@
 <template>
-  <div class="main-page container-fluid" style="height: 880px">
+  <div class="main-page container-fluid font-A1" style="height: 880px">
     <div id="week-table" class="row justify-content-center">
       <div id="week-days" class="col-1" v-for="(day, i) in week" :key="i">
         <p v-if="day === today" style="color: red">{{ day }}</p>
@@ -284,5 +284,8 @@ export default {
 
 #timetable > h1 {
   margin-bottom: 30px;
+}
+.font-A1{
+  font-family: 'Gothic A1', sans-serif;
 }
 </style>

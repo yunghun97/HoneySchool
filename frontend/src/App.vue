@@ -38,7 +38,7 @@
               src="@/assets/logo_transparent.png"
               style="width: 50px; height: 50px; margin-left: 10px"
             />
-            Honey school
+            <a>Honey school</a>
           </h5>
           <button
             type="button"
@@ -194,9 +194,8 @@ export default {
   /* font-size: 0.875rem; */
   /* background-color: transparent; */
   border-radius: 0.3rem;
-  background-color: #aae9e5;
   /* background-image: linear-gradient(310deg, #2dce89 0%, #2dcecc 100%); */
-  background-image: linear-gradient(310deg, rgb(55, 211, 190) 0%, #aae9e5 100%);
+  background-image: linear-gradient(310deg, #fad749 0%, #fad749 100%);
 }
 
 /* router-transition */

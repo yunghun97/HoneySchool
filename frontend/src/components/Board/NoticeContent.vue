@@ -13,7 +13,7 @@
             <hr align="center" style="margin:auto;" noshade>
             <div class="py-4"></div>
             <div v-for="content in currentarticle.board.content.split('\r')" :key="content">
-                <h2>{{ content }}</h2>
+                <h4>{{ content }}</h4>
             </div>
         </div>
     </div>

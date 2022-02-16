@@ -1,13 +1,16 @@
 <template>
 <div class="root">
-  <button 
-    type="button" class="btn btn-outline-success"
-    @click="$router.push('create')"
-    v-if="userinfo.position==='T'"
-  >
+  <div class="py-2"></div>
+  <div class="btn-margin d-flex justify-content-end">
+    <button
+      type="button" class="btn btn-outline-success"
+      @click="$router.push('create')"
+      v-if="userinfo.position==='T'"
+    >
     새로운 글 쓰기
-  </button>
-   <div v-if="isLoading">
+    </button>
+  </div>
+  <div v-if="isLoading">
     <div class="spinner-border" role="status"></div>
     <p>LOADING...</p>
   </div>
@@ -192,5 +195,8 @@ tbody>tr:hover {
   font-weight: bold;
   padding:0px;
 }
-
+.btn-margin {
+  margin-left: 226px;
+  margin-right: 226px;
+}
 </style>
