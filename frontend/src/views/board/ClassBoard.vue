@@ -119,7 +119,6 @@ export default defineComponent({
                   return router.push({name: 'Assignment', params: { article_id: article.id }})
                 }
               } else if (category == "questions") {
-                const article = computed(() => store.state.boardStore.question[0]);
                 return router.push({name: 'Question'})
               } 
           }
