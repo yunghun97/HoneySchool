@@ -1,5 +1,10 @@
 <template>
 <!-- Article Update -->
+  <div v-if="isLoading">
+    <div class="spinner-border" role="status"></div>
+    <p>LOADING...</p>
+  </div>
+  <div v-else>
     <div class="submit-form">
         <form @submit.prevent="updateArticle">
             <div class="row mb-3">
@@ -45,6 +50,8 @@
             <button class="btn btn-success" type="button" @click="updateArticle">수정하기</button>
         </form>
     </div>
+
+  </div>
 </template>
 
 <script lang="ts">
@@ -97,7 +104,6 @@ export default {
             })
             .then((response)=>{
                 currentarticle.value = response.data.board
-                console.log(currentarticle.value)
             })
         }
 
