@@ -30,7 +30,7 @@
             <a 
               :href="`https://i6b201.p.ssafy.io:9999/file/${currentarticle.files[idx-1].stored_file_path}`"
               v-if="currentarticle.files[idx-1].commentId===0"
-              target='_black'
+              target='_blank'
             >
               첨부파일 {{idx}}
             </a>
@@ -91,6 +91,7 @@
                     <a 
                       :href="`https://i6b201.p.ssafy.io:9999/file/${file.stored_file_path}`"
                       v-if="file.commentId === comment.id"
+                      target='_blank'
                     >
                       첨부파일
                     </a>
