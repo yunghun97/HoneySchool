@@ -285,7 +285,7 @@ export default {
             if (revisedComment.value.length === 0) {
                 alert("댓글 내용을 작성해주세요")
             } else {
-                axios.put(`http://localhost:9999/static/uploads/board/class/${id}/comment/${comId}`, {
+                axios.put(`https://i6b201.p.ssafy.io:9999/file//board/class/${id}/comment/${comId}`, {
                     'content': revisedComment.value,
                     })
                 .then(() => {
