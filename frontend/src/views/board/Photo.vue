@@ -29,7 +29,7 @@
         class="note"
     >
         <div class="content">
-          <h5>{{ currentarticle.board.title }}</h5>
+          <h3>{{ currentarticle.board.title }}</h3>
           <p v-if="currentarticle.board.user!==null"><small>작성자 : {{ currentarticle.board.user.name }} &nbsp; | &nbsp; 작성날짜 : {{currentarticle.board.date.split(" ")[0] }}</small></p>
           <!-- <p>{{ currentarticle.board.content }}</p> -->
           <div v-if="currentarticle.files.length > 0">
@@ -155,6 +155,7 @@ export default
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+  font-family: "Gothic A1", sans-serif;
 }
 .btns {
   cursor: pointer;
@@ -176,7 +177,7 @@ img {
 }
 .content {
   padding-top: 15vh;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .content > p  {
   margin-right: 25vh;
@@ -185,7 +186,7 @@ img {
 .carousel {
   margin-left: auto;
   margin-right: auto;
-  top: -80px;
+  top: -70px;
 }
 .carousel-control-prev {
   width: 100px;

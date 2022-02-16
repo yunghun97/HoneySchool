@@ -22,9 +22,9 @@
           <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
       </svg>
     </div>
-    <div class="articleContent">
+    <div class="article">
       <h1 v-if="done"><span class="badge bg-warning articleBadge">숙제 완료!</span></h1><p></p>
-      <h3>{{currentarticle.board.title}}</h3>
+      <h1>{{currentarticle.board.title}}</h1>
       <span class="articleRight"><p>작성자 : {{ currentarticle.board.user.name }} &nbsp; | &nbsp; 작성 날짜 : {{ currentarticle.board.date.split(' ')[0] }}</p></span>
       <div v-for="content in currentarticle.board.content.split('\r')" :key="content">
         <h5>{{ content }}</h5>
@@ -34,18 +34,19 @@
     <div v-if="done">
       <div class="articleContent">
         <div v-if="teacherCom === ''">
-            <h4>선생님의 한마디: 아직 선생님께서 확인중이에요</h4>
+            <h3>선생님의 한마디</h3>
+            <h3>아직 선생님께서 확인중이에요</h3> 
         </div>
         <div v-else>
-          <h4>선생님의 한마디</h4>
+          <h3>선생님의 한마디</h3>
           <div v-for="content in teacherCom.content.split('\r')" :key="content">
-            <h5>{{ content }}</h5>
+            <h3>{{ content }}</h3>
           </div>
         </div>
       </div>
       <div class="image">
-        <h1><span class="badge bg-secondary imageBadge">완료한 {{userinfo.name}} 학생의 숙제</span></h1>
-        <img :src="`https://i6b201.p.ssafy.io:9999/file/${myimg}`" alt="&emsp; &emsp; &emsp; &emsp; 제출한 숙제를 불러올 수 없습니다. 다시 시도해주세요. &emsp; &emsp; &emsp; &emsp;" class="assignmentImg">
+        <h1><span class="badge bg-warning imageBadge">완료한 {{userinfo.name}} 학생의 숙제</span></h1>
+        <img :src="`http://localhost:9999/static/uploads/${myimg}`" alt="&emsp; &emsp; &emsp; &emsp; 제출한 숙제를 불러올 수 없습니다. 다시 시도해주세요. &emsp; &emsp; &emsp; &emsp;" class="assignmentImg">
       </div>
     </div>
     <div class="canvas" v-else>
@@ -179,7 +180,6 @@ export default ({
         isLoading.value = false
     })
     const submitted = () => {
-      alert('Did!')
       isLoading.value = true
       articleDetail().then(()=>{
         checkDone()
@@ -194,6 +194,7 @@ export default ({
       done.value=false
       myimg.value=''
       comId.value=''
+      teacherCom.value=''
       getCurrentArticle()
       checkDone() 
       }).then(() => {
@@ -208,8 +209,9 @@ export default ({
 </script>
 <style scoped>
 .assignment {
-  background-color: #C9D9F0;
+  background-color: #f0e7f7;
   padding-top: 30px;
+  font-family: "Gothic A1", sans-serif;
 }
 .assignmentImg {
   border: 3px solid black;
@@ -219,9 +221,18 @@ export default ({
   margin-bottom: 30px;
   padding-top:50px;
   background-color: #ffff;
+
 }
 .articleContent {
   background-color: #ffff;
+  border-radius: 20px;
+  margin: 15px auto;
+  width: 1200px;
+  padding: 15px;
+  position:relative;
+
+}
+.article {
   border-radius: 20px;
   margin: 15px auto;
   width: 1200px;
@@ -234,6 +245,7 @@ export default ({
   /* bottom: 80px; */
   left: 0;
   top: 0;
+  /* font-weight: 300; */
 }
 .articleRight {
   text-align: right;
@@ -264,5 +276,6 @@ export default ({
   top: 4px;
   left: 33%;
   right: 33%;
+  /* font-weight: 300; */
 }
 </style>

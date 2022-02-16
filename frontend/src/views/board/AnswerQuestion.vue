@@ -25,23 +25,25 @@
 
   <div style="background-color:#F99D07">
     <div class="note">
-      <div class="anscontent">
-        <h4 class="card-title">질문 내용</h4>
-        <p class="card-text"><small class="text-muted">작성 날짜 : {{ currentarticle.board.date.split("T")[0] }}</small></p>
-       <a :href="`https://i6b201.p.ssafy.io:9999/file/${currentarticle.files[0].stored_file_path}`"> <img src="@/assets/board/recordfile.png" alt="" class="fileimg">질문 내용 듣기</a>
-      </div>
-      <div class="anscontent">
-        <h4 class="card-title">선생님의 답변</h4>
-        <div v-if="currentarticle.comments.length > 0">
-          <div v-for="idx in currentarticle.comments.length" :key="idx">
-            <p class="card-text"><small class="text-muted">작성자 : {{ currentarticle.board.user.name }} &nbsp; | &nbsp; 작성 날짜 : {{ currentarticle.board.date.split(' ')[0] }}</small></p>
-            <div v-for="content in currentarticle.comments[idx-1].content.split('\r')" :key="content">
-              <p>{{ content }}</p>
+      <div class="content">
+        <div class="anscontent">
+          <h4 class="card-title">질문 내용</h4>
+          <p class="card-text"><small class="text-muted">작성 날짜 : {{ currentarticle.board.date.split("T")[0] }}</small></p>
+        <a :href="`http://localhost:9999/static/uploads/${currentarticle.files[0].stored_file_path}`"> <img src="@/assets/board/recordfile.png" alt="" class="fileimg">질문 내용 듣기</a>
+        </div>
+        <div class="anscontent">
+          <h4 class="card-title">선생님의 답변</h4>
+          <div v-if="currentarticle.comments.length > 0">
+            <div v-for="idx in currentarticle.comments.length" :key="idx">
+              <p class="card-text"><small class="text-muted">작성자 : {{ currentarticle.board.user.name }} &nbsp; | &nbsp; 작성 날짜 : {{ currentarticle.board.date.split(' ')[0] }}</small></p>
+              <div v-for="content in currentarticle.comments[idx-1].content.split('\r')" :key="content">
+                <p>{{ content }}</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div v-else>
-            <p>아직 작성된 답변이 없습니다. 답변을 기다려주세요.</p>
+          <div v-else>
+              <p>아직 작성된 답변이 없습니다. 답변을 기다려주세요.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -136,13 +138,13 @@ export default {
 <style scoped>
 .note {
   margin: auto;
-  padding-top: 10%;
   background-image: url('../../assets/board/ans-background.png');
   height: 90vh;
   width: 150vh;
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+  font-family: "Gothic A1", sans-serif;
 }
 .btns {
   cursor: pointer;
@@ -150,10 +152,7 @@ export default {
 button {
   margin:5px;
 }
-img {
-  max-width: 600px;
-  height: auto;
-}
+
 .nextbtn {
   float:right;
   margin:80px; 
@@ -173,13 +172,17 @@ img {
   border-radius: 18px;
   box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
   border-radius: 20px;
-  height: auto;
-  width: 900px;
+  height: 55vh;
+  width: 600px;
   margin: 0 auto 30px;
   padding: 10px;
 }
 .fileimg {
   width: 30px;
   height: 30px;
+}
+.content {
+  display: flex;
+  justify-content: space-around;
 }
 </style>
