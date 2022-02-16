@@ -6,6 +6,7 @@ import com.ssafy.honeySchool.db.entity.School;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -25,6 +26,13 @@ public class SchoolRepositorySupport {
         String school = jpaQueryFactory.select(qSchool.school).from(qSchool)
                 .where(qSchool.id.eq(schoolNumber)).fetchOne();
         if(school.equals(null)) return Optional.empty();
+        return Optional.ofNullable(school);
+    }
+
+    public Optional<List<String>> findSchoolContainsSchoolName(String schoolName) {
+        List<String> school = jpaQueryFactory.select(qSchool.school).from(qSchool)
+                .where(qSchool.school.contains(schoolName)).fetch();
+        if(school==null) return Optional.empty();
         return Optional.ofNullable(school);
     }
 }

@@ -1,5 +1,5 @@
 <template>
-        <!-- Article Update -->
+<!-- Article Update -->
     <div class="submit-form">
         <form @submit.prevent="updateArticle">
             <div class="row mb-3">
@@ -97,6 +97,7 @@ export default {
             })
             .then((response)=>{
                 currentarticle.value = response.data.board
+                console.log(currentarticle.value)
             })
         }
 

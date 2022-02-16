@@ -10,6 +10,7 @@ import Assignment from "../views/board/Assignment.vue";
 import Question from "../views/board/Question.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
+import Profile from "../views/accounts/Profile.vue";
 import Videoclass from "../views/Videoclass/Videoclass.vue";
 import AskQuestion from "../views/board/AskQuestion.vue";
 import TimeTable from "../views/board/TimeTable.vue";
@@ -88,6 +89,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
   },
   {
     path: "/videoclass",
