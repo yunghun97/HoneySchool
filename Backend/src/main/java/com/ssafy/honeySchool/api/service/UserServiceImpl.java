@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
         if(user.getGrade()!=userModifyPutReq.getGrade()) user.setGrade(userModifyPutReq.getGrade());
         user.setPassword(passwordEncoder.encode(userModifyPutReq.getPassword()));
         if(user.getClasses()!=userModifyPutReq.getClass_number()) user.setClasses(userModifyPutReq.getClass_number());
-
+        user.setEmail(user.getEmail());
         return userRepository.save(user);
     }
 
