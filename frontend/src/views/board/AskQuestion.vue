@@ -3,6 +3,7 @@
         <div class="note">
             <div>
                 <h1>선생님께 질문을 남겨보아요</h1>
+                <hr align="center" style="margin:auto;" noshade>
                 <div class="recordbox">
                     <Record @finished="finished"/>
                 </div>
@@ -116,5 +117,13 @@ export default defineComponent({
   border-radius: 20px;
   padding: 10px;
 }
-
+hr {
+  border: none;
+  border-top: 5px dotted rgb(0, 0, 0);
+  color: #fff;
+  background-color: #fff;
+  height: 1px;
+  width: 70%;
+  margin: 10px auto;
+}
 </style>
