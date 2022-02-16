@@ -219,6 +219,8 @@ public class BoardController {
 		map.put("board", detailDto);
 		map.put("comments", sortCommentDtos);
 		map.put("files", files);
+		System.out.println("파일 주소 !!");
+		System.out.println(files.toString());
 		return new ResponseEntity<>(map, HttpStatus.OK);
 //		return new ResponseEntity<ClassBoard>(detail, HttpStatus.OK);
 	}
