@@ -1,8 +1,8 @@
 <template>
   <div v-if="isLoading">
-    <p>...LOADING</p>
+    <div class="spinner-border" role="status"></div>
+    <p>LOADING...</p>
   </div>
-
   <!-- Article Detail -->
   <div v-else>
     <button 
@@ -341,6 +341,8 @@ export default {
 .btns {
     margin-bottom:20px;
     text-align: right;
+    display: flex;
+    justify-content: right;
 }
 .content-container {
     text-align: left;
