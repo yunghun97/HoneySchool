@@ -9,6 +9,13 @@
                 <div v-if="isfinished" class="mt-5">
                     <button @click="postQuestion" class="btn btn-warning btn-lg">질문 다 했어요</button>
                 </div>
+                
+                <div class="instruction">
+                    <h4>사용법</h4>
+                    <p>화면의 <span id="micbtn"><fa icon="microphone" id="micicon"></fa></span> 버튼을 누르면 녹음이 시작됩니다.</p>
+                    <p>화면의 <fa icon="stop-circle" id="stopicon"></fa> 버튼을 누르면 녹음을 끝냅니다.</p>
+                    <p><button class="btn-warning">질문 다 했어요</button> 버튼을 누르면 녹음한 질문을 선생님께 전달합니다.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -71,16 +78,43 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top:5%;
+    margin-top:2%;
 }
 .note {
     margin: auto;
-    padding-top: 20%;
+    padding-top: 10%;
     background-image: url('../../assets/board/question-background.png');
     height: 90vh;
     width: 150vh;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+    font-family: "Gothic A1", sans-serif;
 }
+#micbtn {
+  border: 5px solid green;
+  background: green;
+  border-radius: 100%;
+  padding: 2px;
+}
+#micicon {
+  width: 18px;
+  height: 18px;
+  color: white;
+}
+#stopicon {
+  width: 30px;
+  height: 30px;
+  color: red;
+}
+.instruction {
+  text-align: left;
+  position: fixed;
+  left: 18%;
+  bottom: 13%;
+  border: 1px solid grey;
+  border-radius: 20px;
+  padding: 10px;
+}
+
 </style>

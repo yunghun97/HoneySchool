@@ -1,16 +1,16 @@
 <template>
   <div class="main_page container">
-    <div class="top-container">
+    <!-- <div class="top-container"> -->
       <!-- 선생님, 학생 분기 인사말 -->
-      <h2 v-if="userinfo.position === 'S'">
+      <!-- <h2 v-if="userinfo.position === 'S'">
         {{ userinfo.school }} {{ userinfo.name }}학생 반갑습니다.
       </h2>
       <h2 v-else>{{ userinfo.school }} {{ userinfo.name }}선생님 반갑습니다.</h2>
       <h2>오늘 날짜 : {{ dateNow }}</h2>
       <h2>현재 시간 : {{ timeNow }} &emsp;</h2>
       <h2>현재 교시 : {{ thisClass }} 교시 &emsp; &nbsp; &nbsp;</h2>
-    </div>
-    <div class="row justify-content-center" style="height: 500px">
+    </div> -->
+    <div class="row justify-content-center" style="height: 600px">
       <!-- 선생님, 학생 분기 화상수업 -->
       <div class="col-5" id="createSession">
         <img src="@/assets/videoclass/videoclass.png">
@@ -222,31 +222,29 @@ export default {
   background-color: #f99d07;
   border-radius: 40px;
   margin: 30px;
-  padding: 20px;
+  padding: 60px 20px;
 }
 
 #createSession > img {
-  width: 300px;
-  margin-bottom: 20px;
+  max-width: 300px;
+  margin-bottom: 25px;
 }
 
 #timetable {
   background-color:#37b6f6;
   border-radius: 40px;
   margin: 30px 10px;
-  padding: 20px;
+  padding: 60px 20px;
 }
 
 #current {
   background-color: #F9E104;
 }
 
-/* .container {
-  background-color: #F7F7F7;
-  height: 100%;
-  width: 100%;
+.container {
+  font-family: "Gothic A1", sans-serif;
 }
-  */
+ 
 .time {
   display: flex;
   justify-content: space-around;
@@ -271,6 +269,7 @@ export default {
   padding: 10px 70px;
   border-radius: 12px;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+  margin-top: 10px;
 }
 
 .top-container {
@@ -279,5 +278,9 @@ export default {
   padding: 10px;
   max-width: 1155px;
   margin: auto;
+}
+
+#timetable > h1 {
+  margin-bottom: 30px;
 }
 </style>
