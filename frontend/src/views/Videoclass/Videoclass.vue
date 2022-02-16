@@ -151,7 +151,9 @@
                   @click="updateMainVideoStreamManager(publisherCamera)"
                 />
                 <!-- 화면 공유 (선생님에게만 표시) -->
-                <p v-if="userinfo.position === 'T'" class="panel-heading">화면 공유</p>
+                <p v-if="userinfo.position === 'T'" class="panel-heading">
+                  화면 공유
+                </p>
                 <user-screen
                   v-if="userinfo.position === 'T'"
                   :stream-manager="publisherScreen"
@@ -255,7 +257,11 @@
           id="container-users"
         >
           <p>유저 상태목록</p>
-          <table v-if="studentList" cellpadding="10px" style="margin-left: auto; margin-right: auto;">
+          <table
+            v-if="studentList"
+            cellpadding="10px"
+            style="margin-left: auto; margin-right: auto"
+          >
             <thead>
               <tr>
                 <th scope="col">번호</th>
@@ -764,7 +770,7 @@ export default {
       this.connectionId = "";
 
       window.removeEventListener("beforeunload", this.leaveSession);
-      this.$router.push({ name: "About" });
+      this.$router.push({ name: "Home" });
     },
 
     updateMainVideoStreamManager(camera) {
@@ -1082,8 +1088,8 @@ td {
   margin-right: 15px;
 }
 .navbar {
-  justify-content: space-evenly;
-  background-color: #87C7F1;
+  /* justify-content: space-evenly; */
+  background-color: #87c7f1;
   /* overflow: hidden; */
   /* position: fixed; */
   bottom: 0;
@@ -1101,7 +1107,7 @@ td {
   margin-top: 20px;
   /* font-family: "Gothic A1", sans-serif;
   font-weight: 500; */
-  font-family: 'Jua', sans-serif;
+  font-family: "Jua", sans-serif;
   font-size: 20px;
 }
 .main-btn {
