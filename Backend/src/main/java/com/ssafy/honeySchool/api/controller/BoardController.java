@@ -2,6 +2,7 @@ package com.ssafy.honeySchool.api.controller;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,9 +14,13 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
+import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -43,6 +48,8 @@ import com.ssafy.honeySchool.db.repository.ClassBoardFileRepository;
 import com.ssafy.honeySchool.db.repository.ClassBoardRepository;
 import com.ssafy.honeySchool.db.repository.CommentRepository;
 import com.ssafy.honeySchool.db.repository.UserRepository;
+
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/board")
@@ -69,6 +76,9 @@ public class BoardController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	ResourceLoader resourceLoader;
 	
 	// 반 게시판 전체 목록 (페이징)
 	@GetMapping("/class")
@@ -114,7 +124,7 @@ public class BoardController {
 		String resourcesPath = rootPath.substring(0, rootPath.length()-14) + "resources\\static\\uploads";	
 //		System.out.println("자른 거: " + resourcesPath + "resources\\static\\uploads");
 		
-		rootPath = resourcesPath;
+		rootPath = "/home/ubuntu/honeyschool/file";
 		System.out.println("루트패스 수정: " + rootPath);
 		
 		// User 수정 함
@@ -262,7 +272,7 @@ public class BoardController {
 			// 현재 추가하는 첨부파일 저장
 			String rootPath = request.getSession().getServletContext().getRealPath("/uploads");
 			String resourcesPath = rootPath.substring(0, rootPath.length()-14) + "resources\\static\\uploads";	
-			rootPath = resourcesPath;
+			rootPath = "/home/ubuntu/honeyschool/file";
 			ClassBoard sameBoard = boardService.addBoard(board, files, rootPath, 0);
 			System.out.println("첨부파일 저장 됐어");
 		}
@@ -275,5 +285,22 @@ public class BoardController {
 		ClassBoardDto classBoardDto = ClassBoardDto.from(board);
 		System.out.println("글 수정 됐어");
 		return new ResponseEntity<ClassBoardDto>(classBoardDto, HttpStatus.OK);
+	}
+	@GetMapping("/file")
+	public ResponseEntity<Resource> getFile() throws IOException{
+		System.out.println("동작1");
+		// 받아올 폴더 위치
+		Resource resource = resourceLoader.getResource("file:C:/Users/GWON/Desktop/test.png");
+		System.out.println("동작2");
+		File file = resource.getFile();
+		Tika tika = new Tika();
+		String mediaType = tika.detect(file);
+		
+		System.out.println("동작3");
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+resource.getFilename()+"\"")
+				.header(HttpHeaders.CONTENT_TYPE, mediaType)
+				.header(HttpHeaders.CONTENT_LENGTH, file.length()+"")
+				.body(resource);
 	}
 }

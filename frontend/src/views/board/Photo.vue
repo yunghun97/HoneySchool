@@ -29,28 +29,35 @@
         class="note"
     >
         <div class="content">
-          <div v-if="isLoading">
-            <div class="spinner-border" role="status"></div>
-            <p>LOADING...</p>
-          </div>
-          <div v-else>
-            <h1>{{ currentarticle.board.title }}</h1>
-            <p v-if="currentarticle.board.user!==null"><small>작성자 : {{ currentarticle.board.user.name }} &nbsp; | &nbsp; 작성날짜 : {{currentarticle.board.date.split(" ")[0] }}</small></p>
-            <!-- <p>{{ currentarticle.board.content }}</p> -->
-            <div v-if="currentarticle.files.length > 0">
-              <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item" v-for="(image, idx) in currentarticle.files" :key="idx" :class="{ active: idx==0 }">
-                    <img :src="`http://localhost:9999/static/uploads/${image.stored_file_path}`" alt="사진을 찾을 수 없습니다." class="w-60">
-                  </div>
+          <h1>{{ currentarticle.board.title }}</h1>
+          <p v-if="currentarticle.board.user!==null" class="fs-5 d-flex justify-content-between">
+            <!-- <span>작성자 : {{ currentarticle.board.user.name }} &nbsp; | &nbsp; 작성날짜 : {{currentarticle.board.date.split(" ")[0] }}</span></p> -->
+            <span>작성자 : {{ currentarticle.board.user.name }}</span>
+            <span>날짜 : 
+              <span class="color-blue">
+                {{currentarticle.board.date.split(" ")[0] }}
+              </span>
+            </span>
+          </p>
+          <!-- <p>{{ currentarticle.board.content }}</p> -->
+          <div v-if="currentarticle.files.length > 0">
+            <!-- <div v-for="file in currentarticle.files" :key="file.id">
+              <img :src="`http://localhost:9999/static/uploads/${file.stored_file_path}`" class="w-100" alt="사진을 찾을 수 없습니다.">
+            </div> -->
+            <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item" v-for="(image, idx) in currentarticle.files" :key="idx" :class="{ active: idx==0 }">
+                  <img :src="`https://i6b201.p.ssafy.io:9999/file/${image.stored_file_path}`" alt="사진을 찾을 수 없습니다.">
                 </div>
-                <fa icon="angle-left" class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev" style="color:#87C7F1;">
-                  <span class="visually-hidden">Previous</span>
-                </fa>
-                <fa icon="angle-right" class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next" style="color:#87C7F1;">
-                  <span class="visually-hidden">Next</span>
-                </fa>
               </div>
+              <fa icon="angle-left" class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev" style="color:#87C7F1;">
+                <!-- <span class="carousel-control-prev-icon" aria-hidden="false"></span> -->
+                <span class="visually-hidden">Previous</span>
+              </fa>
+              <fa icon="angle-right" class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next" style="color:#87C7F1;">
+                <!-- <span class="carousel-control-next-icon" aria-hidden="false"></span> -->
+                <span class="visually-hidden">Next</span>
+              </fa>
             </div>
           </div>
         </div>
@@ -83,7 +90,6 @@ export default
     userinfoData = JSON.parse(localStorageData);
     }
     let userinfo = userinfoData.accountStore.userinfo;
-
     let currentarticle = ref({});
     const articleDetail = () => {
       return axios.get(process.env.VUE_APP_API_URL+"/board/class/detail",{
@@ -96,7 +102,6 @@ export default
       })
       .then((response)=>{
         currentarticle.value = response.data
-        isLoading.value = false
       })
     }
 
@@ -158,7 +163,6 @@ export default
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-  font-family: "Gothic A1", sans-serif;
 }
 .btns {
   cursor: pointer;
@@ -170,7 +174,6 @@ img {
   width: 55%;
   height: auto;
 }
-
 .nextbtn {
   float:right;
   margin:80px;
@@ -180,17 +183,19 @@ img {
   margin:80px;
 }
 .content {
-  padding-top: 13vh;
-  margin-bottom: 20px;
+  padding-top: 15vh;
+  margin-bottom: 10px;
+  font-family: 'Gothic A1', sans-serif;
 }
-.content p  {
+.content > p  {
   margin-right: 25vh;
-  text-align: right;
+  margin-left: 30vh;
+  /* text-align: right; */
 }
 .carousel {
   margin-left: auto;
   margin-right: auto;
-  top: -65px;
+  top: -80px;
 }
 .carousel-control-prev {
   width: 100px;
@@ -203,5 +208,8 @@ img {
   height: 100px;
   margin-top: 250px;
   margin-right: 100px;
+}
+.color-blue {
+    color: #13a1ff;
 }
 </style>

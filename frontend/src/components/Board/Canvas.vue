@@ -148,9 +148,10 @@ export default {
       color: "#000000",
       strokeType: "dash",
       backgroundColor: "#FFFFFF",
-      backgroundImage: this.article.files.length === 0 ? null : `http://localhost:9999/static/uploads/${this.article.files[0].stored_file_path}`,
+      backgroundImage: null,
       // TODO: background image cross origin 문제 해결
-      watermark: null,
+      // this.article.files.length === 0 ? null : `https://i6b201.p.ssafy.io:9999/file/${this.article.files[0].stored_file_path}`,
+      watermark: null,      
       id : this.article.board.id
     };
   },
@@ -191,6 +192,7 @@ export default {
         axios.post(process.env.VUE_APP_API_URL+`/board/class/${this.id}/comment/`, formData, 
             { headers: {'Content-Type' : 'multipart/form-data;charset=utf-8' }})
         .then(()=> {
+          this.$refs.VueCanvasDrawing.reset()
           this.$emit('submitted')
         })
     }
