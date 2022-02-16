@@ -11,6 +11,7 @@ import Question from "../views/board/Question.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
 import Profile from "../views/accounts/Profile.vue";
+import EditProfile from "../views/accounts/EditProfile.vue";
 import Videoclass from "../views/Videoclass/Videoclass.vue";
 import AskQuestion from "../views/board/AskQuestion.vue";
 import TimeTable from "../views/board/TimeTable.vue";
@@ -94,6 +95,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/profile",
     name: "Profile",
     component: Profile,
+  },
+  {
+    path: "/editprofile",
+    name: "EditProfile",
+    component: EditProfile,
   },
   {
     path: "/videoclass",
