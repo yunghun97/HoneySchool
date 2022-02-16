@@ -89,7 +89,7 @@
                   <p :class="'collapse show col'+comment.id" id="comment-cont">{{ comment.content }}</p>
                   <div v-for="file in comments.files" :key="file.id"  class="comment-list">
                     <a 
-                      :href="process.env.VUE_APP_FILE_URL+`${file.stored_file_path}`"
+                      :href="`https://i6b201.p.ssafy.io:9999/file/${file.stored_file_path}`"
                       v-if="file.commentId === comment.id"
                     >
                       첨부파일
