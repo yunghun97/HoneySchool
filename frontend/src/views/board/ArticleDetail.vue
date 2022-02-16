@@ -28,7 +28,7 @@
           <p>첨부파일</p>
            <div v-for="idx in currentarticle.files.length" :key="idx">
             <a 
-              :href="process.env.VUE_APP_FILE_URL+`${currentarticle.files[idx-1].stored_file_path}`"
+              :href="`https://i6b201.p.ssafy.io:9999/file/${currentarticle.files[idx-1].stored_file_path}`"
               v-if="currentarticle.files[idx-1].commentId===0"
             >
               첨부파일 {{idx}}
@@ -277,7 +277,7 @@ export default {
             if (revisedComment.value.length === 0) {
                 alert("댓글 내용을 작성해주세요")
             } else {
-                axios.put(process.env.VUE_APP_API_URL+`/board/class/${id}/comment/${comId}`, {
+                axios.put(`http://localhost:9999/static/uploads/board/class/${id}/comment/${comId}`, {
                     'content': revisedComment.value,
                     })
                 .then(() => {

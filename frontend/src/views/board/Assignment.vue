@@ -45,7 +45,7 @@
       </div>
       <div class="image">
         <h1><span class="badge bg-secondary imageBadge">완료한 {{userinfo.name}} 학생의 숙제</span></h1>
-        <img :src="`http://localhost:9999/static/uploads/${myimg}`" alt="&emsp; &emsp; &emsp; &emsp; 제출한 숙제를 불러올 수 없습니다. 다시 시도해주세요. &emsp; &emsp; &emsp; &emsp;" class="assignmentImg">
+        <img :src="`https://i6b201.p.ssafy.io:9999/file/${myimg}`" alt="&emsp; &emsp; &emsp; &emsp; 제출한 숙제를 불러올 수 없습니다. 다시 시도해주세요. &emsp; &emsp; &emsp; &emsp;" class="assignmentImg">
       </div>
     </div>
     <div class="canvas" v-else>
