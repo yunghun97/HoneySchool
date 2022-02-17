@@ -202,22 +202,11 @@ export default {
         'class_number': value.class_number,
         'student_number': value.student_number,
         'password': value.password,
-        // 오류때문에 하나씩 추가해봤습니다.
-        // 'user_id' : userinfo.value.userId,
-        //'email': 'email@email.com',
-        //'position': userinfo.value.position,
       }
 
       axios.put(process.env.VUE_APP_API_URL+`/users/${userinfo.value.userId}`, newinfo)
       .then(() => {
-        const payload = {
-          user_id: userinfo.value.user_id,
-          password: newinfo.password,
-        };
-        store.dispatch("accountStore/getToken", payload);
-      })
-      .then(() => {
-        router.push({name: 'Profile'})
+        store.commit("accountStore/logout")
       })
     }
     return { userinfo, editProfile, schema }
