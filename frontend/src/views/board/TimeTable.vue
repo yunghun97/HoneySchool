@@ -181,7 +181,8 @@ export default {
               },
         })
         .then((response)=>{
-            timedetail.value = response.data            
+            timedetail.value = response.data
+      
         })
         .catch(()=> {
             alert("아직 이번주 시간표가 없습니다!")

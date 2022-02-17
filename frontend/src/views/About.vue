@@ -196,18 +196,18 @@ export default {
     const getFile = () =>{
       return axios.get(process.env.VUE_APP_API_URL+"/board/file")
       .then((response)=> {
-        console.log(response)
+        // console.log(response)
         download = response.data;        
         // let blob = new Blob([response.data], {type: "image/jpeg"});
-        console.log(response.data);
+        // console.log(response.data);
         let array = [];
         for (let i = 0; i < response.data.length; i++) {
           array.push(response.data.charCodeAt(i));
         }
         const blob = new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
         download = window.URL.createObjectURL(blob);
-        console.log(blob.size, blob.type);
-        console.log(download);        
+        // console.log(blob.size, blob.type);
+        // console.log(download);        
       })
       .catch((error)=> console.log(error))
     }

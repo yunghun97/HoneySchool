@@ -11,8 +11,12 @@
           >
             <div class="row pb-2">
               <div class="col-4"></div>
-              <label class="col-1 font-A1-500 fs-5 px-0 height label-height">구분</label>
-              <div class="form-row col-3 d-flex justify-content-center align-content-center">
+              <label class="col-1 font-A1-500 fs-5 px-0 height label-height"
+                >구분</label
+              >
+              <div
+                class="form-row col-3 d-flex justify-content-center align-content-center"
+              >
                 <Field
                   name="position"
                   id="student"
@@ -25,11 +29,6 @@
                 />
                 <label for="student" class="form-check-label label-height">
                   <p class="font-A1-500 fs-4 px-2 p-border my-0">학생</p>
-                  <!-- <img
-                    class="profile"
-                    src="@/assets/accounts/Signup_student.png"
-                    alt="Signup_student"
-                  /> -->
                 </label>
                 <p class="d-inline my-0">&nbsp;&nbsp;&nbsp;</p>
                 <Field
@@ -42,130 +41,12 @@
                   v-model="position"
                 />
                 <label for="teacher" class="form-check-label label-height">
-                  <!-- <img
-                    class="profile"
-                    src="@/assets/accounts/Signup_teacher.png"
-                    alt="Signup_teacher"
-                  /> -->
                   <p class="font-A1-500 fs-4 px-2 p-border my-0">교직원</p>
                 </label>
               </div>
               <p class="text-danger">{{ errors.position }}</p>
               <div class="col-4"></div>
             </div>
-            <!-- <div class="row mb-3">
-              <div class="form-group col-4">
-                <label>이름</label>
-                <Field
-                  name="name"
-                  type="text"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors.name }"
-                />
-                <div class="invalid-feedback">{{ errors.name }}</div>
-              </div>
-              <div class="form-group col-4">
-                <label>생년월일</label>
-                <Field
-                  name="birth"
-                  type="date"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors.birth }"
-                />
-                <div class="invalid-feedback">{{ errors.birth }}</div>
-              </div>
-              <div class="form-group col-4">
-                <label>학교</label>
-                <Field
-                  name="school"
-                  as="select"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors.school }"
-                >
-                  <option disabled value="" selected>학교를 선택하세요.</option>
-                  <option value="샘머리초등학교">샘머리초등학교</option>
-                  <option value="노형초등학교">노형초등학교</option>
-                  <option value="갑천초등학교">갑천초등학교</option>
-                  <option value="지장초등학교">지장초등학교</option>
-                  <option value="불당초등학교">불당초등학교</option>
-                </Field>
-                <div class="invalid-feedback">{{ errors.school }}</div>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="form-group col-4">
-                <label>학년</label>
-                <Field
-                  name="grade"
-                  as="select"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors.grade }"
-                >
-                  <option disabled value="" selected>
-                    몇 학년인지 선택하세요.
-                  </option>
-                  <option value="1">1학년</option>
-                  <option value="2">2학년</option>
-                  <option value="3">3학년</option>
-                  <option value="4">4학년</option>
-                  <option value="5">5학년</option>
-                  <option value="6">6학년</option>
-                </Field>
-                <div class="invalid-feedback">{{ errors.grade }}</div>
-              </div>
-              <div class="form-group col-4">
-                <label>반</label>
-                <Field
-                  name="class_number"
-                  as="select"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors.class_number }"
-                >
-                  <option disabled value="" selected>
-                    몇 반인지 선택하세요.
-                  </option>
-                  <option value="1">1반</option>
-                  <option value="2">2반</option>
-                  <option value="3">3반</option>
-                  <option value="4">4반</option>
-                  <option value="5">5반</option>
-                  <option value="6">6반</option>
-                </Field>
-                <div class="invalid-feedback">{{ errors.class_number }}</div>
-              </div>
-              <div class="form-group col-4">
-                <label>번호</label>
-                <Field
-                  name="student_number"
-                  type="number"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors.student_number }"
-                />
-                <div class="invalid-feedback">{{ errors.student_number }}</div>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="form-group col-6">
-                <label>아이디</label>
-                <Field
-                  name="user_id"
-                  type="text"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors.user_id }"
-                />
-                <div class="invalid-feedback">{{ errors.user_id }}</div>
-              </div>
-              <div class="form-group col-6">
-                <label>Email</label>
-                <Field
-                  name="email"
-                  type="text"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors.email }"
-                />
-                <div class="invalid-feedback">{{ errors.email }}</div>
-              </div>
-            </div> -->
             <div class="row mb-3">
               <div class="form-group col-6">
                 <div class="row">
@@ -183,7 +64,9 @@
               </div>
               <div class="form-group col-6">
                 <div class="row">
-                  <label class="col-4 font-A1-500 fs-5 px-0 height">생년월일</label>
+                  <label class="col-4 font-A1-500 fs-5 px-0 height"
+                    >생년월일</label
+                  >
                   <div class="col-8">
                     <Field
                       name="birth"
@@ -198,21 +81,26 @@
             </div>
             <div class="row mb-3">
               <div class="form-group col-6">
-                 <div class="row">
-                  <label class="col-4 font-A1-500 fs-5 px-0 height">아이디</label>
+                <div class="row">
+                  <label class="col-4 font-A1-500 fs-5 px-0 height"
+                    >아이디</label
+                  >
                   <div class="col-8">
                     <Field
                       name="user_id"
                       type="text"
                       class="form-control underline"
                       :class="{ 'is-invalid': errors.user_id }"
+                      v-model="idCk"
+                      @keyup="memberCheck"
                     />
                     <div class="invalid-feedback">{{ errors.user_id }}</div>
+                    <p v-if="bool" id="check-id">중복된 아이디입니다.</p>
                   </div>
-                 </div>
+                </div>
               </div>
               <div class="form-group col-6">
-                 <div class="row">
+                <div class="row">
                   <label class="col-4 font-A1-500 fs-5 px-0 height">학교</label>
                   <div class="col-8">
                     <Field
@@ -221,22 +109,27 @@
                       class="form-control underline"
                       :class="{ 'is-invalid': errors.school }"
                     >
-                      <option disabled value="" selected>학교를 선택하세요.</option>
+                      <option disabled value="" selected>
+                        학교를 선택하세요.
+                      </option>
                       <option value="샘머리초등학교">샘머리초등학교</option>
                       <option value="노형초등학교">노형초등학교</option>
                       <option value="갑천초등학교">갑천초등학교</option>
                       <option value="지장초등학교">지장초등학교</option>
                       <option value="불당초등학교">불당초등학교</option>
+                      <option value="싸피초등학교">싸피초등학교</option>
                     </Field>
                     <div class="invalid-feedback">{{ errors.school }}</div>
                   </div>
-                 </div>
+                </div>
               </div>
             </div>
             <div class="row mb-3">
               <div class="form-group col-6">
-                 <div class="row">
-                  <label class="col-4 font-A1-500 fs-5 px-0 height">비밀번호</label>
+                <div class="row">
+                  <label class="col-4 font-A1-500 fs-5 px-0 height"
+                    >비밀번호</label
+                  >
                   <div class="col-8">
                     <Field
                       name="password"
@@ -246,7 +139,7 @@
                     />
                     <div class="invalid-feedback">{{ errors.password }}</div>
                   </div>
-                 </div>
+                </div>
               </div>
               <div class="form-group col-6">
                 <div class="row">
@@ -276,7 +169,9 @@
             <div class="row mb-3">
               <div class="form-group col-6">
                 <div class="row">
-                  <label class="col-4 font-A1-500 fs-5 px-0 height">비밀번호 확인</label>
+                  <label class="col-4 font-A1-500 fs-5 px-0 height"
+                    >비밀번호 확인</label
+                  >
                   <div class="col-8">
                     <Field
                       name="confirmPassword"
@@ -284,7 +179,9 @@
                       class="form-control underline"
                       :class="{ 'is-invalid': errors.confirmPassword }"
                     />
-                    <div class="invalid-feedback">{{ errors.confirmPassword }}</div>
+                    <div class="invalid-feedback">
+                      {{ errors.confirmPassword }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -308,7 +205,9 @@
                       <option value="5">5반</option>
                       <option value="6">6반</option>
                     </Field>
-                    <div class="invalid-feedback">{{ errors.class_number }}</div>
+                    <div class="invalid-feedback">
+                      {{ errors.class_number }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -316,7 +215,9 @@
             <div class="row mb-3">
               <div class="form-group col-6">
                 <div class="row">
-                  <label class="col-4 font-A1-500 fs-5 px-0 height">이메일</label>
+                  <label class="col-4 font-A1-500 fs-5 px-0 height"
+                    >이메일</label
+                  >
                   <div class="col-8">
                     <Field
                       name="email"
@@ -338,13 +239,20 @@
                       class="form-control underline"
                       :class="{ 'is-invalid': errors.student_number }"
                     />
-                    <div class="invalid-feedback">{{ errors.student_number }}</div>
+                    <div class="invalid-feedback">
+                      {{ errors.student_number }}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="form-group pt-4 d-flex justify-content-center">
-              <button type="submit" class="login-btn d-block font-A1-500 btn-width">확인</button>
+              <button
+                type="submit"
+                class="login-btn d-block font-A1-500 btn-width"
+              >
+                확인
+              </button>
             </div>
             <!-- <div class="form-group mb-3">
               <button type="submit" class="btn btn-primary mr-1">
@@ -357,7 +265,11 @@
     </div>
     <div class="d-flex justify-content-center">
       <p class="p-3">
-        <router-link to="/login" class="text-decoration-none link-color font-A1-500">로그인</router-link>
+        <router-link
+          to="/login"
+          class="text-decoration-none link-color font-A1-500"
+          >로그인</router-link
+        >
       </p>
     </div>
   </div>
@@ -406,24 +318,43 @@ export default {
     const store = useStore();
     const router = useRouter();
 
+    let bool = ref(false);
     const onSubmit = (values: any) => {
-      console.log(schema);
+
+      if (bool.value) {
+        alert("중복된 아이디입니다.");
+      } else {
+        axios
+          .post(process.env.VUE_APP_API_URL + "/users/register/", values)
+          .then((res) => {
+
+            // alert("SUCCESS!! :-)\n\n" + JSON.stringify(values, null, 4));
+            const payload = {
+              user_id: values.user_id,
+              password: values.password,
+            };
+            store.dispatch("accountStore/getToken", payload);
+          })
+          // .catch((err) => {
+          //   console.log(err);
+          // });
+      }
+    };
+    const memberCheck = () => {
       axios
-        .post(process.env.VUE_APP_API_URL+"/users/register/", values)
-        .then((res) => {
-          console.log(res);
-          // alert("SUCCESS!! :-)\n\n" + JSON.stringify(values, null, 4));
-          const payload = {
-            user_id: values.user_id,
-            password: values.password,
-          };
-          store.dispatch("accountStore/getToken", payload);
+        .get(process.env.VUE_APP_API_URL + "/users/IdCheck/" + idCk.value)
+        .then((response) => {
+
+          let cnt = response.data;
+          if (cnt) bool.value = true;
+          else bool.value = false;
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        // .catch((error) => {
+        //   console.log(error);
+        // });
     };
 
+    const idCk = ref("");
     const position = ref("");
     // const grade = ref(0);
     // const class_number = ref(0);
@@ -435,7 +366,10 @@ export default {
       // class_number,
       // student_number,
       schema,
+      idCk,
+      bool,
       onSubmit,
+      memberCheck,
     };
   },
 };
@@ -486,7 +420,7 @@ input[type="radio"]:checked + label > p {
   border-radius: 15px;
 }
 #outer-div {
-  margin : 50px;
+  margin: 50px;
   /* background-color: rgb(255, 237, 169); */
 }
 .height {
@@ -496,7 +430,7 @@ input[type="radio"]:checked + label > p {
   width: 200px;
 }
 .p-border {
-  border : 1px solid gray;
+  border: 1px solid gray;
   border-radius: 10px;
 }
 .label-height {
@@ -504,14 +438,15 @@ input[type="radio"]:checked + label > p {
   margin-top: 6px;
   margin-bottom: 6px;
 }
-input, select {
-    height: 50px;
+input,
+select {
+  height: 50px;
 }
 input.underline {
-  border-left-width:0;
-  border-right-width:0;
-  border-top-width:0;
-  border-bottom-width:1;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 0;
+  border-bottom-width: 1;
 }
 .login-btn {
   display: inline-block;
@@ -541,21 +476,26 @@ input.underline {
 .link-color {
   color: rgb(49, 180, 242);
 }
-.font-A1-200{
-  font-family: 'Gothic A1', sans-serif;
+.font-A1-200 {
+  font-family: "Gothic A1", sans-serif;
   font-weight: 200;
 }
-.font-A1-300{
-  font-family: 'Gothic A1', sans-serif;
+.font-A1-300 {
+  font-family: "Gothic A1", sans-serif;
   font-weight: 300;
 }
-.font-A1-400{
-  font-family: 'Gothic A1', sans-serif;
+.font-A1-400 {
+  font-family: "Gothic A1", sans-serif;
   font-weight: 400;
 }
-.font-A1-500{
-  font-family: 'Gothic A1', sans-serif;
+.font-A1-500 {
+  font-family: "Gothic A1", sans-serif;
   font-weight: 500;
+}
+#check-id {
+  margin: 0;
+  color: red;
+  text-decoration-color: red;
 }
 /* backup */
 /* input[type="radio"]:checked + label > img {

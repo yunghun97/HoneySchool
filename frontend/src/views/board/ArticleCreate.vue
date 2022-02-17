@@ -250,7 +250,7 @@ export default defineComponent({
           '4': timetable[3],
           '5': timetable[4]
         }
-        console.log(data)
+
         axios.post(process.env.VUE_APP_API_URL+"/timetable/week", data)
         .then(() => {
           router.push({name: 'BoardTable'})

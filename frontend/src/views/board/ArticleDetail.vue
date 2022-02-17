@@ -1,154 +1,164 @@
 <template>
-  <div v-if="isLoading">
-    <div class="spinner-border" role="status"></div>
-    <p>LOADING...</p>
-  </div>
-  <!-- Article Detail -->
-  <div v-else>
-    <button 
-    type="button" class="btn btn-outline-success buttonall"
-    @click="$router.go(-1)"
-    >
-      전체 게시판
-    </button>
-    <div class="card">
-      <h4 class="card-header">{{ currentarticle.board.title }}</h4>
-      <div class="card-body">
-        <p>작성자 : {{ currentarticle.board.user.name }}</p>
-        <p>작성날짜 : {{ currentarticle.board.date }}</p>
-        <div v-if="currentarticle.board.content.length > 0" class="content-container">
-          <div v-for="content in currentarticle.board.content.split('\r')" :key="content">
-            <p>{{ content }}</p>
-          </div>
+  <div class="font-A1">
+
+    <div v-if="isLoading">
+      <div class="spinner-border" role="status"></div>
+      <p>LOADING...</p>
+    </div>
+    <!-- Article Detail -->
+    <div v-else class="container">
+      <div class="row row-padding">
+        <div class="btns px-0">
         </div>
-            <!-- <div v-if="currentarticle.board.category==='photo'" class="img-container">
-                <img :src="currentarticle.files" alt="img" class="img-fluid">
-            </div> -->
-        <div v-if="currentarticle.files.length > comments.files.length" class="content-container">
-          <p>첨부파일</p>
-           <div v-for="idx in currentarticle.files.length" :key="idx">
-            <a 
-              :href="`https://i6b201.p.ssafy.io:9999/file/${currentarticle.files[idx-1].stored_file_path}`"
-              v-if="currentarticle.files[idx-1].commentId===0"
-              target='_blank'
+        <div class="btns" v-if="currentarticle.board.user.userId === userinfo.userId">
+            <button 
+            type="button" class="btn buttonall btn-link text-decoration-none px-0"
+            @click="$router.go(-1)"
             >
-              첨부파일 {{idx}}
-            </a>
+              &lt; 전체 게시판
+            </button>
+            <button 
+              type="button" class="btn btn-link update-btn text-decoration-none"
+              @click="$router.push({ name: 'ArticleUpdate', params: { article_id: id }})"
+            >
+              수정
+            </button>
+          <button 
+            type="button" class="btn btn-link delete-btn text-decoration-none"
+            @click="deleteArticle"
+          >
+            삭제
+          </button>
+        </div>
+        <div class="card-content mx-0 col-12">
+          <h4 class="py-2 px-3 text-left"><b>{{ currentarticle.board.title }}</b></h4>
+          <hr>
+          <div class="px-3">
+            <p class="fs-6 d-flex justify-content-between">
+              <span>{{ currentarticle.board.user.name }}</span>
+              <span>{{ currentarticle.board.date }}</span>
+            </p>
+
+            <div v-if="currentarticle.board.content.length > 0" class="content-container">
+              <div class="pt-5" pb-4>
+                <div v-for="content in currentarticle.board.content.split('\r')" :key="content">
+                  <p>{{ content }}</p>
+                </div>
+              </div>
+            </div>
+                <!-- <div v-if="currentarticle.board.category==='photo'" class="img-container">
+                    <img :src="currentarticle.files" alt="img" class="img-fluid">
+                </div> -->
+            <div v-if="currentarticle.files.length > comments.files.length" class="content-container">
+              <p><b>첨부파일</b></p>
+              <div v-for="idx in currentarticle.files.length" :key="idx">
+                <a 
+                  :href="`https://i6b201.p.ssafy.io:9999/file/${currentarticle.files[idx-1].stored_file_path}`"
+                  v-if="currentarticle.files[idx-1].commentId===0"
+                  target='_blank'
+                >
+                  첨부파일 {{idx}}
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="container" >
-        <div class="row">
-            <div class="btns" v-if="currentarticle.board.user.userId === userinfo.userId">
-                <div>
-                  <button 
-                      type="button" class="btn btn-primary"
-                      @click="$router.push({ name: 'ArticleUpdate', params: { article_id: id }})"
-                      >
-                      수정하기
-                  </button>
-                </div>
-                <button 
-                    type="button" class="btn btn-danger"
-                    @click="deleteArticle"
-                    >
-                    삭제하기
-                </button>
-            </div>
-        <hr>
-        <!-- comments 작성 -->
-        <div class="comment-box">
-          <h5>댓글</h5>
-          <form role="form">
-            <div class="form-group">
-              <textarea class="form-control" rows="3" v-model="newComment"></textarea>
-            </div>
-            <button type="button" class="btn btn-primary post-btn" @click="postComment"><fa icon="reply" class="fa-icon"></fa> 작성</button>
-          </form>
-        </div>
-        <hr>
-        <!-- comments 조회 -->
-        <div v-if="isLoadingCom">
-          <p>...LOADING</p>
-        </div>
-        
-        <div v-if="!isLoadingCom">
-          <div v-if="comments.length === 0">
-            <p>아직 작성된 댓글이 없습니다.</p>
+      <div class="container" >
+          <div class="row">
+          <hr>
+          <!-- comments 작성 -->
+          <div class="comment-box pb-4">
+            <form role="form">
+              <div class="form-group">
+                <textarea class="form-control" rows="3" v-model="newComment"></textarea>
+              </div>
+              <button type="button" class="btn btn-black post-btn" @click="postComment"><fa icon="reply" class="fa-icon"></fa> 작성</button>
+            </form>
           </div>
-          <div v-else>
-            <div   
-              v-for="comment in comments.comments"
-              :key="comment.id"
-                >
-                <div v-if="comment.parent_id === 0 | comment.parentId === 0">
-                  <h3 class="comment-list"><fa icon="comment" class="fa-icon-b"></fa> {{ comment.user.name }}: </h3>
-                  <p class="comment-date"><small class="text-muted">{{ comment.createdAt }}</small></p>
-                  
-                  <p :class="'collapse show col'+comment.id" id="comment-cont">{{ comment.content }}</p>
-                  <div v-for="file in comments.files" :key="file.id"  class="comment-list">
-                    <a 
-                      :href="`https://i6b201.p.ssafy.io:9999/file/${file.stored_file_path}`"
-                      v-if="file.commentId === comment.id"
-                      target='_blank'
-                    >
-                      첨부파일
-                    </a>
-                  </div>
-                  <div v-if="comment.user.userId === userinfo.userId">
-                    <!-- 댓글 삭제 -->
-                    <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
-                    <!-- 댓글 수정 -->
+          <!-- comments 조회 -->
+          <div v-if="isLoadingCom">
+            <p>...LOADING</p>
+          </div>
+          
+          <div v-if="!isLoadingCom">
+            <div v-if="comments.length === 0">
+              <p>아직 작성된 댓글이 없습니다.</p>
+            </div>
+            <div v-else>
+              <div   
+                v-for="comment in comments.comments"
+                :key="comment.id"
+                  >
+                  <div v-if="comment.parent_id === 0 | comment.parentId === 0">
+                    <h5 class="comment-list"><fa icon="comment" class="fa-icon-b"></fa> {{ comment.user.name }} </h5>
+                    <p class="comment-date"><small class="text-muted">{{ comment.createdAt }}</small></p>
+                    
+                    <p :class="'collapse show col'+comment.id" id="comment-cont">{{ comment.content }}</p>
+                    <div v-for="file in comments.files" :key="file.id"  class="comment-list">
+                      <a 
+                        :href="`https://i6b201.p.ssafy.io:9999/file/${file.stored_file_path}`"
+                        v-if="file.commentId === comment.id"
+                        target='_blank'
+                      >
+                        첨부파일
+                      </a>
+                    </div>
+                    <div v-if="comment.user.userId === userinfo.userId">
+                      <!-- 댓글 삭제 -->
+                      <button type="button" class="btn btn-black comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
+                      <!-- 댓글 수정 -->
+                      <div v-if="currentarticle.board.category==='assignment' && userinfo.position==='S'">
+                      </div>
+                      <div v-else>
+                        <button class="btn btn-black comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.col'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
+                            <fa icon="edit" class="fa-icon"></fa>
+                        </button>
+                      </div>
+                      <div :class="'collapse col'+comment.id">
+                        <div class="mx-0">
+                          <textarea class="form-control" rows="3" v-model="revisedComment"></textarea>
+                          <button type="button" class="btn btn-black post-btn" @click="editCom(comment.id)"><fa icon="edit" class="fa-icon"></fa>수정</button>
+                        </div>
+                      </div>
+                    </div>
+                      <!-- 대댓글 작성 -->
                     <div v-if="currentarticle.board.category==='assignment' && userinfo.position==='S'">
                     </div>
-                    <div v-else>
-                      <button class="btn btn-secondary comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.col'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
-                          <fa icon="edit" class="fa-icon"></fa>
-                      </button>
-                    </div>
-                    <div :class="'collapse col'+comment.id">
-                      <div class="card card-body">
-                        <textarea class="form-control" rows="1" v-model="revisedComment"></textarea>
-                        <button type="button" class="btn btn-secondary" @click="editCom(comment.id)"><fa icon="edit" class="fa-icon"></fa>수정</button>
+                      <div v-else >
+                         <div>
+                            <button class="btn btn-black comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.re'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
+                                <fa icon="reply" class="fa-icon"></fa>
+                            </button>
+                            <div :class="'collapse re'+comment.id">
+                              <div>
+                                <hr>
+                                <textarea class="form-control" rows="3" v-model="reComment"></textarea>
+                                <button type="button" class="btn btn-black post-btn" @click="postReCom(comment.id)"><fa icon="reply" class="fa-icon"></fa>작성</button>
+                              </div>
+                            </div>
+                         </div>
                       </div>
+                    <hr>
+                  </div>
+                  <div v-else class="reply">
+                    <h5 class="comment-list"><fa icon="share" class="fa-icon-b"></fa> {{ comment.user.name }} </h5>
+                    <p class="comment-date"><small class="text-muted">{{ comment.createdAt }}</small></p>
+                    <div v-for="content in comment.content.split('\r')" :key="content" id="comment-cont">
+                      <p>{{ content }}</p>
                     </div>
-                  </div>
-                    <!-- 대댓글 작성 -->
-                  <div v-if="currentarticle.board.category==='assignment' && userinfo.position==='S'">
-                  </div>
-                  <div v-else>
-                    <button class="btn btn-success comment-btn" type="button" data-bs-toggle="collapse" :data-bs-target="'.re'+comment.id" aria-expanded="false" aria-controls="collapseExample" @click="requestEditCom(comment.content)">
-                        <fa icon="reply" class="fa-icon"></fa>
-                    </button>
-                    <div :class="'collapse re'+comment.id">
-                      <div class="card card-body">
-                        <textarea class="form-control" rows="1" v-model="reComment"></textarea>
-                        <button type="button" class="btn btn-success" @click="postReCom(comment.id)"><fa icon="reply" class="fa-icon"></fa>작성</button>
-                      </div>
+                    <div v-if="comment.user.userId === userinfo.userId">
+                      <button type="button" class="btn btn-black comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
                     </div>
+                    <hr>
                   </div>
-                  <hr>
-                </div>
-                <div v-else class="reply">
-                  <h3 class="comment-list"><fa icon="share" class="fa-icon-b"></fa> {{ comment.user.name }}: </h3>
-                  <p class="comment-date"><small class="text-muted">{{ comment.createdAt }}</small></p>
-                  <div v-for="content in comment.content.split('\r')" :key="content" id="comment-cont">
-                    <p>{{ content }}</p>
-                  </div>
-                  <div v-if="comment.user.userId === userinfo.userId">
-                    <button type="button" class="btn btn-danger comment-btn" @click="deleteCom(comment.id)"><fa icon="times" class="fa-icon"></fa></button>
-                  </div>
-                  <hr>
                 </div>
               </div>
-                
-            </div>
-        </div>
+          </div>
+      </div>
     </div>
-
-	</div>
-</div>
+  </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -262,9 +272,9 @@ export default {
                 .then(() => {
                     isLoadingCom.value = false
                 })
-                .catch((e) => {
-                    console.log(e)
-                })
+                // .catch((e) => {
+                //     console.log(e)
+                // })
             }
         }
         // 댓글 삭제
@@ -332,14 +342,23 @@ export default {
 }
 </script>
 <style scoped>
-.card {
-    margin: 30px;
-    width: 1320px;
+.card-content {
+    width: 100%;
+    padding: 0px;
     display: inline-block;
+    border: none;
+    box-shadow: none;
 }
 .card-body > p{
     text-align: right;
 }
+.row-padding {
+  padding:15px;
+}
+/* .container {
+  margin-left: 20%;
+  margin-right: 20%;
+} */
 .btns {
     margin-bottom:20px;
     text-align: right;
@@ -393,12 +412,29 @@ img {
     
 }
 .buttonall {
-  display: block;
-  margin-left: auto;
+  /* display: block; */
+  /* margin-left: auto; */
   margin-right: auto;
 
 }
 hr {
   width: 100%;
+}
+.btn-black {
+  text-decoration: none;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+.font-A1{
+  font-family: 'Gothic A1', sans-serif;
+}
+.comment-box {
+  background-color: transparent;
+}
+.form-control {
+  border-color: black;
+}
+.bg-gray {
+  background-color: rgb(202, 202, 202);
 }
 </style>

@@ -73,6 +73,7 @@ export const accountStore: Module<accountState, RootState> = {
         })
         .catch((err) => {
           console.log("에러", err.response);
+          alert("존재하지 않는 아이디 혹은 맞지 않는 비밀번호 입니다.");
         });
     },
     getAccounts({ commit }) {

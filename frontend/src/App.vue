@@ -15,8 +15,8 @@
         <router-link to="/"
           ><img
             src="@/assets/logo_transparent.png"
-            style="width: 50px; height: 50px; margin-left: 10px;"
-          />Honey school</router-link
+            style="width: 50px; height: 50px; margin-left: 10px"
+          />Honey School</router-link
         >
       </a>
       <!-- <p v-if="userinfo.position === 'S'" id="user-greeting">{{ userinfo.name }} 학생 반가워요!</p>
@@ -38,7 +38,7 @@
               src="@/assets/logo_transparent.png"
               style="width: 50px; height: 50px; margin-left: 10px"
             />
-            <a>Honey school</a>
+            <a>Honey School</a>
           </h5>
           <button
             type="button"
@@ -120,7 +120,7 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 
 export default {
-  setup() {    
+  setup() {
     const store = useStore();
     let userinfo = computed(() => store.state.accountStore.userinfo);
     const logout = () => store.commit("accountStore/logout");
