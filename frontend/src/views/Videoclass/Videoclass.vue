@@ -17,10 +17,12 @@
           <div class="row">
             <div class="col-md-9">
               <div class="row" id="main-video">
-                <user-video
-                  :stream-manager="mainStreamManager"
-                  id="mainVideoElement"
-                />
+                <transition name="bounce">
+                  <user-video
+                    :stream-manager="mainStreamManager"
+                    id="mainVideoElement"
+                  />
+                </transition>
               </div>
               <hr size="5px" />
               <div class="row">
@@ -146,10 +148,12 @@
             <div class="col-md-3">
               <div id="container-cameras" class="row panel panel-default">
                 <p>나의 화면</p>
-                <user-video
-                  :stream-manager="publisherCamera"
-                  @click="updateMainVideoStreamManager(publisherCamera)"
-                />
+                <transition name="bounce">
+                  <user-video
+                    :stream-manager="publisherCamera"
+                    @click="updateMainVideoStreamManager(publisherCamera)"
+                  />
+                </transition>
                 <!-- 화면 공유 (선생님에게만 표시) -->
                 <p v-if="userinfo.position === 'T'" class="panel-heading">
                   화면 공유
@@ -185,13 +189,15 @@
                     <!-- 선생님 아이콘 제어 -->
                     <div v-if="userinfo.position === 'T'" class="iconsOnVideo">
                       <!-- 손들기 icon-->
-                      <img
-                        src="@/assets/videoclass/hand.png"
-                        alt="손들기"
-                        v-if="sub.raisehand"
-                        style="width: 27px; height: 27px"
-                        @click="handDownThisStudent(sub.stream.connection)"
-                      />
+                      <transition name="bounce">
+                        <img
+                          src="@/assets/videoclass/hand.png"
+                          alt="손들기"
+                          v-if="sub.raisehand"
+                          style="width: 27px; height: 27px"
+                          @click="handDownThisStudent(sub.stream.connection)"
+                        />
+                      </transition>
                       <!-- mic icon -->
                       <span>
                         <fa
@@ -208,22 +214,26 @@
                         ></fa>
                       </span>
                       <!-- 자리비움 icon -->
-                      <img
-                        src="@/assets/videoclass/clock.png"
-                        alt="자리비움"
-                        v-if="sub.left"
-                        style="width: 27px; height: 27px; margin-left: 10px"
-                      />
+                      <transition name="bounce">
+                        <img
+                          src="@/assets/videoclass/clock.png"
+                          alt="자리비움"
+                          v-if="sub.left"
+                          style="width: 27px; height: 27px; margin-left: 10px"
+                        />
+                      </transition>
                     </div>
                     <!-- 학생 아이콘 표시 -->
                     <div v-else class="iconsOnVideo">
                       <!-- 손들기 icon-->
-                      <img
-                        src="@/assets/videoclass/hand.png"
-                        alt="손들기"
-                        v-if="sub.raisehand"
-                        style="width: 27px; height: 27px"
-                      />
+                      <transition name="bounce">
+                        <img
+                          src="@/assets/videoclass/hand.png"
+                          alt="손들기"
+                          v-if="sub.raisehand"
+                          style="width: 27px; height: 27px"
+                        />
+                      </transition>
                       <!-- mic icon -->
                       <span>
                         <fa
@@ -238,12 +248,14 @@
                         ></fa>
                       </span>
                       <!-- 자리비움 icon -->
-                      <img
-                        src="@/assets/videoclass/clock.png"
-                        alt="자리비움"
-                        v-if="sub.left"
-                        style="width: 27px; height: 27px; margin-left: 10px"
-                      />
+                      <transition name="bounce">
+                        <img
+                          src="@/assets/videoclass/clock.png"
+                          alt="자리비움"
+                          v-if="sub.left"
+                          style="width: 27px; height: 27px; margin-left: 10px"
+                        />
+                      </transition>
                     </div>
                   </div>
                 </div>
@@ -286,95 +298,99 @@
       </div>
     </div>
     <!-- modal quiz 제출 -->
-    <div
-      class="modal fade"
-      id="sendquiz"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              우리반 학생들에게 공유 할 퀴즈를 작성해주세요
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label"
-                  >퀴즈 내용</label
-                >
-                <textarea
-                  class="form-control"
-                  id="message-text"
-                  v-model="quizContent"
-                ></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-primary"
-              @click="sendQuiz"
-              data-bs-dismiss="modal"
-            >
-              전송
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              닫기
-            </button>
+    <transition name="bounce">
+      <div
+        class="modal fade"
+        id="sendquiz"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                우리반 학생들에게 공유 할 퀴즈를 작성해주세요
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label"
+                    >퀴즈 내용</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="message-text"
+                    v-model="quizContent"
+                  ></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                @click="sendQuiz"
+                data-bs-dismiss="modal"
+              >
+                전송
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                닫기
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </transition>
 
     <!-- modal quiz 풀기 -->
-    <div
-      class="modal fade"
-      id="recievedquiz"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">퀴즈!!</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <a>{{ quizReceived }}</a>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
+    <transition name="bounce">
+      <div
+        class="modal fade"
+        id="recievedquiz"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">퀴즈!!</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <a>{{ quizReceived }}</a>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -1144,5 +1160,24 @@ td {
   position: absolute;
   left: 0;
   top: -95px;
+}
+
+/* transition */
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>

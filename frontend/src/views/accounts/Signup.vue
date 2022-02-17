@@ -227,6 +227,7 @@
                       <option value="갑천초등학교">갑천초등학교</option>
                       <option value="지장초등학교">지장초등학교</option>
                       <option value="불당초등학교">불당초등학교</option>
+                      <option value="싸피초등학교">싸피초등학교</option>
                     </Field>
                     <div class="invalid-feedback">{{ errors.school }}</div>
                   </div>
