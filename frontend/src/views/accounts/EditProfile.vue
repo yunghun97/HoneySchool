@@ -198,8 +198,8 @@ export default {
         'name': userinfo.value.name,
         'school': value.school,
         'grade': value.grade,
-        'classes': value.class_number,
-        'number': value.student_number,
+        'class_number': value.class_number,
+        'student_number': value.student_number,
         'password': value.password,
         // 오류때문에 하나씩 추가해봤습니다.
         // 'user_id' : userinfo.value.userId,
