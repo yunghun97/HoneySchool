@@ -16,7 +16,7 @@
           ><img
             src="@/assets/logo_transparent.png"
             style="width: 50px; height: 50px; margin-left: 10px"
-          />Honey school</router-link
+          />Honey School</router-link
         >
       </a>
       <!-- <p v-if="userinfo.position === 'S'" id="user-greeting">{{ userinfo.name }} 학생 반가워요!</p>
@@ -38,7 +38,7 @@
               src="@/assets/logo_transparent.png"
               style="width: 50px; height: 50px; margin-left: 10px"
             />
-            <a>Honey school</a>
+            <a>Honey School</a>
           </h5>
           <button
             type="button"
