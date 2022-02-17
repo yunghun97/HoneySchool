@@ -173,7 +173,8 @@ export default {
 }
 
 .navbar {
-  justify-content: start;
+  /* justify-content: start; */
+  justify-content: space-between;
   padding: 30px;
 }
 .navbar-brand a {
