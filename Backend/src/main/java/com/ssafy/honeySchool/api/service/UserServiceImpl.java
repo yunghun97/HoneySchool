@@ -78,8 +78,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUserId(String userId) {
         // 디비에 유저 정보 조회 (userId 를 통한 조회).
-        User user = userRepositorySupport.findUserByUserId(userId).get();
-        return user;
+        Optional<User> user = userRepositorySupport.findUserByUserId(userId);
+        if(!user.isPresent()) return null;
+        return user.get();
     }
 
     @Override
@@ -115,13 +116,6 @@ public class UserServiceImpl implements UserService {
         return schoolNumber;
     }
 
-    @Override
-    public List<String> getSchoolList(String school){
-        Optional<List<String>> pSchool=schoolRepositorySupport.findSchoolContainsSchoolName(school);
-        if(!pSchool.isPresent()) return null;
-
-        return pSchool.get();
-    }
 
     @Override
     public String getSchoolNameByOpenApi() {

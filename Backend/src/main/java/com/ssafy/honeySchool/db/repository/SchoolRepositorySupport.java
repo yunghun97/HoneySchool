@@ -29,10 +29,4 @@ public class SchoolRepositorySupport {
         return Optional.ofNullable(school);
     }
 
-    public Optional<List<String>> findSchoolContainsSchoolName(String schoolName) {
-        List<String> school = jpaQueryFactory.select(qSchool.school).from(qSchool)
-                .where(qSchool.school.contains(schoolName)).fetch();
-        if(school==null) return Optional.empty();
-        return Optional.ofNullable(school);
-    }
 }

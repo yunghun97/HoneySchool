@@ -55,12 +55,26 @@
             <button type="button" class="login-btn d-block font-A1-500 mx-3">
               <router-link to="/editprofile" class="text-decoration-none font-A1-500 btn-color">정보 수정</router-link>
             </button>
-            <button type="button" class="withdrawal-btn d-block font-A1-500 mx-3" @click="leave">회원 탈퇴</button>
+            <button type="button" class="withdrawal-btn d-block font-A1-500 mx-3" data-bs-toggle="modal" data-bs-target="#exampleModal">회원 탈퇴</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">정말로 회원 탈퇴하시겠습니까?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="login-btn d-block font-A1-500 mx-3" data-bs-dismiss="modal">취소</button>
+        <button type="button" class="withdrawal-btn d-block font-A1-500 mx-3" @click="leave">회원 탈퇴</button>
+      </div>
+    </div>
+  </div>
+</div>
 </template>
 
 <script lang="ts">
@@ -80,7 +94,9 @@ export default {
     const store = useStore();
     const leave = () => {
       axios.delete(process.env.VUE_APP_API_URL+`/users/${userinfo.userId}`)
-      store.commit("accountStore/logout")
+      .then(()=> {
+        store.commit("accountStore/logout")
+      })
     }
     return {userinfo, leave}
     },
