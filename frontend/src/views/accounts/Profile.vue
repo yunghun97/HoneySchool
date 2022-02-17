@@ -1,4 +1,5 @@
 <template>
+<div>
   <div id="outer-div">
     <div class="d-flex justify-content-center">
       <div class="card m-3 p-4 profile-card">
@@ -74,6 +75,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 </template>
 
