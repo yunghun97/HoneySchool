@@ -15,7 +15,7 @@
         <router-link to="/"
           ><img
             src="@/assets/logo_transparent.png"
-            style="width: 50px; height: 50px; margin-left: 10px;"
+            style="width: 50px; height: 50px; margin-left: 10px"
           />Honey school</router-link
         >
       </a>
@@ -120,7 +120,7 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 
 export default {
-  setup() {    
+  setup() {
     const store = useStore();
     let userinfo = computed(() => store.state.accountStore.userinfo);
     const logout = () => store.commit("accountStore/logout");
