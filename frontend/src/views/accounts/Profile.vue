@@ -69,8 +69,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-danger" @click="leave">회원 탈퇴</button>
+        <button type="button" class="login-btn d-block font-A1-500 mx-3" data-bs-dismiss="modal">취소</button>
+        <button type="button" class="withdrawal-btn d-block font-A1-500 mx-3" @click="leave">회원 탈퇴</button>
       </div>
     </div>
   </div>
