@@ -297,9 +297,10 @@ export default {
             if (revisedComment.value.length === 0) {
                 alert("댓글 내용을 작성해주세요")
             } else {
-                axios.put(`http://localhost:9999/static/uploads/board/class/${id}/comment/${comId}`, {
-                    'content': revisedComment.value,
-                    })
+              const formData = new FormData()
+              formData.append('content', revisedComment.value)
+                axios.put(process.env.VUE_APP_API_URL+`/board/class/${id}/comment/${comId}`, formData,
+                 { headers: {'Content-Type' : 'multipart/form-data;charset=utf-8' }})
                 .then(() => {
                     revisedComment.value = ''
                     isLoadingCom.value = false
