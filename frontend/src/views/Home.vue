@@ -106,10 +106,10 @@ export default {
           response.data.forEach(function (value: any, index: any, array: any) {
             timeNow.value = dayjs().format("HH:mm:ss");
             let today = new Date();
-            let hour = Number(today.getHours());
-            let minutes = Number(today.getMinutes());
-            // let hour = 9;
-            // let minutes = 50;
+            // let hour = Number(today.getHours());
+            // let minutes = Number(today.getMinutes());
+            let hour = 9;
+            let minutes = 50;
             let startTimeH = Number(value.startTime.substring(0, 2));
             let startTimeM = Number(value.startTime.substring(3, 5));
             let endTimeH = Number(value.endTime.substring(0, 2));
