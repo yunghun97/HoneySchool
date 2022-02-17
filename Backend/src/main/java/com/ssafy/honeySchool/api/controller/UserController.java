@@ -12,6 +12,7 @@ import com.ssafy.honeySchool.common.model.response.BaseResponseBody;
 import com.ssafy.honeySchool.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -78,14 +79,13 @@ public class UserController {
 
     @GetMapping("/IdCheck/{ckId}")
     @ApiOperation(value = "아이디 중복 확인", notes = "아이디 중복을 확인한다.")
-    public ResponseEntity<? extends BaseResponseBody> CheckDuplicateId(
+    public ResponseEntity<Boolean> CheckDuplicateId(
             @PathVariable @ApiParam(value="회원 id 정보", required = true) String ckId) {
-
         User user = userService.getUserByUserId(ckId);
         if(user!=null)
-            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+            return new ResponseEntity<>(true,HttpStatus.ACCEPTED);
         else
-            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Fail"));
+            return new ResponseEntity<>(false,HttpStatus.ACCEPTED);
     }
 
 
@@ -120,19 +120,16 @@ public class UserController {
             return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Fail"));
     }
 
-    @GetMapping("/schoolList/{school}")
+    @GetMapping("/school/{schoolName}")
     @ApiOperation(value = "검색한 학교 리스트", notes = "학교를 검색해서 리스트를 가져온다")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 404, message = "검색된 학교 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public List<String> getSchoolList(@PathVariable String school){
-        List<String> result=userService.getSchoolList(school);
-        if(result==null)
-            return null;
-        else
-            return result;
+    public ResponseEntity<Integer> getSchoolList(@PathVariable String schoolName){
+        int result=userService.getSchoolNumberBySchool(schoolName);
+        return new ResponseEntity<>(result,HttpStatus.ACCEPTED);
     }
 
     // openapi로 학교 데이터 받아오기

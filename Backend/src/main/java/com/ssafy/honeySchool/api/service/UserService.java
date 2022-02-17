@@ -21,5 +21,4 @@ public interface UserService {
     List<UserNameDto> getUserList(int schoolNumber, int gradeNumber, int classNumber);
     int getSchoolNumberBySchool(String school);
     String getSchoolNameByOpenApi();
-    List<String> getSchoolList(String school);
 }
