@@ -272,9 +272,9 @@ export default {
                 .then(() => {
                     isLoadingCom.value = false
                 })
-                .catch((e) => {
-                    console.log(e)
-                })
+                // .catch((e) => {
+                //     console.log(e)
+                // })
             }
         }
         // 댓글 삭제

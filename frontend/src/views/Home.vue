@@ -134,9 +134,9 @@ export default {
         };
         setInterval(getThistime, 1000);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      // .catch((err) => {
+      //   console.log(err);
+      // });
 
     // Join Session
     const joinSession = () => {
@@ -144,15 +144,15 @@ export default {
         .get(process.env.VUE_APP_API_URL + "/lecture")
         .then((response) => {
           let classOn = false;
-          console.log(mySessionName.value);
-          console.log(response.data.content);
+          // console.log(mySessionName.value);
+          // console.log(response.data.content);
           response.data.content.forEach((element: any) => {
             if (element.id === mySessionName.value) {
               classOn = true;
             }
           });
           if (classOn) {
-            console.log("수업 있음");
+            // console.log("수업 있음");
             if (userinfo.position === "S") {
               router.push({
                 name: "Videoclass",
@@ -175,9 +175,9 @@ export default {
             }
           }
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        // .catch((error) => {
+        //   console.log(error);
+        // });
     };
 
     return {
