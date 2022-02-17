@@ -1104,6 +1104,8 @@ td {
   margin-right: 15px;
 }
 .navbar {
+  /* justify-content: start; */
+  padding: 30px;
   /* justify-content: space-evenly; */
   background-color: #87c7f1;
   /* overflow: hidden; */
