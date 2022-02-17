@@ -171,8 +171,8 @@ button {
   margin:5px;
 }
 img {
-  width: 55%;
-  height: auto;
+  width: 80vh;
+  max-height: 600px;
 }
 .nextbtn {
   float:right;
@@ -193,23 +193,23 @@ img {
   /* text-align: right; */
 }
 .carousel {
-  margin-left: auto;
-  margin-right: auto;
-  top: -80px;
+  left: 60vh;
+  position: absolute;
 }
 .carousel-control-prev {
   width: 100px;
   height: 100px;
-  margin-top: 250px;
-  margin-left: 100px;
+  left: -100px;
+  top: 100px;
 }
 .carousel-control-next {
   width: 100px;
   height: 100px;
-  margin-top: 250px;
-  margin-right: 100px;
+  right: -100px;
+  top: 100px;
 }
 .color-blue {
     color: #13a1ff;
 }
+
 </style>
