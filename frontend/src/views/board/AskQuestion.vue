@@ -13,9 +13,9 @@
                 
                 <div class="instruction">
                     <h4>사용법</h4>
-                    <p>화면의 <span id="micbtn"><fa icon="microphone" id="micicon"></fa></span> 버튼을 누르면 녹음이 시작됩니다.</p>
-                    <p>화면의 <fa icon="stop-circle" id="stopicon"></fa> 버튼을 누르면 녹음을 끝냅니다.</p>
-                    <p><button class="btn-warning">질문 다 했어요</button> 버튼을 누르면 녹음한 질문을 선생님께 전달합니다.</p>
+                    <p>1. 화면의 <span id="micbtn"><fa icon="microphone" id="micicon"></fa></span> 버튼을 누르면 녹음이 시작됩니다.</p>
+                    <p>2. 화면의 <fa icon="stop-circle" id="stopicon"></fa> 버튼을 누르면 녹음을 끝냅니다.</p>
+                    <p>3. <button class="btn-warning">질문 다 했어요</button> 버튼을 누르면 녹음한 질문을 선생님께 전달합니다.</p>
                 </div>
             </div>
         </div>

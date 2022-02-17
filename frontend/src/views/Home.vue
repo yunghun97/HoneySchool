@@ -1,12 +1,12 @@
 <template>
-  <div class="main-page container-fluid font-A1" style="height: 880px">
+  <div class="main-page container-fluid font-A1">
     <div id="week-table" class="row justify-content-center">
       <div id="week-days" class="col-1" v-for="(day, i) in week" :key="i">
         <p v-if="day === today" style="color: red">{{ day }}</p>
         <p v-else>{{ day }}</p>
       </div>
     </div>
-    <div class="row justify-content-center" style="height: 600px">
+    <div class="row justify-content-center">
       <!-- 선생님, 학생 분기 화상수업 -->
       <div class="col-5" id="createSession">
         <img src="@/assets/videoclass/videoclass.png">
@@ -18,9 +18,11 @@
           <button v-if="thisClassName" class="btn-class" @click="joinSession">수업 개설 및 참석하기</button>
         </div>
         <div v-else>
-          <button v-if="thisClassName" class="btn-class" @click="joinSession">
-            수업 참석하기
-          </button>
+          <transition name="bounce">
+            <button v-if="thisClassName" class="btn-class" @click="joinSession">
+              수업 참석하기
+            </button>
+          </transition>
         </div>
       </div>
       <!-- 선생님, 학생 분기 시간표 -->
@@ -31,7 +33,7 @@
           <p>시간</p>
           <p>과목</p>
         </div>
-        <div v-for="(sub, i) in timetableData" :key="sub.id" >
+        <div v-for="(sub, i) in timetableData" :key="sub.id">
           <div v-if="thisClass === i + 1" class="time" id="current">
             <p>{{ i + 1 }}교시</p>
             <p>{{ sub.startTime }} ~ {{ sub.endTime }}</p>
@@ -244,6 +246,8 @@ export default {
 
 .main-page {
   background-color: #fcf1c9;
+  border-radius: 30px;
+  height: 850px;
 }
  
 .time {
@@ -287,5 +291,24 @@ export default {
 }
 .font-A1{
   font-family: 'Gothic A1', sans-serif;
+}
+
+/* transition */
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
