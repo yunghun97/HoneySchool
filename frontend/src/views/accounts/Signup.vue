@@ -206,6 +206,8 @@
                       type="text"
                       class="form-control underline"
                       :class="{ 'is-invalid': errors.user_id }"
+                      v-model="idCk"
+                      @keyup="memberCheck"
                     />
                     <div class="invalid-feedback">{{ errors.user_id }}</div>
                   </div>
@@ -228,6 +230,7 @@
                       <option value="지장초등학교">지장초등학교</option>
                       <option value="불당초등학교">불당초등학교</option>
                       <option value="싸피초등학교">싸피초등학교</option>
+
                     </Field>
                     <div class="invalid-feedback">{{ errors.school }}</div>
                   </div>
@@ -392,7 +395,8 @@ export default {
       grade: Yup.string().required("학년은 필수 선택사항 입니다."),
       class_number: Yup.string().required("반은 필수 선택사항 입니다."),
       student_number: Yup.string().required("번호는 필수 기입사항 입니다."),
-      user_id: Yup.string().required("아이디는 필수 기입사항 입니다."),
+      user_id: Yup.string()
+      .required("아이디는 필수 기입사항 입니다."),
       email: Yup.string()
         .required("Email 은 필수 기입사항 입니다.")
         .email("Email 이 유효하지 않습니다."),
@@ -424,7 +428,18 @@ export default {
           console.log(err);
         });
     };
-
+    const memberCheck=()=>{
+      axios.get(process.env.VUE_APP_API_URL+"/users/IdCheck/"+idCk.value).
+      then((response)=>{
+        let cnt=response.data;
+        if(cnt==0) bool=true;
+        else bool=false;
+      }).catch((error) => {
+        console.log(error);
+      });
+    };
+    let bool=false;
+    const idCk=ref("");
     const position = ref("");
     // const grade = ref(0);
     // const class_number = ref(0);
@@ -436,7 +451,10 @@ export default {
       // class_number,
       // student_number,
       schema,
+      idCk,
+      bool,
       onSubmit,
+      memberCheck,
     };
   },
 };
