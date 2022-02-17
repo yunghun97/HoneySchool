@@ -1,24 +1,20 @@
 <template>
 <div class="root">
   <div class="py-2"></div>
-  <div class="btn-margin d-flex justify-content-end">
-    <button
-      type="button" class="btn btn-outline-success"
-      @click="$router.push('create')"
-      v-if="userinfo.position==='T'"
-    >
-    새로운 글 쓰기
-    </button>
-  </div>
+  <button
+    type="button" class="btn btn-outline-success"
+    @click="$router.push('create')"
+    v-if="userinfo.position==='T'"
+  >
+  새로운 글 쓰기
+  </button>
   <div v-if="isLoading">
     <div class="spinner-border" role="status"></div>
     <p>LOADING...</p>
   </div>
   <div v-else>
-    <div v-if="article.length === 0">
-      <h1>아직 작성된 글이 없습니다.</h1>
-    </div>
-    <div v-else class="box">
+
+    <div class="box">
       <table class="table table-hover">
         <thead>
           <tr>
@@ -43,6 +39,7 @@
             <th scope="col">작성 날짜</th>
           </tr>
         </thead>
+        
         <tbody>
           <tr @click="$router.push({ name: 'TimeTable' })">
             <td class="table-warning"><fa icon="calendar-check" style="width:25px;"></fa></td>
@@ -51,7 +48,15 @@
             <td class="table-warning"></td>
             <td class="table-warning"></td>
           </tr>
+          <tr v-if="article.length === 0">
+            <td ></td>
+            <td >아직 작성된 글이 없습니다.</td>
+            <td></td>
+            <td ></td>
+            <td ></td>
+          </tr>
           <tr 
+          v-else
           v-for="a in article" :key="a.id"
           @click="$router.push({name: 'ArticleDetail', params: { category:a.category ,article_id: a.id }})"
           >
@@ -194,9 +199,5 @@ tbody>tr:hover {
 #dropdownCategory {
   font-weight: bold;
   padding:0px;
-}
-.btn-margin {
-  margin-left: 226px;
-  margin-right: 226px;
 }
 </style>

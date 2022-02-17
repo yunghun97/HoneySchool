@@ -35,7 +35,7 @@
             <h2 class="card-title">질문 내용</h2>
             <hr align="center" noshade>
             <p class="fs-5 my-3">작성 날짜 : <span class="color-orange font-A1-500">{{currentarticle.board.date.split(" ")[0] }}</span></p>
-            <a :href="`http://localhost:9999/static/uploads/${currentarticle.files[0].stored_file_path}`"> <img src="@/assets/board/recordfile.png" alt="" class="fileimg">질문 내용 듣기</a>
+            <a :href="`https://i6b201.p.ssafy.io:9999/file/${currentarticle.files[0].stored_file_path}`" target='_black'> <img src="@/assets/board/recordfile.png" alt="" class="fileimg">질문 내용 듣기</a>
           </div>
           <div class="anscontent">
             <h2 class="card-title">선생님의 답변</h2>
