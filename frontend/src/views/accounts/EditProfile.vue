@@ -178,7 +178,7 @@ export default {
       userinfoData = JSON.parse(localStorageData);
     }
     let userinfo = ref<UserInfo>(userinfoData.accountStore.userinfo);
-    console.log(userinfo)
+
     const schema = Yup.object().shape({
       school: Yup.string().required("학교는 필수 선택사항 입니다."),
       grade: Yup.string().required("학년은 필수 선택사항 입니다."),

@@ -320,14 +320,14 @@ export default {
 
     let bool = ref(false);
     const onSubmit = (values: any) => {
-      console.log(schema);
+
       if (bool.value) {
         alert("중복된 아이디입니다.");
       } else {
         axios
           .post(process.env.VUE_APP_API_URL + "/users/register/", values)
           .then((res) => {
-            console.log(res);
+
             // alert("SUCCESS!! :-)\n\n" + JSON.stringify(values, null, 4));
             const payload = {
               user_id: values.user_id,
@@ -335,23 +335,23 @@ export default {
             };
             store.dispatch("accountStore/getToken", payload);
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          // .catch((err) => {
+          //   console.log(err);
+          // });
       }
     };
     const memberCheck = () => {
       axios
         .get(process.env.VUE_APP_API_URL + "/users/IdCheck/" + idCk.value)
         .then((response) => {
-          console.log(response.data);
+
           let cnt = response.data;
           if (cnt) bool.value = true;
           else bool.value = false;
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        // .catch((error) => {
+        //   console.log(error);
+        // });
     };
 
     const idCk = ref("");

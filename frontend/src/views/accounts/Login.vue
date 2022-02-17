@@ -69,7 +69,7 @@ export default {
     });
 
     const onSubmit = (values: any) => {
-      console.log(schema);
+
       // alert("SUCCESS!! :-)\n\n" + JSON.stringify(values, null, 4));
       const payload = {
         user_id: values.user_id,
