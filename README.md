@@ -591,4 +591,7 @@ cd /var/lib/docker/volumes/files/_data
 ls
 ```
 
+![image](https://user-images.githubusercontent.com/71022555/163241363-53bb6bfa-27b4-4ded-add5-42936fbdcbec.png)
+![image](https://user-images.githubusercontent.com/71022555/163241395-8f4d1edd-b17a-4a0d-8d5d-f45992bec55f.png)
+![image](https://user-images.githubusercontent.com/71022555/163241501-cf166e65-fd16-4edb-875a-cc14d1ad3761.png)
 ## 🎉🎉🎉🎉🎉🎉🎉구동준비가 끝났습니다.!! 🎉🎉🎉🎉🎉🎉🎉
